@@ -11,7 +11,6 @@ This folder is a lightweight, responsive marketing/support site for **Perfect Pa
 - `assets/css/styles.css` — Styling (edit the CSS variables at the top to change the look)
 - `assets/js/main.js` — Mobile menu + lightbox + demo form handling
 - `assets/img/` — Placeholder images (swap with real screenshots)
-- `assets/backgrounds/` — Kitchen scene backgrounds (exported from the app)
 
 ## Quick customization checklist
 1. Update the email address: `support@perfectpantryapp.com`
@@ -31,3 +30,13 @@ If you want to use this exact HTML:
 Open `index.html` in a browser or run a local server:
 - `python -m http.server 8000`
 Then visit: http://localhost:8000
+
+
+## Kitchen background images
+To match the mobile app look, add these files (case-sensitive):
+- `assets/backgrounds/bg_home.jpg`
+- `assets/backgrounds/bg_pantry.jpg`
+- `assets/backgrounds/bg_cookbook.jpg`
+- `assets/backgrounds/bg_shopping.jpg`
+
+Each page sets `<body data-bg="...">` and the CSS maps that to the correct background.

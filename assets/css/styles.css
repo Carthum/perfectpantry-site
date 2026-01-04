@@ -1,5 +1,18 @@
+/* Perfect Pantry Website Styles (aligned with the app theme)
+   ---------------------------------------------------------
+   Color & spacing tokens mirror Flutter:
+   - PPColors (parchment/ink/wood + tomato/basil/mustard)
+   - PPSpacing (radius + control height)
+
+   Kitchen background images (from KitchenBackground):
+   - assets/backgrounds/bg_home.jpg
+   - assets/backgrounds/bg_pantry.jpg
+   - assets/backgrounds/bg_cookbook.jpg
+   - assets/backgrounds/bg_shopping.jpg
+*/
+
 :root{
-  /* Perfect Pantry design tokens (mirrors Flutter PPColors/PPSpacing) */
+  /* === PPColors (Flutter) === */
   --pp-parchment: #F4E7D6;
   --pp-parchment-dark: #E9D6BF;
   --pp-parchment-deep: #DCC3A6;
@@ -15,93 +28,57 @@
   --pp-basil: #4F7C4A;
   --pp-mustard: #D6A85A;
 
-  /* Site semantic tokens */
-  --bg: var(--pp-parchment);
-  --surface: rgba(244, 231, 214, 0.92);
-  --surface-strong: rgba(233, 214, 191, 0.92);
-  --text: var(--pp-ink);
-  --muted: var(--pp-ink-soft);
-  --line: rgba(74, 47, 27, 0.18);
-  --shadow: 0 10px 30px rgba(0,0,0,.12);
+  /* === PPSpacing (Flutter) === */
+  --radius-sm: 10px;  /* PPSpacing.radiusSm */
+  --radius: 14px;     /* PPSpacing.radiusMd */
+  --radius-lg: 18px;  /* PPSpacing.radiusLg */
+  --control-h: 44px;  /* PPSpacing.controlHeight */
 
-  --radius-sm: 10px;
-  --radius: 14px;
-  --radius-lg: 18px;
-
-  --control-h: 44px;
   --container: 1100px;
 
-  /* Kitchen background system (set per page via <body data-bg="...">) */
-  --page-bg-image: none;
-  --page-bg-pos: center;
-  --page-bg-opacity: 0.14;
+  /* Aliases used throughout the existing HTML/CSS */
+  --bg: var(--pp-parchment);
+  --surface: rgba(244, 231, 214, .90);
+  --text: var(--pp-ink);
+  --muted: var(--pp-ink-soft);
+  --line: rgba(74, 47, 27, .18); /* woodDark @ ~18% */
+  --accent: var(--pp-wood-dark);
+  --accent-2: var(--pp-tomato);
+  --shadow: 0 10px 30px rgba(0,0,0,.10);
+
+  /* Page background image (set via body[data-bg]) */
+  --bg-img: none;
+
+  /* Parchment wash on top of the kitchen background. Lower = more visible background. */
+  --bg-wash: rgba(244, 231, 214, .84);
 }
 
-/* Per-page background selection (matches your Flutter KitchenBackground asset names) */
-body[data-bg="home"]{
-  --page-bg-image: url("../backgrounds/bg_home.jpg");
-  --page-bg-pos: center top;
-  --page-bg-opacity: 0.18;
-}
-body[data-bg="pantry"]{
-  --page-bg-image: url("../backgrounds/bg_pantry.jpg");
-  --page-bg-pos: center top;
-  --page-bg-opacity: 0.12;
-}
-body[data-bg="cookbook"]{
-  --page-bg-image: url("../backgrounds/bg_cookbook.jpg");
-  --page-bg-pos: center top;
-  --page-bg-opacity: 0.16;
-}
-body[data-bg="shopping"]{
-  --page-bg-image: url("../backgrounds/bg_shopping.jpg");
-  --page-bg-pos: center bottom;
-  --page-bg-opacity: 0.16;
-}
-body[data-bg="none"]{
-  --page-bg-image: none;
-  --page-bg-opacity: 0;
-}
+/* Background routing per page (set <body data-bg="...">) */
+body[data-bg="home"]{ --bg-img: url("../backgrounds/bg_home.jpg"); }
+body[data-bg="pantry"]{ --bg-img: url("../backgrounds/bg_pantry.jpg"); }
+body[data-bg="cookbook"]{ --bg-img: url("../backgrounds/bg_cookbook.jpg"); }
+body[data-bg="shopping"]{ --bg-img: url("../backgrounds/bg_shopping.jpg"); }
+body[data-bg="none"]{ --bg-img: none; --bg-wash: rgba(244, 231, 214, 1); }
 
 *{ box-sizing: border-box; }
 html, body{ height: 100%; }
+html{ background: var(--bg); }
 
 body{
   margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
   color: var(--text);
-  background: var(--bg);
   line-height: 1.5;
 
-  /* Ensures our background pseudo-elements sit behind everything */
-  isolation: isolate;
-}
-
-/* Kitchen background image (behind content) */
-body::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: var(--page-bg-image);
-  background-size: cover;
-  background-position: var(--page-bg-pos);
-  background-repeat: no-repeat;
-  opacity: var(--page-bg-opacity);
-  z-index: -2;
-  pointer-events: none;
-}
-
-/* Parchment "wash" overlay so text stays readable over illustrated backgrounds */
-body::after{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(900px 520px at 12% 0%, rgba(198,156,109,.22), transparent 60%),
-    radial-gradient(760px 480px at 92% 10%, rgba(195,75,58,.12), transparent 55%),
-    rgba(244,231,214,.86);
-  z-index: -1;
-  pointer-events: none;
+  /* Kitchen background + parchment wash */
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--bg-wash), var(--bg-wash)),
+    var(--bg-img);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
 }
 
 a{ color: inherit; text-decoration: none; }
@@ -114,6 +91,7 @@ img{ max-width: 100%; display: block; }
   margin-inline: auto;
 }
 
+/* Accessibility: skip link */
 .skip-link{
   position: absolute;
   left: -999px;
@@ -122,16 +100,18 @@ img{ max-width: 100%; display: block; }
   color: var(--text);
   padding: .75rem 1rem;
   border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow);
   z-index: 999;
 }
 .skip-link:focus{ left: 1rem; top: 1rem; }
 
+/* Header / nav */
 header{
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(244,231,214,.84);
+  background: rgba(244, 231, 214, .78);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -154,12 +134,14 @@ header{
 .brand .mark{
   width: 36px; height: 36px;
   border-radius: var(--radius-sm);
-  background: rgba(198,156,109,.22);
-  border: 1px solid rgba(74,47,27,.22);
+  background: linear-gradient(135deg, rgba(198,156,109,.40), rgba(74,47,27,.12));
+  border: 1px solid var(--line);
   display: grid;
   place-items: center;
+  box-shadow: 0 1px 0 rgba(0,0,0,.05);
 }
-.brand .mark img{ width: 18px; height: 18px; }
+.brand .mark img,
+.brand .mark svg{ width: 18px; height: 18px; }
 .brand small{
   display: block;
   font-weight: 600;
@@ -180,58 +162,67 @@ header{
   font-weight: 700;
 }
 .nav-links a[aria-current="page"]{
-  color: var(--pp-wood-dark);
-  background: rgba(233,214,191,.65);
+  color: var(--text);
+  background: rgba(233, 214, 191, .85);
+  border: 1px solid rgba(74, 47, 27, .16);
 }
 .nav-links a:hover{
   text-decoration: none;
   color: var(--text);
-  background: rgba(74,47,27,.06);
+  background: rgba(220, 195, 166, .55);
 }
 
+/* Buttons — mimic Flutter FilledButton / OutlinedButton */
 .btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: .5rem;
 
-  height: var(--control-h);
-  padding: 0 1rem;
-
+  min-height: var(--control-h);
+  padding: .7rem 1rem;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--pp-wood-dark);
 
-  background: rgba(244,231,214,.55);
-  box-shadow: 0 1px 0 rgba(0,0,0,.06);
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--text);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
 
   font-weight: 800;
-  color: var(--text);
 }
-.btn:hover{ text-decoration: none; filter: brightness(.98); }
+.btn:hover{ text-decoration: none; background: rgba(233, 214, 191, .55); }
 .btn:active{ transform: translateY(1px); }
+.btn:focus-visible{
+  outline: 3px solid rgba(195, 75, 58, .35);
+  outline-offset: 2px;
+}
 
+/* FilledButton-style (parchment filled) */
 .btn-primary{
-  background: rgba(244,231,214,.92);
+  background: rgba(244, 231, 214, .92);
+  border-color: var(--accent);
 }
 
+/* Accent button (tomato wash) */
 .btn-secondary{
-  background: rgba(195,75,58,.12);
-  border-color: rgba(195,75,58,.45);
+  background: rgba(195, 75, 58, .12);
+  border-color: rgba(195, 75, 58, .55);
 }
 
+/* Icon button (mobile menu) */
 .icon-btn{
   width: var(--control-h); height: var(--control-h);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(74,47,27,.22);
-  background: rgba(244,231,214,.8);
+  border: 1px solid var(--accent);
+  background: rgba(244, 231, 214, .92);
   display: none;
   place-items: center;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
 }
 .icon-btn svg{ width: 22px; height: 22px; }
 
-.hero{
-  padding: 3.25rem 0 2.5rem;
-}
+/* Hero */
+.hero{ padding: 3.25rem 0 2.5rem; }
 
 .grid-2{
   display: grid;
@@ -246,8 +237,8 @@ header{
   align-items: center;
   padding: .35rem .65rem;
   border-radius: 999px;
-  border: 1px solid rgba(74,47,27,.20);
-  background: rgba(244,231,214,.75);
+  border: 1px solid var(--line);
+  background: rgba(244, 231, 214, .70);
   color: var(--muted);
   font-weight: 800;
   font-size: .9rem;
@@ -264,6 +255,7 @@ h1{
   color: var(--muted);
   max-width: 60ch;
 }
+
 .cta-row{
   display: flex;
   flex-wrap: wrap;
@@ -276,9 +268,10 @@ h1{
   font-size: .95rem;
 }
 
+/* App preview card */
 .mock{
-  background: rgba(244,231,214,.78);
-  border: 1px solid rgba(74,47,27,.18);
+  background: rgba(244, 231, 214, .80);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 1.25rem;
@@ -293,24 +286,22 @@ h1{
   font-weight: 900;
   padding: .3rem .55rem;
   border-radius: 999px;
-  border: 1px solid rgba(74,47,27,.18);
-  background: rgba(244,231,214,.92);
+  border: 1px solid var(--line);
+  background: rgba(244, 231, 214, .92);
   color: var(--muted);
 }
 .badge.good{
   color: var(--pp-basil);
-  border-color: rgba(79,124,74,.30);
-  background: rgba(79,124,74,.08);
+  border-color: rgba(79, 124, 74, .35);
+  background: rgba(79, 124, 74, .10);
 }
 .badge.warm{
   color: var(--pp-tomato);
-  border-color: rgba(195,75,58,.28);
-  background: rgba(195,75,58,.08);
+  border-color: rgba(195, 75, 58, .35);
+  background: rgba(195, 75, 58, .10);
 }
 
-section{
-  padding: 2.4rem 0;
-}
+section{ padding: 2.4rem 0; }
 
 .section-head{
   display: grid;
@@ -328,6 +319,7 @@ section{
   max-width: 75ch;
 }
 
+/* Cards */
 .cards{
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -335,11 +327,11 @@ section{
 }
 .card{
   grid-column: span 6;
-  background: rgba(244,231,214,.78);
-  border: 1px solid rgba(74,47,27,.18);
+  background: rgba(244, 231, 214, .80);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1.1rem;
-  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
 }
 .card h3{ margin: .1rem 0 .35rem; font-size: 1.05rem; }
 .card p{ margin: 0; color: var(--muted); }
@@ -349,15 +341,16 @@ section{
   align-items: center;
 }
 .pill{
-  width: var(--control-h); height: var(--control-h);
+  width: 44px; height: 44px;
   border-radius: var(--radius-lg);
   display: grid;
   place-items: center;
-  border: 1px solid rgba(74,47,27,.18);
-  background: rgba(244,231,214,.92);
+  border: 1px solid var(--line);
+  background: rgba(244, 231, 214, .92);
 }
 .pill svg{ width: 22px; height: 22px; opacity: .85; }
 
+/* Steps */
 .steps{
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -365,8 +358,8 @@ section{
 }
 .step{
   grid-column: span 4;
-  background: rgba(244,231,214,.78);
-  border: 1px solid rgba(74,47,27,.18);
+  background: rgba(244, 231, 214, .80);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1.1rem;
 }
@@ -376,9 +369,8 @@ section{
   justify-content: center;
   width: 34px; height: 34px;
   border-radius: var(--radius-sm);
-  background: rgba(233,214,191,.9);
-  border: 1px solid rgba(74,47,27,.22);
-  color: var(--pp-wood-dark);
+  background: rgba(233, 214, 191, .85);
+  border: 1px solid rgba(74, 47, 27, .20);
   margin-bottom: .5rem;
 }
 .step p{ margin: .35rem 0 0; color: var(--muted); }
@@ -391,12 +383,13 @@ section{
 }
 
 .panel{
-  background: rgba(244,231,214,.80);
-  border: 1px solid rgba(74,47,27,.18);
+  background: rgba(244, 231, 214, .84);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1.1rem;
 }
 
+/* Gallery */
 .gallery{
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -406,10 +399,10 @@ section{
   grid-column: span 4;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid rgba(74,47,27,.18);
-  background: rgba(244,231,214,.92);
+  border: 1px solid var(--line);
+  background: rgba(244, 231, 214, .92);
   cursor: pointer;
-  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
 }
 .thumb figcaption{
   padding: .75rem .85rem;
@@ -419,6 +412,7 @@ section{
 }
 .thumb:hover{ transform: translateY(-1px); }
 
+/* Lightbox */
 .lightbox{
   position: fixed;
   inset: 0;
@@ -433,7 +427,7 @@ section{
 .lightbox .frame{
   width: min(960px, 100%);
   background: #111;
-  border-radius: var(--radius-lg);
+  border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.2);
 }
@@ -451,19 +445,17 @@ section{
   border: 1px solid rgba(255,255,255,.22);
   background: rgba(255,255,255,.08);
   color: #fff;
-  border-radius: var(--radius-sm);
+  border-radius: 12px;
   padding: .5rem .75rem;
   cursor: pointer;
 }
 .lightbox .bar button:hover{ filter: brightness(1.08); }
 
-.faq{
-  display: grid;
-  gap: .65rem;
-}
+/* FAQ */
+.faq{ display: grid; gap: .65rem; }
 details{
-  background: rgba(244,231,214,.80);
-  border: 1px solid rgba(74,47,27,.18);
+  background: rgba(244, 231, 214, .84);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: .85rem 1rem;
 }
@@ -477,34 +469,27 @@ details p{
   margin: .55rem 0 0;
   color: var(--muted);
 }
-details[open]{ box-shadow: 0 1px 0 rgba(0,0,0,.03); }
+details[open]{ box-shadow: 0 1px 0 rgba(0,0,0,.04); }
 
-form{
-  display: grid;
-  gap: .75rem;
-}
+/* Forms */
+form{ display: grid; gap: .75rem; }
 label{ font-weight: 800; font-size: .95rem; }
-
 input, textarea, select{
   width: 100%;
+  min-height: var(--control-h);
+  padding: .7rem .85rem;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(74,47,27,.35);
-  background: rgba(233,214,191,.35);
+  border: 1px solid var(--accent);
+  background: rgba(233, 214, 191, .35);
   color: var(--text);
   font: inherit;
 }
-input, select{
-  height: var(--control-h);
-  padding: 0 .85rem;
-}
-textarea{
-  min-height: 140px;
-  resize: vertical;
-  padding: .75rem .85rem;
-}
+select{ padding-right: 2rem; }
+textarea{ min-height: 140px; resize: vertical; }
 
+input::placeholder, textarea::placeholder{ color: var(--muted); }
 input:focus, textarea:focus, select:focus{
-  outline: 3px solid rgba(195,75,58,.22);
+  outline: 3px solid rgba(195, 75, 58, .25);
   border-color: var(--pp-tomato);
 }
 
@@ -514,23 +499,23 @@ input:focus, textarea:focus, select:focus{
   gap: .75rem;
 }
 
-.small{
-  font-size: .95rem;
-  color: var(--muted);
-}
+.small{ font-size: .95rem; color: var(--muted); }
 
+/* Callout (use basil accent) */
 .callout{
-  border: 1px solid rgba(79,124,74,.30);
-  background: rgba(79,124,74,.08);
+  border: 1px solid rgba(79, 124, 74, .35);
+  background: rgba(79, 124, 74, .10);
   padding: 1rem;
   border-radius: var(--radius);
 }
 .callout strong{ display: block; margin-bottom: .2rem; }
 
+/* Footer */
 footer{
   border-top: 1px solid var(--line);
   padding: 2rem 0;
   color: var(--muted);
+  background: rgba(244, 231, 214, .60);
 }
 .footer-grid{
   display: grid;
@@ -567,18 +552,18 @@ hr.sep{
 .toc a{
   padding: .45rem .65rem;
   border-radius: 999px;
-  border: 1px solid rgba(74,47,27,.18);
-  background: rgba(244,231,214,.80);
+  border: 1px solid var(--line);
+  background: rgba(244, 231, 214, .82);
   color: var(--muted);
   font-weight: 900;
   font-size: .9rem;
 }
-.toc a:hover{ text-decoration: none; color: var(--text); }
+.toc a:hover{ text-decoration: none; color: var(--text); background: rgba(233, 214, 191, .85); }
 
 .code{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  background: rgba(74,47,27,.06);
-  border: 1px solid rgba(74,47,27,.18);
+  background: rgba(233, 214, 191, .65);
+  border: 1px solid var(--line);
   padding: .15rem .35rem;
   border-radius: 8px;
 }
@@ -599,8 +584,8 @@ hr.sep{
     left: 1rem;
     right: 1rem;
     top: 72px;
-    background: rgba(244,231,214,.94);
-    border: 1px solid rgba(74,47,27,.18);
+    background: rgba(244, 231, 214, .94);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: .75rem;
     box-shadow: var(--shadow);
@@ -612,5 +597,4 @@ hr.sep{
   .nav-links a{ padding: .7rem .75rem; }
   .nav-links[data-open="true"]{ display: flex; }
   .icon-btn{ display: grid; }
-  .form-row{ grid-template-columns: 1fr; }
 }

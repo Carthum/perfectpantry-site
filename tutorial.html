@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tutorial — Perfect Pantry</title>
+  <meta name="description" content="Get started with Perfect Pantry. Learn how to browse recipes, plan meals, track your pantry, and build a smarter shopping list." />
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  
+<header>
+  <div class="container">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true">
+          <img src="assets/img/logo.svg" alt="" />
+        </span>
+        <span>
+          Perfect Pantry
+          <small>Recipes • Plans • Pantry • Shopping</small>
+        </span>
+      </a>
+
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <div class="nav-links" id="navLinks" data-open="false">
+        <a href="index.html">Home</a>
+        <a href="tutorial.html" aria-current="page">Tutorial</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a class="btn btn-primary" href="index.html#waitlist">Join waitlist</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+  <main id="main" class="container">
+    <section class="page-title">
+      <h1>Tutorial</h1>
+      <p>
+        This is a ready-to-edit tutorial layout. Replace the placeholder text with your real workflow
+        and drop in screenshots from the <span class="code">assets/img/</span> folder.
+      </p>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Jump to a section</h2>
+        <p>Pro tip: keep your tutorial “bite-sized” — short steps with screenshots.</p>
+      </div>
+      <div class="toc" aria-label="Table of contents">
+        <a href="#quickstart">Quick start</a>
+        <a href="#recipes">Browse recipes</a>
+        <a href="#mealplan">Meal planner</a>
+        <a href="#pantry">Pantry tracker</a>
+        <a href="#shopping">Shopping assistant</a>
+        <a href="#tips">Tips</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+      </div>
+    </section>
+
+    <section id="quickstart">
+      <div class="section-head">
+        <h2>Quick start (2 minutes)</h2>
+        <p>Use this section for the fastest path to a “successful first session.”</p>
+      </div>
+      <div class="panel">
+        <ol>
+          <li><strong>Create your account</strong> (or sign in).</li>
+          <li><strong>Add 5 pantry staples</strong> you always keep (ex: rice, pasta, eggs).</li>
+          <li><strong>Save 2 recipes</strong> you want to make this week.</li>
+          <li><strong>Add 1 meal to your plan</strong> and generate your shopping list.</li>
+        </ol>
+        <p class="small">Suggested screenshot: <a href="screenshots.html">Screenshots</a> → Pantry + Meal Plan.</p>
+      </div>
+    </section>
+
+    <section id="recipes">
+      <div class="section-head">
+        <h2>Browse recipes</h2>
+        <p>Explain the main ways a user can discover and save recipes.</p>
+      </div>
+
+      <div class="split">
+        <div class="panel">
+          <h3 style="margin-top:0;">Steps</h3>
+          <ul>
+            <li>Go to <strong>Recipes</strong>.</li>
+            <li>Use search or filters (diet, time, ingredients).</li>
+            <li>Tap a recipe to view details.</li>
+            <li>Tap <strong>Save</strong> to add it to Favorites.</li>
+          </ul>
+          <div class="callout" style="margin-top:1rem;">
+            <strong>Helpful tip</strong>
+            <div class="small">Mention your best “wow” trick here (e.g., ingredient filter, quick saves, etc.).</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <img src="assets/img/ss-recipes.svg" alt="Recipe browser screenshot placeholder" />
+          <p class="small" style="margin-top:.75rem;">Replace with a real screenshot when ready.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mealplan">
+      <div class="section-head">
+        <h2>Meal planner</h2>
+        <p>Show how users add meals, move them around, and build a list from the plan.</p>
+      </div>
+
+      <div class="split">
+        <div class="panel">
+          <img src="assets/img/ss-mealplan.svg" alt="Meal planner screenshot placeholder" />
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-top:0;">Steps</h3>
+          <ol>
+            <li>Open <strong>Meal Plan</strong>.</li>
+            <li>Tap a day to add a recipe or meal.</li>
+            <li>Drag to move a meal to another day (if supported).</li>
+            <li>Tap <strong>Generate shopping list</strong>.</li>
+          </ol>
+          <p class="small">
+            If you support repeats: explain how to “repeat last week” or reuse favorites.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pantry">
+      <div class="section-head">
+        <h2>Pantry tracker</h2>
+        <p>Help users understand locations (pantry/freezer/fridge), quantities, and expiration dates.</p>
+      </div>
+
+      <div class="split">
+        <div class="panel">
+          <h3 style="margin-top:0;">Steps</h3>
+          <ul>
+            <li>Open <strong>Pantry</strong>.</li>
+            <li>Tap <strong>Add item</strong> and choose a location.</li>
+            <li>Set a quantity (optional) and expiration date (optional).</li>
+            <li>Edit items anytime from <strong>Item Details</strong>.</li>
+          </ul>
+          <p class="small">Add your rules here (e.g., default expiry reminders, auto-categories, etc.).</p>
+        </div>
+
+        <div class="panel">
+          <img src="assets/img/ss-pantry.svg" alt="Pantry tracker screenshot placeholder" />
+        </div>
+      </div>
+    </section>
+
+    <section id="shopping">
+      <div class="section-head">
+        <h2>Shopping assistant</h2>
+        <p>Explain list creation, grouping, checking off items, and avoiding duplicates.</p>
+      </div>
+
+      <div class="split">
+        <div class="panel">
+          <img src="assets/img/ss-shopping.svg" alt="Shopping assistant screenshot placeholder" />
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-top:0;">Steps</h3>
+          <ol>
+            <li>Open <strong>Shopping List</strong>.</li>
+            <li>Review items suggested from your meal plan.</li>
+            <li>Add any extra items (household essentials).</li>
+            <li>Check off items as you shop.</li>
+          </ol>
+          <div class="callout" style="margin-top:1rem;">
+            <strong>What makes it “smart”?</strong>
+            <div class="small">
+              Add your logic here (for example: “Items you already have enough of won’t appear.”)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tips">
+      <div class="section-head">
+        <h2>Tips</h2>
+        <p>Small tips reduce support requests later.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>Start with staples</h3>
+          <p>Add 10–20 items you always buy. You’ll feel the benefit immediately.</p>
+        </article>
+        <article class="card">
+          <h3>Use quick adds</h3>
+          <p>If you support scanning or recent items, explain it here to save users time.</p>
+        </article>
+        <article class="card">
+          <h3>Make “default reminders”</h3>
+          <p>Set a default reminder timing so you don’t have to think about it for each item.</p>
+        </article>
+        <article class="card">
+          <h3>Keep it flexible</h3>
+          <p>Plans change — show the fastest way to swap meals and regenerate a list.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="troubleshooting">
+      <div class="section-head">
+        <h2>Troubleshooting</h2>
+        <p>Keep this short and link to Support for anything deeper.</p>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>I didn’t get a reminder notification.</summary>
+          <p>Check notification permissions on your phone. In the app, confirm reminders are enabled in Settings.</p>
+        </details>
+        <details>
+          <summary>My data didn’t sync.</summary>
+          <p>Make sure you’re signed into the same account and have an internet connection. If it persists, contact support.</p>
+        </details>
+        <details>
+          <summary>I found a bug.</summary>
+          <p>Please contact support and include your device type, app version, and screenshots if possible.</p>
+        </details>
+      </div>
+
+      <p class="small" style="margin-top:1rem;">
+        Need help? Visit <a href="support.html">Support</a>.
+      </p>
+    </section>
+  </main>
+
+  
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:.35rem;">
+          <span class="mark" aria-hidden="true">
+            <img src="assets/img/logo.svg" alt="" />
+          </span>
+          <span>Perfect Pantry</span>
+        </div>
+        <p style="margin:.25rem 0 0; max-width:70ch;">
+          Perfect Pantry is a recipe browser, meal planner, pantry tracker, and shopping assistant —
+          designed to help you waste less, cook more, and shop with confidence.
+        </p>
+        <p class="small" style="margin:.75rem 0 0;">
+          Contact: <a href="mailto:support@perfectpantryapp.com">support@perfectpantryapp.com</a>
+        </p>
+      </div>
+      <div class="footer-links" aria-label="Footer links">
+        <a href="support.html">Support</a>
+        <a href="tutorial.html">Tutorial</a>
+        <a href="screenshots.html">Screenshots</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <hr class="sep" />
+    <p class="small" style="margin:0;">© 2026 Perfect Pantry. All rights reserved.</p>
+  </div>
+</footer>
+
+
+  <!-- Lightbox (for screenshots if you add clickable tutorial images) -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" aria-label="Image lightbox">
+    <div class="frame" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+      <div class="bar">
+        <div id="lightboxTitle">Screenshot</div>
+        <button type="button" id="lightboxClose">Close</button>
+      </div>
+      <img id="lightboxImg" alt="" />
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

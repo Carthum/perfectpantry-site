@@ -30,3 +30,26 @@ If you want to use this exact HTML:
 Open `index.html` in a browser or run a local server:
 - `python -m http.server 8000`
 Then visit: http://localhost:8000
+
+
+## Kitchen background images (match the app)
+This site can use the same illustrated kitchen backgrounds as the app.
+
+1) Create this folder in the website repo:
+- `assets/backgrounds/`
+
+2) Add these files **with these exact names** (case-sensitive on GitHub Pages):
+- `assets/backgrounds/bg_home.jpg`
+- `assets/backgrounds/bg_pantry.jpg`
+- `assets/backgrounds/bg_cookbook.jpg`
+- `assets/backgrounds/bg_shopping.jpg`
+
+3) Each page sets a background via the `<body data-bg="...">` attribute:
+- Home (`index.html`) → `data-bg="home"`
+- Tutorial (`tutorial.html`) → `data-bg="cookbook"`
+- Screenshots (`screenshots.html`) → `data-bg="home"`
+- Support (`support.html`) → `data-bg="pantry"`
+- Privacy (`privacy.html`) → `data-bg="pantry"`
+
+If you want a page to have no illustration behind it (just parchment), set:
+- `data-bg="none"`

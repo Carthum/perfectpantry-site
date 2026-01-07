@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.meal_planner",
+      "sha256_cert_fingerprints": [
+        "23:5D:9E:60:0A:30:C7:13:1A:10:9E:29:5C:3E:61:4D:C2:72:E4:D7:92:5B:7B:89:A1:A1:74:6E:6D:16:07:D2"
+      ]
+    }
+  }
+]

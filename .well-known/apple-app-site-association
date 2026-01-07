@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "MC62AFMUSJ.com.perfectpantryapp.perfectpantry",
+        "paths": [
+          "/auth/callback/*",
+          "/auth/callback"
+        ]
+      }
+    ]
+  }
+}

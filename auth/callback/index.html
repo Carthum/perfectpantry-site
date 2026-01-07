@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Perfect Pantry — Opening App</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        margin: 0;
+        background: #f4e7d6;
+        color: #3a2a1a;
+      }
+      .wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 28px 18px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.45);
+        border: 1px solid rgba(74, 47, 27, 0.18);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0 0 8px;
+      }
+      p {
+        margin: 10px 0;
+        font-weight: 600;
+        opacity: 0.85;
+      }
+      .muted {
+        font-weight: 600;
+        opacity: 0.7;
+        font-size: 13px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 14px;
+        border-radius: 16px;
+        border: 1px solid rgba(74, 47, 27, 0.25);
+        background: #f4e7d6;
+        color: #4a2f1b;
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>Opening Perfect Pantry…</h1>
+        <p>If nothing happens, tap “Open App”.</p>
+
+        <div class="row">
+          <a id="openBtn" class="btn" href="#">Open App</a>
+          <!-- Optional store fallbacks. Replace later when you have store URLs -->
+          <a class="btn" href="#" onclick="return false;" style="opacity: 0.55"
+            >App Store (soon)</a
+          >
+          <a class="btn" href="#" onclick="return false;" style="opacity: 0.55"
+            >Google Play (soon)</a
+          >
+        </div>
+
+        <p class="muted" id="debug"></p>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // This page receives Supabase auth links (invite / recovery / magic link) and forwards them into the app.
+        // We preserve ALL query params and fragment params.
+        const u = new URL(window.location.href);
+
+        // Supabase sometimes uses fragment (#) for params; keep both.
+        const query = u.searchParams.toString();
+        const fragment = u.hash ? u.hash.substring(1) : "";
+
+        // Build a deep link your app already supports:
+        // NOTE: You already have perfectpantry://login-callback/ handling for OAuth/recovery.
+        const base = "perfectpantry://login-callback/";
+        const parts = [];
+        if (query) parts.push(query);
+        if (fragment) parts.push(fragment);
+        const tail = parts.join("&");
+        const deepLink = tail ? base + "?" + tail : base;
+
+        const debug = document.getElementById("debug");
+        debug.textContent = "Redirecting…";
+
+        const openBtn = document.getElementById("openBtn");
+        openBtn.href = deepLink;
+
+        // Try to open the app immediately
+        // (Universal Links/App Links will open the app if configured; otherwise custom scheme tries)
+        setTimeout(() => {
+          window.location.href = deepLink;
+          debug.textContent =
+            "Tried to open app. If it didn’t open, tap “Open App”.";
+        }, 50);
+      })();
+    </script>
+  </body>
+</html>

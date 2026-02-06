@@ -3,6 +3,7 @@
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
 
   const clamp01 = (n) => Math.max(0, Math.min(1, n));
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
   const TAB_ICONS = {
     home: "assets/brand/tab-icons/ic_tab_home.svg",
@@ -47,6 +48,24 @@
     if (!node) return;
     // inert is now supported in modern browsers; fall back to aria-hidden only.
     if ("inert" in node) node.inert = !!inert;
+  };
+
+  const isFormFieldTarget = (target) => {
+    if (!target || typeof target.closest !== "function") return false;
+    return !!target.closest("input, textarea, select, [contenteditable='true']");
+  };
+
+  const isInteractiveTarget = (target) => {
+    if (!target || typeof target.closest !== "function") return false;
+    return !!target.closest("a, button, input, textarea, select, [role='button'], [contenteditable='true']");
+  };
+
+  const normalizeWheelDeltaY = (event) => {
+    let dy = Number(event && event.deltaY) || 0;
+    if (!dy) return 0;
+    if (event.deltaMode === 1) dy *= 16; // lines -> px-ish
+    if (event.deltaMode === 2) dy *= window.innerHeight; // pages -> px
+    return dy;
   };
 
   const activateTourStep = (tourRoot, stepId) => {
@@ -131,6 +150,219 @@
     };
 
     return { scrollToStep };
+  };
+
+  const bindTourLock = ({ tourRoot, api, prefersReducedMotion, afterSelector }) => {
+    const sentinels = getTourSentinels(tourRoot);
+    if (!sentinels.length) return null;
+    if (prefersReducedMotion) return null;
+
+    const tourSteps = sentinels
+      .map((node) => ({
+        stepId: node.dataset.ppStep,
+        tab: node.dataset.ppTab || null,
+        sceneId: node.dataset.ppScene || null,
+      }))
+      .filter((step) => !!step.stepId);
+
+    if (!tourSteps.length) return null;
+
+    const indexByStepId = new Map();
+    tourSteps.forEach((step, idx) => {
+      if (!indexByStepId.has(step.stepId)) indexByStepId.set(step.stepId, idx);
+    });
+
+    let activeIndex = clamp(indexByStepId.get("welcome") ?? 0, 0, tourSteps.length - 1);
+    let locked = false;
+    let wheelAccum = 0;
+    let cooldownUntil = 0;
+    let storedScrollY = 0;
+
+    const restoreBody = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      width: document.body.style.width,
+    };
+
+    const getAfterNode = () => {
+      if (!afterSelector) return null;
+      return document.querySelector(afterSelector);
+    };
+
+    const setStepIndex = (nextIndex) => {
+      activeIndex = clamp(nextIndex, 0, tourSteps.length - 1);
+      const step = tourSteps[activeIndex];
+      if (!step) return;
+
+      activateTourStep(tourRoot, step.stepId);
+
+      if (step.sceneId) api.setScene(step.sceneId);
+      else if (step.tab) api.setTab(step.tab);
+    };
+
+    const setStep = (stepId) => {
+      if (!stepId) return;
+      const idx = indexByStepId.get(stepId);
+      if (typeof idx !== "number") return;
+      setStepIndex(idx);
+    };
+
+    const lock = ({ initialStepId } = {}) => {
+      if (locked) return;
+      locked = true;
+
+      storedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.documentElement.classList.add("pp-tour-locked");
+
+      // Freeze scroll position without layout shift.
+      document.body.style.position = "fixed";
+      document.body.style.top = `${-storedScrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+
+      if (initialStepId) setStep(initialStepId);
+      else setStepIndex(activeIndex);
+    };
+
+    const unlock = ({ scrollAfter } = {}) => {
+      if (!locked) return;
+      locked = false;
+
+      document.documentElement.classList.remove("pp-tour-locked");
+
+      document.body.style.position = restoreBody.position || "";
+      document.body.style.top = restoreBody.top || "";
+      document.body.style.left = restoreBody.left || "";
+      document.body.style.right = restoreBody.right || "";
+      document.body.style.width = restoreBody.width || "";
+
+      window.scrollTo(0, storedScrollY);
+
+      if (scrollAfter) {
+        const after = getAfterNode();
+        if (after) {
+          after.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+            block: "start",
+          });
+        }
+      }
+    };
+
+    const advance = (dir) => {
+      if (dir > 0 && activeIndex >= tourSteps.length - 1) {
+        unlock({ scrollAfter: true });
+        return;
+      }
+      if (dir < 0 && activeIndex <= 0) return;
+      setStepIndex(activeIndex + dir);
+    };
+
+    const onWheel = (event) => {
+      if (!locked) return;
+      if (event.ctrlKey) return; // allow pinch-to-zoom
+      if (isFormFieldTarget(event.target)) return;
+
+      event.preventDefault();
+
+      const now = Date.now();
+      if (now < cooldownUntil) return;
+
+      const dy = normalizeWheelDeltaY(event);
+      if (!dy) return;
+
+      wheelAccum += dy;
+      const thresholdPx = 90;
+      if (Math.abs(wheelAccum) < thresholdPx) return;
+
+      const dir = wheelAccum > 0 ? 1 : -1;
+      wheelAccum = 0;
+      cooldownUntil = now + 520;
+      advance(dir);
+    };
+
+    const onKeyDown = (event) => {
+      if (!locked) return;
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        unlock({ scrollAfter: false });
+        return;
+      }
+
+      if (isInteractiveTarget(event.target)) return;
+
+      const key = event.key;
+      const isSpace = key === " " || key === "Spacebar";
+
+      if (key === "ArrowDown" || key === "PageDown" || isSpace) {
+        event.preventDefault();
+        advance(1);
+        return;
+      }
+
+      if (key === "ArrowUp" || key === "PageUp") {
+        event.preventDefault();
+        advance(-1);
+      }
+    };
+
+    // Wire explicit controls.
+    $("[data-pp-tour-skip]", tourRoot)?.addEventListener("click", (event) => {
+      event.preventDefault();
+      unlock({ scrollAfter: true });
+    });
+
+    $("[data-pp-tour-continue]", tourRoot)?.addEventListener("click", (event) => {
+      event.preventDefault();
+      unlock({ scrollAfter: true });
+    });
+
+    $$("[data-pp-tour-jump]", tourRoot).forEach((node) => {
+      node.addEventListener("click", (event) => {
+        const stepId = node.dataset.ppTourJump;
+        if (!stepId) return;
+        event.preventDefault();
+        if (!locked) lock({ initialStepId: stepId });
+        else setStep(stepId);
+      });
+    });
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKeyDown);
+
+    // Auto-lock only when the tour is actually at the top (don’t trap deep links).
+    const maybeAutoLock = () => {
+      const hash = String(window.location.hash || "");
+      if (hash && hash !== "#guided-tour") return;
+
+      const y = window.scrollY || window.pageYOffset || 0;
+      if (y > 12) return;
+
+      lock({ initialStepId: "welcome" });
+    };
+
+    maybeAutoLock();
+
+    window.addEventListener("hashchange", () => {
+      if (String(window.location.hash || "") !== "#guided-tour") return;
+      window.setTimeout(() => {
+        const y = window.scrollY || window.pageYOffset || 0;
+        if (y > 12) return;
+        lock({ initialStepId: "welcome" });
+      }, 0);
+    });
+
+    return {
+      isLocked: () => locked,
+      lock,
+      unlock,
+      setStep,
+      getStepId: () => tourSteps[activeIndex]?.stepId || "",
+    };
   };
 
   const buildHotspot = (hotspot, onActivate) => {
@@ -279,6 +511,7 @@
 
     const tabs = data.tabs || [];
     let activeTab = tabs[0] || "home";
+    let currentImageSrc = null;
 
     const sceneById = new Map((data.scenes || []).map((s) => [s.id, s]));
     const scenesByTab = new Map();
@@ -371,9 +604,10 @@
       mountNode.dataset.ppTab = activeTab || "";
 
       const nextSrc = activeScene.image;
-      if (nextSrc) {
+      if (nextSrc && nextSrc !== currentImageSrc) {
         if (!reduceMotion) img.style.opacity = "0";
         img.src = nextSrc;
+        currentImageSrc = nextSrc;
       }
       img.alt = activeScene.headline || "Perfect Pantry preview";
       redaction.dataset.preset = activeScene.redactionPreset || "light";
@@ -446,10 +680,13 @@
     const api = {
       setTab(tab) {
         if (!tab) return;
+        const nextDefault = findDefaultScene(tab);
+        if (!nextDefault) return;
+        if (tab === activeTab && activeScene && activeScene.id === nextDefault.id) return;
         const prevSceneId = activeScene && activeScene.id;
         const prevTab = activeTab;
         activeTab = tab;
-        activeScene = findDefaultScene(tab);
+        activeScene = nextDefault;
         render({
           transitionClass:
             prevSceneId === "splash" && activeScene && activeScene.id !== "splash"
@@ -464,6 +701,7 @@
       setScene(sceneId) {
         const next = sceneById.get(sceneId);
         if (!next) return;
+        if (activeScene && next.id === activeScene.id) return;
         const prevSceneId = activeScene && activeScene.id;
         activeTab = next.tab;
         activeScene = next;
@@ -501,33 +739,60 @@
     }
 
     const tourRoot = tourSelector ? document.querySelector(tourSelector) : null;
-    const stickyTourEnabled =
-      !!tourRoot &&
-      mobileMode !== "carousel" &&
-      !window.matchMedia("(max-width: 960px)").matches;
+    const desktopWidth =
+      window.matchMedia && !window.matchMedia("(max-width: 960px)").matches;
+    const finePointer =
+      window.matchMedia &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-    const scrollToTab = stickyTourEnabled
+    const desktopTourCandidate =
+      !!tourRoot && mobileMode !== "carousel" && desktopWidth && finePointer && !prefersReducedMotion;
+
+    const tourMode = desktopTourCandidate
+      ? String(tourRoot.dataset.ppTourMode || "scroll")
+      : "none";
+
+    const lockTourEnabled = desktopTourCandidate && tourMode === "lock";
+    const scrollTourEnabled = desktopTourCandidate && tourMode !== "lock";
+
+    // In lock mode, the controller is created after the demo mounts, so use a forward ref.
+    let lockController = null;
+
+    const scrollToTab = lockTourEnabled
       ? (tab) => {
-          // Index tour uses step ids that match tab slugs.
-          const stepId = tab;
-          activateTourStep(tourRoot, stepId);
-          const sentinel = tourRoot.querySelector(
-            `.pp-tour-sentinel[data-pp-step="${CSS.escape(stepId)}"]`,
-          );
-          if (!sentinel) return;
-          sentinel.scrollIntoView({
-            behavior: prefersReducedMotion ? "auto" : "smooth",
-            block: "start",
-          });
+          if (lockController) lockController.setStep(tab);
         }
-      : null;
+      : scrollTourEnabled
+        ? (tab) => {
+            // Tour uses step ids that match tab slugs.
+            const stepId = tab;
+            activateTourStep(tourRoot, stepId);
+            const sentinel = tourRoot.querySelector(
+              `.pp-tour-sentinel[data-pp-step="${CSS.escape(stepId)}"]`,
+            );
+            if (!sentinel) return;
+            sentinel.scrollIntoView({
+              behavior: prefersReducedMotion ? "auto" : "smooth",
+              block: "start",
+            });
+          }
+        : null;
+
+    const shouldStartInSplash = (() => {
+      if (!lockTourEnabled) return false;
+      if (!tourRoot) return false;
+      const hash = String(window.location.hash || "");
+      if (hash && hash !== "#guided-tour") return false;
+      const y = window.scrollY || window.pageYOffset || 0;
+      return y <= 12;
+    })();
 
     const { mountNode, api } = createDemo({
       mount,
       data,
       enableSwipe: mobileMode === "carousel",
       scrollToTab,
-      initialSceneId: stickyTourEnabled ? initialSceneId : null,
+      initialSceneId: shouldStartInSplash ? initialSceneId : null,
       prefersReducedMotion,
     });
 
@@ -538,8 +803,18 @@
     mount.innerHTML = "";
     mount.appendChild(mountNode);
 
-    // Tour binding (desktop scrolly). When disabled, keep the demo interactive-only.
-    if (stickyTourEnabled) {
+    // Tour bindings (desktop). When disabled, keep the demo interactive-only.
+    if (lockTourEnabled) {
+      lockController = bindTourLock({
+        tourRoot,
+        api,
+        prefersReducedMotion,
+        afterSelector: "#tour-after",
+      });
+      return;
+    }
+
+    if (scrollTourEnabled) {
       bindTourSync({ tourRoot, api, prefersReducedMotion });
       return;
     }

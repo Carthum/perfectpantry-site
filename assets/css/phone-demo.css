@@ -5,6 +5,12 @@
   --pp-splash-overlay: rgba(255, 248, 237, 0.72);
 }
 
+html.pp-tour-locked,
+html.pp-tour-locked body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 #guided-tour {
   scroll-margin-top: calc(var(--nav-height) + 1.35rem);
 }
@@ -416,10 +422,35 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (prefers-reduced-motion: reduce) {
   .pp-scrolly-sticky {
     position: static;
-    min-height: auto;
+    height: auto;
+    padding: 1.1rem 0;
+    display: block;
+  }
+
+  .pp-tour-stack {
+    gap: 1rem;
+  }
+
+  .pp-tour-step {
+    grid-area: auto;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .pp-tour-sentinels {
+    display: none;
+  }
+}
+
+@media (max-width: 960px), (hover: none) and (pointer: coarse) {
+  .pp-scrolly-sticky {
+    position: static;
+    height: auto;
     display: block;
   }
 

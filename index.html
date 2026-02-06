@@ -72,7 +72,7 @@
       </header>
   
       <main id="main" class="container">
-        <section class="section pp-scrolly" id="guided-tour">
+        <section class="section pp-scrolly" id="guided-tour" data-pp-tour-mode="lock">
           <div class="pp-scrolly-sticky">
             <div class="pp-scrolly-grid">
               <div class="pp-tour-left">
@@ -91,10 +91,11 @@
                       into one calm loop so dinner decisions get faster, grocery runs get cleaner,
                       and food waste drops.
                     </p>
-                    <div class="hero-cta">
-                      <a class="btn btn-primary" href="#waitlist">Get early access</a>
-                      <a class="btn btn-outline" href="#tour-home">Start the demo</a>
-                    </div>
+                  <div class="hero-cta">
+                    <a class="btn btn-primary" href="#waitlist">Get early access</a>
+                    <a class="btn btn-outline" href="#tour-home" data-pp-tour-jump="home">Start the demo</a>
+                    <button class="btn btn-ghost" type="button" data-pp-tour-skip>Skip tour</button>
+                  </div>
                     <p class="small" style="margin-top: 0.25rem">
                       Scroll to move the phone through Home, Pantry, Cookbook, Plan, and Shop.
                     </p>
@@ -155,18 +156,23 @@
                     </ul>
                   </article>
   
-                  <article class="pp-tour-step surface" data-pp-step="shop">
-                    <p class="pp-tour-kicker">Shop</p>
-                    <h2>Shop the gap, not the whole pantry</h2>
-                    <p class="muted">
-                      The list is generated from what your plan needs compared to what your pantry
-                      already covers, so trips stay clean and focused.
-                    </p>
-                    <ul class="list-clean pp-tour-bullets">
-                      <li><strong>Try it:</strong> tap an item to preview the bulk picker and detail view.</li>
-                      <li><strong>Why it matters:</strong> fewer duplicates, less waste.</li>
-                    </ul>
-                  </article>
+                <article class="pp-tour-step surface" data-pp-step="shop">
+                  <p class="pp-tour-kicker">Shop</p>
+                  <h2>Shop the gap, not the whole pantry</h2>
+                  <p class="muted">
+                    The list is generated from what your plan needs compared to what your pantry
+                    already covers, so trips stay clean and focused.
+                  </p>
+                  <ul class="list-clean pp-tour-bullets">
+                    <li><strong>Try it:</strong> tap an item to preview the bulk picker and detail view.</li>
+                    <li><strong>Why it matters:</strong> fewer duplicates, less waste.</li>
+                  </ul>
+                  <div class="hero-cta" style="margin-top: 0.9rem">
+                    <button class="btn btn-primary" type="button" data-pp-tour-continue>
+                      Continue down the page
+                    </button>
+                  </div>
+                </article>
                 </div>
   
                 <div class="callout pp-tour-note">
@@ -196,6 +202,8 @@
             <div class="pp-tour-sentinel" data-pp-step="shop" data-pp-tab="shop"></div>
           </div>
         </section>
+
+        <div id="tour-after" aria-hidden="true"></div>
   
         <section class="section" data-reveal>
           <div class="section-head">
@@ -476,10 +484,11 @@
       <script>
         window.addEventListener("load", () => {
           if (!window.PPDemo) return;
-          const isMobile =
-            window.matchMedia && window.matchMedia("(max-width: 960px)").matches;
-  
-          if (isMobile) {
+          const desktopTour =
+            window.matchMedia &&
+            window.matchMedia("(min-width: 961px) and (hover: hover) and (pointer: fine)").matches;
+
+          if (!desktopTour) {
             window.PPDemo.init({
               sceneDataPath: "assets/data/demo_scenes.v1.json",
               mountSelector: "#ppDemoMobileMount",
@@ -487,7 +496,7 @@
             });
             return;
           }
-  
+
           window.PPDemo.init({
             sceneDataPath: "assets/data/demo_scenes.v1.json",
             mountSelector: "#ppDemoMount",
@@ -496,5 +505,5 @@
           });
         });
       </script>
-    </body>
-  </html>
+  </body>
+</html>

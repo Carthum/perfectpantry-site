@@ -72,16 +72,10 @@
       </header>
   
       <main id="main" class="container">
-        <section class="section pp-scrolly" id="guided-tour" data-pp-tour-mode="lock">
+        <section class="section pp-scrolly" id="guided-tour" data-pp-demo="stage">
           <div class="pp-scrolly-sticky">
             <div class="pp-scrolly-grid">
               <div class="pp-tour-left">
-                <div
-                  class="pp-demo-carousel pp-tour-mobile-demo"
-                  id="ppDemoMobileMount"
-                  aria-label="Perfect Pantry demo preview"
-                ></div>
-  
                 <div class="pp-tour-stack" aria-label="Tutorial steps">
                   <article class="pp-tour-step surface is-active" data-pp-step="welcome">
                     <p class="eyebrow">Mobile app in active development</p>
@@ -93,8 +87,8 @@
                     </p>
                   <div class="hero-cta">
                     <a class="btn btn-primary" href="#waitlist">Get early access</a>
-                    <a class="btn btn-outline" href="#tour-home" data-pp-tour-jump="home">Start the demo</a>
-                    <button class="btn btn-ghost" type="button" data-pp-tour-skip>Skip tour</button>
+                    <a class="btn btn-outline" href="#guided-tour">Start the demo</a>
+                    <a class="btn btn-ghost" href="#tour-after">Skip tour</a>
                   </div>
                     <p class="small" style="margin-top: 0.25rem">
                       Scroll to move the phone through Home, Pantry, Cookbook, Plan, and Shop.
@@ -168,9 +162,7 @@
                     <li><strong>Why it matters:</strong> fewer duplicates, less waste.</li>
                   </ul>
                   <div class="hero-cta" style="margin-top: 0.9rem">
-                    <button class="btn btn-primary" type="button" data-pp-tour-continue>
-                      Continue down the page
-                    </button>
+                    <a class="btn btn-primary" href="#tour-after">Continue down the page</a>
                   </div>
                 </article>
                 </div>
@@ -187,20 +179,13 @@
               <aside class="pp-tour-right" aria-label="Perfect Pantry demo phone">
                 <div class="pp-demo-hero-mount" id="ppDemoMount"></div>
                 <p class="small pp-tour-tip">
-                  Tip: click the tabs or hotspots to preview deeper UI states.
+                  Scroll to move through the app screens. (Preview only.)
                 </p>
               </aside>
             </div>
           </div>
   
-          <div class="pp-tour-sentinels" aria-hidden="true">
-            <div class="pp-tour-sentinel" data-pp-step="welcome" data-pp-scene="splash"></div>
-            <div class="pp-tour-sentinel" id="tour-home" data-pp-step="home" data-pp-tab="home"></div>
-            <div class="pp-tour-sentinel" data-pp-step="pantry" data-pp-tab="pantry"></div>
-            <div class="pp-tour-sentinel" data-pp-step="cookbook" data-pp-tab="cookbook"></div>
-            <div class="pp-tour-sentinel" data-pp-step="plan" data-pp-tab="plan"></div>
-            <div class="pp-tour-sentinel" data-pp-step="shop" data-pp-tab="shop"></div>
-          </div>
+          <div class="pp-scrolly-spacer" aria-hidden="true"></div>
         </section>
 
         <div id="tour-after" aria-hidden="true"></div>
@@ -484,24 +469,9 @@
       <script>
         window.addEventListener("load", () => {
           if (!window.PPDemo) return;
-          const desktopTour =
-            window.matchMedia &&
-            window.matchMedia("(min-width: 961px) and (hover: hover) and (pointer: fine)").matches;
-
-          if (!desktopTour) {
-            window.PPDemo.init({
-              sceneDataPath: "assets/data/demo_scenes.v1.json",
-              mountSelector: "#ppDemoMobileMount",
-              mobileMode: "carousel",
-            });
-            return;
-          }
-
           window.PPDemo.init({
-            sceneDataPath: "assets/data/demo_scenes.v1.json",
             mountSelector: "#ppDemoMount",
-            tourSelector: "#guided-tour",
-            initialSceneId: "splash",
+            stageSelector: "#guided-tour",
           });
         });
       </script>

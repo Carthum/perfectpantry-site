@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" role="img" aria-label="Redaction card mask">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8e7cf" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#efd8b9" stop-opacity="0.72"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="380" rx="34" fill="url(#g)"/>
+</svg>

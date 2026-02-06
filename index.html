@@ -24,8 +24,11 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="assets/media/logo-mark.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/pp-favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/pp-favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/pp-apple-touch-180.png" />
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/phone-demo.css" />
   </head>
   <body data-bg="home">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -35,7 +38,7 @@
         <a class="brand" href="index.html">
           <img
             class="brand-mark"
-            src="assets/media/logo-mark.svg"
+            src="assets/brand/pp-mark-256.png"
             alt=""
             width="42"
             height="42"
@@ -59,7 +62,7 @@
 
         <nav class="nav-links" id="primaryNav" data-nav data-open="false" aria-label="Primary">
           <a href="index.html" aria-current="page">Home</a>
-          <a href="tutorial.html">Tutorial</a>
+          <a href="index.html#guided-tour">Tutorial</a>
           <a href="screenshots.html">Screenshots</a>
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
@@ -81,7 +84,7 @@
             </p>
             <div class="hero-cta">
               <a class="btn btn-primary" href="#waitlist">Get early access</a>
-              <a class="btn btn-outline" href="tutorial.html">See 5-minute tour</a>
+              <a class="btn btn-outline" href="index.html#guided-tour">See 5-minute tour</a>
             </div>
             <p class="small">
               Marketing site only for now. No memberships or checkout on the website.
@@ -98,7 +101,7 @@
             </div>
             <figure class="device-card">
               <img
-                src="assets/media/shot-home.svg"
+                src="assets/demo/demo-home-overview.png"
                 alt="Preview of the Perfect Pantry home dashboard"
                 width="1170"
                 height="2532"
@@ -123,6 +126,103 @@
           <div class="stat-pill">Recipe cookbook</div>
           <div class="stat-pill">Weekly meal plan</div>
           <div class="stat-pill">Smart shopping list</div>
+        </div>
+      </section>
+
+      <section class="section" id="guided-tour" data-reveal>
+        <div class="section-head">
+          <p class="eyebrow">Interactive tour</p>
+          <h2>Scroll the story. Tap the phone.</h2>
+          <p class="muted">
+            As you scroll, the phone preview follows along. Tap around to see the UI states, but
+            everything is preview-only.
+          </p>
+        </div>
+
+        <div class="pp-guided">
+          <div class="pp-tour-copy">
+            <div class="pp-demo-carousel" id="ppDemoMobileMount" aria-label="Perfect Pantry demo preview"></div>
+
+            <article class="pp-tour-step surface" data-scroll-key="home">
+              <p class="pp-tour-kicker">Home</p>
+              <h3>Start with a calm weekly dashboard</h3>
+              <p class="muted">
+                Home keeps the week visible: what is coming up, what needs restocking, and what to
+                do next without digging through multiple views.
+              </p>
+              <ul class="list-clean pp-tour-bullets">
+                <li><strong>Try it:</strong> tap the Quick Actions area on the phone.</li>
+                <li><strong>Why it matters:</strong> fewer decisions, faster momentum.</li>
+              </ul>
+            </article>
+
+            <article class="pp-tour-step surface" data-scroll-key="pantry">
+              <p class="pp-tour-kicker">Pantry</p>
+              <h3>Inventory that stays lightweight</h3>
+              <p class="muted">
+                Track staples, quantities, and timing without turning your pantry into a second
+                job. List and shelf-style views keep it usable.
+              </p>
+              <ul class="list-clean pp-tour-bullets">
+                <li><strong>Try it:</strong> tap an item row to open the detail preview.</li>
+                <li><strong>Why it matters:</strong> plan and shop with real coverage, not guesses.</li>
+              </ul>
+            </article>
+
+            <article class="pp-tour-step surface" data-scroll-key="cookbook">
+              <p class="pp-tour-kicker">Cookbook</p>
+              <h3>Your household cookbook, private by default</h3>
+              <p class="muted">
+                Save recipes your household actually repeats. The detail view is optimized for
+                cooking flow, not endless scrolling.
+              </p>
+              <ul class="list-clean pp-tour-bullets">
+                <li><strong>Try it:</strong> tap a recipe card to preview the recipe detail layout.</li>
+                <li><strong>Why it matters:</strong> reliable repeats and faster weeknight execution.</li>
+              </ul>
+            </article>
+
+            <article class="pp-tour-step surface" data-scroll-key="plan">
+              <p class="pp-tour-kicker">Plan</p>
+              <h3>Place meals into the week in seconds</h3>
+              <p class="muted">
+                Build a realistic baseline plan, then adjust without breaking everything. Planning
+                is where time and pantry coverage tradeoffs become clear.
+              </p>
+              <ul class="list-clean pp-tour-bullets">
+                <li><strong>Try it:</strong> tap a meal slot area to open the slot detail preview.</li>
+                <li><strong>Why it matters:</strong> fewer midweek pivots and less last-minute shopping.</li>
+              </ul>
+            </article>
+
+            <article class="pp-tour-step surface" data-scroll-key="shop">
+              <p class="pp-tour-kicker">Shop</p>
+              <h3>Shop the gap, not the whole pantry</h3>
+              <p class="muted">
+                The list is generated from what your plan needs compared to what your pantry
+                already covers, so trips stay clean and focused.
+              </p>
+              <ul class="list-clean pp-tour-bullets">
+                <li><strong>Try it:</strong> tap an item to preview the bulk picker and item detail view.</li>
+                <li><strong>Why it matters:</strong> fewer duplicates, less waste.</li>
+              </ul>
+            </article>
+
+            <div class="callout">
+              <p class="eyebrow">Preview only</p>
+              <p class="muted" style="margin-top: 0.5rem">
+                This phone is a guided UI demo. It shows layout and flow, but does not create
+                accounts, sync data, or execute actions.
+              </p>
+            </div>
+          </div>
+
+          <aside class="pp-demo-shell" aria-label="Perfect Pantry demo phone">
+            <div id="ppDemoMount"></div>
+            <p class="small" style="margin-top: 0.85rem">
+              Tip: click the tabs or hotspots to preview deeper UI states.
+            </p>
+          </aside>
         </div>
       </section>
 
@@ -374,7 +474,7 @@
       <div class="container footer-grid">
         <div>
           <a class="brand" href="index.html">
-            <img class="brand-mark" src="assets/media/logo-mark.svg" alt="" width="42" height="42" />
+            <img class="brand-mark" src="assets/brand/pp-mark-256.png" alt="" width="42" height="42" />
             <span class="brand-text">
               <span class="brand-title">Perfect Pantry</span>
               <span class="brand-subtitle">Recipes, pantry, plan, shop</span>
@@ -392,7 +492,7 @@
         </div>
 
         <nav class="footer-links" aria-label="Footer links">
-          <a href="tutorial.html">Tutorial</a>
+          <a href="index.html#guided-tour">Tutorial</a>
           <a href="screenshots.html">Screenshots</a>
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
@@ -401,5 +501,20 @@
     </footer>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/phone-demo.js"></script>
+    <script>
+      window.addEventListener("load", () => {
+        if (!window.PPDemo) return;
+        window.PPDemo.init({
+          sceneDataPath: "assets/data/demo_scenes.v1.json",
+          mountSelector: "#ppDemoMount",
+        });
+        window.PPDemo.init({
+          sceneDataPath: "assets/data/demo_scenes.v1.json",
+          mountSelector: "#ppDemoMobileMount",
+          mobileMode: "carousel",
+        });
+      });
+    </script>
   </body>
 </html>

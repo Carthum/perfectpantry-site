@@ -1,0 +1,242 @@
+{
+  "version": "1",
+  "tabs": [
+    "home",
+    "pantry",
+    "cookbook",
+    "plan",
+    "shop"
+  ],
+  "scenes": [
+    {
+      "id": "home-overview",
+      "tab": "home",
+      "level": "overview",
+      "headline": "Home dashboard",
+      "body": "Quick actions and current-week context. Explore preview-only interactions.",
+      "image": "assets/demo/demo-home-overview.png",
+      "redactionPreset": "light",
+      "hotspots": [
+        {
+          "id": "home-quick-actions",
+          "x": 12,
+          "y": 36,
+          "w": 76,
+          "h": 14,
+          "targetSceneId": "home-detail",
+          "label": "Open quick actions preview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "home",
+      "mobileOrder": 1
+    },
+    {
+      "id": "home-detail",
+      "tab": "home",
+      "level": "detail",
+      "headline": "Quick actions preview",
+      "body": "UI flow preview only. Buttons do not perform account or data actions.",
+      "image": "assets/demo/demo-home-quick-actions.png",
+      "redactionPreset": "medium",
+      "hotspots": [
+        {
+          "id": "home-back",
+          "x": 6,
+          "y": 4,
+          "w": 18,
+          "h": 8,
+          "targetSceneId": "home-overview",
+          "label": "Back to home overview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "home",
+      "mobileOrder": 2
+    },
+    {
+      "id": "pantry-overview",
+      "tab": "pantry",
+      "level": "overview",
+      "headline": "Pantry list and shelf modes",
+      "body": "View pantry organization and switch styles without exposing private details.",
+      "image": "assets/demo/demo-pantry-list.png",
+      "redactionPreset": "medium",
+      "hotspots": [
+        {
+          "id": "pantry-item",
+          "x": 10,
+          "y": 34,
+          "w": 80,
+          "h": 12,
+          "targetSceneId": "pantry-detail",
+          "label": "Open pantry item preview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "pantry",
+      "mobileOrder": 3
+    },
+    {
+      "id": "pantry-detail",
+      "tab": "pantry",
+      "level": "detail",
+      "headline": "Pantry item detail",
+      "body": "Partial metadata, quantities, and preference controls are visible in redacted form.",
+      "image": "assets/demo/demo-pantry-item-detail.png",
+      "redactionPreset": "strong",
+      "hotspots": [
+        {
+          "id": "pantry-back",
+          "x": 6,
+          "y": 4,
+          "w": 18,
+          "h": 8,
+          "targetSceneId": "pantry-overview",
+          "label": "Back to pantry overview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "pantry",
+      "mobileOrder": 4
+    },
+    {
+      "id": "cookbook-overview",
+      "tab": "cookbook",
+      "level": "overview",
+      "headline": "Cookbook cards",
+      "body": "Preview browsing and saved recipe card layout.",
+      "image": "assets/demo/demo-cookbook-grid.png",
+      "redactionPreset": "light",
+      "hotspots": [
+        {
+          "id": "cookbook-card",
+          "x": 8,
+          "y": 28,
+          "w": 40,
+          "h": 26,
+          "targetSceneId": "cookbook-detail",
+          "label": "Open recipe preview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "cookbook",
+      "mobileOrder": 5
+    },
+    {
+      "id": "cookbook-detail",
+      "tab": "cookbook",
+      "level": "detail",
+      "headline": "Recipe detail preview",
+      "body": "Ingredients and steps are partially obscured to demonstrate structure without exposing full content.",
+      "image": "assets/demo/demo-cookbook-recipe-detail.png",
+      "redactionPreset": "strong",
+      "hotspots": [
+        {
+          "id": "cookbook-back",
+          "x": 6,
+          "y": 4,
+          "w": 18,
+          "h": 8,
+          "targetSceneId": "cookbook-overview",
+          "label": "Back to cookbook overview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "cookbook",
+      "mobileOrder": 6
+    },
+    {
+      "id": "plan-overview",
+      "tab": "plan",
+      "level": "overview",
+      "headline": "Weekly planning board",
+      "body": "Plan tab demonstrates slot workflows and pantry-aware planning cues.",
+      "image": "assets/demo/demo-plan-week.png",
+      "redactionPreset": "medium",
+      "hotspots": [
+        {
+          "id": "plan-slot",
+          "x": 12,
+          "y": 34,
+          "w": 76,
+          "h": 14,
+          "targetSceneId": "plan-detail",
+          "label": "Open meal slot preview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "plan",
+      "mobileOrder": 7
+    },
+    {
+      "id": "plan-detail",
+      "tab": "plan",
+      "level": "detail",
+      "headline": "Meal slot detail",
+      "body": "Workflow controls are visible while deep recipe internals remain redacted.",
+      "image": "assets/demo/demo-plan-slot-detail.png",
+      "redactionPreset": "strong",
+      "hotspots": [
+        {
+          "id": "plan-back",
+          "x": 6,
+          "y": 4,
+          "w": 18,
+          "h": 8,
+          "targetSceneId": "plan-overview",
+          "label": "Back to plan overview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "plan",
+      "mobileOrder": 8
+    },
+    {
+      "id": "shop-overview",
+      "tab": "shop",
+      "level": "overview",
+      "headline": "Shopping list",
+      "body": "Shopping flow shows grouped items and planning output at a glance.",
+      "image": "assets/demo/demo-shop-list.png",
+      "redactionPreset": "medium",
+      "hotspots": [
+        {
+          "id": "shop-item",
+          "x": 12,
+          "y": 34,
+          "w": 76,
+          "h": 14,
+          "targetSceneId": "shop-detail",
+          "label": "Open shopping item preview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "shop",
+      "mobileOrder": 9
+    },
+    {
+      "id": "shop-detail",
+      "tab": "shop",
+      "level": "detail",
+      "headline": "Bulk picker and cart preview",
+      "body": "Bulk picker and item-detail layout are shown as non-functional previews.",
+      "image": "assets/demo/demo-shop-item-detail.png",
+      "redactionPreset": "strong",
+      "hotspots": [
+        {
+          "id": "shop-back",
+          "x": 6,
+          "y": 4,
+          "w": 18,
+          "h": 8,
+          "targetSceneId": "shop-overview",
+          "label": "Back to shop overview",
+          "previewOnly": true
+        }
+      ],
+      "scrollKey": "shop",
+      "mobileOrder": 10
+    }
+  ]
+}

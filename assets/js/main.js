@@ -34,7 +34,7 @@
     const nav = $("[data-nav]");
     if (!button || !nav) return;
 
-    $$("a[href^='#']").forEach((anchor) => {
+    $$("a", nav).forEach((anchor) => {
       anchor.addEventListener("click", () => {
         openNav(false, button, nav);
       });

@@ -24,8 +24,11 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="assets/media/logo-mark.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/pp-favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/pp-favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/pp-apple-touch-180.png" />
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/phone-demo.css" />
   </head>
   <body data-bg="home">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -33,7 +36,7 @@
     <header class="site-header">
       <div class="container nav-shell">
         <a class="brand" href="index.html">
-          <img class="brand-mark" src="assets/media/logo-mark.svg" alt="" width="42" height="42" />
+          <img class="brand-mark" src="assets/brand/pp-mark-256.png" alt="" width="42" height="42" />
           <span class="brand-text">
             <span class="brand-title">Perfect Pantry</span>
             <span class="brand-subtitle">Cook with what you already have</span>
@@ -53,7 +56,7 @@
 
         <nav class="nav-links" id="primaryNav" data-nav data-open="false" aria-label="Primary">
           <a href="index.html">Home</a>
-          <a href="tutorial.html">Tutorial</a>
+          <a href="index.html#guided-tour">Tutorial</a>
           <a href="screenshots.html" aria-current="page">Screenshots</a>
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
@@ -68,8 +71,8 @@
           <p class="eyebrow">Screenshots</p>
           <h1>Visual walkthrough of the product loop</h1>
           <p class="hero-lead">
-            These polished placeholders map to core app flows and can be swapped one-for-one
-            with real device captures when launch assets are ready.
+            Preview captures (with light redaction) that map to core app flows. Swap these with
+            approved device screenshots when launch assets are ready.
           </p>
         </div>
       </section>
@@ -94,11 +97,11 @@
             role="button"
             tabindex="0"
             data-lightbox
-            data-src="assets/media/shot-home.svg"
+            data-src="assets/demo/demo-home-overview.png"
             data-title="Home Dashboard"
             data-caption="Overview of the week, recent activity, and next-action prompts."
           >
-            <img src="assets/media/shot-home.svg" alt="Perfect Pantry home dashboard placeholder" width="1170" height="2532" />
+            <img src="assets/demo/demo-home-overview.png" alt="Perfect Pantry home dashboard preview" width="1170" height="2532" />
             <figcaption>
               <span class="shot-title">Home dashboard</span>
               <span class="small">Central command view for planning and updates.</span>
@@ -111,11 +114,11 @@
             role="button"
             tabindex="0"
             data-lightbox
-            data-src="assets/media/shot-pantry.svg"
+            data-src="assets/demo/demo-pantry-list.png"
             data-title="Pantry Inventory"
             data-caption="Structured pantry list with quantity context and quick edits."
           >
-            <img src="assets/media/shot-pantry.svg" alt="Perfect Pantry pantry placeholder" width="1170" height="2532" />
+            <img src="assets/demo/demo-pantry-list.png" alt="Perfect Pantry pantry preview" width="1170" height="2532" />
             <figcaption>
               <span class="shot-title">Pantry inventory</span>
               <span class="small">Track staples, restocks, and expiration-sensitive items.</span>
@@ -128,11 +131,11 @@
             role="button"
             tabindex="0"
             data-lightbox
-            data-src="assets/media/shot-cookbook.svg"
+            data-src="assets/demo/demo-cookbook-grid.png"
             data-title="Cookbook"
             data-caption="Saved recipes and browse cards organized for repeat cooking."
           >
-            <img src="assets/media/shot-cookbook.svg" alt="Perfect Pantry cookbook placeholder" width="1170" height="2532" />
+            <img src="assets/demo/demo-cookbook-grid.png" alt="Perfect Pantry cookbook preview" width="1170" height="2532" />
             <figcaption>
               <span class="shot-title">Cookbook</span>
               <span class="small">Save and revisit recipes that match your routine.</span>
@@ -145,11 +148,11 @@
             role="button"
             tabindex="0"
             data-lightbox
-            data-src="assets/media/shot-plan.svg"
+            data-src="assets/demo/demo-plan-week.png"
             data-title="Meal Plan"
             data-caption="Week-level planning with fast adjustments and slot-level control."
           >
-            <img src="assets/media/shot-plan.svg" alt="Perfect Pantry plan placeholder" width="1170" height="2532" />
+            <img src="assets/demo/demo-plan-week.png" alt="Perfect Pantry plan preview" width="1170" height="2532" />
             <figcaption>
               <span class="shot-title">Meal plan</span>
               <span class="small">Commit the week, then adjust without breaking your flow.</span>
@@ -162,11 +165,11 @@
             role="button"
             tabindex="0"
             data-lightbox
-            data-src="assets/media/shot-shop.svg"
+            data-src="assets/demo/demo-shop-list.png"
             data-title="Shopping List"
             data-caption="Shopping list generated from plan and pantry differences."
           >
-            <img src="assets/media/shot-shop.svg" alt="Perfect Pantry shopping placeholder" width="1170" height="2532" />
+            <img src="assets/demo/demo-shop-list.png" alt="Perfect Pantry shopping preview" width="1170" height="2532" />
             <figcaption>
               <span class="shot-title">Shopping list</span>
               <span class="small">Buy the gap instead of rebuying what you already own.</span>
@@ -179,11 +182,11 @@
             role="button"
             tabindex="0"
             data-lightbox
-            data-src="assets/media/shot-scanner.svg"
+            data-src="assets/demo/demo-tools-upc-scan.png"
             data-title="UPC Scanner"
             data-caption="Scanner flow for quick packaged-item entry and preference setup."
           >
-            <img src="assets/media/shot-scanner.svg" alt="Perfect Pantry scanner placeholder" width="1170" height="2532" />
+            <img src="assets/demo/demo-tools-upc-scan.png" alt="Perfect Pantry scanner preview" width="1170" height="2532" />
             <figcaption>
               <span class="shot-title">UPC scanner</span>
               <span class="small">Fast product capture for pantry accuracy at speed.</span>
@@ -196,7 +199,7 @@
         <div class="callout">
           <p class="eyebrow">Asset handoff ready</p>
           <p class="muted" style="margin-top: 0.5rem">
-            When real screenshots are available, replace files in <strong>assets/media</strong>
+            When real screenshots are available, replace files in <strong>assets/demo</strong>
             and keep names the same to update this page instantly.
           </p>
         </div>
@@ -207,7 +210,7 @@
       <div class="container footer-grid">
         <div>
           <a class="brand" href="index.html">
-            <img class="brand-mark" src="assets/media/logo-mark.svg" alt="" width="42" height="42" />
+            <img class="brand-mark" src="assets/brand/pp-mark-256.png" alt="" width="42" height="42" />
             <span class="brand-text">
               <span class="brand-title">Perfect Pantry</span>
               <span class="brand-subtitle">Recipes, pantry, plan, shop</span>
@@ -224,7 +227,8 @@
 
         <nav class="footer-links" aria-label="Footer links">
           <a href="index.html">Home</a>
-          <a href="tutorial.html">Tutorial</a>
+          <a href="index.html#guided-tour">Tutorial</a>
+          <a href="screenshots.html">Screenshots</a>
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
         </nav>

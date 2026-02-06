@@ -1,0 +1,38 @@
+{
+  "version": "1",
+  "generatedAt": "2026-02-06T00:00:00Z",
+  "stillAssets": {
+    "status": "placeholder-ready",
+    "requiredCount": 10,
+    "optionalCount": 2,
+    "notes": "Real approved captures should replace placeholders in assets/demo."
+  },
+  "videoAssets": {
+    "status": "pending-source-captures",
+    "required": [
+      "assets/video/01-splash-brand-loop.master.mp4",
+      "assets/video/02-home-quick-actions.master.mp4",
+      "assets/video/03-pantry-list-to-item.master.mp4",
+      "assets/video/04-cookbook-card-to-recipe.master.mp4",
+      "assets/video/05-plan-week-flow.master.mp4",
+      "assets/video/06-shopping-bulk-picker.master.mp4"
+    ],
+    "webDerivatives": [
+      "*.web.mp4",
+      "*.web.webm"
+    ],
+    "notes": "Placeholder .pending files created; encode jobs required when source captures are approved."
+  },
+  "posterAssets": {
+    "status": "ready",
+    "required": [
+      "assets/video/posters/01.jpg",
+      "assets/video/posters/02.jpg",
+      "assets/video/posters/03.jpg",
+      "assets/video/posters/04.jpg",
+      "assets/video/posters/05.jpg",
+      "assets/video/posters/06.jpg"
+    ]
+  },
+  "status": "in-progress"
+}

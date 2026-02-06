@@ -90,9 +90,12 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background-image: radial-gradient(rgba(31, 38, 32, 0.08) 0.7px, transparent 0.7px);
-  background-size: 3px 3px;
-  opacity: 0.2;
+  background-image:
+    url("../brand/pp-paper-texture-tile.png"),
+    radial-gradient(rgba(31, 38, 32, 0.08) 0.7px, transparent 0.7px);
+  background-size: 920px 920px, 3px 3px;
+  background-repeat: repeat, repeat;
+  opacity: 0.18;
 }
 
 a {
@@ -375,7 +378,33 @@ p {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   padding-top: 4.4rem;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -140px -90px -140px -90px;
+  pointer-events: none;
+  background-image: url("../brand/pp-splash-hero-desktop.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.16;
+  filter: saturate(0.92) contrast(1.06);
+}
+
+.hero > * {
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .hero::before {
+    inset: -110px -60px -110px -60px;
+    background-image: url("../brand/pp-splash-hero-mobile.png");
+    opacity: 0.12;
+  }
 }
 
 .hero-grid {

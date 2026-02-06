@@ -362,7 +362,10 @@
 
       if (event.key === "Escape") {
         event.preventDefault();
-        unlock({ scrollAfter: false });
+        event.stopPropagation();
+        if (api && typeof api.isDetailOpen === "function" && api.isDetailOpen()) {
+          if (typeof api.closeDetail === "function") api.closeDetail();
+        }
         return;
       }
 
@@ -405,7 +408,7 @@
     });
 
     window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", onKeyDown, { capture: true });
 
     // Auto-lock only when the tour is actually at the top (don’t trap deep links).
     const maybeAutoLock = () => {
@@ -786,6 +789,16 @@
               : "pp-demo--detail",
           transitionMs: prevSceneId === "splash" && next.id !== "splash" ? 820 : 420,
         });
+      },
+      isDetailOpen() {
+        return !!(activeScene && activeScene.level === "detail");
+      },
+      closeDetail() {
+        const nextDefault = findDefaultScene(activeTab);
+        if (!nextDefault) return;
+        if (activeScene && nextDefault.id === activeScene.id) return;
+        activeScene = nextDefault;
+        render({ transitionClass: "pp-demo--detail", transitionMs: 420 });
       },
     };
 
@@ -1986,6 +1999,12 @@
               : "pp-demo--detail",
           transitionMs: prevSceneId === "splash" && next.id !== "splash" ? 820 : 420,
         });
+      },
+      isDetailOpen() {
+        return !!(activeScene && activeScene.level === "detail");
+      },
+      closeDetail() {
+        closeDetail();
       },
     };
 

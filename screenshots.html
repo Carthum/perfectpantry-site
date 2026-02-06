@@ -1,159 +1,247 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#F4E7D6" />
-<title>Screenshots — Perfect Pantry</title>
-  <meta name="description" content="A quick visual tour of Perfect Pantry: recipe browser, meal planner, pantry tracker, and shopping assistant." />
-  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="assets/css/styles.css" />
-</head>
-<body data-bg="home">
-  <a class="skip-link" href="#main">Skip to content</a>
-  
-<header>
-  <div class="container">
-    <nav class="nav" aria-label="Primary">
-      <a class="brand" href="index.html">
-        <span class="mark" aria-hidden="true">
-          <img src="assets/img/logo.svg" alt="" />
-        </span>
-        <span>
-          Perfect Pantry
-          <small>Recipes • Plans • Pantry • Shopping</small>
-        </span>
-      </a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Screenshots | Perfect Pantry</title>
+    <meta
+      name="description"
+      content="Visual tour of Perfect Pantry core tabs and flows: Home, Pantry, Cookbook, Plan, Shop, and UPC scanning."
+    />
+    <meta name="theme-color" content="#3f5e39" />
 
-      <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Perfect Pantry Screenshots" />
+    <meta
+      property="og:description"
+      content="Explore the core app screens and workflow highlights."
+    />
+    <meta property="og:image" content="assets/media/og-cover.svg" />
 
-      <div class="nav-links" id="navLinks" data-open="false">
-        <a href="index.html">Home</a>
-        <a href="tutorial.html">Tutorial</a>
-        <a href="screenshots.html" aria-current="page">Screenshots</a>
-        <a href="support.html">Support</a>
-        <a href="privacy.html">Privacy</a>
-        <a class="btn btn-primary" href="index.html#waitlist">Join waitlist</a>
-      </div>
-    </nav>
-  </div>
-</header>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/media/logo-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body data-bg="home">
+    <a class="skip-link" href="#main">Skip to content</a>
 
-
-  <main id="main" class="container">
-    <section class="page-title">
-      <h1>Screenshots</h1>
-      <p>
-        A clean, simple gallery. Replace these placeholders with real screenshots (PNG/JPG) when the app is ready.
-        Clicking any image opens a lightbox.
-      </p>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>Filter</h2>
-        <p>Optional: group your screenshots by feature so users can scan faster.</p>
-      </div>
-      <div id="shotFilters" class="cta-row" role="group" aria-label="Screenshot filters">
-        <button class="btn btn-primary" type="button" data-filter="all">All</button>
-        <button class="btn" type="button" data-filter="recipes">Recipes</button>
-        <button class="btn" type="button" data-filter="mealplan">Meal plan</button>
-        <button class="btn" type="button" data-filter="pantry">Pantry</button>
-        <button class="btn" type="button" data-filter="shopping">Shopping</button>
-        <button class="btn" type="button" data-filter="settings">Settings</button>
-      </div>
-    </section>
-
-    <section>
-      <div class="gallery">
-        <figure class="thumb" data-shot="recipes" role="button" tabindex="0" data-lightbox data-src="assets/img/ss-recipes.svg" data-title="Browse Recipes">
-          <img src="assets/img/ss-recipes.svg" alt="Browse Recipes screenshot placeholder" />
-          <figcaption>Browse recipes</figcaption>
-        </figure>
-
-        <figure class="thumb" data-shot="mealplan" role="button" tabindex="0" data-lightbox data-src="assets/img/ss-mealplan.svg" data-title="Meal Plan">
-          <img src="assets/img/ss-mealplan.svg" alt="Meal plan screenshot placeholder" />
-          <figcaption>Meal planner</figcaption>
-        </figure>
-
-        <figure class="thumb" data-shot="pantry" role="button" tabindex="0" data-lightbox data-src="assets/img/ss-pantry.svg" data-title="Pantry Tracker">
-          <img src="assets/img/ss-pantry.svg" alt="Pantry tracker screenshot placeholder" />
-          <figcaption>Pantry tracker</figcaption>
-        </figure>
-
-        <figure class="thumb" data-shot="shopping" role="button" tabindex="0" data-lightbox data-src="assets/img/ss-shopping.svg" data-title="Shopping Assistant">
-          <img src="assets/img/ss-shopping.svg" alt="Shopping assistant screenshot placeholder" />
-          <figcaption>Shopping assistant</figcaption>
-        </figure>
-
-        <figure class="thumb" data-shot="pantry" role="button" tabindex="0" data-lightbox data-src="assets/img/ss-itemdetail.svg" data-title="Item Details">
-          <img src="assets/img/ss-itemdetail.svg" alt="Item details screenshot placeholder" />
-          <figcaption>Item details</figcaption>
-        </figure>
-
-        <figure class="thumb" data-shot="settings" role="button" tabindex="0" data-lightbox data-src="assets/img/ss-settings.svg" data-title="Settings">
-          <img src="assets/img/ss-settings.svg" alt="Settings screenshot placeholder" />
-          <figcaption>Settings</figcaption>
-        </figure>
-      </div>
-
-      <div class="callout" style="margin-top:1rem;">
-        <strong>Swap in your real screenshots</strong>
-        <div class="small">
-          Export app screenshots as <span class="code">.png</span> or <span class="code">.jpg</span>,
-          drop them into <span class="code">assets/img/</span>, and update the <span class="code">src</span> attributes in this page.
-        </div>
-      </div>
-    </section>
-  </main>
-
-  
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="brand" style="margin-bottom:.35rem;">
-          <span class="mark" aria-hidden="true">
-            <img src="assets/img/logo.svg" alt="" />
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="index.html">
+          <img class="brand-mark" src="assets/media/logo-mark.svg" alt="" width="42" height="42" />
+          <span class="brand-text">
+            <span class="brand-title">Perfect Pantry</span>
+            <span class="brand-subtitle">Cook with what you already have</span>
           </span>
-          <span>Perfect Pantry</span>
+        </a>
+
+        <button
+          type="button"
+          class="nav-toggle"
+          data-menu-toggle
+          aria-expanded="false"
+          aria-controls="primaryNav"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav-links" id="primaryNav" data-nav data-open="false" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="tutorial.html">Tutorial</a>
+          <a href="screenshots.html" aria-current="page">Screenshots</a>
+          <a href="support.html">Support</a>
+          <a href="privacy.html">Privacy</a>
+          <a class="btn btn-ghost btn-sm" href="index.html#waitlist">Join waitlist</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="container">
+      <section class="section" data-reveal>
+        <div class="section-head">
+          <p class="eyebrow">Screenshots</p>
+          <h1>Visual walkthrough of the product loop</h1>
+          <p class="hero-lead">
+            These polished placeholders map to core app flows and can be swapped one-for-one
+            with real device captures when launch assets are ready.
+          </p>
         </div>
-        <p style="margin:.25rem 0 0; max-width:70ch;">
-          Perfect Pantry is a recipe browser, meal planner, pantry tracker, and shopping assistant —
-          designed to help you waste less, cook more, and shop with confidence.
-        </p>
-        <p class="small" style="margin:.75rem 0 0;">
-          Contact: <a href="mailto:support@perfectpantryapp.com">support@perfectpantryapp.com</a>
-        </p>
+      </section>
+
+      <section class="section-tight" data-reveal>
+        <div class="filters" data-filter-group role="group" aria-label="Filter screenshots">
+          <button type="button" class="filter-btn is-active" data-filter="all">All</button>
+          <button type="button" class="filter-btn" data-filter="home">Home</button>
+          <button type="button" class="filter-btn" data-filter="pantry">Pantry</button>
+          <button type="button" class="filter-btn" data-filter="cookbook">Cookbook</button>
+          <button type="button" class="filter-btn" data-filter="plan">Plan</button>
+          <button type="button" class="filter-btn" data-filter="shop">Shop</button>
+          <button type="button" class="filter-btn" data-filter="tools">Tools</button>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="shot-grid">
+          <figure
+            class="shot-card surface"
+            data-shot="home"
+            role="button"
+            tabindex="0"
+            data-lightbox
+            data-src="assets/media/shot-home.svg"
+            data-title="Home Dashboard"
+            data-caption="Overview of the week, recent activity, and next-action prompts."
+          >
+            <img src="assets/media/shot-home.svg" alt="Perfect Pantry home dashboard placeholder" width="1170" height="2532" />
+            <figcaption>
+              <span class="shot-title">Home dashboard</span>
+              <span class="small">Central command view for planning and updates.</span>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="shot-card surface"
+            data-shot="pantry"
+            role="button"
+            tabindex="0"
+            data-lightbox
+            data-src="assets/media/shot-pantry.svg"
+            data-title="Pantry Inventory"
+            data-caption="Structured pantry list with quantity context and quick edits."
+          >
+            <img src="assets/media/shot-pantry.svg" alt="Perfect Pantry pantry placeholder" width="1170" height="2532" />
+            <figcaption>
+              <span class="shot-title">Pantry inventory</span>
+              <span class="small">Track staples, restocks, and expiration-sensitive items.</span>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="shot-card surface"
+            data-shot="cookbook"
+            role="button"
+            tabindex="0"
+            data-lightbox
+            data-src="assets/media/shot-cookbook.svg"
+            data-title="Cookbook"
+            data-caption="Saved recipes and browse cards organized for repeat cooking."
+          >
+            <img src="assets/media/shot-cookbook.svg" alt="Perfect Pantry cookbook placeholder" width="1170" height="2532" />
+            <figcaption>
+              <span class="shot-title">Cookbook</span>
+              <span class="small">Save and revisit recipes that match your routine.</span>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="shot-card surface"
+            data-shot="plan"
+            role="button"
+            tabindex="0"
+            data-lightbox
+            data-src="assets/media/shot-plan.svg"
+            data-title="Meal Plan"
+            data-caption="Week-level planning with fast adjustments and slot-level control."
+          >
+            <img src="assets/media/shot-plan.svg" alt="Perfect Pantry plan placeholder" width="1170" height="2532" />
+            <figcaption>
+              <span class="shot-title">Meal plan</span>
+              <span class="small">Commit the week, then adjust without breaking your flow.</span>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="shot-card surface"
+            data-shot="shop"
+            role="button"
+            tabindex="0"
+            data-lightbox
+            data-src="assets/media/shot-shop.svg"
+            data-title="Shopping List"
+            data-caption="Shopping list generated from plan and pantry differences."
+          >
+            <img src="assets/media/shot-shop.svg" alt="Perfect Pantry shopping placeholder" width="1170" height="2532" />
+            <figcaption>
+              <span class="shot-title">Shopping list</span>
+              <span class="small">Buy the gap instead of rebuying what you already own.</span>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="shot-card surface"
+            data-shot="tools"
+            role="button"
+            tabindex="0"
+            data-lightbox
+            data-src="assets/media/shot-scanner.svg"
+            data-title="UPC Scanner"
+            data-caption="Scanner flow for quick packaged-item entry and preference setup."
+          >
+            <img src="assets/media/shot-scanner.svg" alt="Perfect Pantry scanner placeholder" width="1170" height="2532" />
+            <figcaption>
+              <span class="shot-title">UPC scanner</span>
+              <span class="small">Fast product capture for pantry accuracy at speed.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section-tight" data-reveal>
+        <div class="callout">
+          <p class="eyebrow">Asset handoff ready</p>
+          <p class="muted" style="margin-top: 0.5rem">
+            When real screenshots are available, replace files in <strong>assets/media</strong>
+            and keep names the same to update this page instantly.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href="index.html">
+            <img class="brand-mark" src="assets/media/logo-mark.svg" alt="" width="42" height="42" />
+            <span class="brand-text">
+              <span class="brand-title">Perfect Pantry</span>
+              <span class="brand-subtitle">Recipes, pantry, plan, shop</span>
+            </span>
+          </a>
+          <p class="small" style="margin-top: 0.75rem; max-width: 56ch">
+            Screenshot page is designed for quick updates as app visuals evolve.
+          </p>
+          <p class="small" style="margin-top: 0.45rem">
+            Contact: <a href="mailto:support@perfectpantryapp.com">support@perfectpantryapp.com</a>
+          </p>
+          <p class="small" style="margin-top: 0.45rem">&copy; <span data-year></span> Perfect Pantry.</p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="index.html">Home</a>
+          <a href="tutorial.html">Tutorial</a>
+          <a href="support.html">Support</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
       </div>
-      <div class="footer-links" aria-label="Footer links">
-        <a href="support.html">Support</a>
-        <a href="tutorial.html">Tutorial</a>
-        <a href="screenshots.html">Screenshots</a>
-        <a href="privacy.html">Privacy Policy</a>
+    </footer>
+
+    <div class="lightbox" data-lightbox-modal aria-hidden="true" aria-label="Screenshot preview">
+      <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="Screenshot detail">
+        <div class="lightbox-top">
+          <strong data-lightbox-title>Screenshot</strong>
+          <button type="button" class="lightbox-close" data-lightbox-close>Close</button>
+        </div>
+        <img class="lightbox-image" data-lightbox-image alt="" />
+        <p class="lightbox-copy" data-lightbox-caption></p>
       </div>
     </div>
-    <hr class="sep" />
-    <p class="small" style="margin:0;">© 2026 Perfect Pantry. All rights reserved.</p>
-  </div>
-</footer>
 
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" aria-label="Image lightbox">
-    <div class="frame" role="dialog" aria-modal="true" aria-label="Screenshot preview">
-      <div class="bar">
-        <div id="lightboxTitle">Screenshot</div>
-        <button type="button" id="lightboxClose">Close</button>
-      </div>
-      <img id="lightboxImg" alt="" />
-    </div>
-  </div>
-
-  <script src="assets/js/main.js"></script>
-</body>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>

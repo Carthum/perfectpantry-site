@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1170 2532" role="img" aria-label="Perfect Pantry scanner preview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f9f3e5"/>
+      <stop offset="1" stop-color="#d9e4cf"/>
+    </linearGradient>
+  </defs>
+  <rect width="1170" height="2532" fill="#111"/>
+  <rect x="70" y="60" width="1030" height="2410" rx="110" fill="url(#bg)"/>
+  <text x="170" y="210" fill="#243026" font-size="84" font-family="Arial" font-weight="700">UPC Scanner</text>
+  <rect x="150" y="300" width="870" height="1720" rx="50" fill="#223228"/>
+  <rect x="220" y="520" width="730" height="820" rx="34" fill="rgba(255,255,255,0.08)"/>
+  <rect x="310" y="610" width="550" height="640" rx="20" fill="none" stroke="rgba(95,127,87,0.9)" stroke-width="18"/>
+  <rect x="360" y="840" width="450" height="180" rx="20" fill="rgba(255,255,255,0.16)"/>
+  <rect x="240" y="1420" width="690" height="116" rx="22" fill="rgba(255,255,255,0.16)"/>
+  <rect x="290" y="1580" width="590" height="116" rx="22" fill="rgba(95,127,87,0.46)"/>
+  <rect x="150" y="2090" width="870" height="280" rx="46" fill="rgba(255,255,255,0.8)"/>
+</svg>

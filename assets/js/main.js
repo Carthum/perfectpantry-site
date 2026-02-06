@@ -1,109 +1,261 @@
 (() => {
-  const $ = (sel, root=document) => root.querySelector(sel);
-  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) =>
+    Array.from(root.querySelectorAll(selector));
 
-  // Mobile nav toggle
-  const menuBtn = $("#menuBtn");
-  const navLinks = $("#navLinks");
-  if (menuBtn && navLinks) {
-    const toggle = () => {
-      const open = navLinks.getAttribute("data-open") === "true";
-      navLinks.setAttribute("data-open", String(!open));
-      menuBtn.setAttribute("aria-expanded", String(!open));
-    };
-    menuBtn.addEventListener("click", toggle);
-    document.addEventListener("click", (e) => {
-      if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
-        navLinks.setAttribute("data-open", "false");
-        menuBtn.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  // Smooth scroll for same-page anchors
-  $$('a[href^="#"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const id = a.getAttribute("href");
-      const el = id && id !== "#" ? $(id) : null;
-      if (el) {
-        e.preventDefault();
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        // close menu on mobile
-        if (navLinks) navLinks.setAttribute("data-open", "false");
-        if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
-      }
-    });
-  });
-
-  // Lightbox
-  const lb = $("#lightbox");
-  const lbImg = $("#lightboxImg");
-  const lbTitle = $("#lightboxTitle");
-  const lbClose = $("#lightboxClose");
-
-  const openLightbox = (src, title) => {
-    if (!lb || !lbImg) return;
-    lbImg.src = src;
-    lbImg.alt = title || "Screenshot";
-    if (lbTitle) lbTitle.textContent = title || "Screenshot";
-    lb.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+  const openNav = (isOpen, button, nav) => {
+    nav.setAttribute("data-open", String(isOpen));
+    button.setAttribute("aria-expanded", String(isOpen));
   };
 
-  const closeLightbox = () => {
-    if (!lb) return;
-    lb.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-    if (lbImg) lbImg.src = "";
+  const setupNav = () => {
+    const button = $("[data-menu-toggle]");
+    const nav = $("[data-nav]");
+    if (!button || !nav) return;
+
+    button.addEventListener("click", () => {
+      const isOpen = nav.getAttribute("data-open") === "true";
+      openNav(!isOpen, button, nav);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (nav.contains(event.target) || button.contains(event.target)) return;
+      openNav(false, button, nav);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      openNav(false, button, nav);
+    });
   };
 
-  if (lb && lbClose) {
-    lbClose.addEventListener("click", closeLightbox);
-    lb.addEventListener("click", (e) => {
-      if (e.target === lb) closeLightbox();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeLightbox();
-    });
-  }
+  const setupAnchorClose = () => {
+    const button = $("[data-menu-toggle]");
+    const nav = $("[data-nav]");
+    if (!button || !nav) return;
 
-  $$("[data-lightbox]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const src = btn.getAttribute("data-src");
-      const title = btn.getAttribute("data-title") || btn.querySelector("figcaption")?.textContent?.trim();
-      if (src) openLightbox(src, title);
+    $$("a[href^='#']").forEach((anchor) => {
+      anchor.addEventListener("click", () => {
+        openNav(false, button, nav);
+      });
     });
-  });
+  };
 
-  // Simple screenshot filters (optional)
-  const filterWrap = $("#shotFilters");
-  if (filterWrap) {
-    const items = $$("[data-shot]", document);
-    $$("#shotFilters button").forEach(b => {
-      b.addEventListener("click", () => {
-        const key = b.getAttribute("data-filter");
-        $$("#shotFilters button").forEach(x => x.classList.remove("btn-primary"));
-        b.classList.add("btn-primary");
-        items.forEach(it => {
-          const cat = it.getAttribute("data-shot");
-          it.style.display = (!key || key === "all" || cat === key) ? "" : "none";
+  const setupReveal = () => {
+    const revealNodes = $$('[data-reveal]');
+    if (!revealNodes.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      revealNodes.forEach((node) => node.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -20px 0px",
+      },
+    );
+
+    revealNodes.forEach((node) => observer.observe(node));
+  };
+
+  const setupYear = () => {
+    const year = String(new Date().getFullYear());
+    $$('[data-year]').forEach((node) => {
+      node.textContent = year;
+    });
+  };
+
+  const showMessage = (node, message, state) => {
+    if (!node) return;
+    node.hidden = false;
+    node.textContent = message;
+    node.dataset.state = state;
+  };
+
+  const buildMailto = (subject, bodyLines) => {
+    const target = "support@perfectpantryapp.com";
+    const payload = bodyLines.join("\n");
+    return `mailto:${target}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(payload)}`;
+  };
+
+  const setupWaitlistForm = () => {
+    const form = $("#waitlistForm");
+    const msg = $("#waitlistMessage");
+    if (!form) return;
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const email = String(data.get("email") || "").trim();
+      if (!email) {
+        showMessage(msg, "Please add an email so we can contact you.", "error");
+        return;
+      }
+
+      const name = String(data.get("name") || "").trim() || "Not provided";
+      const household = String(data.get("household") || "").trim() || "Not provided";
+      const challenge = String(data.get("challenge") || "").trim() || "Not provided";
+      const notes = String(data.get("notes") || "").trim() || "None";
+
+      const subject = "Perfect Pantry waitlist request";
+      const lines = [
+        "New waitlist signup",
+        "",
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Household size: ${household}`,
+        `Biggest challenge: ${challenge}`,
+        `Notes: ${notes}`,
+      ];
+
+      window.location.href = buildMailto(subject, lines);
+      showMessage(
+        msg,
+        "Your mail app should open now with your waitlist message. If it does not, email support@perfectpantryapp.com.",
+        "success",
+      );
+      form.reset();
+    });
+  };
+
+  const setupSupportForm = () => {
+    const form = $("#supportForm");
+    const msg = $("#supportMessage");
+    if (!form) return;
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const email = String(data.get("email") || "").trim();
+      const details = String(data.get("details") || "").trim();
+
+      if (!email || !details) {
+        showMessage(
+          msg,
+          "Please include your email and a short description so we can help.",
+          "error",
+        );
+        return;
+      }
+
+      const subject = `Perfect Pantry support: ${String(data.get("category") || "General")}`;
+      const lines = [
+        "Support request",
+        "",
+        `Name: ${String(data.get("name") || "").trim() || "Not provided"}`,
+        `Email: ${email}`,
+        `Category: ${String(data.get("category") || "General")}`,
+        `Device: ${String(data.get("device") || "Not provided")}`,
+        `App version: ${String(data.get("app_version") || "Not provided")}`,
+        "",
+        "Details:",
+        details,
+      ];
+
+      window.location.href = buildMailto(subject, lines);
+      showMessage(
+        msg,
+        "Your mail app should open now with the support draft. If it does not, email support@perfectpantryapp.com directly.",
+        "success",
+      );
+      form.reset();
+    });
+  };
+
+  const setupShotFilter = () => {
+    const group = $("[data-filter-group]");
+    if (!group) return;
+
+    const buttons = $$("[data-filter]", group);
+    const cards = $$("[data-shot]");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const activeKey = button.dataset.filter || "all";
+
+        buttons.forEach((item) => {
+          item.classList.toggle("is-active", item === button);
+        });
+
+        cards.forEach((card) => {
+          const cardKey = card.dataset.shot || "";
+          const show = activeKey === "all" || activeKey === cardKey;
+          card.hidden = !show;
         });
       });
     });
-  }
+  };
 
-  // Demo form helper: prevent blank submissions
-  const contactForm = $("#contactForm");
-  const formMsg = $("#formMsg");
-  if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-      // Keep as front-end only. In Wix, replace with Wix Forms.
-      e.preventDefault();
-      if (formMsg) {
-        formMsg.textContent = "Thanks! This template form doesn’t send messages yet. In Wix, replace it with a Wix Form (or connect this form to a backend).";
-        formMsg.style.display = "block";
-      }
-      contactForm.reset();
+  const setupLightbox = () => {
+    const modal = $("[data-lightbox-modal]");
+    const image = $("[data-lightbox-image]");
+    const title = $("[data-lightbox-title]");
+    const copy = $("[data-lightbox-caption]");
+    const closeButton = $("[data-lightbox-close]");
+
+    if (!modal || !image || !title || !copy) return;
+
+    const close = () => {
+      modal.setAttribute("aria-hidden", "true");
+      image.removeAttribute("src");
+      image.removeAttribute("alt");
+      document.body.style.overflow = "";
+    };
+
+    const open = (node) => {
+      const src = node.dataset.src;
+      if (!src) return;
+
+      image.src = src;
+      image.alt = node.dataset.title || "Perfect Pantry screenshot";
+      title.textContent = node.dataset.title || "Screenshot";
+      copy.textContent = node.dataset.caption || "";
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    };
+
+    $$('[data-lightbox]').forEach((node) => {
+      const activate = () => open(node);
+
+      node.addEventListener("click", activate);
+      node.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activate();
+        }
+      });
     });
-  }
+
+    if (closeButton) {
+      closeButton.addEventListener("click", close);
+    }
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close();
+    });
+  };
+
+  setupNav();
+  setupAnchorClose();
+  setupReveal();
+  setupYear();
+  setupWaitlistForm();
+  setupSupportForm();
+  setupShotFilter();
+  setupLightbox();
 })();

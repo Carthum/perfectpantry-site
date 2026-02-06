@@ -46,9 +46,9 @@ html.pp-tour-locked body {
   background-image: url("../brand/pp-splash-hero-desktop.jpg");
   background-size: cover;
   background-position: center;
-  opacity: 0.18;
-  filter: saturate(0.92) contrast(1.06);
-  transform: scale(1.08);
+  opacity: 0.08;
+  filter: saturate(0.92) contrast(1.03);
+  transform: scale(1.04);
   transform-origin: center;
 }
 
@@ -60,8 +60,8 @@ html.pp-tour-locked body {
   .pp-scrolly::before {
     inset: 0;
     background-image: url("../brand/pp-splash-hero-mobile.png");
-    opacity: 0.12;
-    transform: scale(1.12);
+    opacity: 0.06;
+    transform: scale(1.06);
   }
 }
 

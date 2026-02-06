@@ -203,7 +203,8 @@
     };
 
     measure();
-    schedule();
+    // Initial render: compute solely from scroll position.
+    tick();
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
@@ -253,31 +254,7 @@
       }
     });
 
-    const computeInitialStepIndex = () => {
-      if (!stageMode || STEPS.length <= 1) return 0;
-
-      const navHeight = readCssPxVar("--nav-height", 0);
-      const viewportHeight = Math.max(1, window.innerHeight - navHeight);
-
-      const rect = stage.getBoundingClientRect();
-      const stageTop = rect.top + (window.scrollY || window.pageYOffset || 0);
-      const stageHeight = stage.offsetHeight || rect.height || 0;
-      const range = Math.max(1, stageHeight - viewportHeight);
-      const progress = clamp(
-        ((window.scrollY || window.pageYOffset || 0) - stageTop) / range,
-        0,
-        1,
-      );
-
-      return clamp(
-        Math.floor(progress * (STEPS.length - 1) + 1e-6),
-        0,
-        STEPS.length - 1,
-      );
-    };
-
-    const initialIndex = computeInitialStepIndex();
-    const initialStep = STEPS[initialIndex] || STEPS[0];
+    const initialStep = STEPS[0];
     const phoneImg = createPhone({
       mount,
       initialSrc: initialStep && initialStep.screenshot,
@@ -289,7 +266,6 @@
         // Desktop stage mode: we overlay copy, so non-active steps must not
         // steal focus/tab order.
         stepNodesById.forEach((node) => setNodeInert(node, true));
-        setActiveCopyStep(stepNodesById, initialStep.id);
       } else {
         // Non-stage mode (mobile/tablet/reduced motion): show all copy.
         stepNodesById.forEach((node) => setNodeInert(node, false));
@@ -298,7 +274,7 @@
           node.classList.toggle("is-active", stepId === initialStep.id);
         });
       }
-      if (initialStep.bg) document.body.dataset.bg = initialStep.bg;
+      if (!stageMode && initialStep.bg) document.body.dataset.bg = initialStep.bg;
     }
 
     if (reduceMotion) {

@@ -463,34 +463,34 @@ html.pp-tour-locked body {
 .pp-obj--fridge-note {
   top: 34px;
   left: 40px;
-  width: 150px;
+  width: 130px;
   transform: rotate(-1.5deg);
 }
 
 .pp-obj--fridge-pic {
   top: 18px;
   left: 18px;
-  width: 105px;
+  width: 92px;
   transform: rotate(-4deg);
 }
 
 .pp-obj--fridge-calendar {
   top: 40px;
   right: 22px;
-  width: 265px;
+  width: 235px;
 }
 
 .pp-obj--unicorn {
   top: 210px;
   left: 28px;
-  width: 72px;
+  width: 62px;
   filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.2));
 }
 
 .pp-obj--cookbook {
   top: 76px;
   left: 50%;
-  width: 360px;
+  width: 320px;
   transform: translateX(-50%);
   filter: drop-shadow(0 26px 40px rgba(0, 0, 0, 0.24));
 }
@@ -498,24 +498,24 @@ html.pp-tour-locked body {
 .pp-obj--pantry-shelf {
   top: 18%;
   left: 50%;
-  width: 78%;
-  max-width: 420px;
+  width: 70%;
+  max-width: 380px;
   transform: translateX(-50%);
 }
 
 .pp-obj--pantry-board-top {
   top: 42%;
   left: 50%;
-  width: 86%;
-  max-width: 460px;
+  width: 80%;
+  max-width: 420px;
   transform: translateX(-50%);
 }
 
 .pp-obj--pantry-board-bottom {
   top: 72%;
   left: 50%;
-  width: 86%;
-  max-width: 460px;
+  width: 80%;
+  max-width: 420px;
   transform: translateX(-50%);
 }
 
@@ -911,8 +911,8 @@ html.pp-tour-locked body {
 
 .pp-app-fab {
   position: absolute;
-  width: 70px;
-  height: 70px;
+  width: 62px;
+  height: 62px;
   border-radius: 24px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.92);
@@ -926,16 +926,16 @@ html.pp-tour-locked body {
 }
 
 .pp-app-fab svg {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   display: block;
 }
 
 .pp-app-fab--gear {
   right: 16px;
-  bottom: 110px;
-  width: 74px;
-  height: 74px;
+  bottom: 22px;
+  width: 66px;
+  height: 66px;
   border-radius: 22px;
   background: rgba(74, 47, 27, 0.92);
   color: var(--pp-app-parchment);
@@ -944,24 +944,24 @@ html.pp-tour-locked body {
 
 .pp-app-fab--plus {
   right: 16px;
-  bottom: 110px;
+  bottom: 22px;
   border-radius: 999px;
-  width: 68px;
-  height: 68px;
+  width: 60px;
+  height: 60px;
 }
 
 .pp-app-fab--spice {
   left: 16px;
-  bottom: 110px;
+  bottom: 22px;
   border-radius: 999px;
-  width: 62px;
-  height: 62px;
+  width: 54px;
+  height: 54px;
   background: rgba(244, 231, 214, 0.88);
 }
 
 .pp-app-fab--spice img {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
 }
 
@@ -1174,29 +1174,29 @@ html.pp-tour-locked body {
 .pp-pantry-item--apple {
   top: 34%;
   left: 18%;
-  width: 26%;
-  max-width: 160px;
+  width: 22%;
+  max-width: 145px;
 }
 
 .pp-pantry-item--banana {
   top: 33%;
   right: 14%;
-  width: 30%;
-  max-width: 185px;
+  width: 26%;
+  max-width: 170px;
 }
 
 .pp-pantry-item--avocado {
   top: 62%;
   left: 50%;
   transform: translateX(-50%);
-  width: 32%;
-  max-width: 190px;
+  width: 28%;
+  max-width: 175px;
 }
 
 .pp-pantry-label {
   position: absolute;
-  width: 46%;
-  min-height: 82px;
+  width: 42%;
+  min-height: 74px;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.92);
@@ -1210,13 +1210,13 @@ html.pp-tour-locked body {
 
 .pp-pantry-label strong {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 16px;
   letter-spacing: -0.01em;
 }
 
 .pp-pantry-label span {
   margin-top: 2px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 750;
   color: rgba(58, 42, 26, 0.72);
 }
@@ -1235,7 +1235,7 @@ html.pp-tour-locked body {
   top: 80%;
   left: 50%;
   transform: translateX(-50%);
-  width: 78%;
+  width: 70%;
 }
 
 .pp-shop-stage {
@@ -1267,44 +1267,44 @@ html.pp-tour-locked body {
 .pp-shop-item--garlic {
   top: 4%;
   left: 10%;
-  width: 26%;
-  max-width: 140px;
+  width: 22%;
+  max-width: 120px;
 }
 
 .pp-shop-item--jalapeno {
   top: 6%;
   left: 50%;
   transform: translateX(-50%);
-  width: 30%;
-  max-width: 160px;
+  width: 26%;
+  max-width: 145px;
 }
 
 .pp-shop-item--salt {
   top: 5%;
   right: 10%;
-  width: 20%;
-  max-width: 105px;
+  width: 17%;
+  max-width: 90px;
 }
 
 .pp-shop-item--oliveoil {
   top: 42%;
   left: 14%;
-  width: 14%;
-  max-width: 82px;
+  width: 11%;
+  max-width: 66px;
 }
 
 .pp-shop-item--onion {
   top: 40%;
   left: 52%;
   transform: translateX(-50%);
-  width: 36%;
-  max-width: 200px;
+  width: 30%;
+  max-width: 175px;
 }
 
 .pp-shop-label {
   position: absolute;
-  min-height: 48px;
-  padding: 0 18px;
+  min-height: 44px;
+  padding: 0 16px;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.92);
@@ -1313,7 +1313,7 @@ html.pp-tour-locked body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 820;
   color: rgba(58, 42, 26, 0.88);
 }
@@ -1321,40 +1321,40 @@ html.pp-tour-locked body {
 .pp-shop-label--garlic {
   top: 22%;
   left: 6%;
-  width: 150px;
+  width: 140px;
 }
 
 .pp-shop-label--jalapeno {
   top: 23%;
   left: 50%;
   transform: translateX(-50%);
-  width: 160px;
+  width: 150px;
 }
 
 .pp-shop-label--salt {
   top: 22%;
   right: 6%;
-  width: 160px;
+  width: 150px;
 }
 
 .pp-shop-label--oliveoil {
   top: 55%;
   left: 4%;
-  width: 180px;
+  width: 160px;
 }
 
 .pp-shop-label--onion {
   top: 61%;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
+  width: 190px;
 }
 
 .pp-shop-bar {
   position: absolute;
   left: 14px;
   right: 14px;
-  bottom: 110px;
+  bottom: 22px;
   z-index: 3;
   display: grid;
   grid-template-columns: 54px 1fr 54px;
@@ -1363,8 +1363,8 @@ html.pp-tour-locked body {
 }
 
 .pp-shop-bar .pp-app-pill {
-  min-height: 62px;
-  font-size: 22px;
+  min-height: 56px;
+  font-size: 20px;
   font-family: var(--font-display);
   font-weight: 820;
   letter-spacing: -0.01em;

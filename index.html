@@ -67,168 +67,139 @@
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
           <a class="btn btn-ghost btn-sm" href="#waitlist">Join waitlist</a>
-        </nav>
-      </div>
-    </header>
-
-    <main id="main" class="container">
-      <section class="hero section" data-reveal>
-        <div class="hero-grid">
-          <div class="hero-copy" data-reveal data-delay="80">
-            <p class="eyebrow">Mobile app in active development</p>
-            <h1>The weekly food loop, finally in one place.</h1>
-            <p class="hero-lead">
-              Perfect Pantry brings recipes, pantry inventory, meal planning, and shopping
-              into one connected flow so dinner decisions get faster, grocery runs get
-              cleaner, and food waste drops.
-            </p>
-            <div class="hero-cta">
-              <a class="btn btn-primary" href="#waitlist">Get early access</a>
-              <a class="btn btn-outline" href="index.html#guided-tour">See 5-minute tour</a>
-            </div>
-            <p class="small">
-              Marketing site only for now. No memberships or checkout on the website.
-            </p>
-          </div>
-
-          <aside class="hero-showcase surface" data-reveal data-delay="160">
-            <div class="hero-chip-row" aria-hidden="true">
-              <span class="chip">Home</span>
-              <span class="chip">Pantry</span>
-              <span class="chip">Cookbook</span>
-              <span class="chip">Plan</span>
-              <span class="chip">Shop</span>
-            </div>
-            <figure class="device-card">
-              <img
-                src="assets/demo/demo-home-overview.png"
-                alt="Preview of the Perfect Pantry home dashboard"
-                width="1170"
-                height="2532"
-              />
-            </figure>
-            <div class="hero-notes">
-              <div class="note-card">
-                <strong>Pantry-aware planning</strong>
-                <span class="small">See meals with pantry coverage before shopping.</span>
+          </nav>
+        </div>
+      </header>
+  
+      <main id="main" class="container">
+        <section class="section pp-scrolly" id="guided-tour">
+          <div class="pp-scrolly-sticky">
+            <div class="pp-scrolly-grid">
+              <div class="pp-tour-left">
+                <div
+                  class="pp-demo-carousel pp-tour-mobile-demo"
+                  id="ppDemoMobileMount"
+                  aria-label="Perfect Pantry demo preview"
+                ></div>
+  
+                <div class="pp-tour-stack" aria-label="Tutorial steps">
+                  <article class="pp-tour-step surface is-active" data-pp-step="welcome">
+                    <p class="eyebrow">Mobile app in active development</p>
+                    <h1>The weekly food loop, finally in one place.</h1>
+                    <p class="hero-lead">
+                      Perfect Pantry connects recipes, pantry inventory, meal planning, and shopping
+                      into one calm loop so dinner decisions get faster, grocery runs get cleaner,
+                      and food waste drops.
+                    </p>
+                    <div class="hero-cta">
+                      <a class="btn btn-primary" href="#waitlist">Get early access</a>
+                      <a class="btn btn-outline" href="#tour-home">Start the demo</a>
+                    </div>
+                    <p class="small" style="margin-top: 0.25rem">
+                      Scroll to move the phone through Home, Pantry, Cookbook, Plan, and Shop.
+                    </p>
+                    <p class="small">
+                      Marketing site only for now. No memberships or checkout on the website.
+                    </p>
+                  </article>
+  
+                  <article class="pp-tour-step surface" data-pp-step="home">
+                    <p class="pp-tour-kicker">Home</p>
+                    <h2>Start with a calm weekly dashboard</h2>
+                    <p class="muted">
+                      Home keeps the week visible: what is coming up, what needs restocking, and what
+                      to do next without digging through multiple views.
+                    </p>
+                    <ul class="list-clean pp-tour-bullets">
+                      <li><strong>Try it:</strong> tap the Quick Actions area on the phone.</li>
+                      <li><strong>Why it matters:</strong> fewer decisions, faster momentum.</li>
+                    </ul>
+                  </article>
+  
+                  <article class="pp-tour-step surface" data-pp-step="pantry">
+                    <p class="pp-tour-kicker">Pantry</p>
+                    <h2>Inventory that stays lightweight</h2>
+                    <p class="muted">
+                      Track staples, quantities, and timing without turning your pantry into a second
+                      job. List and shelf-style views keep it usable.
+                    </p>
+                    <ul class="list-clean pp-tour-bullets">
+                      <li><strong>Try it:</strong> tap an item row to open the detail preview.</li>
+                      <li><strong>Why it matters:</strong> plan and shop with real coverage, not guesses.</li>
+                    </ul>
+                  </article>
+  
+                  <article class="pp-tour-step surface" data-pp-step="cookbook">
+                    <p class="pp-tour-kicker">Cookbook</p>
+                    <h2>Your household cookbook, private by default</h2>
+                    <p class="muted">
+                      Save recipes your household actually repeats. The detail view is optimized for
+                      cooking flow, not endless scrolling.
+                    </p>
+                    <ul class="list-clean pp-tour-bullets">
+                      <li><strong>Try it:</strong> tap a recipe card to preview the detail layout.</li>
+                      <li><strong>Why it matters:</strong> reliable repeats and faster weeknight execution.</li>
+                    </ul>
+                  </article>
+  
+                  <article class="pp-tour-step surface" data-pp-step="plan">
+                    <p class="pp-tour-kicker">Plan</p>
+                    <h2>Place meals into the week in seconds</h2>
+                    <p class="muted">
+                      Build a realistic baseline plan, then adjust without breaking everything. Planning
+                      is where time and pantry coverage tradeoffs become clear.
+                    </p>
+                    <ul class="list-clean pp-tour-bullets">
+                      <li><strong>Try it:</strong> tap a meal slot to open the slot detail preview.</li>
+                      <li><strong>Why it matters:</strong> fewer midweek pivots and less last-minute shopping.</li>
+                    </ul>
+                  </article>
+  
+                  <article class="pp-tour-step surface" data-pp-step="shop">
+                    <p class="pp-tour-kicker">Shop</p>
+                    <h2>Shop the gap, not the whole pantry</h2>
+                    <p class="muted">
+                      The list is generated from what your plan needs compared to what your pantry
+                      already covers, so trips stay clean and focused.
+                    </p>
+                    <ul class="list-clean pp-tour-bullets">
+                      <li><strong>Try it:</strong> tap an item to preview the bulk picker and detail view.</li>
+                      <li><strong>Why it matters:</strong> fewer duplicates, less waste.</li>
+                    </ul>
+                  </article>
+                </div>
+  
+                <div class="callout pp-tour-note">
+                  <p class="eyebrow">Preview only</p>
+                  <p class="muted" style="margin-top: 0.5rem">
+                    The phone is a guided UI demo. It shows layout and flow, but it does not create
+                    accounts, sync data, or execute actions.
+                  </p>
+                </div>
               </div>
-              <div class="note-card">
-                <strong>Barcode quick add</strong>
-                <span class="small">Scan products and keep inventory current in seconds.</span>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <div class="stats-band surface" data-reveal data-delay="200" aria-label="Core app areas">
-          <div class="stat-pill">Home dashboard</div>
-          <div class="stat-pill">Pantry tracking</div>
-          <div class="stat-pill">Recipe cookbook</div>
-          <div class="stat-pill">Weekly meal plan</div>
-          <div class="stat-pill">Smart shopping list</div>
-        </div>
-      </section>
-
-      <section class="section" id="guided-tour" data-reveal>
-        <div class="section-head">
-          <p class="eyebrow">Interactive tour</p>
-          <h2>Scroll the story. Tap the phone.</h2>
-          <p class="muted">
-            As you scroll, the phone preview follows along. Tap around to see the UI states, but
-            everything is preview-only.
-          </p>
-        </div>
-
-        <div class="pp-guided">
-          <div class="pp-tour-copy">
-            <div class="pp-demo-carousel" id="ppDemoMobileMount" aria-label="Perfect Pantry demo preview"></div>
-
-            <article class="pp-tour-step surface" data-scroll-key="home">
-              <p class="pp-tour-kicker">Home</p>
-              <h3>Start with a calm weekly dashboard</h3>
-              <p class="muted">
-                Home keeps the week visible: what is coming up, what needs restocking, and what to
-                do next without digging through multiple views.
-              </p>
-              <ul class="list-clean pp-tour-bullets">
-                <li><strong>Try it:</strong> tap the Quick Actions area on the phone.</li>
-                <li><strong>Why it matters:</strong> fewer decisions, faster momentum.</li>
-              </ul>
-            </article>
-
-            <article class="pp-tour-step surface" data-scroll-key="pantry">
-              <p class="pp-tour-kicker">Pantry</p>
-              <h3>Inventory that stays lightweight</h3>
-              <p class="muted">
-                Track staples, quantities, and timing without turning your pantry into a second
-                job. List and shelf-style views keep it usable.
-              </p>
-              <ul class="list-clean pp-tour-bullets">
-                <li><strong>Try it:</strong> tap an item row to open the detail preview.</li>
-                <li><strong>Why it matters:</strong> plan and shop with real coverage, not guesses.</li>
-              </ul>
-            </article>
-
-            <article class="pp-tour-step surface" data-scroll-key="cookbook">
-              <p class="pp-tour-kicker">Cookbook</p>
-              <h3>Your household cookbook, private by default</h3>
-              <p class="muted">
-                Save recipes your household actually repeats. The detail view is optimized for
-                cooking flow, not endless scrolling.
-              </p>
-              <ul class="list-clean pp-tour-bullets">
-                <li><strong>Try it:</strong> tap a recipe card to preview the recipe detail layout.</li>
-                <li><strong>Why it matters:</strong> reliable repeats and faster weeknight execution.</li>
-              </ul>
-            </article>
-
-            <article class="pp-tour-step surface" data-scroll-key="plan">
-              <p class="pp-tour-kicker">Plan</p>
-              <h3>Place meals into the week in seconds</h3>
-              <p class="muted">
-                Build a realistic baseline plan, then adjust without breaking everything. Planning
-                is where time and pantry coverage tradeoffs become clear.
-              </p>
-              <ul class="list-clean pp-tour-bullets">
-                <li><strong>Try it:</strong> tap a meal slot area to open the slot detail preview.</li>
-                <li><strong>Why it matters:</strong> fewer midweek pivots and less last-minute shopping.</li>
-              </ul>
-            </article>
-
-            <article class="pp-tour-step surface" data-scroll-key="shop">
-              <p class="pp-tour-kicker">Shop</p>
-              <h3>Shop the gap, not the whole pantry</h3>
-              <p class="muted">
-                The list is generated from what your plan needs compared to what your pantry
-                already covers, so trips stay clean and focused.
-              </p>
-              <ul class="list-clean pp-tour-bullets">
-                <li><strong>Try it:</strong> tap an item to preview the bulk picker and item detail view.</li>
-                <li><strong>Why it matters:</strong> fewer duplicates, less waste.</li>
-              </ul>
-            </article>
-
-            <div class="callout">
-              <p class="eyebrow">Preview only</p>
-              <p class="muted" style="margin-top: 0.5rem">
-                This phone is a guided UI demo. It shows layout and flow, but does not create
-                accounts, sync data, or execute actions.
-              </p>
+  
+              <aside class="pp-tour-right" aria-label="Perfect Pantry demo phone">
+                <div class="pp-demo-hero-mount" id="ppDemoMount"></div>
+                <p class="small pp-tour-tip">
+                  Tip: click the tabs or hotspots to preview deeper UI states.
+                </p>
+              </aside>
             </div>
           </div>
-
-          <aside class="pp-demo-shell" aria-label="Perfect Pantry demo phone">
-            <div id="ppDemoMount"></div>
-            <p class="small" style="margin-top: 0.85rem">
-              Tip: click the tabs or hotspots to preview deeper UI states.
-            </p>
-          </aside>
-        </div>
-      </section>
-
-      <section class="section" data-reveal>
-        <div class="section-head">
-          <p class="eyebrow">Why this works</p>
+  
+          <div class="pp-tour-sentinels" aria-hidden="true">
+            <div class="pp-tour-sentinel" data-pp-step="welcome" data-pp-scene="splash"></div>
+            <div class="pp-tour-sentinel" id="tour-home" data-pp-step="home" data-pp-tab="home"></div>
+            <div class="pp-tour-sentinel" data-pp-step="pantry" data-pp-tab="pantry"></div>
+            <div class="pp-tour-sentinel" data-pp-step="cookbook" data-pp-tab="cookbook"></div>
+            <div class="pp-tour-sentinel" data-pp-step="plan" data-pp-tab="plan"></div>
+            <div class="pp-tour-sentinel" data-pp-step="shop" data-pp-tab="shop"></div>
+          </div>
+        </section>
+  
+        <section class="section" data-reveal>
+          <div class="section-head">
+            <p class="eyebrow">Why this works</p>
           <h2>Built around real home cooking constraints</h2>
           <p class="muted">
             Perfect Pantry was shaped for busy households that need speed, flexibility,
@@ -500,21 +471,30 @@
       </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/phone-demo.js"></script>
-    <script>
-      window.addEventListener("load", () => {
-        if (!window.PPDemo) return;
-        window.PPDemo.init({
-          sceneDataPath: "assets/data/demo_scenes.v1.json",
-          mountSelector: "#ppDemoMount",
+      <script src="assets/js/main.js"></script>
+      <script src="assets/js/phone-demo.js"></script>
+      <script>
+        window.addEventListener("load", () => {
+          if (!window.PPDemo) return;
+          const isMobile =
+            window.matchMedia && window.matchMedia("(max-width: 960px)").matches;
+  
+          if (isMobile) {
+            window.PPDemo.init({
+              sceneDataPath: "assets/data/demo_scenes.v1.json",
+              mountSelector: "#ppDemoMobileMount",
+              mobileMode: "carousel",
+            });
+            return;
+          }
+  
+          window.PPDemo.init({
+            sceneDataPath: "assets/data/demo_scenes.v1.json",
+            mountSelector: "#ppDemoMount",
+            tourSelector: "#guided-tour",
+            initialSceneId: "splash",
+          });
         });
-        window.PPDemo.init({
-          sceneDataPath: "assets/data/demo_scenes.v1.json",
-          mountSelector: "#ppDemoMobileMount",
-          mobileMode: "carousel",
-        });
-      });
-    </script>
-  </body>
-</html>
+      </script>
+    </body>
+  </html>

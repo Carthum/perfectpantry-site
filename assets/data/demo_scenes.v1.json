@@ -9,6 +9,19 @@
   ],
   "scenes": [
     {
+      "id": "splash",
+      "tab": "splash",
+      "level": "splash",
+      "headline": "Perfect Pantry",
+      "body": "Loading preview. Scroll to begin the guided tour.",
+      "image": "assets/brand/pp-splash-hero-mobile.png",
+      "redactionPreset": "none",
+      "hideTabs": true,
+      "hotspots": [],
+      "scrollKey": "welcome",
+      "mobileOrder": 0
+    },
+    {
       "id": "home-overview",
       "tab": "home",
       "level": "overview",

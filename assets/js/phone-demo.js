@@ -33,6 +33,106 @@
     return $$('[data-scroll-key]', container);
   };
 
+  const getTourSentinels = (tourRoot) => {
+    if (!tourRoot) return [];
+    return $$(".pp-tour-sentinel[data-pp-step]", tourRoot);
+  };
+
+  const getTourSteps = (tourRoot) => {
+    if (!tourRoot) return [];
+    return $$(".pp-tour-step[data-pp-step]", tourRoot);
+  };
+
+  const setNodeInert = (node, inert) => {
+    if (!node) return;
+    // inert is now supported in modern browsers; fall back to aria-hidden only.
+    if ("inert" in node) node.inert = !!inert;
+  };
+
+  const activateTourStep = (tourRoot, stepId) => {
+    const steps = getTourSteps(tourRoot);
+    steps.forEach((node) => {
+      const isActive = node.dataset.ppStep === stepId;
+      node.classList.toggle("is-active", isActive);
+      node.setAttribute("aria-hidden", String(!isActive));
+      setNodeInert(node, !isActive);
+    });
+
+    if (tourRoot) {
+      tourRoot.dataset.ppActiveStep = stepId || "";
+    }
+  };
+
+  const bindTourSync = ({ tourRoot, api, prefersReducedMotion }) => {
+    const sentinels = getTourSentinels(tourRoot);
+    if (!sentinels.length) return null;
+    if (!("IntersectionObserver" in window)) return null;
+
+    // Track intersection ratios across all sentinels to avoid flicker when
+    // the callback only delivers changed entries.
+    const ratios = new Map(sentinels.map((n) => [n, 0]));
+    let activeStep = null;
+
+    const drive = (stepId) => {
+      if (!stepId || stepId === activeStep) return;
+      activeStep = stepId;
+      activateTourStep(tourRoot, stepId);
+
+      const sentinel = tourRoot.querySelector(
+        `.pp-tour-sentinel[data-pp-step="${CSS.escape(stepId)}"]`,
+      );
+      if (!sentinel) return;
+
+      const sceneId = sentinel.dataset.ppScene;
+      const tab = sentinel.dataset.ppTab;
+
+      if (sceneId) api.setScene(sceneId);
+      else if (tab) api.setTab(tab);
+    };
+
+    // Ensure initial state is consistent with the first sentinel.
+    drive(sentinels[0].dataset.ppStep);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          ratios.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let bestNode = null;
+        let bestRatio = 0;
+        ratios.forEach((ratio, node) => {
+          if (ratio <= bestRatio) return;
+          bestRatio = ratio;
+          bestNode = node;
+        });
+
+        if (!bestNode) return;
+        drive(bestNode.dataset.ppStep);
+      },
+      {
+        threshold: [0.12, 0.3, 0.45, 0.6, 0.78],
+        rootMargin: "-35% 0px -55% 0px",
+      },
+    );
+
+    sentinels.forEach((node) => io.observe(node));
+
+    const scrollToStep = (stepId) => {
+      if (!stepId) return;
+      const sentinel = tourRoot.querySelector(
+        `.pp-tour-sentinel[data-pp-step="${CSS.escape(stepId)}"]`,
+      );
+      if (!sentinel) return;
+      sentinel.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    };
+
+    return { scrollToStep };
+  };
+
   const buildHotspot = (hotspot, onActivate) => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -112,11 +212,20 @@
     return wrap;
   };
 
-  const createDemo = ({ mount, data, enableSwipe }) => {
+  const createDemo = ({
+    mount,
+    data,
+    enableSwipe,
+    scrollToTab,
+    initialSceneId,
+    prefersReducedMotion,
+  }) => {
     const toast = createToast(mount);
-    const prefersReducedMotion =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion =
+      typeof prefersReducedMotion === "boolean"
+        ? prefersReducedMotion
+        : window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const phone = document.createElement("div");
     phone.className = "pp-phone";
@@ -129,9 +238,9 @@
 
     const img = document.createElement("img");
     img.decoding = "async";
-    img.loading = "lazy";
+    img.loading = "eager";
     img.style.opacity = "1";
-    if (!prefersReducedMotion) {
+    if (!reduceMotion) {
       img.style.transition = "opacity var(--pp-demo-transition-ms) ease";
       img.addEventListener("load", () => {
         img.style.opacity = "1";
@@ -185,28 +294,48 @@
       return scenes.find((s) => s.level === "overview") || scenes[0] || null;
     };
 
-    let activeScene = findDefaultScene(activeTab);
+    let activeScene = null;
+    if (initialSceneId && sceneById.has(initialSceneId)) {
+      activeScene = sceneById.get(initialSceneId);
+      activeTab = activeScene.tab || activeTab;
+    } else {
+      activeScene = findDefaultScene(activeTab);
+    }
 
-    const syncNarrative = () => {
-      const nodes = $$("[data-scroll-key]", document);
-      nodes.forEach((node) => {
-        node.classList.toggle(
-          "is-active",
-          node.getAttribute("data-scroll-key") === activeTab,
-        );
-      });
+    const mountNode = document.createElement("div");
+    mountNode.className = "pp-demo";
+    mountNode.appendChild(phone);
+
+    const playAnim = (className, durationMs) => {
+      if (reduceMotion) return;
+      if (!className) return;
+      mountNode.classList.remove(className);
+      // Force style recalc so repeated transitions can re-play.
+      void mountNode.offsetWidth;
+      mountNode.classList.add(className);
+      window.clearTimeout(playAnim._t);
+      playAnim._t = window.setTimeout(() => {
+        mountNode.classList.remove(className);
+      }, durationMs);
     };
 
     const tabsUi = createTabs(tabs, activeTab, (tab) => {
+      const prevSceneId = activeScene && activeScene.id;
+      const prevTab = activeTab;
       activeTab = tab;
       activeScene = findDefaultScene(tab);
-      render();
+      render({
+        transitionClass:
+          prevSceneId === "splash" && activeScene && activeScene.id !== "splash"
+            ? "pp-demo--boot"
+            : prevTab !== tab
+              ? "pp-demo--tab-swap"
+              : null,
+        transitionMs:
+          prevSceneId === "splash" && activeScene && activeScene.id !== "splash" ? 820 : 520,
+      });
 
-      // Sync scroll narrative on left when user taps tabs.
-      const target = document.querySelector(`[data-scroll-key="${tab}"]`);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      if (typeof scrollToTab === "function") scrollToTab(tab);
     });
 
     const setSelectedTabUi = () => {
@@ -226,29 +355,38 @@
             if (next) {
               activeTab = next.tab;
               activeScene = next;
-              render();
+              render({
+                transitionClass: "pp-demo--detail",
+                transitionMs: 420,
+              });
             }
           })
         );
       });
     };
 
-    const render = () => {
+    const render = ({ transitionClass, transitionMs } = {}) => {
       if (!activeScene) return;
+      mountNode.dataset.ppScene = activeScene.id || "";
+      mountNode.dataset.ppTab = activeTab || "";
+
       const nextSrc = activeScene.image;
       if (nextSrc) {
-        if (!prefersReducedMotion) img.style.opacity = "0";
+        if (!reduceMotion) img.style.opacity = "0";
         img.src = nextSrc;
       }
       img.alt = activeScene.headline || "Perfect Pantry preview";
       redaction.dataset.preset = activeScene.redactionPreset || "light";
+      tabsUi.classList.toggle("is-hidden", !!activeScene.hideTabs);
+      badge.style.display = activeScene.hideTabs ? "none" : "";
 
       captionTitle.textContent = activeScene.headline || "";
       captionBody.textContent = activeScene.body || "";
 
       setSelectedTabUi();
-      syncNarrative();
       renderHotspots();
+
+      playAnim(transitionClass, transitionMs || 520);
     };
 
     render();
@@ -292,7 +430,7 @@
         const nextTab = tabs[(idx + dir + tabs.length) % tabs.length];
         activeTab = nextTab;
         activeScene = findDefaultScene(nextTab);
-        render();
+        render({ transitionClass: "pp-demo--tab-swap", transitionMs: 520 });
       };
 
       screen.addEventListener("pointerdown", onDown);
@@ -308,31 +446,50 @@
     const api = {
       setTab(tab) {
         if (!tab) return;
+        const prevSceneId = activeScene && activeScene.id;
+        const prevTab = activeTab;
         activeTab = tab;
         activeScene = findDefaultScene(tab);
-        render();
+        render({
+          transitionClass:
+            prevSceneId === "splash" && activeScene && activeScene.id !== "splash"
+              ? "pp-demo--boot"
+              : prevTab !== tab
+                ? "pp-demo--tab-swap"
+                : null,
+          transitionMs:
+            prevSceneId === "splash" && activeScene && activeScene.id !== "splash" ? 820 : 520,
+        });
       },
       setScene(sceneId) {
         const next = sceneById.get(sceneId);
         if (!next) return;
+        const prevSceneId = activeScene && activeScene.id;
         activeTab = next.tab;
         activeScene = next;
-        render();
+        render({
+          transitionClass:
+            prevSceneId === "splash" && next.id !== "splash"
+              ? "pp-demo--boot"
+              : "pp-demo--detail",
+          transitionMs: prevSceneId === "splash" && next.id !== "splash" ? 820 : 420,
+        });
       },
     };
 
-    const mountNode = document.createElement("div");
-    mountNode.className = "pp-demo";
-    mountNode.appendChild(phone);
     mountNode.appendChild(tabsUi);
     mountNode.appendChild(caption);
 
     return { mountNode, api };
   };
 
-  const init = async ({ sceneDataPath, mountSelector, mobileMode }) => {
+  const init = async ({ sceneDataPath, mountSelector, mobileMode, tourSelector, initialSceneId }) => {
     const mount = document.querySelector(mountSelector);
     if (!mount) return;
+
+    const prefersReducedMotion =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let data;
     try {
@@ -343,10 +500,35 @@
       return;
     }
 
+    const tourRoot = tourSelector ? document.querySelector(tourSelector) : null;
+    const stickyTourEnabled =
+      !!tourRoot &&
+      mobileMode !== "carousel" &&
+      !window.matchMedia("(max-width: 960px)").matches;
+
+    const scrollToTab = stickyTourEnabled
+      ? (tab) => {
+          // Index tour uses step ids that match tab slugs.
+          const stepId = tab;
+          activateTourStep(tourRoot, stepId);
+          const sentinel = tourRoot.querySelector(
+            `.pp-tour-sentinel[data-pp-step="${CSS.escape(stepId)}"]`,
+          );
+          if (!sentinel) return;
+          sentinel.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+            block: "start",
+          });
+        }
+      : null;
+
     const { mountNode, api } = createDemo({
       mount,
       data,
       enableSwipe: mobileMode === "carousel",
+      scrollToTab,
+      initialSceneId: stickyTourEnabled ? initialSceneId : null,
+      prefersReducedMotion,
     });
 
     if (mobileMode === "carousel") {
@@ -356,7 +538,13 @@
     mount.innerHTML = "";
     mount.appendChild(mountNode);
 
-    // Scroll-driven syncing (desktop/tablet).
+    // Tour binding (desktop scrolly). When disabled, keep the demo interactive-only.
+    if (stickyTourEnabled) {
+      bindTourSync({ tourRoot, api, prefersReducedMotion });
+      return;
+    }
+
+    // Legacy scroll-driven syncing (for older pages/sections using data-scroll-key).
     const anchors = getScrollAnchors(document);
     if (!anchors.length || !("IntersectionObserver" in window)) return;
 

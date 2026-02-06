@@ -2,20 +2,20 @@
   "version": "1",
   "home": {
     "weekRangeLabel": "This week",
-    "weekRangeValue": "Mon–Sun",
-    "todayLabel": "Today",
+    "weekRangeValue": "Feb 2–Feb 8",
+    "todayLabel": "Fri, Feb 6",
     "todayValue": "Dinner time",
-    "plannedMeals": 4,
+    "plannedMeals": 1,
     "targetMeals": 5,
-    "scheduledDays": 4,
-    "coverageLabel": "Pantry coverage: 19/28 on hand  •  9 to buy",
-    "nextWeekPlannedMeals": 3,
-    "nextWeekScheduledDays": 3,
-    "nextWeekCoverageLabel": "Next week Pantry coverage: 14/25 on hand  •  11 to buy",
+    "scheduledDays": 1,
+    "coverageLabel": "Pantry coverage: 0/10 on hand  •  10 to buy",
+    "nextWeekPlannedMeals": 0,
+    "nextWeekScheduledDays": 0,
+    "nextWeekCoverageLabel": "Next week Pantry coverage: —",
     "todayMeal": {
-      "title": "Weeknight lemon chicken",
+      "title": "One-Pot Creamy Tuscan Pasta",
       "thumbnail": null,
-      "coverageLabel": "Pantry coverage: 8/11 on hand  •  3 to buy"
+      "coverageLabel": "Pantry coverage: 0/10 on hand  •  10 to buy"
     },
     "quickActions": [
       { "id": "add_recipe", "label": "Add recipe" },
@@ -42,29 +42,29 @@
   },
   "cookbook": {
     "recipes": [
-      { "title": "Rustic tomato soup", "meta": "35 min  •  4 servings", "tags": ["Staple"] },
-      { "title": "Garlic butter noodles", "meta": "18 min  •  2 servings", "tags": ["Fast"] },
-      { "title": "Sheet-pan fajitas", "meta": "30 min  •  4 servings", "tags": ["Weeknight"] },
-      { "title": "Roasted veggie bowls", "meta": "40 min  •  4 servings", "tags": ["Prep"] },
-      { "title": "Skillet chili", "meta": "45 min  •  6 servings", "tags": ["Freezer"] },
-      { "title": "Lemon herb salmon", "meta": "22 min  •  2 servings", "tags": ["Simple"] }
+      { "title": "Bang Bang Shrimp", "meta": "25 min  •  4 servings", "tags": ["Main Dish"] },
+      { "title": "Chicken Tikka Masala", "meta": "45 min  •  4 servings", "tags": ["Main Dish"] },
+      { "title": "Pico de Gallo", "meta": "10 min  •  6 servings", "tags": ["Staple"] },
+      { "title": "Skillet tacos", "meta": "20 min  •  4 servings", "tags": ["Weeknight"] },
+      { "title": "Garden salad", "meta": "12 min  •  2 servings", "tags": ["Simple"] },
+      { "title": "Rustic tomato soup", "meta": "35 min  •  4 servings", "tags": ["Staple"] }
     ],
     "detail": {
-      "title": "Rustic tomato soup",
-      "meta": "35 min  •  4 servings",
+      "title": "Chicken Tikka Masala",
+      "meta": "45 min  •  4 servings",
       "ingredients": [
-        "2 tbsp olive oil",
-        "1 onion, chopped",
+        "2 tbsp oil",
+        "1 onion",
         "3 cloves garlic",
         "1 can tomatoes",
-        "2 cups broth",
+        "•••",
         "•••",
         "•••"
       ],
       "steps": [
-        "Saute onion until soft.",
-        "Add garlic and stir briefly.",
-        "Simmer, blend, and season.",
+        "Cook aromatics until soft.",
+        "Add spices and simmer.",
+        "Finish and season.",
         "•••",
         "•••"
       ]
@@ -72,13 +72,13 @@
   },
   "plan": {
     "week": [
-      { "day": "Mon", "meal": "Rustic tomato soup" },
-      { "day": "Tue", "meal": "Sheet-pan fajitas" },
-      { "day": "Wed", "meal": "Skillet chili" },
-      { "day": "Thu", "meal": "—" },
-      { "day": "Fri", "meal": "Lemon herb salmon" },
+      { "day": "Mon", "meal": "Vegetarian BLT with Avocado" },
+      { "day": "Tue", "meal": "Chicken Avocado Wrap - Paleo" },
+      { "day": "Wed", "meal": "Salmon in Green Chili Cream Sauce" },
+      { "day": "Thu", "meal": "Spicy Avocado Chicken" },
+      { "day": "Fri", "meal": "—" },
       { "day": "Sat", "meal": "—" },
-      { "day": "Sun", "meal": "Roasted veggie bowls" }
+      { "day": "Sun", "meal": "—" }
     ],
     "detail": {
       "day": "Wednesday",
@@ -124,4 +124,3 @@
     }
   }
 }
-

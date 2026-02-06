@@ -28,6 +28,31 @@
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M6.1 6.2H3.8a1.2 1.2 0 1 1 0-2.4H7c.56 0 1.05.39 1.16.94l.3 1.46H20a1.2 1.2 0 0 1 1.16 1.5l-1.35 5.0a3 3 0 0 1-2.9 2.24H10.2a3 3 0 0 1-2.94-2.34L6.1 6.2zm3.1 3.4.48 2.3c.06.28.3.48.58.48h6.6c.27 0 .5-.18.58-.44l.93-3.34H9.2z" clip-rule="evenodd"/><path fill="currentColor" d="M9.6 19.0a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4zM17.4 19.0a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4z"/><path fill="currentColor" d="M14 4.9a1 1 0 0 1 2 0v1.6h1.6a1 1 0 1 1 0 2H16v1.6a1 1 0 1 1-2 0V8.5h-1.6a1 1 0 1 1 0-2H14V4.9z"/></svg>',
   };
 
+  const UI_SVGS = {
+    menu:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M5 7.2a1.1 1.1 0 0 1 1.1-1.1h11.8a1.1 1.1 0 1 1 0 2.2H6.1A1.1 1.1 0 0 1 5 7.2zM5 12a1.1 1.1 0 0 1 1.1-1.1h11.8a1.1 1.1 0 1 1 0 2.2H6.1A1.1 1.1 0 0 1 5 12zM5 16.8a1.1 1.1 0 0 1 1.1-1.1h11.8a1.1 1.1 0 1 1 0 2.2H6.1A1.1 1.1 0 0 1 5 16.8z"/></svg>',
+    search:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M10.6 4.1a6.5 6.5 0 1 0 0 13.0 6.5 6.5 0 0 0 0-13.0zm-8.7 6.5a8.7 8.7 0 1 1 15.6 5.5l3.0 3.0a1.2 1.2 0 0 1-1.7 1.7l-3.0-3.0A8.7 8.7 0 0 1 1.9 10.6z" clip-rule="evenodd"/></svg>',
+    chevron_down:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M7.2 9.2a1.2 1.2 0 0 1 1.7 0L12 12.3l3.1-3.1a1.2 1.2 0 0 1 1.7 1.7l-4.0 4.0a1.2 1.2 0 0 1-1.7 0l-4.0-4.0a1.2 1.2 0 0 1 0-1.7z"/></svg>',
+    chevron_left:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M14.8 6.2a1.2 1.2 0 0 1 0 1.7L10.7 12l4.1 4.1a1.2 1.2 0 1 1-1.7 1.7l-4.9-4.9a1.2 1.2 0 0 1 0-1.7l4.9-4.9a1.2 1.2 0 0 1 1.7 0z"/></svg>',
+    chevron_right:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M9.2 6.2a1.2 1.2 0 0 1 1.7 0l4.9 4.9a1.2 1.2 0 0 1 0 1.7l-4.9 4.9a1.2 1.2 0 1 1-1.7-1.7l4.1-4.1-4.1-4.1a1.2 1.2 0 0 1 0-1.7z"/></svg>',
+    plus:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M12 4.6a1.2 1.2 0 0 1 1.2 1.2v5h5a1.2 1.2 0 1 1 0 2.4h-5v5a1.2 1.2 0 1 1-2.4 0v-5h-5a1.2 1.2 0 1 1 0-2.4h5v-5A1.2 1.2 0 0 1 12 4.6z"/></svg>',
+    close:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M7.3 7.3a1.2 1.2 0 0 1 1.7 0L12 10.3l3.0-3.0a1.2 1.2 0 1 1 1.7 1.7l-3.0 3.0 3.0 3.0a1.2 1.2 0 0 1-1.7 1.7l-3.0-3.0-3.0 3.0a1.2 1.2 0 1 1-1.7-1.7l3.0-3.0-3.0-3.0a1.2 1.2 0 0 1 0-1.7z"/></svg>',
+    heart:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M12 21.2c-.3 0-.6-.1-.8-.3-3.6-3.0-6.7-5.8-8.3-8.5-1.6-2.6-1.1-5.9 1.2-7.7 2.0-1.6 4.9-1.2 6.6.7.5.5 1 .5 1.5 0 1.7-1.9 4.6-2.3 6.6-.7 2.3 1.8 2.8 5.1 1.2 7.7-1.6 2.7-4.7 5.5-8.3 8.5-.2.2-.5.3-.8.3z"/></svg>',
+    sparkles:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M12 2.9c.5 0 .9.3 1.0.8l.7 2.6a3 3 0 0 0 2.1 2.1l2.6.7c.5.1.8.5.8 1.0s-.3.9-.8 1.0l-2.6.7a3 3 0 0 0-2.1 2.1l-.7 2.6c-.1.5-.5.8-1.0.8s-.9-.3-1.0-.8l-.7-2.6a3 3 0 0 0-2.1-2.1l-2.6-.7a1.0 1.0 0 0 1 0-2.0l2.6-.7a3 3 0 0 0 2.1-2.1l.7-2.6c.1-.5.5-.8 1.0-.8z"/><path fill="currentColor" d="M20.1 4.9c.4 0 .8.3.9.7l.2 1.0c.1.4.4.7.8.8l1.0.2c.4.1.7.5.7.9s-.3.8-.7.9l-1.0.2a1.2 1.2 0 0 0-.8.8l-.2 1.0c-.1.4-.5.7-.9.7s-.8-.3-.9-.7l-.2-1.0a1.2 1.2 0 0 0-.8-.8l-1.0-.2a.9.9 0 0 1 0-1.8l1.0-.2c.4-.1.7-.4.8-.8l.2-1.0c.1-.4.5-.7.9-.7z"/></svg>',
+    swap:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M7.8 6.3a1.2 1.2 0 0 1 1.7 0l2.2 2.2a1.2 1.2 0 1 1-1.7 1.7l-.2-.2v7.3a1.2 1.2 0 0 1-2.4 0V10l-.2.2a1.2 1.2 0 1 1-1.7-1.7l2.3-2.2zM16.2 17.7a1.2 1.2 0 0 1-1.7 0l-2.2-2.2a1.2 1.2 0 0 1 1.7-1.7l.2.2V6.7a1.2 1.2 0 0 1 2.4 0V14l.2-.2a1.2 1.2 0 0 1 1.7 1.7l-2.3 2.2z"/></svg>',
+    gear:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M13.9 2.9a1.2 1.2 0 0 0-1.8 0l-.9 1.1a1.2 1.2 0 0 1-1.2.4l-1.3-.4a1.2 1.2 0 0 0-1.5.9l-.3 1.4a1.2 1.2 0 0 1-.9.9l-1.4.3a1.2 1.2 0 0 0-.9 1.5l.4 1.3a1.2 1.2 0 0 1-.4 1.2l-1.1.9a1.2 1.2 0 0 0 0 1.8l1.1.9c.4.3.5.8.4 1.2l-.4 1.3a1.2 1.2 0 0 0 .9 1.5l1.4.3c.4.1.8.4.9.9l.3 1.4a1.2 1.2 0 0 0 1.5.9l1.3-.4c.4-.1.9 0 1.2.4l.9 1.1a1.2 1.2 0 0 0 1.8 0l.9-1.1c.3-.4.8-.5 1.2-.4l1.3.4a1.2 1.2 0 0 0 1.5-.9l.3-1.4c.1-.4.4-.8.9-.9l1.4-.3a1.2 1.2 0 0 0 .9-1.5l-.4-1.3a1.2 1.2 0 0 1 .4-1.2l1.1-.9a1.2 1.2 0 0 0 0-1.8l-1.1-.9a1.2 1.2 0 0 1-.4-1.2l.4-1.3a1.2 1.2 0 0 0-.9-1.5l-1.4-.3a1.2 1.2 0 0 1-.9-.9l-.3-1.4a1.2 1.2 0 0 0-1.5-.9l-1.3.4a1.2 1.2 0 0 1-1.2-.4l-.9-1.1zM12 15.4a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8z" clip-rule="evenodd"/></svg>',
+  };
+
   const svgElementFromString = (rawSvg) => {
     if (!rawSvg) return null;
     const tpl = document.createElement("template");
@@ -792,6 +817,7 @@
     const tabs = data.tabs || [];
     let activeTab = tabs[0] || "home";
     let activeScene = null;
+    let lastUiTab = null;
 
     const sceneById = new Map((data.scenes || []).map((s) => [s.id, s]));
     const scenesByTab = new Map();
@@ -870,37 +896,26 @@
     const app = document.createElement("div");
     app.className = "pp-app";
     app.setAttribute("aria-hidden", "true");
+    app.dataset.ppBg = "home";
+    app.dataset.ppTab = "";
 
-    const appBar = document.createElement("header");
-    appBar.className = "pp-app-bar";
+    const stage = document.createElement("div");
+    stage.className = "pp-app-stage";
 
-    const appBarText = document.createElement("div");
-    const appBarTitle = document.createElement("h3");
-    appBarTitle.className = "pp-app-bar-title";
-    appBarTitle.textContent = "Perfect Pantry";
-    const appBarSubtitle = document.createElement("p");
-    appBarSubtitle.className = "pp-app-bar-subtitle";
-    appBarSubtitle.textContent = "Preview only";
-    appBarText.appendChild(appBarTitle);
-    appBarText.appendChild(appBarSubtitle);
+    const bg = document.createElement("div");
+    bg.className = "pp-app-bg";
 
-    const appBarActions = document.createElement("div");
-    appBarActions.className = "pp-app-bar-actions";
-    // Keep an empty action slot to match the app's right-side affordance.
-    const ghostAction = document.createElement("button");
-    ghostAction.type = "button";
-    ghostAction.className = "pp-app-icon-btn";
-    ghostAction.setAttribute("aria-label", "Preview only");
-    ghostAction.textContent = "+";
-    ghostAction.addEventListener("click", () => showToast(toast));
-    appBarActions.appendChild(ghostAction);
-
-    appBar.appendChild(appBarText);
-    appBar.appendChild(appBarActions);
+    const objectsLayer = document.createElement("div");
+    objectsLayer.className = "pp-app-objects";
+    objectsLayer.setAttribute("aria-hidden", "true");
 
     const appContent = document.createElement("div");
     appContent.className = "pp-app-content";
     appContent.dataset.ppScrollable = "true";
+
+    const fabsLayer = document.createElement("div");
+    fabsLayer.className = "pp-app-fabs";
+    fabsLayer.setAttribute("aria-hidden", "true");
 
     const appNav = document.createElement("nav");
     appNav.className = "pp-app-nav";
@@ -956,8 +971,12 @@
     modal.appendChild(scrim);
     modal.appendChild(sheet);
 
-    app.appendChild(appBar);
-    app.appendChild(appContent);
+    stage.appendChild(bg);
+    stage.appendChild(objectsLayer);
+    stage.appendChild(appContent);
+    stage.appendChild(fabsLayer);
+
+    app.appendChild(stage);
     app.appendChild(appNav);
 
     screen.appendChild(splashImg);
@@ -984,6 +1003,163 @@
       if (className) node.className = className;
       if (text != null) node.textContent = String(text);
       return node;
+    };
+
+    const iconEl = (name) => {
+      const svg = svgElementFromString(UI_SVGS[name]);
+      if (!svg) return null;
+      svg.setAttribute("aria-hidden", "true");
+      svg.setAttribute("focusable", "false");
+      return svg;
+    };
+
+    const imgEl = ({ src, className, alt }) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = className || "";
+      img.alt = alt || "";
+      img.decoding = "async";
+      img.loading = "eager";
+      return img;
+    };
+
+    const buildPill = ({
+      label,
+      className,
+      leftIcon,
+      rightIcon,
+      ariaLabel,
+      onClick,
+    }) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = className ? `pp-app-pill ${className}` : "pp-app-pill";
+      if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
+
+      const left = leftIcon ? iconEl(leftIcon) : null;
+      if (left) btn.appendChild(left);
+
+      const span = document.createElement("span");
+      span.textContent = label || "";
+      btn.appendChild(span);
+
+      const right = rightIcon ? iconEl(rightIcon) : null;
+      if (right) btn.appendChild(right);
+
+      btn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        return onClick ? onClick() : showToast(toast);
+      });
+      return btn;
+    };
+
+    const buildCircle = ({ icon, className, ariaLabel, onClick }) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = className ? `pp-app-circle ${className}` : "pp-app-circle";
+      if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
+      const svg = iconEl(icon);
+      if (svg) btn.appendChild(svg);
+      btn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        return onClick ? onClick() : showToast(toast);
+      });
+      return btn;
+    };
+
+    const bgKeyForTab = (tab) => {
+      switch (tab) {
+        case "home":
+        case "plan":
+          return "home";
+        case "pantry":
+          return "pantry";
+        case "cookbook":
+          return "cookbook";
+        case "shop":
+          return "shopping";
+        default:
+          return "home";
+      }
+    };
+
+    const renderObjectsForTab = (tab) => {
+      clear(objectsLayer);
+
+      const add = (src, cls) => {
+        const obj = imgEl({ src, className: `pp-obj ${cls}`, alt: "" });
+        objectsLayer.appendChild(obj);
+      };
+
+      if (tab === "home") {
+        add("assets/objects/obj_fridge_note.png", "pp-obj--fridge-note");
+        add("assets/objects/obj_fridge_pic.png", "pp-obj--fridge-pic");
+        return;
+      }
+
+      if (tab === "plan") {
+        add("assets/objects/obj_fridge_note.png", "pp-obj--fridge-note");
+        add("assets/objects/obj_fridge_pic.png", "pp-obj--fridge-pic");
+        add("assets/objects/obj_fridge_calendar.png", "pp-obj--fridge-calendar");
+        add("assets/objects/obj_unicorn.png", "pp-obj--unicorn");
+        return;
+      }
+
+      if (tab === "cookbook") {
+        add("assets/objects/obj_cookbook.png", "pp-obj--cookbook");
+        return;
+      }
+
+      if (tab === "pantry") {
+        add("assets/objects/obj_pantry_shelf.png", "pp-obj--pantry-shelf");
+        add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-top");
+        add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-bottom");
+      }
+    };
+
+    const renderFabsForTab = (tab) => {
+      clear(fabsLayer);
+
+      const addFabSvg = ({ cls, icon, ariaLabel, onClick }) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `pp-app-fab ${cls}`;
+        btn.setAttribute("aria-label", ariaLabel || "Preview only");
+        const svg = iconEl(icon);
+        if (svg) btn.appendChild(svg);
+        btn.addEventListener("click", () => (onClick ? onClick() : showToast(toast)));
+        fabsLayer.appendChild(btn);
+      };
+
+      const addFabImg = ({ cls, src, ariaLabel, onClick }) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `pp-app-fab ${cls}`;
+        btn.setAttribute("aria-label", ariaLabel || "Preview only");
+        const img = imgEl({ src, className: "", alt: "" });
+        btn.appendChild(img);
+        btn.addEventListener("click", () => (onClick ? onClick() : showToast(toast)));
+        fabsLayer.appendChild(btn);
+      };
+
+      if (tab === "home") {
+        addFabSvg({ cls: "pp-app-fab--gear", icon: "gear", ariaLabel: "Settings (preview)" });
+        return;
+      }
+
+      if (tab === "cookbook") {
+        addFabSvg({ cls: "pp-app-fab--plus", icon: "plus", ariaLabel: "Add recipe (preview)" });
+        return;
+      }
+
+      if (tab === "pantry") {
+        addFabImg({
+          cls: "pp-app-fab--spice",
+          src: "assets/objects/obj_tan_spice.png",
+          ariaLabel: "Spices (preview)",
+        });
+        addFabSvg({ cls: "pp-app-fab--plus", icon: "plus", ariaLabel: "Add pantry item (preview)" });
+      }
     };
 
     const buildListRow = ({ title, subtitle, trailing, onClick }) => {
@@ -1035,138 +1211,256 @@
 
     const renderHome = () => {
       const home = content.home || {};
-      const section = el("div", "pp-app-section");
+      const root = el("div", "pp-screen pp-screen-home");
 
       const weekCard = el("div", "pp-app-card");
       weekCard.appendChild(el("p", "pp-app-card-title", "Meals This Week"));
-      weekCard.appendChild(el("p", "pp-app-card-sub", "Plan your life, live your plan"));
+      weekCard.appendChild(el("p", "pp-app-card-sub", "Plan your life, Live your plan"));
       weekCard.appendChild(
         el(
           "p",
           "pp-app-card-sub",
-          `${home.weekRangeLabel || "This week"}  •  ${home.todayLabel || "Today"}`,
+          "Feb 2–Feb 8  •  Today is Fri, Feb 6",
         ),
       );
       weekCard.appendChild(el("div", "pp-app-divider"));
-      const weekRow = el("div", "pp-app-card-row");
-      weekRow.appendChild(
-        el(
-          "span",
-          "",
-          `${home.plannedMeals || 0}/${home.targetMeals || 0} meals planned`,
-        ),
-      );
-      weekRow.appendChild(
-        el("span", "", `${home.scheduledDays || 0}/7 scheduled`),
-      );
-      weekCard.appendChild(weekRow);
-      weekCard.appendChild(el("p", "pp-app-card-sub", home.coverageLabel || ""));
-      section.appendChild(weekCard);
-
-      if (home.todayMeal) {
-        const todayCard = el("div", "pp-app-card");
-        todayCard.appendChild(el("p", "pp-app-card-kicker", "Cook today's meal"));
-        todayCard.appendChild(el("p", "pp-app-card-title", home.todayMeal.title || "Today's meal"));
-        todayCard.appendChild(el("p", "pp-app-card-sub", home.todayMeal.coverageLabel || ""));
-        const pillRow = el("div", "pp-app-pill-row");
-        const cookBtn = el("button", "pp-app-pill pp-app-pill--primary", "Cook now");
-        cookBtn.type = "button";
-        cookBtn.addEventListener("click", () => {
-          showToast(toast);
-        });
-        const viewBtn = el("button", "pp-app-pill", "View recipe");
-        viewBtn.type = "button";
-        viewBtn.addEventListener("click", () => openDetailForTab("cookbook"));
-        pillRow.appendChild(cookBtn);
-        pillRow.appendChild(viewBtn);
-        todayCard.appendChild(el("div", "pp-app-divider"));
-        todayCard.appendChild(pillRow);
-        section.appendChild(todayCard);
-      }
-
-      const actionsCard = el("div", "pp-app-card");
-      actionsCard.appendChild(el("p", "pp-app-card-kicker", "Quick actions"));
-      actionsCard.appendChild(
+      weekCard.appendChild(
         el(
           "p",
           "pp-app-card-sub",
-          "Try a few flows (preview only).",
+          `${home.plannedMeals || 1}/${home.targetMeals || 5} meals planned`,
         ),
       );
-      const pills = el("div", "pp-app-pill-row");
-      (home.quickActions || []).slice(0, 3).forEach((action) => {
-        const btn = el("button", "pp-app-pill", action.label || "Action");
-        btn.type = "button";
-        btn.addEventListener("click", () => openDetailForTab("home"));
-        pills.appendChild(btn);
-      });
-      actionsCard.appendChild(el("div", "pp-app-divider"));
-      actionsCard.appendChild(pills);
-      section.appendChild(actionsCard);
+      weekCard.appendChild(
+        el(
+          "p",
+          "pp-app-card-sub",
+          `${home.scheduledDays || 1}/7 scheduled for the week`,
+        ),
+      );
+      weekCard.appendChild(el("p", "pp-app-card-sub", home.coverageLabel || "Pantry coverage: 0/10 on hand  •  10 to buy"));
+      root.appendChild(weekCard);
 
-      if (home.useItUp) {
-        const up = home.useItUp;
-        const useCard = el("div", "pp-app-card");
-        useCard.appendChild(el("p", "pp-app-card-kicker", up.headline || "Use it up"));
-        useCard.appendChild(el("p", "pp-app-card-title", up.line1 || "Expiring soon"));
-        useCard.appendChild(el("p", "pp-app-card-sub", up.line2 || ""));
-        const btn = el("button", "pp-app-pill pp-app-pill--primary", "Open Pantry");
-        btn.type = "button";
-        btn.addEventListener("click", () => api.setTab("pantry"));
-        useCard.appendChild(el("div", "pp-app-divider"));
-        useCard.appendChild(btn);
-        section.appendChild(useCard);
-      }
+      const dinnerCard = el("div", "pp-app-card");
+      dinnerCard.appendChild(el("p", "pp-app-card-title", "What's For Dinner?"));
+      dinnerCard.appendChild(
+        el(
+          "p",
+          "pp-meal-title",
+          (home.todayMeal && home.todayMeal.title) || "One-Pot Creamy Tuscan Pasta",
+        ),
+      );
+      dinnerCard.appendChild(
+        el(
+          "p",
+          "pp-app-card-sub",
+          (home.todayMeal && home.todayMeal.coverageLabel) || "Pantry coverage: 0/10 on hand  •  10 to buy",
+        ),
+      );
+      dinnerCard.appendChild(el("div", "pp-app-divider"));
+      const ctas = el("div", "pp-home-cta-row");
+      ctas.appendChild(
+        buildPill({
+          label: "View Recipe",
+          className: "pp-app-pill--title",
+          onClick: () => openDetailForTab("cookbook"),
+        }),
+      );
+      ctas.appendChild(
+        buildPill({
+          label: "Cook Now",
+          className: "pp-app-pill--title",
+          onClick: () => showToast(toast),
+        }),
+      );
+      dinnerCard.appendChild(ctas);
+      root.appendChild(dinnerCard);
 
-      return section;
+      const actionsCard = el("div", "pp-app-card");
+      actionsCard.appendChild(el("p", "pp-app-card-title", "Quick Actions"));
+      const actions = el("div", "pp-home-actions");
+
+      const mkAction = ({ icon, label, onClick }) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "pp-home-action";
+        btn.addEventListener("click", () => (onClick ? onClick() : showToast(toast)));
+
+        const iconWrap = el("div", "pp-home-action-icon");
+        const svg = svgElementFromString(icon);
+        if (svg) {
+          svg.setAttribute("aria-hidden", "true");
+          svg.setAttribute("focusable", "false");
+          iconWrap.appendChild(svg);
+        }
+        btn.appendChild(iconWrap);
+
+        btn.appendChild(el("div", "pp-home-action-label", label));
+        return btn;
+      };
+
+      actions.appendChild(
+        mkAction({
+          icon: TAB_SVGS.cookbook,
+          label: "Add New Recipe",
+          onClick: () => showToast(toast),
+        }),
+      );
+      actions.appendChild(
+        mkAction({
+          icon: TAB_SVGS.pantry,
+          label: "Add Pantry Item",
+          onClick: () => api.setTab("pantry"),
+        }),
+      );
+      actions.appendChild(
+        mkAction({
+          icon: UI_SVGS.search,
+          label: "Search Recipes",
+          onClick: () => api.setTab("cookbook"),
+        }),
+      );
+
+      actionsCard.appendChild(actions);
+      root.appendChild(actionsCard);
+
+      return root;
     };
 
     const renderPantry = () => {
       const pantry = content.pantry || {};
       const items = Array.isArray(pantry.items) ? pantry.items : [];
+      const root = el("div", "pp-screen pp-screen-pantry");
 
-      const section = el("div", "pp-app-section");
-      const head = el("div", "pp-app-card");
-      head.appendChild(el("p", "pp-app-card-kicker", "Your Pantry"));
-      head.appendChild(el("p", "pp-app-card-title", "List and shelf-style views"));
-      head.appendChild(
-        el(
-          "p",
-          "pp-app-card-sub",
-          "Tap an item to preview details (redacted).",
-        ),
+      const count = Number(items.length || 0);
+      const topRow = el("div", "pp-top-row");
+      topRow.appendChild(
+        buildPill({
+          label: "List",
+          className: "pp-app-pill--title",
+          leftIcon: "menu",
+          onClick: () => showToast(toast),
+        }),
       );
-      section.appendChild(head);
+      topRow.appendChild(
+        buildPill({
+          label: `All Items (${count || 5})`,
+          className: "pp-app-pill--title",
+          rightIcon: "chevron_down",
+          onClick: () => showToast(toast),
+        }),
+      );
+      topRow.appendChild(
+        buildCircle({
+          icon: "search",
+          className: "pp-app-circle--muted",
+          ariaLabel: "Search pantry (preview)",
+        }),
+      );
+      root.appendChild(topRow);
 
-      const list = el("div", "pp-app-list");
-      items.slice(0, 8).forEach((it) => {
-        const trailing = el("span", "pp-app-chip", it.qty || "Qty");
-        const sub = it.expires && it.expires !== "—" ? `Expires: ${it.expires}` : "No expiration";
-        list.appendChild(
-          buildListRow({
-            title: it.name || "Pantry item",
-            subtitle: sub,
-            trailing,
-            onClick: () => openDetailForTab("pantry"),
-          }),
-        );
-      });
-      section.appendChild(list);
-      return section;
+      const chipWrap = el("div", "pp-chip-wrap");
+      chipWrap.appendChild(el("span", "pp-app-chip", "Produce 3"));
+      root.appendChild(chipWrap);
+
+      const stage = el("div", "pp-pantry-stage");
+      stage.appendChild(
+        imgEl({
+          src: "assets/ingredients/apple.png",
+          className: "pp-pantry-item pp-pantry-item--apple",
+          alt: "",
+        }),
+      );
+      stage.appendChild(
+        imgEl({
+          src: "assets/ingredients/banana.png",
+          className: "pp-pantry-item pp-pantry-item--banana",
+          alt: "",
+        }),
+      );
+      stage.appendChild(
+        imgEl({
+          src: "assets/ingredients/avocado.png",
+          className: "pp-pantry-item pp-pantry-item--avocado",
+          alt: "",
+        }),
+      );
+
+      const label = ({ cls, title, sub }) => {
+        const node = document.createElement("div");
+        node.className = `pp-pantry-label ${cls}`;
+        const strong = document.createElement("strong");
+        strong.textContent = title;
+        const span = document.createElement("span");
+        span.textContent = sub;
+        node.appendChild(strong);
+        node.appendChild(span);
+        return node;
+      };
+
+      stage.appendChild(label({ cls: "pp-pantry-label--apple", title: "Apple", sub: "Exp 1d" }));
+      stage.appendChild(label({ cls: "pp-pantry-label--banana", title: "Banana", sub: "Exp 1d" }));
+      stage.appendChild(label({ cls: "pp-pantry-label--avocado", title: "Avocado", sub: "Exp 1d" }));
+
+      root.appendChild(stage);
+      return root;
     };
 
     const renderCookbook = () => {
       const cookbook = content.cookbook || {};
       const recipes = Array.isArray(cookbook.recipes) ? cookbook.recipes : [];
-      const section = el("div", "pp-app-section");
+      const root = el("div", "pp-screen pp-screen-cookbook");
 
-      const head = el("div", "pp-app-card");
-      head.appendChild(el("p", "pp-app-card-kicker", "Cookbook"));
-      head.appendChild(el("p", "pp-app-card-title", "Your household cookbook"));
-      head.appendChild(
-        el("p", "pp-app-card-sub", "Tap a card to preview the detail layout."),
+      const hud = el("div", "pp-cookbook-hud");
+
+      const row = el("div", "pp-cookbook-row");
+      row.appendChild(
+        buildPill({
+          label: "Cookbook",
+          className: "pp-app-pill--title",
+          rightIcon: "chevron_down",
+          onClick: () => showToast(toast),
+        }),
       );
-      section.appendChild(head);
+      row.appendChild(
+        buildCircle({
+          icon: "search",
+          ariaLabel: "Search recipes (preview)",
+          className: "pp-app-circle--muted",
+        }),
+      );
+      hud.appendChild(row);
+
+      const filterRow = el("div", "pp-cookbook-row pp-cookbook-row--filters");
+      filterRow.appendChild(
+        buildCircle({
+          icon: "swap",
+          ariaLabel: "Swap (preview)",
+          className: "pp-app-circle--muted",
+        }),
+      );
+      filterRow.appendChild(
+        buildPill({
+          label: "Main Dish",
+          className: "pp-app-pill--title",
+          rightIcon: "chevron_down",
+          onClick: () => showToast(toast),
+        }),
+      );
+      hud.appendChild(filterRow);
+
+      const chips = el("div", "pp-cookbook-chips");
+      ["All", "Burgers", "Casseroles", "Deep Fried", "Fish"].forEach((labelText, idx) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = idx === 0 ? "pp-cookbook-chip is-selected" : "pp-cookbook-chip";
+        chip.textContent = labelText;
+        chip.addEventListener("click", () => showToast(toast));
+        chips.appendChild(chip);
+      });
+      hud.appendChild(chips);
+
+      root.appendChild(hud);
 
       const grid = el("div", "pp-app-grid");
       recipes.slice(0, 6).forEach((r) => {
@@ -1174,86 +1468,208 @@
         card.type = "button";
         card.className = "pp-app-recipe-card";
         card.addEventListener("click", () => openDetailForTab("cookbook"));
-        card.appendChild(el("div", "pp-app-recipe-thumb"));
+
+        const thumb = el("div", "pp-app-recipe-thumb");
+        const overlays = el("div", "pp-recipe-overlays");
+
+        const mkOverlay = (iconName, ariaLabel) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "pp-recipe-overlay-btn";
+          btn.setAttribute("aria-label", ariaLabel);
+          const svg = iconEl(iconName);
+          if (svg) btn.appendChild(svg);
+          btn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            showToast(toast);
+          });
+          return btn;
+        };
+
+        overlays.appendChild(mkOverlay("heart", "Favorite (preview)"));
+        overlays.appendChild(mkOverlay("plus", "Add (preview)"));
+        thumb.appendChild(overlays);
+        card.appendChild(thumb);
+
         card.appendChild(el("p", "pp-app-recipe-title", r.title || "Recipe"));
-        card.appendChild(el("p", "pp-app-recipe-meta", r.meta || ""));
+        card.appendChild(el("p", "pp-app-recipe-meta", r.meta || "35 min  •  4 servings"));
         grid.appendChild(card);
       });
-      section.appendChild(grid);
-      return section;
+
+      root.appendChild(grid);
+      return root;
     };
 
     const renderPlan = () => {
       const plan = content.plan || {};
       const week = Array.isArray(plan.week) ? plan.week : [];
-      const section = el("div", "pp-app-section");
+      const root = el("div", "pp-screen pp-screen-plan");
 
-      const head = el("div", "pp-app-card");
-      head.appendChild(el("p", "pp-app-card-kicker", "Plan"));
-      head.appendChild(el("p", "pp-app-card-title", "Weekly planning board"));
-      head.appendChild(
-        el(
-          "p",
-          "pp-app-card-sub",
-          "Tap a slot to preview the workflow (details redacted).",
-        ),
+      const hud = el("div", "pp-plan-hud");
+      const weekRow = el("div", "pp-plan-week-row");
+      weekRow.appendChild(
+        buildCircle({
+          icon: "chevron_left",
+          ariaLabel: "Previous week (preview)",
+          className: "pp-app-circle--muted",
+        }),
       );
-      section.appendChild(head);
+      weekRow.appendChild(
+        buildPill({
+          label: "Week of 2/2",
+          className: "pp-plan-week-pill pp-app-pill--title",
+          rightIcon: "chevron_down",
+          onClick: () => showToast(toast),
+        }),
+      );
+      weekRow.appendChild(
+        buildCircle({
+          icon: "chevron_right",
+          ariaLabel: "Next week (preview)",
+          className: "pp-app-circle--muted",
+        }),
+      );
+      hud.appendChild(weekRow);
 
-      const list = el("div", "pp-app-list");
-      week.slice(0, 7).forEach((slot) => {
-        const meal = slot.meal && slot.meal !== "—" ? slot.meal : "Empty slot";
-        list.appendChild(
-          buildListRow({
-            title: `${slot.day || "Day"}  •  Dinner`,
-            subtitle: meal,
-            trailing: el("span", "pp-app-chip", meal === "Empty slot" ? "Add" : "View"),
-            onClick: () => openDetailForTab("plan"),
+      hud.appendChild(
+        buildPill({
+          label: "Auto-fill this week",
+          className: "pp-app-pill--wide pp-app-pill--title",
+          leftIcon: "sparkles",
+          onClick: () => showToast(toast),
+        }),
+      );
+
+      root.appendChild(hud);
+
+      const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+      const dates = ["2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8"];
+
+      week.slice(0, 7).forEach((slot, idx) => {
+        const card = el("div", "pp-app-card pp-meal-card");
+        card.addEventListener("click", () => openDetailForTab("plan"));
+
+        card.appendChild(el("div", "pp-meal-thumb"));
+
+        const meta = el("div", "pp-meal-meta");
+        meta.appendChild(
+          el("p", "pp-meal-title", `${dayNames[idx] || slot.day || "Day"}  •  ${dates[idx] || ""}`),
+        );
+        meta.appendChild(el("p", "pp-meal-sub", slot.meal || "Meal preview"));
+        meta.appendChild(el("p", "pp-meal-sub", `${(idx % 3) + 1} of ${(idx % 10) + 7} from pantry`));
+        card.appendChild(meta);
+
+        const actions = el("div", "pp-meal-actions");
+        actions.appendChild(
+          buildPill({
+            label: "Start Cooking",
+            onClick: () => showToast(toast),
           }),
         );
+        actions.appendChild(
+          buildPill({
+            label: "Replan Meal",
+            onClick: () => showToast(toast),
+          }),
+        );
+        card.appendChild(actions);
+        root.appendChild(card);
       });
-      section.appendChild(list);
-      return section;
+
+      return root;
     };
 
     const renderShop = () => {
       const shop = content.shop || {};
-      const groups = Array.isArray(shop.groups) ? shop.groups : [];
-      const section = el("div", "pp-app-section");
+      const root = el("div", "pp-screen pp-screen-shop");
 
-      const head = el("div", "pp-app-card");
-      head.appendChild(el("p", "pp-app-card-kicker", "Shop"));
-      head.appendChild(el("p", "pp-app-card-title", "Shop the gap"));
-      head.appendChild(
-        el(
-          "p",
-          "pp-app-card-sub",
-          "Tap an item to preview bulk picker and detail.",
-        ),
+      const topRow = el("div", "pp-top-row");
+      topRow.appendChild(
+        buildPill({
+          label: "List",
+          className: "pp-app-pill--title",
+          leftIcon: "menu",
+          onClick: () => showToast(toast),
+        }),
       );
-      section.appendChild(head);
+      topRow.appendChild(
+        buildPill({
+          label: "Shopping",
+          className: "pp-app-pill--title",
+          onClick: () => showToast(toast),
+        }),
+      );
+      topRow.appendChild(
+        buildCircle({
+          icon: "search",
+          ariaLabel: "Search shopping (preview)",
+          className: "pp-app-circle--muted",
+        }),
+      );
+      root.appendChild(topRow);
 
-      groups.slice(0, 3).forEach((g) => {
-        const groupCard = el("div", "pp-app-card");
-        groupCard.appendChild(el("p", "pp-app-card-kicker", g.name || "Group"));
-        const list = el("div", "pp-app-list");
-        (g.items || []).slice(0, 3).forEach((it) => {
-          const chip = el("span", "pp-app-chip", it.checked ? "Have" : "Need");
-          list.appendChild(
-            buildListRow({
-              title: it.name || "Item",
-              subtitle: it.qty ? `Qty: ${it.qty}` : "",
-              trailing: chip,
-              onClick: () => openDetailForTab("shop"),
-            }),
-          );
-        });
-        groupCard.appendChild(el("div", "pp-app-divider"));
-        groupCard.appendChild(list);
-        section.appendChild(groupCard);
-      });
+      root.appendChild(
+        buildPill({
+          label: "Tomatillo Salsa Verde",
+          className: "pp-app-pill--title pp-shop-recipe-pill",
+          onClick: () => showToast(toast),
+        }),
+      );
 
-      return section;
+      const stage = el("div", "pp-shop-stage");
+      const itemsWrap = el("div", "pp-shop-items");
+
+      itemsWrap.appendChild(
+        imgEl({ src: "assets/objects/obj_garlic.png", className: "pp-shop-item pp-shop-item--garlic", alt: "" }),
+      );
+      itemsWrap.appendChild(
+        imgEl({ src: "assets/ingredients/jalapeno.png", className: "pp-shop-item pp-shop-item--jalapeno", alt: "" }),
+      );
+      itemsWrap.appendChild(
+        imgEl({ src: "assets/objects/obj_tan_spice.png", className: "pp-shop-item pp-shop-item--salt", alt: "" }),
+      );
+      itemsWrap.appendChild(
+        imgEl({ src: "assets/ingredients/olive_oil.png", className: "pp-shop-item pp-shop-item--oliveoil", alt: "" }),
+      );
+      itemsWrap.appendChild(
+        imgEl({ src: "assets/ingredients/white_onion.png", className: "pp-shop-item pp-shop-item--onion", alt: "" }),
+      );
+
+      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--garlic", "Garlic"));
+      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--jalapeno", "Jalapeno"));
+      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--salt", "Kosher Salt"));
+      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--oliveoil", "Olive oil"));
+      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--onion", "White Onion"));
+
+      stage.appendChild(itemsWrap);
+
+      const bar = el("div", "pp-shop-bar");
+      bar.appendChild(
+        buildCircle({
+          icon: "close",
+          className: "pp-app-circle--danger",
+          ariaLabel: "Cancel (preview)",
+          onClick: () => showToast(toast),
+        }),
+      );
+      bar.appendChild(
+        buildPill({
+          label: "Complete shopping",
+          className: "pp-app-pill--wide",
+          onClick: () => showToast(toast),
+        }),
+      );
+      bar.appendChild(
+        buildCircle({
+          icon: "plus",
+          ariaLabel: "Add item (preview)",
+          onClick: () => showToast(toast),
+        }),
+      );
+      stage.appendChild(bar);
+
+      root.appendChild(stage);
+      return root;
     };
 
     const renderOverviewForTab = (tab) => {
@@ -1450,8 +1866,18 @@
       badge.style.display = "";
       app.setAttribute("aria-hidden", "false");
 
-      appBarTitle.textContent = slugToLabel(activeTab);
-      appBarSubtitle.textContent = "Preview only";
+      app.dataset.ppTab = activeTab || "";
+      app.dataset.ppBg = bgKeyForTab(activeTab);
+
+      renderObjectsForTab(activeTab);
+      renderFabsForTab(activeTab);
+
+      const fixedLayout = activeTab === "pantry" || activeTab === "shop";
+      appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
+      if (activeTab !== lastUiTab) {
+        appContent.scrollTop = 0;
+        lastUiTab = activeTab;
+      }
 
       clear(appContent);
       appContent.appendChild(renderOverviewForTab(activeTab));

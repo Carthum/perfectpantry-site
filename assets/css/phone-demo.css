@@ -11,7 +11,6 @@
 
 .pp-scrolly {
   position: relative;
-  overflow: hidden;
   padding-top: 1.35rem;
   padding-bottom: 2.4rem;
 }
@@ -19,13 +18,15 @@
 .pp-scrolly::before {
   content: "";
   position: absolute;
-  inset: -140px -90px -140px -90px;
+  inset: 0;
   pointer-events: none;
   background-image: url("../brand/pp-splash-hero-desktop.jpg");
   background-size: cover;
   background-position: center;
   opacity: 0.18;
   filter: saturate(0.92) contrast(1.06);
+  transform: scale(1.08);
+  transform-origin: center;
 }
 
 .pp-scrolly > * {
@@ -34,9 +35,10 @@
 
 @media (max-width: 900px) {
   .pp-scrolly::before {
-    inset: -110px -60px -110px -60px;
+    inset: 0;
     background-image: url("../brand/pp-splash-hero-mobile.png");
     opacity: 0.12;
+    transform: scale(1.12);
   }
 }
 

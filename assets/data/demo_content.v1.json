@@ -1,0 +1,127 @@
+{
+  "version": "1",
+  "home": {
+    "weekRangeLabel": "This week",
+    "weekRangeValue": "Mon–Sun",
+    "todayLabel": "Today",
+    "todayValue": "Dinner time",
+    "plannedMeals": 4,
+    "targetMeals": 5,
+    "scheduledDays": 4,
+    "coverageLabel": "Pantry coverage: 19/28 on hand  •  9 to buy",
+    "nextWeekPlannedMeals": 3,
+    "nextWeekScheduledDays": 3,
+    "nextWeekCoverageLabel": "Next week Pantry coverage: 14/25 on hand  •  11 to buy",
+    "todayMeal": {
+      "title": "Weeknight lemon chicken",
+      "thumbnail": null,
+      "coverageLabel": "Pantry coverage: 8/11 on hand  •  3 to buy"
+    },
+    "quickActions": [
+      { "id": "add_recipe", "label": "Add recipe" },
+      { "id": "add_pantry", "label": "Add pantry item" },
+      { "id": "search", "label": "Search recipes" }
+    ],
+    "useItUp": {
+      "headline": "Use it up",
+      "line1": "Garlic expires in 3 days",
+      "line2": "Plan a meal to use it this week"
+    }
+  },
+  "pantry": {
+    "items": [
+      { "name": "Olive oil", "qty": "Half bottle", "expires": "—" },
+      { "name": "Garlic", "qty": "3 cloves", "expires": "3 days" },
+      { "name": "Rice", "qty": "2 cups", "expires": "—" },
+      { "name": "Black beans", "qty": "1 can", "expires": "—" },
+      { "name": "Greek yogurt", "qty": "1 tub", "expires": "6 days" },
+      { "name": "Parmesan", "qty": "Small wedge", "expires": "9 days" },
+      { "name": "Frozen peas", "qty": "1 bag", "expires": "—" },
+      { "name": "Canned tomatoes", "qty": "2 cans", "expires": "—" }
+    ]
+  },
+  "cookbook": {
+    "recipes": [
+      { "title": "Rustic tomato soup", "meta": "35 min  •  4 servings", "tags": ["Staple"] },
+      { "title": "Garlic butter noodles", "meta": "18 min  •  2 servings", "tags": ["Fast"] },
+      { "title": "Sheet-pan fajitas", "meta": "30 min  •  4 servings", "tags": ["Weeknight"] },
+      { "title": "Roasted veggie bowls", "meta": "40 min  •  4 servings", "tags": ["Prep"] },
+      { "title": "Skillet chili", "meta": "45 min  •  6 servings", "tags": ["Freezer"] },
+      { "title": "Lemon herb salmon", "meta": "22 min  •  2 servings", "tags": ["Simple"] }
+    ],
+    "detail": {
+      "title": "Rustic tomato soup",
+      "meta": "35 min  •  4 servings",
+      "ingredients": [
+        "2 tbsp olive oil",
+        "1 onion, chopped",
+        "3 cloves garlic",
+        "1 can tomatoes",
+        "2 cups broth",
+        "•••",
+        "•••"
+      ],
+      "steps": [
+        "Saute onion until soft.",
+        "Add garlic and stir briefly.",
+        "Simmer, blend, and season.",
+        "•••",
+        "•••"
+      ]
+    }
+  },
+  "plan": {
+    "week": [
+      { "day": "Mon", "meal": "Rustic tomato soup" },
+      { "day": "Tue", "meal": "Sheet-pan fajitas" },
+      { "day": "Wed", "meal": "Skillet chili" },
+      { "day": "Thu", "meal": "—" },
+      { "day": "Fri", "meal": "Lemon herb salmon" },
+      { "day": "Sat", "meal": "—" },
+      { "day": "Sun", "meal": "Roasted veggie bowls" }
+    ],
+    "detail": {
+      "day": "Wednesday",
+      "slot": "Dinner",
+      "headline": "Meal slot preview",
+      "body": "Choose a recipe, then Perfect Pantry auto-builds the Shop gap list."
+    }
+  },
+  "shop": {
+    "groups": [
+      {
+        "name": "Produce",
+        "items": [
+          { "name": "Lemons", "qty": "4", "checked": false },
+          { "name": "Onions", "qty": "2", "checked": false },
+          { "name": "Bell peppers", "qty": "3", "checked": true }
+        ]
+      },
+      {
+        "name": "Pantry",
+        "items": [
+          { "name": "Broth", "qty": "1 carton", "checked": false },
+          { "name": "Tortillas", "qty": "1 pack", "checked": false },
+          { "name": "Canned tomatoes", "qty": "2 cans", "checked": true }
+        ]
+      },
+      {
+        "name": "Dairy",
+        "items": [
+          { "name": "Parmesan", "qty": "1 wedge", "checked": false },
+          { "name": "Greek yogurt", "qty": "1 tub", "checked": true }
+        ]
+      }
+    ],
+    "detail": {
+      "headline": "Bulk picker preview",
+      "body": "Pick a size and add to cart (preview only).",
+      "options": [
+        { "label": "Small", "detail": "1–2 meals" },
+        { "label": "Medium", "detail": "3–4 meals" },
+        { "label": "Family", "detail": "5+ meals" }
+      ]
+    }
+  }
+}
+

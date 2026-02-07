@@ -137,27 +137,99 @@
 
   const MODAL_SCREENS = [
     {
-      id: "home-add-recipe",
+      id: "home-add-recipe-link",
       bg: "home",
       tab: "home",
-      sheet: { title: "Add New Recipe", kind: "add_recipe" },
+      sheet: { title: "Add Recipe", kind: "add_recipe", mode: "link", align: "center" },
       copy: {
         kicker: "Quick Actions",
-        title: "Add New Recipe",
+        title: "Add Recipe",
         description:
-          "This opens the same add-recipe surface the app uses. We'll refine the fields and buttons next.",
+          "Paste a recipe link to import it. This mirrors the app's link-import flow (preview only).",
       },
     },
     {
-      id: "home-add-pantry-item",
+      id: "home-add-recipe-photo",
       bg: "home",
       tab: "home",
-      sheet: { title: "Add Pantry Item", kind: "add_pantry_item" },
+      sheet: { title: "Add Recipe", kind: "add_recipe", mode: "photo", align: "center" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Add Recipe",
+        description:
+          "Capture a recipe from a photo or your library. Layout only for now (preview only).",
+      },
+    },
+    {
+      id: "home-add-recipe-ai",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Add Recipe", kind: "add_recipe", mode: "ai", align: "center" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Add Recipe",
+        description:
+          "Describe what you want to cook and let the app draft a recipe. Layout only for now (preview only).",
+      },
+    },
+    {
+      id: "home-add-recipe-manual",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Add Recipe", kind: "add_recipe", mode: "manual", align: "center" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Add Recipe",
+        description:
+          "Create a recipe by typing it in. We'll refine fields and spacing to match the app.",
+      },
+    },
+    {
+      id: "home-add-pantry-search",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "search", align: "center" },
       copy: {
         kicker: "Quick Actions",
         title: "Add Pantry Item",
         description:
-          "This opens the same add-item surface the app uses. We'll tighten the flow once you confirm the exact UI.",
+          "Search foods and products to add them to your pantry (preview only).",
+      },
+    },
+    {
+      id: "home-add-pantry-scan",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "scan", align: "center" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Add Pantry Item",
+        description:
+          "Scan a UPC to add an item. Layout only for now (preview only).",
+      },
+    },
+    {
+      id: "home-add-pantry-manual",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "manual", align: "center" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Add Pantry Item",
+        description:
+          "Add an item manually. We'll tighten the details once you confirm the exact UI.",
+      },
+    },
+    {
+      id: "home-add-pantry-bulk",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Bulk add", kind: "add_pantry_item", mode: "bulk", align: "left" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Bulk add",
+        description:
+          "Tap items to add. Your added items stay pinned while you browse (preview only).",
       },
     },
     {
@@ -356,6 +428,18 @@
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M7 7a1.1 1.1 0 0 1 1.6 0l3.4 3.4L15.4 7A1.1 1.1 0 1 1 17 8.6L13.6 12l3.4 3.4a1.1 1.1 0 0 1-1.6 1.6L12 13.6 8.6 17A1.1 1.1 0 0 1 7 15.4L10.4 12 7 8.6A1.1 1.1 0 0 1 7 7z"/></svg>',
     gear:
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm9 3.5a7.8 7.8 0 0 0-.1-1.2l-2.2-.4a7.3 7.3 0 0 0-.7-1.6l1.3-1.8a9.2 9.2 0 0 0-1.7-1.7l-1.8 1.3a7.3 7.3 0 0 0-1.6-.7L13.2 3a8.6 8.6 0 0 0-2.4 0l-.4 2.2a7.3 7.3 0 0 0-1.6.7L7 4.6A9.2 9.2 0 0 0 5.3 6.3l1.3 1.8a7.3 7.3 0 0 0-.7 1.6l-2.2.4a8.6 8.6 0 0 0 0 2.4l2.2.4c.2.6.4 1.1.7 1.6l-1.3 1.8a9.2 9.2 0 0 0 1.7 1.7l1.8-1.3c.5.3 1 .5 1.6.7l.4 2.2a8.6 8.6 0 0 0 2.4 0l.4-2.2c.6-.2 1.1-.4 1.6-.7l1.8 1.3a9.2 9.2 0 0 0 1.7-1.7l-1.3-1.8c.3-.5.5-1 .7-1.6l2.2-.4c.1-.4.1-.8.1-1.2z"/></svg>',
+    link:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M10.7 13.3a1.1 1.1 0 0 1 0-1.6l2.9-2.9a3 3 0 1 1 4.2 4.2l-1.8 1.8a3 3 0 0 1-4.2 0 1.1 1.1 0 1 1 1.6-1.6.8.8 0 0 0 1.1 0l1.8-1.8a.8.8 0 1 0-1.1-1.1l-2.9 2.9a1.1 1.1 0 0 1-1.6 0z"/><path fill="currentColor" d="M13.3 10.7a1.1 1.1 0 0 1 0 1.6l-2.9 2.9a3 3 0 1 1-4.2-4.2l1.8-1.8a3 3 0 0 1 4.2 0 1.1 1.1 0 1 1-1.6 1.6.8.8 0 0 0-1.1 0l-1.8 1.8a.8.8 0 1 0 1.1 1.1l2.9-2.9a1.1 1.1 0 0 1 1.6 0z"/></svg>',
+    camera:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M8.3 6.5 9.3 5c.3-.5.8-.8 1.4-.8h2.6c.6 0 1.1.3 1.4.8l1 1.5H19a2.3 2.3 0 0 1 2.3 2.3v8.3A2.3 2.3 0 0 1 19 19.4H5A2.3 2.3 0 0 1 2.7 17V8.8A2.3 2.3 0 0 1 5 6.5h3.3zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" clip-rule="evenodd"/></svg>',
+    image:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M6 4.5h12A2.5 2.5 0 0 1 20.5 7v10A2.5 2.5 0 0 1 18 19.5H6A2.5 2.5 0 0 1 3.5 17V7A2.5 2.5 0 0 1 6 4.5zm0 2.2a.3.3 0 0 0-.3.3v8.2l2.8-2.8a1.3 1.3 0 0 1 1.9 0l5.1 5.1H18a.3.3 0 0 0 .3-.3V7a.3.3 0 0 0-.3-.3H6zm3.2 3.6a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6z" clip-rule="evenodd"/></svg>',
+    barcode:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M6 6.2c.6 0 1.1.5 1.1 1.1v9.4a1.1 1.1 0 1 1-2.2 0V7.3c0-.6.5-1.1 1.1-1.1zm3 0c.6 0 1.1.5 1.1 1.1v9.4a1.1 1.1 0 1 1-2.2 0V7.3c0-.6.5-1.1 1.1-1.1zm3 0c.6 0 1.1.5 1.1 1.1v9.4a1.1 1.1 0 1 1-2.2 0V7.3c0-.6.5-1.1 1.1-1.1zm3 0c.6 0 1.1.5 1.1 1.1v9.4a1.1 1.1 0 1 1-2.2 0V7.3c0-.6.5-1.1 1.1-1.1zm3 0c.6 0 1.1.5 1.1 1.1v9.4a1.1 1.1 0 1 1-2.2 0V7.3c0-.6.5-1.1 1.1-1.1z"/></svg>',
+    utensils:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M6.6 3.5c.6 0 1.1.5 1.1 1.1v6.4c0 1.4-1 2.6-2.3 2.8v6.7a1.1 1.1 0 1 1-2.2 0v-6.7A2.9 2.9 0 0 1 1 11V4.6a1.1 1.1 0 1 1 2.2 0v6.4c0 .4.3.7.7.7s.7-.3.7-.7V4.6c0-.6.5-1.1 1.1-1.1zM17.7 3.5c1.8 0 3.3 1.5 3.3 3.3v3.8c0 1.6-1.1 3-2.7 3.3v6.6a1.1 1.1 0 1 1-2.2 0V3.8c.4-.2 1-.3 1.6-.3z"/></svg>',
+    list:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M6 6.8a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM8.2 6.1h12a1.1 1.1 0 0 1 0 2.2h-12a1.1 1.1 0 0 1 0-2.2zM6 12a1.1 1.1 0 1 1-2.2 0A1.1 1.1 0 0 1 6 12zM8.2 11h12a1.1 1.1 0 0 1 0 2.2h-12a1.1 1.1 0 0 1 0-2.2zM6 17.2a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM8.2 16h12a1.1 1.1 0 1 1 0 2.2h-12a1.1 1.1 0 0 1 0-2.2z"/></svg>',
   };
 
   const iconEl = (name) => {
@@ -467,7 +551,10 @@
     const scrim = el("div", "pp-app-scrim");
     const sheet = el("div", "pp-app-sheet");
     sheet.dataset.ppScrollable = "true";
+    sheet.dataset.ppAlign = "center";
+    const sheetHandle = el("div", "pp-app-sheet-handle");
     const sheetHeader = el("div", "pp-app-sheet-header");
+    const sheetSpacer = el("div", "pp-app-sheet-spacer");
     const sheetTitle = el("h3", "pp-app-sheet-title", "");
     const sheetClose = document.createElement("button");
     sheetClose.type = "button";
@@ -475,12 +562,15 @@
     sheetClose.setAttribute("aria-label", "Close");
     const closeIcon = iconEl("close");
     if (closeIcon) sheetClose.appendChild(closeIcon);
+    sheetHeader.appendChild(sheetSpacer);
     sheetHeader.appendChild(sheetTitle);
     sheetHeader.appendChild(sheetClose);
     const sheetBody = el("div", "pp-app-sheet-body");
-    sheetBody.style.marginTop = "12px";
+    const sheetFooter = el("div", "pp-app-sheet-footer");
+    sheet.appendChild(sheetHandle);
     sheet.appendChild(sheetHeader);
     sheet.appendChild(sheetBody);
+    sheet.appendChild(sheetFooter);
     modal.appendChild(scrim);
     modal.appendChild(sheet);
 
@@ -488,7 +578,6 @@
     stage.appendChild(objectsLayer);
     stage.appendChild(appContent);
     stage.appendChild(fabsLayer);
-    stage.appendChild(modal);
 
     const nav = el("nav", "pp-app-nav");
     nav.setAttribute("aria-label", "App tabs");
@@ -518,6 +607,7 @@
 
     app.appendChild(stage);
     app.appendChild(nav);
+    app.appendChild(modal);
 
     screen.appendChild(splashImg);
     screen.appendChild(overlay);
@@ -676,14 +766,14 @@
         mkAction({
           iconSvg: TAB_SVGS.cookbook,
           label: "Add New\nRecipe",
-          action: actionOpenModal("home-add-recipe"),
+          action: actionOpenModal("home-add-recipe-link"),
         }),
       );
       actions.appendChild(
         mkAction({
           iconSvg: TAB_SVGS.pantry,
           label: "Add Pantry\nItem",
-          action: actionOpenModal("home-add-pantry-item"),
+          action: actionOpenModal("home-add-pantry-search"),
         }),
       );
       actionsCard.appendChild(actions);
@@ -898,131 +988,257 @@
     const closeSheet = () => {
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
+      sheet.dataset.ppAlign = "center";
       sheetTitle.textContent = "";
       clear(sheetBody);
+      clear(sheetFooter);
+      sheetFooter.hidden = true;
     };
 
-    const renderSheetContent = (kind) => {
-      const root = document.createElement("div");
+    const buildSheetBtn = ({ label, icon, variant, disabled, onClick }) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = variant
+        ? `pp-app-sheet-btn pp-app-sheet-btn--${variant}`
+        : "pp-app-sheet-btn";
+      btn.disabled = !!disabled;
+      if (icon) {
+        const svg = iconEl(icon);
+        if (svg) btn.appendChild(svg);
+      }
+      btn.appendChild(document.createTextNode(String(label || "")));
+      if (typeof onClick === "function") btn.addEventListener("click", onClick);
+      return btn;
+    };
 
-      const mkCard = ({ title, sub, actions }) => {
-        const card = el("div", "pp-app-card");
-        card.appendChild(el("p", "pp-app-card-title", title));
-        if (sub) card.appendChild(el("p", "pp-app-card-sub", sub));
-        if (actions && actions.length) {
-          card.appendChild(el("div", "pp-app-divider"));
-          const row = el("div", "pp-app-pill-row");
-          actions.forEach((label) => {
-            row.appendChild(buildPill({ label, className: "pp-app-pill--wide pp-app-pill--title" }));
-          });
-          card.appendChild(row);
+    const buildSeg = ({ options, selectedId }) => {
+      const wrap = el("div", "pp-app-seg");
+      wrap.setAttribute("role", "tablist");
+      (options || []).forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "pp-app-seg-btn";
+        btn.setAttribute("role", "tab");
+        btn.setAttribute("aria-selected", String(opt.id === selectedId));
+        btn.textContent = String(opt.label || opt.id || "");
+        if (opt.openId && typeof onAction === "function") {
+          btn.addEventListener("click", () => onAction(actionOpenModal(opt.openId)));
         }
-        return card;
+        wrap.appendChild(btn);
+      });
+      return wrap;
+    };
+
+    const buildField = ({ icon, placeholder, multiline }) => {
+      const field = el("label", "pp-app-field");
+      const svg = icon ? iconEl(icon) : null;
+      if (svg) field.appendChild(svg);
+      else field.appendChild(el("span", "", ""));
+
+      if (multiline) {
+        const ta = document.createElement("textarea");
+        ta.placeholder = placeholder || "";
+        ta.rows = 3;
+        field.appendChild(ta);
+      } else {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = placeholder || "";
+        field.appendChild(input);
+      }
+
+      return field;
+    };
+
+    const renderSheetContent = (sheetSpec) => {
+      const kind = sheetSpec && sheetSpec.kind ? String(sheetSpec.kind) : "";
+      const mode = sheetSpec && sheetSpec.mode ? String(sheetSpec.mode) : "";
+
+      const bodyNodes = [];
+      const footerNodes = [];
+
+      const addCancelFooter = (primaryLabel, primaryDisabled) => {
+        footerNodes.push(
+          buildSheetBtn({
+            label: primaryLabel,
+            variant: "primary",
+            disabled: !!primaryDisabled,
+          }),
+        );
+        footerNodes.push(
+          buildSheetBtn({
+            label: "Cancel",
+            variant: "secondary",
+            onClick: () => {
+              if (typeof onAction === "function") onAction(actionCloseModal());
+            },
+          }),
+        );
       };
 
       if (kind === "add_recipe") {
-        root.appendChild(
-          mkCard({
-            title: "Add New Recipe",
-            sub: "Choose how you want to add a recipe. (Preview only.)",
-            actions: ["Import from URL", "Create manually"],
+        bodyNodes.push(
+          buildSeg({
+            selectedId: mode || "link",
+            options: [
+              { id: "ai", label: "AI", openId: "home-add-recipe-ai" },
+              { id: "link", label: "Link", openId: "home-add-recipe-link" },
+              { id: "photo", label: "Photo", openId: "home-add-recipe-photo" },
+              { id: "manual", label: "Manual", openId: "home-add-recipe-manual" },
+            ],
           }),
         );
-        return root;
+
+        if (mode === "photo") {
+          const grid = el("div", "pp-app-sheet-grid2");
+          grid.appendChild(buildSheetBtn({ label: "Photo", icon: "camera", variant: "primary" }));
+          grid.appendChild(buildSheetBtn({ label: "Library", icon: "image", variant: "primary" }));
+          bodyNodes.push(grid);
+          bodyNodes.push(
+            buildSheetBtn({
+              label: "Extract recipe from photo",
+              variant: "primary",
+              disabled: true,
+            }),
+          );
+          bodyNodes.push(
+            el(
+              "p",
+              "pp-app-sheet-tip",
+              "We'll extract the title, servings, ingredients, and steps. Then you can edit before saving.",
+            ),
+          );
+          addCancelFooter("Save Recipe", true);
+          return { bodyNodes, footerNodes };
+        }
+
+        if (mode === "ai") {
+          bodyNodes.push(el("p", "pp-app-sheet-sub", "Describe what you want to cook"));
+          bodyNodes.push(
+            buildField({
+              icon: "sparkles",
+              placeholder: "e.g. Give me a great spicy chicken chili recipe",
+              multiline: true,
+            }),
+          );
+          bodyNodes.push(buildSheetBtn({ label: "Generate recipe", variant: "primary", disabled: true }));
+          addCancelFooter("Save Recipe", true);
+          return { bodyNodes, footerNodes };
+        }
+
+        if (mode === "manual") {
+          bodyNodes.push(buildField({ icon: "utensils", placeholder: "Recipe Name" }));
+          bodyNodes.push(buildField({ icon: "list", placeholder: "Description (optional)", multiline: true }));
+          bodyNodes.push(buildSheetBtn({ label: "Add ingredient line", variant: "primary", disabled: true }));
+          addCancelFooter("Save Recipe", true);
+          return { bodyNodes, footerNodes };
+        }
+
+        // Default: link import.
+        bodyNodes.push(buildField({ icon: "link", placeholder: "Paste a recipe link here" }));
+        bodyNodes.push(buildSheetBtn({ label: "Import from Link", variant: "primary" }));
+        bodyNodes.push(
+          el(
+            "p",
+            "pp-app-sheet-tip",
+            "Tip: Many recipe sites include a \"Recipe\" JSON block. We'll try to read that automatically.",
+          ),
+        );
+        addCancelFooter("Save Recipe", true);
+        return { bodyNodes, footerNodes };
       }
 
       if (kind === "add_pantry_item") {
-        root.appendChild(
-          mkCard({
-            title: "Add Pantry Item",
-            sub: "Choose a capture method. (Preview only.)",
-            actions: ["Scan barcode", "Search items"],
-          }),
-        );
-        return root;
-      }
-
-      if (kind === "recipe_detail") {
-        root.appendChild(
-          mkCard({
-            title: "One-Pot Creamy Tuscan Pasta",
-            sub: "Preview only. We'll match the cookbook recipe detail layout next.",
-            actions: ["Add to plan", "Start cooking"],
+        bodyNodes.push(
+          buildSeg({
+            selectedId: mode || "search",
+            options: [
+              { id: "bulk", label: "Bulk", openId: "home-add-pantry-bulk" },
+              { id: "scan", label: "Scan", openId: "home-add-pantry-scan" },
+              { id: "search", label: "Search", openId: "home-add-pantry-search" },
+              { id: "manual", label: "Manual", openId: "home-add-pantry-manual" },
+            ],
           }),
         );
 
-        const ingredients = el("div", "pp-app-card");
-        ingredients.appendChild(el("p", "pp-app-card-title", "Ingredients"));
-        ingredients.appendChild(el("p", "pp-app-card-sub", "Pantry coverage: 0/10 on hand  •  10 to buy"));
-        ingredients.appendChild(el("div", "pp-app-divider"));
+        if (mode === "scan") {
+          bodyNodes.push(buildSheetBtn({ label: "Scan UPC", icon: "barcode", variant: "primary" }));
+          addCancelFooter("Add to Pantry", false);
+          return { bodyNodes, footerNodes };
+        }
 
-        const list = el("div", "pp-app-list");
-        [
-          { title: "Pasta", sub: "Need" },
-          { title: "Spinach", sub: "Need" },
-          { title: "Sun-dried tomatoes", sub: "Need" },
-          { title: "Cream", sub: "Need" },
-        ].forEach((item) => {
-          const row = document.createElement("button");
-          row.type = "button";
-          row.className = "pp-app-list-row";
-          const left = document.createElement("div");
-          left.appendChild(el("p", "pp-app-list-row-title", item.title));
-          left.appendChild(el("p", "pp-app-list-row-sub", item.sub));
-          row.appendChild(left);
-          row.appendChild(el("span", "pp-app-chip", "Preview"));
-          list.appendChild(row);
-        });
-        ingredients.appendChild(list);
-        root.appendChild(ingredients);
-        return root;
+        if (mode === "manual") {
+          bodyNodes.push(buildField({ icon: "plus", placeholder: "Food name" }));
+          bodyNodes.push(buildField({ icon: "chevron_down", placeholder: "Category" }));
+          addCancelFooter("Add to Pantry", false);
+          return { bodyNodes, footerNodes };
+        }
+
+        if (mode === "bulk") {
+          bodyNodes.push(
+            el(
+              "p",
+              "pp-app-sheet-sub",
+              "Tap items to add. Your added items stay pinned while you browse.",
+            ),
+          );
+
+          const row = el("div", "pp-app-sheet-row");
+          const category = document.createElement("button");
+          category.type = "button";
+          category.className = "pp-app-sheet-pill";
+          category.appendChild(document.createTextNode("Produce"));
+          const chevron = iconEl("chevron_down");
+          if (chevron) category.appendChild(chevron);
+          row.appendChild(category);
+          row.appendChild(buildCircle({ icon: "search", className: "pp-app-circle--sheet", ariaLabel: "Search (preview)" }));
+          bodyNodes.push(row);
+
+          bodyNodes.push(el("p", "pp-app-sheet-section", "Tap to add"));
+          const grid = el("div", "pp-app-tile-grid");
+          [
+            { label: "Jalapeno", src: "assets/ingredients/jalapeno.png" },
+            { label: "Apple", src: "assets/ingredients/apple.png" },
+            { label: "Avocado", src: "assets/ingredients/avocado.png" },
+            { label: "Banana", src: "assets/ingredients/banana.png" },
+            { label: "Onion", src: "assets/ingredients/white_onion.png" },
+            { label: "Garlic", src: "assets/objects/obj_garlic.png" },
+          ].forEach((item) => {
+            const tile = document.createElement("button");
+            tile.type = "button";
+            tile.className = "pp-app-tile";
+            const media = el("div", "pp-app-tile-media");
+            media.appendChild(imgEl({ src: item.src, className: "", alt: "" }));
+            tile.appendChild(media);
+            tile.appendChild(el("div", "pp-app-tile-label", item.label));
+            grid.appendChild(tile);
+          });
+          bodyNodes.push(grid);
+
+          addCancelFooter("Add to Pantry", true);
+          return { bodyNodes, footerNodes };
+        }
+
+        // Default: search.
+        bodyNodes.push(buildField({ icon: "search", placeholder: "Search foods & products" }));
+        bodyNodes.push(buildSheetBtn({ label: "Search foods & products", icon: "search", variant: "primary" }));
+        addCancelFooter("Add to Pantry", false);
+        return { bodyNodes, footerNodes };
       }
 
-      if (kind === "cook_now") {
-        root.appendChild(
-          mkCard({
-            title: "Cooking Steps",
-            sub: "Preview only. We'll mirror the in-cook controls from the app next.",
-            actions: ["Start Cooking"],
-          }),
-        );
-
-        const steps = el("div", "pp-app-card");
-        steps.appendChild(el("p", "pp-app-card-title", "Step list"));
-        steps.appendChild(el("p", "pp-app-card-sub", "One-Pot Creamy Tuscan Pasta"));
-        steps.appendChild(el("div", "pp-app-divider"));
-
-        const list = el("div", "pp-app-list");
-        [
-          { title: "Prep ingredients", sub: "5 min" },
-          { title: "Cook pasta", sub: "10 min" },
-          { title: "Finish sauce", sub: "8 min" },
-        ].forEach((item) => {
-          const row = document.createElement("button");
-          row.type = "button";
-          row.className = "pp-app-list-row";
-          const left = document.createElement("div");
-          left.appendChild(el("p", "pp-app-list-row-title", item.title));
-          left.appendChild(el("p", "pp-app-list-row-sub", item.sub));
-          row.appendChild(left);
-          row.appendChild(el("span", "pp-app-chip", "Preview"));
-          list.appendChild(row);
-        });
-
-        steps.appendChild(list);
-        root.appendChild(steps);
-        return root;
-      }
-
-      root.appendChild(el("p", "", "Preview only."));
-      return root;
+      // Fallback.
+      bodyNodes.push(el("p", "", "Preview only."));
+      return { bodyNodes, footerNodes };
     };
 
     const openSheet = (sheetSpec) => {
       if (!sheetSpec) return closeSheet();
+      sheet.dataset.ppAlign = String(sheetSpec.align || "center");
       sheetTitle.textContent = String(sheetSpec.title || "Preview");
-      clear(sheetBody);
-      sheetBody.appendChild(renderSheetContent(String(sheetSpec.kind || "")));
+      const { bodyNodes, footerNodes } = renderSheetContent(sheetSpec);
+      sheetBody.replaceChildren(...(bodyNodes || []));
+      sheetFooter.replaceChildren(...(footerNodes || []));
+      sheetFooter.hidden = !(footerNodes && footerNodes.length);
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
     };

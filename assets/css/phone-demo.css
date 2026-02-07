@@ -1573,7 +1573,14 @@ html.pp-tour-locked body {
   flex: 1;
   min-height: 0;
   overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
   padding: 12px 2px 8px;
+}
+
+.pp-app-sheet-body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .pp-app-sheet-footer {

@@ -17,6 +17,7 @@
 
   const actionOpenModal = (id) => ({ type: "open_modal", id });
   const actionCloseModal = () => ({ type: "close_modal" });
+  const actionSelectTab = (tab) => ({ type: "select_tab", tab });
 
   // Single source of truth for the demo.
   // Each step owns BOTH the left copy and the right phone UI state.
@@ -656,6 +657,10 @@
       btn.dataset.tab = tab;
       btn.setAttribute("aria-label", slugToLabel(tab));
       btn.setAttribute("aria-selected", "false");
+
+      if (typeof onAction === "function") {
+        btn.addEventListener("click", () => onAction(actionSelectTab(tab)));
+      }
 
       const icon = tabIconEl(tab);
       if (icon) icon.classList.add("pp-app-nav-icon");
@@ -2479,13 +2484,21 @@
       mount,
       onAction(action) {
         if (!action || typeof action !== "object") return;
-        if (!stageMode) return;
 
         switch (action.type) {
           case "open_modal": {
             const nextId = String(action.id || "");
             if (!nextId || !modalById.has(nextId)) return;
             activeModalId = nextId;
+            break;
+          }
+          case "select_tab": {
+            if (stageMode) return;
+            const nextTab = String(action.tab || "");
+            const idx = STEPS.findIndex((s) => s && s.tab === nextTab);
+            if (idx < 0) return;
+            activeStepIndex = idx;
+            activeModalId = null;
             break;
           }
           case "close_modal": {
@@ -2497,8 +2510,10 @@
         }
 
         const screen = activeScreen();
-        stage.dataset.ppBg = screen.bg || baseStep().bg || "home";
-        setActiveCopyStep(stepNodesById, screen.id);
+        if (stageMode) {
+          stage.dataset.ppBg = screen.bg || baseStep().bg || "home";
+          setActiveCopyStep(stepNodesById, screen.id);
+        }
         phone.setScreen(screen);
       },
     });
@@ -2573,11 +2588,13 @@
         onResize: syncPhoneWidth,
       });
     } else {
-      // Non-stage mode: fall back to a standard stacked layout and keep the phone on the welcome shot.
+      // Non-stage mode: fall back to a standard stacked layout and keep the phone interactive
+      // so users can still explore overlays on smaller viewports.
       stage.classList.add("pp-tour-static");
       stepNodesById.forEach((node) => setNodeInert(node, false));
-      stage.dataset.ppBg = STEPS[0].bg || "home";
-      phone.setScreen(STEPS[0]);
+      activeStepIndex = STEPS.length > 1 ? 1 : 0; // default to Home vs splash
+      stage.dataset.ppBg = STEPS[activeStepIndex].bg || "home";
+      phone.setScreen(STEPS[activeStepIndex]);
     }
 
     if (reduceMotion) stage.classList.add("pp-reduce-motion");

@@ -1487,7 +1487,6 @@ html.pp-tour-locked body {
   position: absolute;
   inset: 0;
   background: rgba(17, 14, 10, 0.42);
-  backdrop-filter: blur(3px);
   opacity: 0;
   transition: opacity 220ms ease;
 }
@@ -2937,7 +2936,6 @@ html.pp-tour-locked body {
   position: absolute;
   inset: 0;
   background: rgba(17, 14, 10, 0.42);
-  backdrop-filter: blur(3px);
   opacity: 0;
   transition: opacity 220ms ease;
 }

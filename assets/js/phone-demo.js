@@ -541,7 +541,7 @@
     }
   };
 
-  const createAppSimPhone = ({ mount, onAction }) => {
+  const createAppSimPhone = ({ mount, onAction, lockOuterScroll = true } = {}) => {
     const wrap = document.createElement("div");
     wrap.className = "pp-demo pp-demo--appsim";
 
@@ -1088,9 +1088,14 @@
       nav.classList.toggle("is-hidden", anyOverlay);
       objectsLayer.classList.toggle("is-hidden", anyOverlay);
       fabsLayer.classList.toggle("is-hidden", anyOverlay);
-      // Lock the outer page scroll while any in-phone overlay is open.
-      // This prevents the scroll-driven state machine from advancing and closing overlays.
-      document.documentElement.classList.toggle("pp-tour-locked", anyOverlay);
+      // Only lock outer page scroll for the desktop scroll-driven tour.
+      // On small screens the demo is not scroll-driven; locking can leave the phone
+      // partially off-screen, which feels like a full-page overlay.
+      if (lockOuterScroll) {
+        document.documentElement.classList.toggle("pp-tour-locked", anyOverlay);
+      } else {
+        document.documentElement.classList.remove("pp-tour-locked");
+      }
     };
 
     const closeDownload = () => {
@@ -2482,6 +2487,7 @@
 
     const phone = createAppSimPhone({
       mount,
+      lockOuterScroll: stageMode,
       onAction(action) {
         if (!action || typeof action !== "object") return;
 

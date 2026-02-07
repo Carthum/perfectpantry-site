@@ -1,4 +1,4 @@
-(function () {
+(() => {
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
   const readCssPxVar = (name, fallback) => {
@@ -9,24 +9,161 @@
     return Number.isFinite(parsed) ? parsed : fallback;
   };
 
-  const prefersReducedMotion = () => {
-    return (
+  const prefersReducedMotion = () =>
+    !!(
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
-  };
 
+  const actionOpenModal = (id) => ({ type: "open_modal", id });
+  const actionCloseModal = () => ({ type: "close_modal" });
+
+  // Single source of truth for the demo.
+  // Each step owns BOTH the left copy and the right phone UI state.
+  // Later we can add `hotspots` per-step without touching the scroll engine.
   const STEPS = [
-    { id: "welcome", tab: null },
-    { id: "home", tab: "home" },
-    { id: "pantry", tab: "pantry" },
-    { id: "cookbook", tab: "cookbook" },
-    { id: "plan", tab: "plan" },
-    { id: "shop", tab: "shop" },
+    {
+      id: "welcome",
+      bg: "home",
+      tab: null,
+      copy: {
+        variant: "hero",
+        eyebrow: "Mobile app in active development",
+        title: "The weekly food loop, finally in one place.",
+        description:
+          "Perfect Pantry connects recipes, pantry inventory, meal planning, and shopping into one calm loop so dinner decisions get faster, grocery runs get cleaner, and food waste drops.",
+        ctas: [
+          { label: "Get early access", href: "#waitlist", className: "btn btn-primary" },
+          { label: "Start the demo", href: "#guided-tour", className: "btn btn-outline" },
+          { label: "Skip tour", href: "#tour-after", className: "btn btn-ghost" },
+        ],
+        notes: [
+          "Scroll to move the phone through Home, Pantry, Cookbook, Plan, and Shop.",
+          "Marketing site only for now. No memberships or checkout on the website.",
+        ],
+      },
+    },
+    {
+      id: "home",
+      bg: "home",
+      tab: "home",
+      copy: {
+        kicker: "Home",
+        title: "Start with a calm weekly dashboard",
+        description:
+          "Home keeps the week visible: what is coming up, what needs restocking, and what to do next without digging through multiple views.",
+        bullets: [
+          { strong: "Try it:", text: "tap the Quick Actions area on the phone." },
+          { strong: "Why it matters:", text: "fewer decisions, faster momentum." },
+        ],
+      },
+    },
+    {
+      id: "pantry",
+      bg: "pantry",
+      tab: "pantry",
+      copy: {
+        kicker: "Pantry",
+        title: "Inventory that stays lightweight",
+        description:
+          "Track staples, quantities, and timing without turning your pantry into a second job. List and shelf-style views keep it usable.",
+        bullets: [
+          { strong: "Try it:", text: "tap an item row to open the detail preview." },
+          {
+            strong: "Why it matters:",
+            text: "plan and shop with real coverage, not guesses.",
+          },
+        ],
+      },
+    },
+    {
+      id: "cookbook",
+      bg: "cookbook",
+      tab: "cookbook",
+      copy: {
+        kicker: "Cookbook",
+        title: "Your household cookbook, private by default",
+        description:
+          "Save recipes your household actually repeats. The detail view is optimized for cooking flow, not endless scrolling.",
+        bullets: [
+          { strong: "Try it:", text: "tap a recipe card to preview the detail layout." },
+          {
+            strong: "Why it matters:",
+            text: "reliable repeats and faster weeknight execution.",
+          },
+        ],
+      },
+    },
+    {
+      id: "plan",
+      bg: "home",
+      tab: "plan",
+      copy: {
+        kicker: "Plan",
+        title: "Place meals into the week in seconds",
+        description:
+          "Build a realistic baseline plan, then adjust without breaking everything. Planning is where time and pantry coverage tradeoffs become clear.",
+        bullets: [
+          { strong: "Try it:", text: "tap a meal slot to open the slot detail preview." },
+          {
+            strong: "Why it matters:",
+            text: "fewer midweek pivots and less last-minute shopping.",
+          },
+        ],
+      },
+    },
+    {
+      id: "shop",
+      bg: "shopping",
+      tab: "shop",
+      copy: {
+        kicker: "Shop",
+        title: "Shop the gap, not the whole pantry",
+        description:
+          "The list is generated from what your plan needs compared to what your pantry already covers, so trips stay clean and focused.",
+        bullets: [
+          {
+            strong: "Try it:",
+            text: "tap an item to preview the bulk picker and detail view.",
+          },
+          { strong: "Why it matters:", text: "fewer duplicates, less waste." },
+        ],
+        ctas: [
+          { label: "Continue down the page", href: "#tour-after", className: "btn btn-primary" },
+        ],
+      },
+    },
+  ];
+
+  const MODAL_SCREENS = [
+    {
+      id: "home-add-recipe",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Add New Recipe", kind: "add_recipe" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Add New Recipe",
+        description:
+          "This opens the same add-recipe surface the app uses. We'll refine the fields and buttons next.",
+      },
+    },
+    {
+      id: "home-add-pantry-item",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Add Pantry Item", kind: "add_pantry_item" },
+      copy: {
+        kicker: "Quick Actions",
+        title: "Add Pantry Item",
+        description:
+          "This opens the same add-item surface the app uses. We'll tighten the flow once you confirm the exact UI.",
+      },
+    },
   ];
 
   const preloadImages = (paths) => {
-    const uniq = Array.from(new Set(paths.filter(Boolean)));
+    const uniq = Array.from(new Set((paths || []).filter(Boolean)));
     uniq.forEach((src) => {
       const img = new Image();
       img.decoding = "async";
@@ -35,14 +172,11 @@
     });
   };
 
-  const getStepNodesById = (stage) => {
-    const map = new Map();
-    stage
-      .querySelectorAll(".pp-tour-step[data-pp-step]")
-      .forEach((node) => {
-        map.set(String(node.dataset.ppStep || ""), node);
-      });
-    return map;
+  const el = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = String(text);
+    return node;
   };
 
   const setNodeInert = (node, inert) => {
@@ -57,6 +191,84 @@
       node.classList.toggle("is-active", isActive);
       setNodeInert(node, !isActive);
     });
+  };
+
+  const buildCtas = (ctas) => {
+    if (!Array.isArray(ctas) || !ctas.length) return null;
+    const wrap = el("div", "hero-cta");
+    ctas.forEach((cta) => {
+      const a = document.createElement("a");
+      a.className = cta.className || "btn btn-primary";
+      a.href = cta.href || "#";
+      a.textContent = cta.label || "Learn more";
+      wrap.appendChild(a);
+    });
+    return wrap;
+  };
+
+  const buildBullets = (bullets) => {
+    if (!Array.isArray(bullets) || !bullets.length) return null;
+    const ul = el("ul", "list-clean pp-tour-bullets");
+    bullets.forEach((b) => {
+      const li = document.createElement("li");
+      if (b && b.strong) {
+        const strong = document.createElement("strong");
+        strong.textContent = String(b.strong);
+        li.appendChild(strong);
+        li.appendChild(document.createTextNode(" "));
+      }
+      li.appendChild(document.createTextNode(String((b && b.text) || "")));
+      ul.appendChild(li);
+    });
+    return ul;
+  };
+
+  const buildCopyArticle = (step, index) => {
+    const article = document.createElement("article");
+    article.className = `pp-tour-step surface${index === 0 ? " is-active" : ""}`;
+    article.dataset.ppStep = step.id;
+
+    const copy = step.copy || {};
+
+    if (copy.variant === "hero") {
+      if (copy.eyebrow) article.appendChild(el("p", "eyebrow", copy.eyebrow));
+      article.appendChild(el("h1", "", copy.title || ""));
+      if (copy.description) article.appendChild(el("p", "hero-lead", copy.description));
+
+      const ctas = buildCtas(copy.ctas);
+      if (ctas) article.appendChild(ctas);
+
+      (copy.notes || []).forEach((note, idx) => {
+        const p = el("p", "small", note);
+        if (idx === 0) p.style.marginTop = "0.25rem";
+        article.appendChild(p);
+      });
+
+      return article;
+    }
+
+    if (copy.kicker) article.appendChild(el("p", "pp-tour-kicker", copy.kicker));
+    article.appendChild(el("h2", "", copy.title || ""));
+    if (copy.description) article.appendChild(el("p", "muted", copy.description));
+
+    const bullets = buildBullets(copy.bullets);
+    if (bullets) article.appendChild(bullets);
+
+    const ctas = buildCtas(copy.ctas);
+    if (ctas) {
+      ctas.style.marginTop = "0.9rem";
+      article.appendChild(ctas);
+    }
+
+    return article;
+  };
+
+  const getStepNodesById = (stack) => {
+    const map = new Map();
+    stack.querySelectorAll(".pp-tour-step[data-pp-step]").forEach((node) => {
+      map.set(String(node.dataset.ppStep || ""), node);
+    });
+    return map;
   };
 
   const svgElementFromString = (rawSvg) => {
@@ -138,13 +350,6 @@
     return svg;
   };
 
-  const el = (tag, className, text) => {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (text != null) node.textContent = String(text);
-    return node;
-  };
-
   const imgEl = ({ src, className, alt }) => {
     const img = document.createElement("img");
     img.decoding = "async";
@@ -203,7 +408,7 @@
     }
   };
 
-  const createAppSimPhone = ({ mount }) => {
+  const createAppSimPhone = ({ mount, onAction }) => {
     const wrap = document.createElement("div");
     wrap.className = "pp-demo pp-demo--appsim";
 
@@ -233,10 +438,33 @@
     const fabsLayer = el("div", "pp-app-fabs");
     fabsLayer.setAttribute("aria-hidden", "true");
 
+    const modal = el("div", "pp-app-modal");
+    modal.setAttribute("aria-hidden", "true");
+    const scrim = el("div", "pp-app-scrim");
+    const sheet = el("div", "pp-app-sheet");
+    sheet.dataset.ppScrollable = "true";
+    const sheetHeader = el("div", "pp-app-sheet-header");
+    const sheetTitle = el("h3", "pp-app-sheet-title", "");
+    const sheetClose = document.createElement("button");
+    sheetClose.type = "button";
+    sheetClose.className = "pp-app-sheet-close";
+    sheetClose.setAttribute("aria-label", "Close");
+    const closeIcon = iconEl("close");
+    if (closeIcon) sheetClose.appendChild(closeIcon);
+    sheetHeader.appendChild(sheetTitle);
+    sheetHeader.appendChild(sheetClose);
+    const sheetBody = el("div", "pp-app-sheet-body");
+    sheetBody.style.marginTop = "12px";
+    sheet.appendChild(sheetHeader);
+    sheet.appendChild(sheetBody);
+    modal.appendChild(scrim);
+    modal.appendChild(sheet);
+
     stage.appendChild(bg);
     stage.appendChild(objectsLayer);
     stage.appendChild(appContent);
     stage.appendChild(fabsLayer);
+    stage.appendChild(modal);
 
     const nav = el("nav", "pp-app-nav");
     nav.setAttribute("aria-label", "App tabs");
@@ -390,10 +618,14 @@
       actionsCard.appendChild(el("p", "pp-app-card-title", "Quick Actions"));
       const actions = el("div", "pp-home-actions");
 
-      const mkAction = ({ iconSvg, label }) => {
+      const mkAction = ({ iconSvg, label, action }) => {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "pp-home-action";
+
+        if (action && typeof onAction === "function") {
+          btn.addEventListener("click", () => onAction(action));
+        }
 
         const iconWrap = el("div", "pp-home-action-icon");
         const svg = svgElementFromString(iconSvg);
@@ -407,9 +639,20 @@
         return btn;
       };
 
-      actions.appendChild(mkAction({ iconSvg: TAB_SVGS.cookbook, label: "Add New\nRecipe" }));
-      actions.appendChild(mkAction({ iconSvg: TAB_SVGS.pantry, label: "Add Pantry\nItem" }));
-      actions.appendChild(mkAction({ iconSvg: UI_SVGS.search, label: "Search\nRecipes" }));
+      actions.appendChild(
+        mkAction({
+          iconSvg: TAB_SVGS.cookbook,
+          label: "Add New\nRecipe",
+          action: actionOpenModal("home-add-recipe"),
+        }),
+      );
+      actions.appendChild(
+        mkAction({
+          iconSvg: TAB_SVGS.pantry,
+          label: "Add Pantry\nItem",
+          action: actionOpenModal("home-add-pantry-item"),
+        }),
+      );
       actionsCard.appendChild(actions);
       root.appendChild(actionsCard);
 
@@ -619,6 +862,66 @@
     let lastUiTab = null;
     let activeTab = null;
 
+    const closeSheet = () => {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      sheetTitle.textContent = "";
+      clear(sheetBody);
+    };
+
+    const renderSheetContent = (kind) => {
+      const root = document.createElement("div");
+
+      const mkCard = ({ title, sub, actions }) => {
+        const card = el("div", "pp-app-card");
+        card.appendChild(el("p", "pp-app-card-title", title));
+        if (sub) card.appendChild(el("p", "pp-app-card-sub", sub));
+        if (actions && actions.length) {
+          card.appendChild(el("div", "pp-app-divider"));
+          const row = el("div", "pp-app-pill-row");
+          actions.forEach((label) => {
+            row.appendChild(buildPill({ label, className: "pp-app-pill--wide pp-app-pill--title" }));
+          });
+          card.appendChild(row);
+        }
+        return card;
+      };
+
+      if (kind === "add_recipe") {
+        root.appendChild(
+          mkCard({
+            title: "Add New Recipe",
+            sub: "Choose how you want to add a recipe. (Preview only.)",
+            actions: ["Import from URL", "Create manually"],
+          }),
+        );
+        return root;
+      }
+
+      if (kind === "add_pantry_item") {
+        root.appendChild(
+          mkCard({
+            title: "Add Pantry Item",
+            sub: "Choose a capture method. (Preview only.)",
+            actions: ["Scan barcode", "Search items"],
+          }),
+        );
+        return root;
+      }
+
+      root.appendChild(el("p", "", "Preview only."));
+      return root;
+    };
+
+    const openSheet = (sheetSpec) => {
+      if (!sheetSpec) return closeSheet();
+      sheetTitle.textContent = String(sheetSpec.title || "Preview");
+      clear(sheetBody);
+      sheetBody.appendChild(renderSheetContent(String(sheetSpec.kind || "")));
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+    };
+
     const setSplash = () => {
       activeTab = null;
       splashImg.style.display = "block";
@@ -627,6 +930,7 @@
       clear(appContent);
       clear(objectsLayer);
       clear(fabsLayer);
+      closeSheet();
     };
 
     const setTab = (tab) => {
@@ -655,13 +959,35 @@
       setSelectedNavUi(tab);
     };
 
+    const setScreen = (screenState) => {
+      const tab = screenState && screenState.tab ? String(screenState.tab) : "";
+      const sheetSpec = screenState && screenState.sheet ? screenState.sheet : null;
+
+      if (!tab) {
+        setSplash();
+        return;
+      }
+
+      setTab(tab);
+      if (sheetSpec) openSheet(sheetSpec);
+      else closeSheet();
+    };
+
+    scrim.addEventListener("click", () => {
+      if (typeof onAction === "function") onAction(actionCloseModal());
+    });
+
+    sheetClose.addEventListener("click", () => {
+      if (typeof onAction === "function") onAction(actionCloseModal());
+    });
+
     // Initialize in splash.
     setSplash();
 
-    return { setSplash, setTab };
+    return { setScreen };
   };
 
-  const createScrollStageController = ({ stage, steps, onStepIndex }) => {
+  const createScrollStageController = ({ stage, steps, onStepIndex, onResize }) => {
     let activeStep = -1;
     let stageTop = 0;
     let stageHeight = 0;
@@ -677,6 +1003,8 @@
       const rect = stage.getBoundingClientRect();
       stageTop = rect.top + (window.scrollY || window.pageYOffset || 0);
       stageHeight = stage.offsetHeight || rect.height || 0;
+
+      if (typeof onResize === "function") onResize({ viewportHeight });
     };
 
     const computeProgress = () => {
@@ -707,31 +1035,36 @@
       rafId = window.requestAnimationFrame(tick);
     };
 
-    const onResize = () => {
+    const onScroll = () => schedule();
+    const onWindowResize = () => {
       measure();
       schedule();
     };
-
-    const onScroll = () => schedule();
 
     measure();
     tick();
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    window.addEventListener("load", onResize, { once: true });
+    window.addEventListener("resize", onWindowResize);
 
-    window.setTimeout(() => {
-      measure();
-      schedule();
-    }, 250);
+    // Keep measurements accurate when fonts/layout settle.
+    window.addEventListener("load", onWindowResize, { once: true });
+    window.setTimeout(onWindowResize, 250);
+
+    // Also react to stage height changes (e.g. responsive text wraps).
+    let ro = null;
+    if ("ResizeObserver" in window) {
+      ro = new ResizeObserver(() => onWindowResize());
+      ro.observe(stage);
+    }
 
     return {
       destroy() {
         window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", onResize);
+        window.removeEventListener("resize", onWindowResize);
         if (rafId) window.cancelAnimationFrame(rafId);
         rafId = 0;
+        if (ro) ro.disconnect();
       },
     };
   };
@@ -741,15 +1074,19 @@
     const mount = document.querySelector(mountSelector || "#ppDemoMount");
     if (!stage || !mount) return;
 
+    const stack = stage.querySelector("[data-pp-tour-stack]");
+    if (!stack) return;
+
     const reduceMotion = prefersReducedMotion();
     const stageMode =
       !reduceMotion &&
       window.matchMedia &&
-      window.matchMedia(
-        "(min-width: 961px) and (hover: hover) and (pointer: fine)",
-      ).matches;
+      window.matchMedia("(min-width: 961px) and (hover: hover) and (pointer: fine)")
+        .matches;
 
-    // Preload all in-phone assets so step changes are instant.
+    const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
+
+    // Preload assets early so scroll-driven swaps don't flash.
     preloadImages([
       "assets/brand/pp-splash-ios-source.png",
       "assets/backgrounds/bg_home.jpg",
@@ -763,8 +1100,8 @@
       "assets/objects/obj_cookbook.png",
       "assets/objects/obj_pantry_shelf.png",
       "assets/objects/obj_pantry_item_shelf.png",
-      "assets/objects/obj_garlic.png",
       "assets/objects/obj_tan_spice.png",
+      "assets/objects/obj_garlic.png",
       "assets/ingredients/apple.png",
       "assets/ingredients/banana.png",
       "assets/ingredients/avocado.png",
@@ -773,48 +1110,132 @@
       "assets/ingredients/white_onion.png",
     ]);
 
-    const stepNodesById = getStepNodesById(stage);
+    // Build left copy from the screen model (guarantees sync with phone).
+    // In stage mode we include modal screens so the copy can swap when a hotspot is tapped.
+    const copyScreens = stageMode ? [...STEPS, ...MODAL_SCREENS] : [...STEPS];
+    stack.replaceChildren(...copyScreens.map((screen, idx) => buildCopyArticle(screen, idx)));
+    const stepNodesById = getStepNodesById(stack);
 
-    // Ensure step IDs in the DOM match the step model.
-    STEPS.forEach((step) => {
-      if (!stepNodesById.has(step.id)) {
-        console.warn("Missing step node for", step.id);
-      }
+    let activeStepIndex = 0;
+    let activeModalId = null;
+
+    const baseStep = () => STEPS[activeStepIndex] || STEPS[0];
+    const activeScreen = () => {
+      if (!activeModalId) return baseStep();
+      return modalById.get(activeModalId) || baseStep();
+    };
+
+    const phone = createAppSimPhone({
+      mount,
+      onAction(action) {
+        if (!action || typeof action !== "object") return;
+        if (!stageMode) return;
+
+        switch (action.type) {
+          case "open_modal": {
+            const nextId = String(action.id || "");
+            if (!nextId || !modalById.has(nextId)) return;
+            activeModalId = nextId;
+            break;
+          }
+          case "close_modal": {
+            activeModalId = null;
+            break;
+          }
+          default:
+            return;
+        }
+
+        const screen = activeScreen();
+        stage.dataset.ppBg = screen.bg || baseStep().bg || "home";
+        setActiveCopyStep(stepNodesById, screen.id);
+        phone.setScreen(screen);
+      },
     });
 
-    const phone = createAppSimPhone({ mount });
+    const render = () => {
+      const screen = activeScreen();
+      stage.dataset.ppBg = screen.bg || baseStep().bg || "home";
+      setActiveCopyStep(stepNodesById, screen.id);
+      phone.setScreen(screen);
+    };
+
+    const syncPhoneWidth = () => {
+      const navHeight = readCssPxVar("--nav-height", 0);
+      const stickyH = Math.max(1, window.innerHeight - navHeight);
+
+      const aside = mount.closest(".pp-tour-right");
+      const tip = aside ? aside.querySelector(".pp-tour-tip") : null;
+      const tipH = tip ? tip.getBoundingClientRect().height : 0;
+      const tipMargins = tip
+        ? (() => {
+            const cs = getComputedStyle(tip);
+            return (
+              (Number.parseFloat(cs.marginTop) || 0) +
+              (Number.parseFloat(cs.marginBottom) || 0)
+            );
+          })()
+        : 0;
+
+      const sticky = stage.querySelector(".pp-scrolly-sticky");
+      const stickyRectH = sticky ? sticky.getBoundingClientRect().height : stickyH;
+      const stickyPads = sticky
+        ? (() => {
+            const cs = getComputedStyle(sticky);
+            return (
+              (Number.parseFloat(cs.paddingTop) || 0) +
+              (Number.parseFloat(cs.paddingBottom) || 0)
+            );
+          })()
+        : 0;
+      const stickyContentH = Math.max(1, stickyRectH - stickyPads);
+
+      // Phone screen is iPhone screenshot ratio (1170x2532).
+      const screenAspect = 1170 / 2532;
+      const framePad = 14 * 2; // `.pp-phone-frame` padding in CSS
+
+      const safe = 10; // breathing room inside the sticky region
+      const tipSpace = tipH + tipMargins;
+      const maxPhoneOuterH = Math.max(320, stickyContentH - tipSpace - safe);
+      const maxWByH = Math.floor((maxPhoneOuterH - framePad) * screenAspect);
+
+      const colW = aside ? aside.getBoundingClientRect().width : mount.getBoundingClientRect().width;
+      const maxWByCol = Math.floor(colW - 4);
+
+      const minW = 280;
+      const maxW = 400;
+      const target = clamp(Math.min(maxWByH, maxWByCol, maxW), minW, maxW);
+      stage.style.setProperty("--pp-phone-demo-w", `${target}px`);
+    };
 
     if (stageMode) {
+      // In stage mode, only the active step should be focusable.
       stepNodesById.forEach((node) => setNodeInert(node, true));
+      createScrollStageController({
+        stage,
+        steps: STEPS,
+        onStepIndex(stepIndex) {
+          activeStepIndex = stepIndex;
+          // Any scroll-driven step change closes transient modal UI so the demo stays deterministic.
+          activeModalId = null;
+          render();
+        },
+        onResize: syncPhoneWidth,
+      });
     } else {
-      // Non-stage mode: show all copy stacked and keep phone in splash.
+      // Non-stage mode: fall back to a standard stacked layout and keep the phone on the welcome shot.
+      stage.classList.add("pp-tour-static");
       stepNodesById.forEach((node) => setNodeInert(node, false));
-      stepNodesById.forEach((node) => node.classList.add("is-active"));
-      phone.setSplash();
-      return;
+      stage.dataset.ppBg = STEPS[0].bg || "home";
+      phone.setScreen(STEPS[0]);
     }
 
     if (reduceMotion) stage.classList.add("pp-reduce-motion");
 
-    const render = (stepIndex) => {
-      const step = STEPS[stepIndex] || STEPS[0];
-      if (!step) return;
-
-      setActiveCopyStep(stepNodesById, step.id);
-
-      // Keep page background stable while we iterate on visuals.
-      // (Phone background is controlled by the app simulator.)
-      if (step.id === "welcome") phone.setSplash();
-      else phone.setTab(step.tab);
-    };
-
-    createScrollStageController({
-      stage,
-      steps: STEPS,
-      onStepIndex: render,
-    });
+    // Ensure initial sizing is correct even before the first resize.
+    syncPhoneWidth();
+    if (stageMode) render();
   };
 
   window.PPDemo = { init };
 })();
-

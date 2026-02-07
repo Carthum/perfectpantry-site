@@ -36,6 +36,33 @@ html.pp-tour-locked body {
   padding-top: 0;
   padding-bottom: 0;
   --pp-step-count: 6;
+  --pp-tour-bg-image: url("../backgrounds/bg_home.jpg");
+  --pp-tour-bg-position: center top;
+  --pp-tour-bg-opacity: 0.1;
+}
+
+.pp-scrolly[data-pp-bg="home"] {
+  --pp-tour-bg-image: url("../backgrounds/bg_home.jpg");
+  --pp-tour-bg-position: center top;
+  --pp-tour-bg-opacity: 0.1;
+}
+
+.pp-scrolly[data-pp-bg="pantry"] {
+  --pp-tour-bg-image: url("../backgrounds/bg_pantry.jpg");
+  --pp-tour-bg-position: center 18%;
+  --pp-tour-bg-opacity: 0.12;
+}
+
+.pp-scrolly[data-pp-bg="cookbook"] {
+  --pp-tour-bg-image: url("../backgrounds/bg_cookbook.jpg");
+  --pp-tour-bg-position: center 12%;
+  --pp-tour-bg-opacity: 0.12;
+}
+
+.pp-scrolly[data-pp-bg="shopping"] {
+  --pp-tour-bg-image: url("../backgrounds/bg_shopping.jpg");
+  --pp-tour-bg-position: center top;
+  --pp-tour-bg-opacity: 0.12;
 }
 
 .pp-scrolly::before {
@@ -43,10 +70,10 @@ html.pp-tour-locked body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: url("../brand/pp-splash-hero-desktop.jpg");
+  background-image: var(--pp-tour-bg-image);
   background-size: cover;
-  background-position: center;
-  opacity: 0.08;
+  background-position: var(--pp-tour-bg-position);
+  opacity: var(--pp-tour-bg-opacity);
   filter: saturate(0.92) contrast(1.03);
   transform: scale(1.04);
   transform-origin: center;
@@ -59,7 +86,6 @@ html.pp-tour-locked body {
 @media (max-width: 900px) {
   .pp-scrolly::before {
     inset: 0;
-    background-image: url("../brand/pp-splash-hero-mobile.png");
     opacity: 0.06;
     transform: scale(1.06);
   }
@@ -73,7 +99,7 @@ html.pp-tour-locked body {
   height: calc(100vh - var(--nav-height));
   padding: 1.1rem 0;
   display: flex;
-  align-items: start;
+  align-items: center;
 }
 
 .pp-scrolly-spacer {
@@ -83,9 +109,9 @@ html.pp-tour-locked body {
 .pp-scrolly-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
   gap: 2.25rem;
-  align-items: start;
+  align-items: center;
 }
 
 .pp-tour-left {
@@ -95,7 +121,9 @@ html.pp-tour-locked body {
 }
 
 .pp-tour-right {
-  align-self: start;
+  align-self: center;
+  display: grid;
+  justify-items: center;
 }
 
 .pp-tour-mobile-demo {
@@ -104,6 +132,35 @@ html.pp-tour-locked body {
 
 .pp-tour-stack {
   display: grid;
+}
+
+.pp-scrolly.pp-tour-static .pp-scrolly-sticky {
+  position: static;
+  height: auto;
+  padding: 1.1rem 0;
+  display: block;
+}
+
+.pp-scrolly.pp-tour-static .pp-scrolly-grid {
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.pp-scrolly.pp-tour-static .pp-tour-stack {
+  gap: 1rem;
+}
+
+.pp-scrolly.pp-tour-static .pp-tour-step {
+  grid-area: auto;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: none;
+}
+
+.pp-scrolly.pp-tour-static .pp-scrolly-spacer {
+  display: none;
+  height: 0;
 }
 
 .pp-tour-step {
@@ -181,8 +238,15 @@ html.pp-tour-locked body {
 }
 
 .pp-demo-hero-mount {
-  width: min(380px, 100%);
+  width: 100%;
+  display: grid;
+  justify-items: center;
   margin-inline: auto;
+}
+
+.pp-demo-hero-mount .pp-phone {
+  width: var(--pp-phone-demo-w, 360px);
+  max-width: 100%;
 }
 
 .pp-demo-hero-mount .pp-demo-caption {
@@ -640,14 +704,16 @@ html.pp-tour-locked body {
   gap: 8px;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
   max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
+  /* Never truncate button text in the demo. Wrap if needed. */
+  overflow: visible;
+  text-align: center;
 }
 
 .pp-app-pill > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  line-height: 1.05;
 }
 
 .pp-app-pill:active {
@@ -687,6 +753,23 @@ html.pp-tour-locked body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+.pp-home-cta-row > * {
+  min-width: 0;
+}
+
+.pp-home-cta-row .pp-app-pill {
+  padding: 0 14px;
+}
+
+.pp-home-cta-row .pp-app-pill--title {
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+.pp-home-cta-row .pp-app-pill > span {
+  white-space: nowrap;
 }
 
 .pp-top-row {
@@ -889,19 +972,14 @@ html.pp-tour-locked body {
   font-weight: 800;
   line-height: 1;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .pp-app-nav-indicator {
   position: absolute;
-  top: 7px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 64px;
-  height: 42px;
-  border-radius: 999px;
+  /* A squared selection plate behind the icon+label (closer to the app). */
+  inset: 4px 6px 4px 6px;
+  border-radius: 18px;
   background: rgba(233, 214, 191, 0.86);
   border: 1px solid rgba(58, 42, 26, 0.12);
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
@@ -977,7 +1055,7 @@ html.pp-tour-locked body {
 
 .pp-home-actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 12px;
 }
@@ -1386,6 +1464,7 @@ html.pp-tour-locked body {
   display: grid;
   grid-template-rows: 1fr auto;
   pointer-events: none;
+  z-index: 10;
 }
 
 .pp-app-modal[aria-hidden="true"] {

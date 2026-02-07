@@ -233,27 +233,39 @@
       },
     },
     {
-      id: "home-view-recipe",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "View Recipe", kind: "recipe_detail" },
+      id: "recipe-view",
+      bg: "cookbook",
+      tab: "cookbook",
+      page: { kind: "recipe_view" },
       copy: {
         kicker: "What's For Dinner?",
         title: "View Recipe",
         description:
-          "This is a preview of the recipe detail surface. Next we'll align the header, actions, and ingredient list to the app.",
+          "This is a demo preview of the recipe detail page. Buttons here will prompt you to download the app.",
       },
     },
     {
-      id: "home-cook-now",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "Cook Now", kind: "cook_now" },
+      id: "cook-view",
+      bg: "cookbook",
+      tab: "cookbook",
+      page: { kind: "cook_view" },
       copy: {
         kicker: "What's For Dinner?",
         title: "Cook Now",
         description:
-          "This is a preview of the cook flow surface. Next we'll mirror the step layout and controls from the app.",
+          "This is a demo preview of cooking mode (steps, read-aloud, and hands-free concept).",
+      },
+    },
+    {
+      id: "shop-staples",
+      bg: "shopping",
+      tab: "shop",
+      sheet: { title: "Shop staples", kind: "shop_staples", align: "left" },
+      copy: {
+        kicker: "Shop",
+        title: "Shop staples",
+        description:
+          "Bulk picker demo. Add-to-list is preview only and will prompt an app download.",
       },
     },
   ];
@@ -440,6 +452,18 @@
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M6.6 3.5c.6 0 1.1.5 1.1 1.1v6.4c0 1.4-1 2.6-2.3 2.8v6.7a1.1 1.1 0 1 1-2.2 0v-6.7A2.9 2.9 0 0 1 1 11V4.6a1.1 1.1 0 1 1 2.2 0v6.4c0 .4.3.7.7.7s.7-.3.7-.7V4.6c0-.6.5-1.1 1.1-1.1zM17.7 3.5c1.8 0 3.3 1.5 3.3 3.3v3.8c0 1.6-1.1 3-2.7 3.3v6.6a1.1 1.1 0 1 1-2.2 0V3.8c.4-.2 1-.3 1.6-.3z"/></svg>',
     list:
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M6 6.8a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM8.2 6.1h12a1.1 1.1 0 0 1 0 2.2h-12a1.1 1.1 0 0 1 0-2.2zM6 12a1.1 1.1 0 1 1-2.2 0A1.1 1.1 0 0 1 6 12zM8.2 11h12a1.1 1.1 0 0 1 0 2.2h-12a1.1 1.1 0 0 1 0-2.2zM6 17.2a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM8.2 16h12a1.1 1.1 0 1 1 0 2.2h-12a1.1 1.1 0 0 1 0-2.2z"/></svg>',
+    cart:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M6.1 6.2H3.8a1.2 1.2 0 1 1 0-2.4H7c.56 0 1.05.39 1.16.94l.3 1.46H20a1.2 1.2 0 0 1 1.16 1.5l-1.35 5.0a3 3 0 0 1-2.9 2.24H10.2a3 3 0 0 1-2.94-2.34L6.1 6.2z" clip-rule="evenodd"/><path fill="currentColor" d="M9.6 19.0a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4zM17.4 19.0a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4z"/></svg>',
+    star:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.7l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.95L12 2.6z"/></svg>',
+    play:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M9 7.4v9.2c0 .7.8 1.1 1.4.7l8-4.6c.6-.3.6-1.1 0-1.4l-8-4.6c-.6-.4-1.4 0-1.4.7z"/></svg>',
+    pause:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M7.8 6.8c0-.6.5-1.1 1.1-1.1h1.2c.6 0 1.1.5 1.1 1.1v10.4c0 .6-.5 1.1-1.1 1.1H8.9c-.6 0-1.1-.5-1.1-1.1V6.8zm5.9 0c0-.6.5-1.1 1.1-1.1H16c.6 0 1.1.5 1.1 1.1v10.4c0 .6-.5 1.1-1.1 1.1h-1.3c-.6 0-1.1-.5-1.1-1.1V6.8z"/></svg>',
+    restart:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M12 5.1a6.9 6.9 0 1 1-6.6 5H3.2a1.1 1.1 0 1 1 0-2.2h3.9c.6 0 1 .5 1 1.1a1.1 1.1 0 0 1-1 1.1H7a4.7 4.7 0 1 0 5-3.9 4.8 4.8 0 0 0-3.4 1.4 1.1 1.1 0 0 1-1.6-1.6A6.9 6.9 0 0 1 12 5.1z"/></svg>',
+    speaker:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M4.8 9.3h2.4l3.7-3.1c.7-.6 1.8-.1 1.8.8v10c0 .9-1.1 1.4-1.8.8l-3.7-3.1H4.8c-.6 0-1.1-.5-1.1-1.1v-3.2c0-.6.5-1.1 1.1-1.1z"/><path fill="currentColor" d="M16.2 8.2a1.1 1.1 0 0 1 1.6 0 5.7 5.7 0 0 1 0 8.1 1.1 1.1 0 1 1-1.6-1.6 3.5 3.5 0 0 0 0-4.9 1.1 1.1 0 0 1 0-1.6z"/></svg>',
   };
 
   const iconEl = (name) => {
@@ -574,6 +598,48 @@
     modal.appendChild(scrim);
     modal.appendChild(sheet);
 
+    const page = el("div", "pp-app-page");
+    page.setAttribute("aria-hidden", "true");
+
+    const download = el("div", "pp-app-download");
+    download.setAttribute("aria-hidden", "true");
+    const downloadScrim = el("div", "pp-app-download-scrim");
+    const downloadCard = el("div", "pp-app-download-card");
+    const downloadHeader = el("div", "pp-app-download-header");
+    const downloadTitle = el("h3", "pp-app-download-title", "Get Perfect Pantry");
+    const downloadClose = document.createElement("button");
+    downloadClose.type = "button";
+    downloadClose.className = "pp-app-download-close";
+    downloadClose.setAttribute("aria-label", "Close");
+    const dlCloseIcon = iconEl("close");
+    if (dlCloseIcon) downloadClose.appendChild(dlCloseIcon);
+    downloadHeader.appendChild(downloadTitle);
+    downloadHeader.appendChild(downloadClose);
+    const downloadBody = el(
+      "p",
+      "pp-app-download-body",
+      "This is a website demo. Download the app to complete this action.",
+    );
+    const downloadBtns = el("div", "pp-app-download-btns");
+    const mkStoreBtn = (label, href) => {
+      const a = document.createElement("a");
+      a.className = "pp-app-download-btn";
+      a.href = href;
+      a.target = "_blank";
+      a.rel = "noreferrer";
+      a.textContent = label;
+      return a;
+    };
+    downloadBtns.appendChild(mkStoreBtn("App Store", "https://example.com/app-store"));
+    downloadBtns.appendChild(mkStoreBtn("Google Play", "https://example.com/google-play"));
+    const downloadNote = el("p", "pp-app-download-note", "Coming soon.");
+    downloadCard.appendChild(downloadHeader);
+    downloadCard.appendChild(downloadBody);
+    downloadCard.appendChild(downloadBtns);
+    downloadCard.appendChild(downloadNote);
+    download.appendChild(downloadScrim);
+    download.appendChild(downloadCard);
+
     stage.appendChild(bg);
     stage.appendChild(objectsLayer);
     stage.appendChild(appContent);
@@ -608,6 +674,8 @@
     app.appendChild(stage);
     app.appendChild(nav);
     app.appendChild(modal);
+    app.appendChild(page);
+    app.appendChild(download);
 
     screen.appendChild(splashImg);
     screen.appendChild(overlay);
@@ -725,13 +793,13 @@
       const ctas = el("div", "pp-home-cta-row");
       const viewBtn = buildPill({ label: "View Recipe", className: "pp-app-pill--title" });
       if (typeof onAction === "function") {
-        viewBtn.addEventListener("click", () => onAction(actionOpenModal("home-view-recipe")));
+        viewBtn.addEventListener("click", () => onAction(actionOpenModal("recipe-view")));
       }
       ctas.appendChild(viewBtn);
 
       const cookBtn = buildPill({ label: "Cook Now", className: "pp-app-pill--title" });
       if (typeof onAction === "function") {
-        cookBtn.addEventListener("click", () => onAction(actionOpenModal("home-cook-now")));
+        cookBtn.addEventListener("click", () => onAction(actionOpenModal("cook-view")));
       }
       ctas.appendChild(cookBtn);
       dinnerCard.appendChild(ctas);
@@ -766,14 +834,14 @@
         mkAction({
           iconSvg: TAB_SVGS.cookbook,
           label: "Add New\nRecipe",
-          action: actionOpenModal("home-add-recipe-link"),
+          action: actionOpenModal("home-add-recipe-ai"),
         }),
       );
       actions.appendChild(
         mkAction({
           iconSvg: TAB_SVGS.pantry,
           label: "Add Pantry\nItem",
-          action: actionOpenModal("home-add-pantry-search"),
+          action: actionOpenModal("home-add-pantry-bulk"),
         }),
       );
       actionsCard.appendChild(actions);
@@ -878,6 +946,9 @@
         const card = document.createElement("button");
         card.type = "button";
         card.className = "pp-app-recipe-card";
+        if (typeof onAction === "function") {
+          card.addEventListener("click", () => onAction(actionOpenModal("recipe-view")));
+        }
         card.appendChild(el("div", "pp-app-recipe-thumb"));
         card.appendChild(el("p", "pp-app-recipe-title", r.title));
         card.appendChild(el("p", "pp-app-recipe-meta", r.meta));
@@ -917,7 +988,11 @@
         card.appendChild(meta);
 
         const actions = el("div", "pp-meal-actions");
-        actions.appendChild(buildPill({ label: "Start Cooking" }));
+        const startCooking = buildPill({ label: "Start Cooking" });
+        if (typeof onAction === "function") {
+          startCooking.addEventListener("click", () => onAction(actionOpenModal("cook-view")));
+        }
+        actions.appendChild(startCooking);
         actions.appendChild(buildPill({ label: "Replan Meal" }));
         card.appendChild(actions);
 
@@ -932,7 +1007,11 @@
 
       const topRow = el("div", "pp-top-row");
       topRow.appendChild(buildPill({ label: "List", className: "pp-app-pill--title", leftIcon: "menu" }));
-      topRow.appendChild(buildPill({ label: "Shopping", className: "pp-app-pill--title" }));
+      const shoppingBtn = buildPill({ label: "Shopping", className: "pp-app-pill--title" });
+      if (typeof onAction === "function") {
+        shoppingBtn.addEventListener("click", () => onAction(actionOpenModal("shop-staples")));
+      }
+      topRow.appendChild(shoppingBtn);
       topRow.appendChild(buildCircle({ icon: "search", className: "pp-app-circle--muted", ariaLabel: "Search (preview)" }));
       root.appendChild(topRow);
 
@@ -957,7 +1036,9 @@
 
       const bar = el("div", "pp-shop-bar");
       bar.appendChild(buildCircle({ icon: "close", className: "pp-app-circle--danger", ariaLabel: "Cancel (preview)" }));
-      bar.appendChild(buildPill({ label: "Complete shopping", className: "pp-app-pill--wide" }));
+      const complete = buildPill({ label: "Complete shopping", className: "pp-app-pill--wide" });
+      complete.dataset.downloadCta = "true";
+      bar.appendChild(complete);
       bar.appendChild(buildCircle({ icon: "plus", ariaLabel: "Add item (preview)" }));
       stageNode.appendChild(bar);
 
@@ -985,7 +1066,53 @@
     let lastUiTab = null;
     let activeTab = null;
 
+    let isSheetOpen = false;
+    let isPageOpen = false;
+    let isDownloadOpen = false;
+
+    const allowBackdropClose = () =>
+      !!(
+        window.matchMedia &&
+        window.matchMedia("(min-width: 961px) and (hover: hover) and (pointer: fine)").matches
+      );
+
+    const syncOverlayChrome = () => {
+      const anyOverlay = isSheetOpen || isPageOpen || isDownloadOpen;
+      // Hide tab bar + decorative layers so overlays feel like real app screens.
+      app.classList.toggle("is-overlay-open", anyOverlay);
+      nav.classList.toggle("is-hidden", anyOverlay);
+      objectsLayer.classList.toggle("is-hidden", anyOverlay);
+      fabsLayer.classList.toggle("is-hidden", anyOverlay);
+      // Lock the outer page scroll while any in-phone overlay is open.
+      // This prevents the scroll-driven state machine from advancing and closing overlays.
+      document.documentElement.classList.toggle("pp-tour-locked", anyOverlay);
+    };
+
+    const closeDownload = () => {
+      isDownloadOpen = false;
+      download.classList.remove("is-open");
+      download.setAttribute("aria-hidden", "true");
+      syncOverlayChrome();
+    };
+
+    const openDownload = () => {
+      isDownloadOpen = true;
+      download.classList.add("is-open");
+      download.setAttribute("aria-hidden", "false");
+      syncOverlayChrome();
+    };
+
+    const closePage = () => {
+      isPageOpen = false;
+      page.classList.remove("is-open");
+      page.setAttribute("aria-hidden", "true");
+      delete page.dataset.ppKind;
+      clear(page);
+      syncOverlayChrome();
+    };
+
     const closeSheet = () => {
+      isSheetOpen = false;
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
       sheet.dataset.ppAlign = "center";
@@ -993,15 +1120,31 @@
       clear(sheetBody);
       clear(sheetFooter);
       sheetFooter.hidden = true;
+      syncOverlayChrome();
     };
 
-    const buildSheetBtn = ({ label, icon, variant, disabled, onClick }) => {
+    const buildSheetBtn = ({
+      label,
+      icon,
+      variant,
+      disabled,
+      disabledLook,
+      downloadCta,
+      ariaLabel,
+      onClick,
+    }) => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = variant
         ? `pp-app-sheet-btn pp-app-sheet-btn--${variant}`
         : "pp-app-sheet-btn";
+      if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
       btn.disabled = !!disabled;
+      if (disabledLook && !disabled) {
+        btn.classList.add("is-soft-disabled");
+        btn.setAttribute("aria-disabled", "true");
+      }
+      if (downloadCta) btn.dataset.downloadCta = "true";
       if (icon) {
         const svg = iconEl(icon);
         if (svg) btn.appendChild(svg);
@@ -1032,8 +1175,12 @@
     const buildField = ({ icon, placeholder, multiline }) => {
       const field = el("label", "pp-app-field");
       const svg = icon ? iconEl(icon) : null;
-      if (svg) field.appendChild(svg);
-      else field.appendChild(el("span", "", ""));
+      if (svg) {
+        field.appendChild(svg);
+      } else {
+        field.classList.add("pp-app-field--noicon");
+        field.appendChild(el("span", "", ""));
+      }
 
       if (multiline) {
         const ta = document.createElement("textarea");
@@ -1050,6 +1197,103 @@
       return field;
     };
 
+    // Local-only state for demo overlays.
+    let addRecipeSaveAs = "private";
+    let addRecipeServings = 4;
+    let pantryBulkCategory = "Staples";
+    const pantryBulkSelected = new Set();
+    let shopStaplesCategory = "Staples";
+    const shopStaplesSelected = new Set();
+
+    const buildMiniSeg = ({ options, value, onSelect }) => {
+      const wrap = el("div", "pp-app-mini-seg");
+      (options || []).forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "pp-app-mini-seg-btn";
+        btn.setAttribute("aria-selected", String(opt.id === value));
+        btn.textContent = String(opt.label || opt.id || "");
+        btn.addEventListener("click", () => {
+          const next = String(opt.id || "");
+          if (!next) return;
+          if (typeof onSelect === "function") onSelect(next);
+          wrap.querySelectorAll(".pp-app-mini-seg-btn").forEach((node) => {
+            node.setAttribute(
+              "aria-selected",
+              String(node === btn),
+            );
+          });
+        });
+        wrap.appendChild(btn);
+      });
+      return wrap;
+    };
+
+    const buildSaveAsCard = () => {
+      const card = el("div", "pp-app-sheet-surface");
+      const head = el("div", "pp-app-sheet-surface-head");
+      head.appendChild(el("div", "pp-app-sheet-surface-title", "Save as"));
+      card.appendChild(head);
+
+      const note = el(
+        "div",
+        "pp-app-sheet-surface-note",
+        addRecipeSaveAs === "public" ? "Visible to everyone" : "Private to your household",
+      );
+
+      const seg = buildMiniSeg({
+        value: addRecipeSaveAs,
+        options: [
+          { id: "private", label: "Private" },
+          { id: "public", label: "Public" },
+        ],
+        onSelect(next) {
+          addRecipeSaveAs = next;
+          note.textContent = addRecipeSaveAs === "public" ? "Visible to everyone" : "Private to your household";
+        },
+      });
+      card.appendChild(seg);
+      card.appendChild(note);
+      return card;
+    };
+
+    const buildStepper = ({ label, value, onChange }) => {
+      const row = el("div", "pp-app-stepper");
+      row.appendChild(el("div", "pp-app-stepper-label", label));
+
+      const controls = el("div", "pp-app-stepper-controls");
+      const minus = document.createElement("button");
+      minus.type = "button";
+      minus.className = "pp-app-stepper-btn";
+      minus.textContent = "–";
+
+      const val = el("div", "pp-app-stepper-val", String(value));
+
+      const plus = document.createElement("button");
+      plus.type = "button";
+      plus.className = "pp-app-stepper-btn";
+      plus.textContent = "+";
+
+      const apply = (next) => {
+        const safe = clamp(Number(next) || 1, 1, 24);
+        val.textContent = String(safe);
+        if (typeof onChange === "function") onChange(safe);
+        val.classList.remove("is-bump");
+        // Restart animation.
+        void val.offsetWidth;
+        val.classList.add("is-bump");
+      };
+
+      minus.addEventListener("click", () => apply((Number(val.textContent) || 1) - 1));
+      plus.addEventListener("click", () => apply((Number(val.textContent) || 1) + 1));
+
+      controls.appendChild(minus);
+      controls.appendChild(val);
+      controls.appendChild(plus);
+      row.appendChild(controls);
+      return row;
+    };
+
     const renderSheetContent = (sheetSpec) => {
       const kind = sheetSpec && sheetSpec.kind ? String(sheetSpec.kind) : "";
       const mode = sheetSpec && sheetSpec.mode ? String(sheetSpec.mode) : "";
@@ -1057,12 +1301,23 @@
       const bodyNodes = [];
       const footerNodes = [];
 
-      const addCancelFooter = (primaryLabel, primaryDisabled) => {
+      const addCancelFooter = (
+        primaryLabel,
+        {
+          softDisabled = false,
+          hardDisabled = false,
+          downloadCta = true,
+          icon = null,
+        } = {},
+      ) => {
         footerNodes.push(
           buildSheetBtn({
             label: primaryLabel,
             variant: "primary",
-            disabled: !!primaryDisabled,
+            icon,
+            disabled: !!hardDisabled,
+            disabledLook: !!softDisabled,
+            downloadCta: !!downloadCta,
           }),
         );
         footerNodes.push(
@@ -1079,7 +1334,7 @@
       if (kind === "add_recipe") {
         bodyNodes.push(
           buildSeg({
-            selectedId: mode || "link",
+            selectedId: mode || "ai",
             options: [
               { id: "ai", label: "AI", openId: "home-add-recipe-ai" },
               { id: "link", label: "Link", openId: "home-add-recipe-link" },
@@ -1089,16 +1344,26 @@
           }),
         );
 
+        const addRecipeFooter = () => {
+          bodyNodes.push(buildSaveAsCard());
+          addCancelFooter("Save Recipe", { softDisabled: true, downloadCta: true });
+        };
+
         if (mode === "photo") {
           const grid = el("div", "pp-app-sheet-grid2");
-          grid.appendChild(buildSheetBtn({ label: "Photo", icon: "camera", variant: "primary" }));
-          grid.appendChild(buildSheetBtn({ label: "Library", icon: "image", variant: "primary" }));
+          grid.appendChild(
+            buildSheetBtn({ label: "Photo", icon: "camera", variant: "primary", downloadCta: true }),
+          );
+          grid.appendChild(
+            buildSheetBtn({ label: "Library", icon: "image", variant: "primary", downloadCta: true }),
+          );
           bodyNodes.push(grid);
           bodyNodes.push(
             buildSheetBtn({
               label: "Extract recipe from photo",
               variant: "primary",
-              disabled: true,
+              disabledLook: true,
+              downloadCta: true,
             }),
           );
           bodyNodes.push(
@@ -1108,7 +1373,7 @@
               "We'll extract the title, servings, ingredients, and steps. Then you can edit before saving.",
             ),
           );
-          addCancelFooter("Save Recipe", true);
+          addRecipeFooter();
           return { bodyNodes, footerNodes };
         }
 
@@ -1116,27 +1381,80 @@
           bodyNodes.push(el("p", "pp-app-sheet-sub", "Describe what you want to cook"));
           bodyNodes.push(
             buildField({
-              icon: "sparkles",
+              icon: null,
               placeholder: "e.g. Give me a great spicy chicken chili recipe",
               multiline: true,
             }),
           );
-          bodyNodes.push(buildSheetBtn({ label: "Generate recipe", variant: "primary", disabled: true }));
-          addCancelFooter("Save Recipe", true);
+          const filters = el("div", "pp-app-sheet-stack");
+          [
+            "Protein: Any",
+            "Prep time: Any",
+            "Cuisine: Any",
+            "Method: Any",
+          ].forEach((label) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "pp-app-sheet-pill pp-app-sheet-pill--filter";
+            btn.appendChild(document.createTextNode(label));
+            const chev = iconEl("chevron_down");
+            if (chev) btn.appendChild(chev);
+            filters.appendChild(btn);
+          });
+          bodyNodes.push(filters);
+          bodyNodes.push(
+            buildStepper({
+              label: "Servings",
+              value: addRecipeServings,
+              onChange(next) {
+                addRecipeServings = next;
+              },
+            }),
+          );
+          addRecipeFooter();
           return { bodyNodes, footerNodes };
         }
 
         if (mode === "manual") {
           bodyNodes.push(buildField({ icon: "utensils", placeholder: "Recipe Name" }));
           bodyNodes.push(buildField({ icon: "list", placeholder: "Description (optional)", multiline: true }));
-          bodyNodes.push(buildSheetBtn({ label: "Add ingredient line", variant: "primary", disabled: true }));
-          addCancelFooter("Save Recipe", true);
+          bodyNodes.push(
+            buildStepper({
+              label: "Servings",
+              value: addRecipeServings,
+              onChange(next) {
+                addRecipeServings = next;
+              },
+            }),
+          );
+          bodyNodes.push(el("p", "pp-app-sheet-section", "Ingredients"));
+          const ingRow = el("div", "pp-app-inline-add");
+          ingRow.appendChild(buildField({ icon: null, placeholder: "Ingredient" }));
+          const plusBtn = buildSheetBtn({
+            label: "",
+            icon: "plus",
+            variant: "secondary",
+            ariaLabel: "Add ingredient",
+            downloadCta: true,
+          });
+          plusBtn.classList.add("pp-app-inline-add-btn");
+          ingRow.appendChild(plusBtn);
+          bodyNodes.push(ingRow);
+          const addLine = document.createElement("button");
+          addLine.type = "button";
+          addLine.className = "pp-app-inline-link";
+          addLine.dataset.downloadCta = "true";
+          const addLinePlus = iconEl("plus");
+          if (addLinePlus) addLine.appendChild(addLinePlus);
+          addLine.appendChild(document.createTextNode("Add ingredient line"));
+          bodyNodes.push(addLine);
+          addRecipeFooter();
           return { bodyNodes, footerNodes };
         }
 
         // Default: link import.
         bodyNodes.push(buildField({ icon: "link", placeholder: "Paste a recipe link here" }));
-        bodyNodes.push(buildSheetBtn({ label: "Import from Link", variant: "primary" }));
+        bodyNodes.push(buildSheetBtn({ label: "Import from Link", variant: "primary", downloadCta: true }));
         bodyNodes.push(
           el(
             "p",
@@ -1144,14 +1462,14 @@
             "Tip: Many recipe sites include a \"Recipe\" JSON block. We'll try to read that automatically.",
           ),
         );
-        addCancelFooter("Save Recipe", true);
+        addRecipeFooter();
         return { bodyNodes, footerNodes };
       }
 
       if (kind === "add_pantry_item") {
         bodyNodes.push(
           buildSeg({
-            selectedId: mode || "search",
+            selectedId: mode || "bulk",
             options: [
               { id: "bulk", label: "Bulk", openId: "home-add-pantry-bulk" },
               { id: "scan", label: "Scan", openId: "home-add-pantry-scan" },
@@ -1162,15 +1480,19 @@
         );
 
         if (mode === "scan") {
-          bodyNodes.push(buildSheetBtn({ label: "Scan UPC", icon: "barcode", variant: "primary" }));
-          addCancelFooter("Add to Pantry", false);
+          bodyNodes.push(buildSheetBtn({ label: "Scan UPC", icon: "barcode", variant: "primary", downloadCta: true }));
+          addCancelFooter("Add to Pantry", { softDisabled: true, downloadCta: true });
           return { bodyNodes, footerNodes };
         }
 
         if (mode === "manual") {
-          bodyNodes.push(buildField({ icon: "plus", placeholder: "Food name" }));
-          bodyNodes.push(buildField({ icon: "chevron_down", placeholder: "Category" }));
-          addCancelFooter("Add to Pantry", false);
+          bodyNodes.push(buildField({ icon: "plus", placeholder: "Item name" }));
+          const qtyRow = el("div", "pp-app-sheet-grid2");
+          qtyRow.appendChild(buildField({ icon: null, placeholder: "Quantity" }));
+          qtyRow.appendChild(buildField({ icon: "chevron_down", placeholder: "Unit" }));
+          bodyNodes.push(qtyRow);
+          bodyNodes.push(buildField({ icon: "chevron_down", placeholder: "Expiration date (optional)" }));
+          addCancelFooter("Add to Pantry", { downloadCta: true });
           return { bodyNodes, footerNodes };
         }
 
@@ -1187,48 +1509,694 @@
           const category = document.createElement("button");
           category.type = "button";
           category.className = "pp-app-sheet-pill";
-          category.appendChild(document.createTextNode("Produce"));
+          const catLabel = document.createElement("span");
+          catLabel.textContent = pantryBulkCategory;
+          category.appendChild(catLabel);
           const chevron = iconEl("chevron_down");
           if (chevron) category.appendChild(chevron);
           row.appendChild(category);
-          row.appendChild(buildCircle({ icon: "search", className: "pp-app-circle--sheet", ariaLabel: "Search (preview)" }));
+          const searchBtn = buildCircle({
+            icon: "search",
+            className: "pp-app-circle--sheet",
+            ariaLabel: "Search (preview)",
+          });
+          searchBtn.dataset.downloadCta = "true";
+          row.appendChild(searchBtn);
           bodyNodes.push(row);
+
+          const menu = el("div", "pp-app-sheet-menu");
+          menu.hidden = true;
+          const categories = [
+            "Staples",
+            "Produce",
+            "Meat",
+            "Seafood",
+            "Dairy",
+            "Pantry",
+            "Spices",
+            "Baking",
+            "Snacks",
+            "Frozen",
+            "Beverages",
+            "Condiments",
+          ];
+          categories.forEach((label) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "pp-app-sheet-menu-item";
+            btn.textContent = label;
+            btn.addEventListener("click", () => {
+              menu.hidden = true;
+              if (label !== "Staples") {
+                openDownload();
+                pantryBulkCategory = "Staples";
+                catLabel.textContent = pantryBulkCategory;
+                return;
+              }
+              pantryBulkCategory = "Staples";
+              catLabel.textContent = pantryBulkCategory;
+            });
+            menu.appendChild(btn);
+          });
+          category.addEventListener("click", () => {
+            menu.hidden = !menu.hidden;
+          });
+          bodyNodes.push(menu);
 
           bodyNodes.push(el("p", "pp-app-sheet-section", "Tap to add"));
           const grid = el("div", "pp-app-tile-grid");
-          [
-            { label: "Jalapeno", src: "assets/ingredients/jalapeno.png" },
-            { label: "Apple", src: "assets/ingredients/apple.png" },
-            { label: "Avocado", src: "assets/ingredients/avocado.png" },
-            { label: "Banana", src: "assets/ingredients/banana.png" },
-            { label: "Onion", src: "assets/ingredients/white_onion.png" },
-            { label: "Garlic", src: "assets/objects/obj_garlic.png" },
-          ].forEach((item) => {
+          const items = [
+            { id: "milk", label: "Milk", src: "assets/ingredients/milk.png" },
+            { id: "bread", label: "Bread", src: "assets/ingredients/bread.png" },
+            { id: "eggs", label: "Eggs", src: "assets/ingredients/eggs.png" },
+            { id: "butter", label: "Butter", src: "assets/ingredients/butter.png" },
+            { id: "banana", label: "Banana", src: "assets/ingredients/banana.png" },
+            { id: "apple", label: "Apple", src: "assets/ingredients/apple.png" },
+            { id: "onion", label: "Onion", src: "assets/ingredients/onion.png" },
+            { id: "garlic", label: "Garlic", src: "assets/ingredients/garlic.png" },
+            { id: "tomato", label: "Tomato", src: "assets/ingredients/tomato.png" },
+          ];
+
+          const addBtn = buildSheetBtn({
+            label: "Add to pantry",
+            icon: "plus",
+            variant: "primary",
+            disabled: pantryBulkSelected.size === 0,
+            downloadCta: true,
+          });
+
+          const refreshAddBtn = () => {
+            addBtn.disabled = pantryBulkSelected.size === 0;
+          };
+
+          items.forEach((item) => {
             const tile = document.createElement("button");
             tile.type = "button";
             tile.className = "pp-app-tile";
             const media = el("div", "pp-app-tile-media");
-            media.appendChild(imgEl({ src: item.src, className: "", alt: "" }));
+            if (item.src) {
+              media.appendChild(imgEl({ src: item.src, className: "", alt: "" }));
+            } else {
+              media.appendChild(el("span", "pp-app-emoji", item.emoji || ""));
+            }
             tile.appendChild(media);
             tile.appendChild(el("div", "pp-app-tile-label", item.label));
+            tile.classList.toggle("is-selected", pantryBulkSelected.has(item.id));
+            tile.addEventListener("click", () => {
+              const id = String(item.id || item.label || "");
+              if (!id) return;
+              if (pantryBulkSelected.has(id)) pantryBulkSelected.delete(id);
+              else pantryBulkSelected.add(id);
+              tile.classList.toggle("is-selected", pantryBulkSelected.has(id));
+              refreshAddBtn();
+            });
             grid.appendChild(tile);
           });
           bodyNodes.push(grid);
 
-          addCancelFooter("Add to Pantry", true);
+          footerNodes.push(addBtn);
+          footerNodes.push(
+            buildSheetBtn({
+              label: "Cancel",
+              variant: "secondary",
+              onClick: () => {
+                if (typeof onAction === "function") onAction(actionCloseModal());
+              },
+            }),
+          );
           return { bodyNodes, footerNodes };
         }
 
         // Default: search.
         bodyNodes.push(buildField({ icon: "search", placeholder: "Search foods & products" }));
-        bodyNodes.push(buildSheetBtn({ label: "Search foods & products", icon: "search", variant: "primary" }));
-        addCancelFooter("Add to Pantry", false);
+        bodyNodes.push(
+          buildSheetBtn({
+            label: "Search foods & products",
+            icon: "search",
+            variant: "primary",
+            downloadCta: true,
+          }),
+        );
+        addCancelFooter("Add to Pantry", { softDisabled: true, downloadCta: true });
+        return { bodyNodes, footerNodes };
+      }
+
+      if (kind === "shop_staples") {
+        bodyNodes.push(
+          el(
+            "p",
+            "pp-app-sheet-sub",
+            "Tap items to add. Your added items stay pinned while you browse.",
+          ),
+        );
+
+        const row = el("div", "pp-app-sheet-row");
+        const category = document.createElement("button");
+        category.type = "button";
+        category.className = "pp-app-sheet-pill";
+        const catLabel = document.createElement("span");
+        catLabel.textContent = shopStaplesCategory;
+        category.appendChild(catLabel);
+        const chevron = iconEl("chevron_down");
+        if (chevron) category.appendChild(chevron);
+        row.appendChild(category);
+
+        const searchBtn = buildCircle({
+          icon: "search",
+          className: "pp-app-circle--sheet",
+          ariaLabel: "Search (preview)",
+        });
+        searchBtn.dataset.downloadCta = "true";
+        row.appendChild(searchBtn);
+        bodyNodes.push(row);
+
+        const menu = el("div", "pp-app-sheet-menu");
+        menu.hidden = true;
+        [
+          "Staples",
+          "Produce",
+          "Meat",
+          "Seafood",
+          "Dairy",
+          "Pantry",
+          "Spices",
+          "Baking",
+          "Snacks",
+          "Frozen",
+          "Beverages",
+          "Condiments",
+        ].forEach((label) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "pp-app-sheet-menu-item";
+          btn.textContent = label;
+          btn.addEventListener("click", () => {
+            menu.hidden = true;
+            if (label !== "Staples") {
+              openDownload();
+              shopStaplesCategory = "Staples";
+              catLabel.textContent = shopStaplesCategory;
+              return;
+            }
+            shopStaplesCategory = "Staples";
+            catLabel.textContent = shopStaplesCategory;
+          });
+          menu.appendChild(btn);
+        });
+        category.addEventListener("click", () => {
+          menu.hidden = !menu.hidden;
+        });
+        bodyNodes.push(menu);
+
+        bodyNodes.push(el("p", "pp-app-sheet-section", "Tap to add"));
+        const grid = el("div", "pp-app-tile-grid");
+        const items = [
+          { id: "milk", label: "Milk", src: "assets/ingredients/milk.png" },
+          { id: "bread", label: "Bread", src: "assets/ingredients/bread.png" },
+          { id: "eggs", label: "Eggs", src: "assets/ingredients/eggs.png" },
+          { id: "butter", label: "Butter", src: "assets/ingredients/butter.png" },
+          { id: "banana", label: "Banana", src: "assets/ingredients/banana.png" },
+          { id: "apple", label: "Apple", src: "assets/ingredients/apple.png" },
+          { id: "onion", label: "Onion", src: "assets/ingredients/onion.png" },
+          { id: "garlic", label: "Garlic", src: "assets/ingredients/garlic.png" },
+          { id: "tomato", label: "Tomato", src: "assets/ingredients/tomato.png" },
+        ];
+
+        const addBtn = buildSheetBtn({
+          label: "Add to list",
+          icon: "plus",
+          variant: "primary",
+          disabled: shopStaplesSelected.size === 0,
+          downloadCta: true,
+        });
+        const refreshAddBtn = () => {
+          addBtn.disabled = shopStaplesSelected.size === 0;
+        };
+
+        items.forEach((item) => {
+          const tile = document.createElement("button");
+          tile.type = "button";
+          tile.className = "pp-app-tile";
+          const media = el("div", "pp-app-tile-media");
+          if (item.src) media.appendChild(imgEl({ src: item.src, className: "", alt: "" }));
+          else media.appendChild(el("span", "pp-app-emoji", item.emoji || ""));
+          tile.appendChild(media);
+          tile.appendChild(el("div", "pp-app-tile-label", item.label));
+          tile.classList.toggle("is-selected", shopStaplesSelected.has(item.id));
+          tile.addEventListener("click", () => {
+            const id = String(item.id || item.label || "");
+            if (!id) return;
+            if (shopStaplesSelected.has(id)) shopStaplesSelected.delete(id);
+            else shopStaplesSelected.add(id);
+            tile.classList.toggle("is-selected", shopStaplesSelected.has(id));
+            refreshAddBtn();
+          });
+          grid.appendChild(tile);
+        });
+        bodyNodes.push(grid);
+
+        footerNodes.push(addBtn);
+        footerNodes.push(
+          buildSheetBtn({
+            label: "Cancel",
+            variant: "secondary",
+            onClick: () => {
+              if (typeof onAction === "function") onAction(actionCloseModal());
+            },
+          }),
+        );
         return { bodyNodes, footerNodes };
       }
 
       // Fallback.
       bodyNodes.push(el("p", "", "Preview only."));
       return { bodyNodes, footerNodes };
+    };
+
+    const buildTopBarBtn = ({ icon, label, downloadCta, onClick, className }) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = className ? `pp-page-topbar-btn ${className}` : "pp-page-topbar-btn";
+      if (label) btn.setAttribute("aria-label", label);
+      if (downloadCta) btn.dataset.downloadCta = "true";
+      const svg = icon ? iconEl(icon) : null;
+      if (svg) btn.appendChild(svg);
+      else if (label) btn.appendChild(document.createTextNode(label));
+      if (typeof onClick === "function") btn.addEventListener("click", onClick);
+      return btn;
+    };
+
+    const buildRecipeViewPage = () => {
+      const root = el("div", "pp-page pp-page--recipe");
+      const scroll = el("div", "pp-page-scroll");
+
+      const top = el("div", "pp-page-topbar");
+      const back = buildTopBarBtn({
+        icon: "chevron_left",
+        label: "Back",
+        onClick: () => {
+          if (typeof onAction === "function") onAction(actionCloseModal());
+        },
+      });
+      top.appendChild(back);
+      scroll.appendChild(top);
+
+      const headerCard = el("div", "pp-recipe-head pp-app-card");
+      const headRow = el("div", "pp-recipe-head-row");
+      const fav = document.createElement("button");
+      fav.type = "button";
+      fav.className = "pp-recipe-fav";
+      fav.setAttribute("aria-label", "Favorite (preview)");
+      const heartSvg = iconEl("heart");
+      if (heartSvg) fav.appendChild(heartSvg);
+      headRow.appendChild(fav);
+      const headText = el("div", "pp-recipe-head-text");
+      headText.appendChild(el("div", "pp-recipe-title", "Shredded Flank Steak with Peppers, (Ropa Vieja)"));
+      const rating = el("div", "pp-recipe-rating");
+      const starSvg = iconEl("star");
+      if (starSvg) rating.appendChild(starSvg);
+      rating.appendChild(el("span", "", "5.0"));
+      rating.appendChild(el("span", "pp-recipe-rating-sub", "(1)"));
+      headText.appendChild(rating);
+      headRow.appendChild(headText);
+      headerCard.appendChild(headRow);
+      scroll.appendChild(headerCard);
+
+      const hero = el("div", "pp-recipe-hero");
+      // Placeholder: styling matters most for the demo; swap with a real photo later.
+      hero.appendChild(el("div", "pp-recipe-hero-ph"));
+      scroll.appendChild(hero);
+
+      const nut = el("div", "pp-recipe-nut pp-app-card");
+      const nutHead = el("div", "pp-recipe-nut-head");
+      const nutTitle = el("div", "pp-recipe-nut-title");
+      const listSvg = iconEl("list");
+      if (listSvg) nutTitle.appendChild(listSvg);
+      nutTitle.appendChild(el("span", "", "Nutrition & tags"));
+      nutHead.appendChild(nutTitle);
+      nutHead.appendChild(el("div", "pp-recipe-nut-servings", "4 servings"));
+      nut.appendChild(nutHead);
+
+      const pills = el("div", "pp-recipe-nut-pills");
+      [
+        { k: "Calories", v: "926 kcal" },
+        { k: "Protein", v: "76 g" },
+        { k: "Carbs", v: "129 g" },
+        { k: "Fat", v: "20 g" },
+      ].forEach((p) => {
+        const pill = el("div", "pp-recipe-pill");
+        pill.appendChild(el("div", "pp-recipe-pill-k", p.k));
+        pill.appendChild(el("div", "pp-recipe-pill-v", p.v));
+        pills.appendChild(pill);
+      });
+      nut.appendChild(pills);
+
+      const tags = el("div", "pp-recipe-tags");
+      ["Gluten-free", "Dairy-free", "gluten free", "dairy free"].forEach((t) => {
+        tags.appendChild(el("span", "pp-recipe-tag", t));
+      });
+      nut.appendChild(tags);
+      nut.appendChild(el("div", "pp-recipe-nut-note", "Analysis via Spoonacular (cached on Supabase)"));
+      scroll.appendChild(nut);
+
+      const ingCard = el("div", "pp-recipe-ing pp-app-card");
+      ingCard.appendChild(el("div", "pp-recipe-section-title", "Ingredients"));
+      const ingSubRow = el("div", "pp-recipe-ing-subrow");
+      ingSubRow.appendChild(el("div", "pp-recipe-ing-sub", "You have 0 of 16 for this recipe"));
+      const addAll = document.createElement("button");
+      addAll.type = "button";
+      addAll.className = "pp-recipe-addall";
+      addAll.dataset.downloadCta = "true";
+      const cartSvg = iconEl("cart");
+      if (cartSvg) addAll.appendChild(cartSvg);
+      addAll.appendChild(document.createTextNode("Add All"));
+      ingSubRow.appendChild(addAll);
+      ingCard.appendChild(ingSubRow);
+
+      const ingList = el("div", "pp-recipe-ing-list");
+      const ingredients = [
+        { id: "steak", src: "assets/ingredients/flank_steak.png", icon: "🥩", name: "Flank Steak", sub: "2 lb  •  steak" },
+        { id: "onion", src: "assets/ingredients/onion.png", icon: "🧅", name: "Onions", sub: "2" },
+        { id: "greenpep", src: "assets/ingredients/green_pepper.png", icon: "🫑", name: "Green Pepper", sub: "1" },
+        { id: "redpep", src: "assets/ingredients/red_pepper.png", icon: "🌶️", name: "Red Pepper", sub: "6 oz" },
+        { id: "chili", src: "assets/ingredients/red_chili_pepper.png", icon: "🌶️", name: "Red Chili Pepper", sub: "1" },
+        { id: "garlic", src: "assets/ingredients/garlic.png", icon: "🧄", name: "Garlic", sub: "3 cloves" },
+        { id: "oil", src: "assets/ingredients/olive_oil.png", icon: "🫒", name: "Olive Oil", sub: "1 tbsp" },
+        { id: "tomatoes", src: "assets/ingredients/tomato.png", icon: "🍅", name: "Tomatoes", sub: "14 1/2 can  •  chopped" },
+        { id: "sauce", src: "assets/ingredients/tomato_sauce.png", icon: "🫙", name: "Tomato Sauce", sub: "1/4 cup" },
+        { id: "bay", src: "assets/ingredients/bay_leaves.png", icon: "🌿", name: "Bay Leaves", sub: "2" },
+        { id: "salt", icon: "🧂", name: "Salt", sub: "2 tsp" },
+        { id: "wine", src: "assets/ingredients/red_wine.png", icon: "🍷", name: "Red Wine", sub: "1/4 cup" },
+        { id: "cumin", icon: "🌿", name: "Cumin", sub: "1 tsp" },
+        { id: "oregano", icon: "🌿", name: "Oregano", sub: "1 tsp" },
+        { id: "parsley", icon: "🌿", name: "Parsley", sub: "1 tbsp" },
+        { id: "lime", src: "assets/ingredients/lime.png", icon: "🍋", name: "Lime", sub: "1" },
+      ];
+
+      const mkIngRow = (ing) => {
+        const row = el("div", "pp-ing-row");
+        const check = document.createElement("button");
+        check.type = "button";
+        check.className = "pp-ing-check";
+        check.setAttribute("aria-pressed", "false");
+        check.addEventListener("click", () => {
+          const next = check.getAttribute("aria-pressed") !== "true";
+          check.setAttribute("aria-pressed", String(next));
+          row.classList.toggle("is-checked", next);
+        });
+        row.appendChild(check);
+
+        const ico = el("div", "pp-ing-ico");
+        if (ing && ing.src) {
+          ico.appendChild(imgEl({ src: ing.src, className: "pp-ing-ico-img", alt: "" }));
+        } else {
+          ico.appendChild(document.createTextNode(String((ing && ing.icon) || "")));
+        }
+        row.appendChild(ico);
+
+        const mid = el("div", "pp-ing-mid");
+        mid.appendChild(el("div", "pp-ing-name", ing.name));
+        mid.appendChild(el("div", "pp-ing-sub", ing.sub));
+        row.appendChild(mid);
+
+        const cartBtn = document.createElement("button");
+        cartBtn.type = "button";
+        cartBtn.className = "pp-ing-cart";
+        cartBtn.dataset.downloadCta = "true";
+        const svg = iconEl("cart");
+        if (svg) cartBtn.appendChild(svg);
+        cartBtn.setAttribute("aria-label", "Add to list (preview)");
+        row.appendChild(cartBtn);
+        return row;
+      };
+
+      const visibleCount = 6;
+      ingredients.slice(0, visibleCount).forEach((ing) => ingList.appendChild(mkIngRow(ing)));
+
+      const gated = el("div", "pp-gated");
+      const gatedContent = el("div", "pp-gated-content");
+      ingredients.slice(visibleCount).forEach((ing) => gatedContent.appendChild(mkIngRow(ing)));
+      const gatedOverlay = el("div", "pp-gated-overlay");
+      const dlBtn = document.createElement("button");
+      dlBtn.type = "button";
+      dlBtn.className = "pp-gated-cta";
+      dlBtn.dataset.downloadCta = "true";
+      dlBtn.textContent = "Download to see full ingredient list";
+      gatedOverlay.appendChild(dlBtn);
+      gated.appendChild(gatedContent);
+      gated.appendChild(gatedOverlay);
+      ingList.appendChild(gated);
+
+      ingCard.appendChild(ingList);
+      scroll.appendChild(ingCard);
+
+      const actions = el("div", "pp-recipe-actions");
+      const startBtn = buildSheetBtn({ label: "Start Cooking", variant: "primary", downloadCta: true });
+      const planBtn = buildSheetBtn({ label: "Add to Plan", variant: "secondary", downloadCta: true });
+      startBtn.classList.add("pp-recipe-action-btn");
+      planBtn.classList.add("pp-recipe-action-btn");
+      actions.appendChild(startBtn);
+      actions.appendChild(planBtn);
+      scroll.appendChild(actions);
+
+      const dirCard = el("div", "pp-recipe-dir pp-app-card");
+      dirCard.appendChild(el("div", "pp-recipe-section-title", "Directions"));
+      const dirList = el("div", "pp-dir-list");
+      const steps = [
+        "Brown one onion and 1 clove of garlic with 1 tsp of salt in a pressure cooker.",
+        "Add the skirt steak and cover with water, cook for 45 minutes or until tender.",
+        "Remove the meat and shred with a fork. Add the peppers, the 2nd onion, the last 2 cloves of garlic and saute in a large frying pan with remaining one tsp of salt.",
+        "Once softened, add the Spanish red wine, tomatoes, tomato sauce, bay leaves, cumin, oregano and parsley.",
+        "Mix well and add the shredded meat. Simmer on low for 15 minutes. If you like lime, at the end, squeeze in a little lime to taste and remove the 2 bay leaves prior to serving.",
+        "Serve with white rice, black beans, plantains, etc.",
+      ];
+      const mkStep = (idx, textVal) => {
+        const row = el("div", "pp-dir-row");
+        row.appendChild(el("div", "pp-dir-num", String(idx + 1)));
+        row.appendChild(el("div", "pp-dir-text", textVal));
+        return row;
+      };
+      steps.slice(0, 2).forEach((t, idx) => dirList.appendChild(mkStep(idx, t)));
+      const dirGate = el("div", "pp-gated");
+      const dirGateContent = el("div", "pp-gated-content");
+      steps.slice(2).forEach((t, idx) => dirGateContent.appendChild(mkStep(idx + 2, t)));
+      const dirGateOverlay = el("div", "pp-gated-overlay");
+      const dirDl = document.createElement("button");
+      dirDl.type = "button";
+      dirDl.className = "pp-gated-cta";
+      dirDl.dataset.downloadCta = "true";
+      dirDl.textContent = "Download to see full directions";
+      dirGateOverlay.appendChild(dirDl);
+      dirGate.appendChild(dirGateContent);
+      dirGate.appendChild(dirGateOverlay);
+      dirList.appendChild(dirGate);
+      dirCard.appendChild(dirList);
+      scroll.appendChild(dirCard);
+
+      root.appendChild(scroll);
+      return root;
+    };
+
+    const buildCookViewPage = () => {
+      const root = el("div", "pp-page pp-page--cook");
+      const scroll = el("div", "pp-page-scroll");
+
+      // Local-only cooking step state (demo).
+      const steps = [
+        {
+          title: "Brown one onion and 1 clove of garlic with 1 tsp of salt in a pressure cooker.",
+          ingredients: [
+            { name: "Onions", qty: "2" },
+            { name: "Garlic", qty: "3 cloves" },
+            { name: "Salt", qty: "2 teaspoons" },
+          ],
+          next: "Add the skirt steak and cover with water, cook for 45 minutes or until tender.",
+        },
+        {
+          title: "Add the skirt steak and cover with water, cook for 45 minutes or until tender.",
+          ingredients: [
+            { name: "Flank steak", qty: "2 lb" },
+            { name: "Water", qty: "to cover" },
+            { name: "Salt", qty: "1 tsp" },
+          ],
+          next: "Remove the meat and shred with a fork. Add peppers and saute.",
+        },
+        {
+          title: "Remove the meat and shred with a fork. Add peppers and saute in a frying pan.",
+          ingredients: [
+            { name: "Green pepper", qty: "1" },
+            { name: "Red pepper", qty: "6 oz" },
+            { name: "Olive oil", qty: "1 tbsp" },
+          ],
+          next: "Finish the sauce and simmer everything together.",
+        },
+      ];
+
+      let stepIndex = 0;
+
+      const topbar = el("div", "pp-cook-topbar");
+      const back = buildTopBarBtn({
+        icon: "chevron_left",
+        label: "Back",
+        onClick: () => {
+          if (typeof onAction === "function") onAction(actionCloseModal());
+        },
+      });
+      topbar.appendChild(back);
+      topbar.appendChild(el("div", "pp-cook-topbar-title", "Cooking"));
+      const topIcons = el("div", "pp-cook-topbar-icons");
+      topIcons.appendChild(buildTopBarBtn({ icon: "speaker", label: "Read aloud (preview)", downloadCta: true }));
+      topIcons.appendChild(buildTopBarBtn({ icon: "list", label: "All steps (preview)", downloadCta: true }));
+      topbar.appendChild(topIcons);
+      const finish = document.createElement("button");
+      finish.type = "button";
+      finish.className = "pp-cook-finish";
+      finish.dataset.downloadCta = "true";
+      finish.textContent = "Finish";
+      topbar.appendChild(finish);
+      scroll.appendChild(topbar);
+
+      const progressCard = el("div", "pp-cook-progress pp-app-card");
+      const progressTitle = el("div", "pp-cook-progress-title", "Shredded Flank Steak with Peppers, (Ropa Vieja)");
+      progressCard.appendChild(progressTitle);
+      const progressRow = el("div", "pp-cook-progress-row");
+      progressRow.appendChild(el("div", "pp-cook-progress-sub", "Step 1 of 6"));
+      const allSteps = document.createElement("button");
+      allSteps.type = "button";
+      allSteps.className = "pp-cook-allsteps";
+      allSteps.dataset.downloadCta = "true";
+      allSteps.textContent = "All steps";
+      progressRow.appendChild(allSteps);
+      progressCard.appendChild(progressRow);
+      const bar = el("div", "pp-cook-bar");
+      const fill = el("div", "pp-cook-bar-fill");
+      bar.appendChild(fill);
+      progressCard.appendChild(bar);
+      scroll.appendChild(progressCard);
+
+      const callout = el(
+        "div",
+        "pp-cook-callout",
+        "Hands-free: cover the proximity sensor / face camera to advance. Steps can be read aloud.",
+      );
+      scroll.appendChild(callout);
+
+      const stepCard = el("div", "pp-cook-step pp-app-card");
+      const stepHead = el("div", "pp-cook-step-head");
+      const stepLabel = el("div", "pp-cook-step-label", "Step 1");
+      stepHead.appendChild(stepLabel);
+      const stepBtns = el("div", "pp-cook-step-btns");
+      stepBtns.appendChild(
+        buildTopBarBtn({ icon: "play", label: "Play (preview)", downloadCta: true, className: "pp-cook-iconbtn" }),
+      );
+      stepBtns.appendChild(
+        buildTopBarBtn({ icon: "pause", label: "Pause (preview)", downloadCta: true, className: "pp-cook-iconbtn" }),
+      );
+      stepBtns.appendChild(
+        buildTopBarBtn({
+          icon: "restart",
+          label: "Restart (preview)",
+          downloadCta: true,
+          className: "pp-cook-iconbtn",
+        }),
+      );
+      stepHead.appendChild(stepBtns);
+      const stepText = el("div", "pp-cook-step-text", steps[0].title);
+      stepCard.appendChild(stepHead);
+      stepCard.appendChild(stepText);
+      scroll.appendChild(stepCard);
+
+      const ingCard = el("div", "pp-cook-ing pp-app-card");
+      const ingHead = el("div", "pp-cook-ing-head");
+      ingHead.appendChild(el("div", "pp-cook-ing-title", "Ingredients in this step"));
+      const viewAll = document.createElement("button");
+      viewAll.type = "button";
+      viewAll.className = "pp-cook-viewall";
+      viewAll.dataset.downloadCta = "true";
+      viewAll.textContent = "View All";
+      ingHead.appendChild(viewAll);
+      ingCard.appendChild(ingHead);
+      const ingList = el("div", "pp-cook-ing-list");
+      ingCard.appendChild(ingList);
+      scroll.appendChild(ingCard);
+
+      const nextStrip = el("div", "pp-cook-next pp-app-card");
+      nextStrip.appendChild(el("div", "pp-cook-next-text", `Next: ${steps[0].next}`));
+      scroll.appendChild(nextStrip);
+
+      const bottom = el("div", "pp-cook-bottom");
+      const backBtn = buildSheetBtn({ label: "Back", variant: "secondary", downloadCta: false });
+      const nextBtn = buildSheetBtn({ label: "Next", variant: "primary", downloadCta: false });
+      backBtn.classList.add("pp-cook-navbtn");
+      nextBtn.classList.add("pp-cook-navbtn");
+      bottom.appendChild(backBtn);
+      bottom.appendChild(nextBtn);
+      scroll.appendChild(bottom);
+
+      const renderStep = () => {
+        const safe = clamp(stepIndex, 0, steps.length - 1);
+        stepIndex = safe;
+        const displayStep = safe + 1;
+        progressRow.querySelector(".pp-cook-progress-sub").textContent = `Step ${displayStep} of 6`;
+        stepLabel.textContent = `Step ${displayStep}`;
+        stepText.textContent = steps[safe].title;
+        nextStrip.querySelector(".pp-cook-next-text").textContent = `Next: ${steps[safe].next}`;
+
+        // Progress: Step 1 of 6 even if we only demo a few steps.
+        fill.style.width = `${clamp(displayStep / 6, 0.08, 1) * 100}%`;
+
+        ingList.replaceChildren(
+          ...steps[safe].ingredients.map((ing) => {
+            const row = el("div", "pp-cook-ing-row");
+            row.appendChild(el("div", "pp-cook-ing-bullet", "•"));
+            row.appendChild(el("div", "pp-cook-ing-name", ing.name));
+            row.appendChild(el("div", "pp-cook-ing-qty", ing.qty));
+            return row;
+          }),
+        );
+
+        const isFirst = safe === 0;
+        backBtn.disabled = isFirst;
+        backBtn.classList.toggle("is-soft-disabled", isFirst);
+      };
+
+      backBtn.addEventListener("click", () => {
+        if (stepIndex <= 0) return;
+        stepIndex -= 1;
+        renderStep();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (stepIndex >= steps.length - 1) {
+          openDownload();
+          return;
+        }
+        stepIndex += 1;
+        renderStep();
+      });
+
+      renderStep();
+
+      root.appendChild(scroll);
+      return root;
+    };
+
+    const openPage = (pageSpec) => {
+      if (!pageSpec) return closePage();
+      clear(page);
+      const kind = pageSpec && pageSpec.kind ? String(pageSpec.kind) : "";
+      const node =
+        kind === "recipe_view"
+          ? buildRecipeViewPage()
+          : kind === "cook_view"
+            ? buildCookViewPage()
+            : el("div", "pp-page", "Preview only.");
+      page.appendChild(node);
+      page.dataset.ppKind = kind;
+      isPageOpen = true;
+      page.classList.add("is-open");
+      page.setAttribute("aria-hidden", "false");
+      syncOverlayChrome();
     };
 
     const openSheet = (sheetSpec) => {
@@ -1239,8 +2207,10 @@
       sheetBody.replaceChildren(...(bodyNodes || []));
       sheetFooter.replaceChildren(...(footerNodes || []));
       sheetFooter.hidden = !(footerNodes && footerNodes.length);
+      isSheetOpen = true;
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
+      syncOverlayChrome();
     };
 
     const setSplash = () => {
@@ -1252,6 +2222,8 @@
       clear(objectsLayer);
       clear(fabsLayer);
       closeSheet();
+      closePage();
+      closeDownload();
     };
 
     const setTab = (tab) => {
@@ -1283,6 +2255,7 @@
     const setScreen = (screenState) => {
       const tab = screenState && screenState.tab ? String(screenState.tab) : "";
       const sheetSpec = screenState && screenState.sheet ? screenState.sheet : null;
+      const pageSpec = screenState && screenState.page ? screenState.page : null;
 
       if (!tab) {
         setSplash();
@@ -1290,16 +2263,57 @@
       }
 
       setTab(tab);
-      if (sheetSpec) openSheet(sheetSpec);
-      else closeSheet();
+      // Download prompt is a transient overlay: always close it when the underlying screen changes.
+      closeDownload();
+      if (pageSpec) {
+        openPage(pageSpec);
+        closeSheet();
+      } else if (sheetSpec) {
+        openSheet(sheetSpec);
+        closePage();
+      } else {
+        closeSheet();
+        closePage();
+      }
     };
 
     scrim.addEventListener("click", () => {
+      if (!allowBackdropClose()) return;
       if (typeof onAction === "function") onAction(actionCloseModal());
     });
 
     sheetClose.addEventListener("click", () => {
       if (typeof onAction === "function") onAction(actionCloseModal());
+    });
+
+    downloadScrim.addEventListener("click", () => {
+      if (!allowBackdropClose()) return;
+      closeDownload();
+    });
+
+    downloadClose.addEventListener("click", () => {
+      closeDownload();
+    });
+
+    // Single handler for any CTA that should prompt the "Download the app" hook.
+    app.addEventListener("click", (event) => {
+      const target =
+        event.target instanceof Element ? event.target.closest("[data-download-cta=\"true\"]") : null;
+      if (!target) return;
+      event.preventDefault();
+      event.stopPropagation();
+      openDownload();
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (isDownloadOpen) {
+        closeDownload();
+        return;
+      }
+      if (isSheetOpen || isPageOpen) {
+        if (typeof onAction === "function") onAction(actionCloseModal());
+      }
     });
 
     // Initialize in splash.
@@ -1426,6 +2440,21 @@
       "assets/ingredients/apple.png",
       "assets/ingredients/banana.png",
       "assets/ingredients/avocado.png",
+      "assets/ingredients/milk.png",
+      "assets/ingredients/bread.png",
+      "assets/ingredients/eggs.png",
+      "assets/ingredients/butter.png",
+      "assets/ingredients/onion.png",
+      "assets/ingredients/garlic.png",
+      "assets/ingredients/tomato.png",
+      "assets/ingredients/flank_steak.png",
+      "assets/ingredients/green_pepper.png",
+      "assets/ingredients/red_pepper.png",
+      "assets/ingredients/red_chili_pepper.png",
+      "assets/ingredients/tomato_sauce.png",
+      "assets/ingredients/bay_leaves.png",
+      "assets/ingredients/red_wine.png",
+      "assets/ingredients/lime.png",
       "assets/ingredients/jalapeno.png",
       "assets/ingredients/olive_oil.png",
       "assets/ingredients/white_onion.png",

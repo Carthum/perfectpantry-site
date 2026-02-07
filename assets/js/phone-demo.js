@@ -160,6 +160,30 @@
           "This opens the same add-item surface the app uses. We'll tighten the flow once you confirm the exact UI.",
       },
     },
+    {
+      id: "home-view-recipe",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "View Recipe", kind: "recipe_detail" },
+      copy: {
+        kicker: "What's For Dinner?",
+        title: "View Recipe",
+        description:
+          "This is a preview of the recipe detail surface. Next we'll align the header, actions, and ingredient list to the app.",
+      },
+    },
+    {
+      id: "home-cook-now",
+      bg: "home",
+      tab: "home",
+      sheet: { title: "Cook Now", kind: "cook_now" },
+      copy: {
+        kicker: "What's For Dinner?",
+        title: "Cook Now",
+        description:
+          "This is a preview of the cook flow surface. Next we'll mirror the step layout and controls from the app.",
+      },
+    },
   ];
 
   const preloadImages = (paths) => {
@@ -609,8 +633,17 @@
       dinnerCard.appendChild(el("p", "pp-app-card-sub", "Pantry coverage: 0/10 on hand  •  10 to buy"));
       dinnerCard.appendChild(el("div", "pp-app-divider"));
       const ctas = el("div", "pp-home-cta-row");
-      ctas.appendChild(buildPill({ label: "View Recipe", className: "pp-app-pill--title" }));
-      ctas.appendChild(buildPill({ label: "Cook Now", className: "pp-app-pill--title" }));
+      const viewBtn = buildPill({ label: "View Recipe", className: "pp-app-pill--title" });
+      if (typeof onAction === "function") {
+        viewBtn.addEventListener("click", () => onAction(actionOpenModal("home-view-recipe")));
+      }
+      ctas.appendChild(viewBtn);
+
+      const cookBtn = buildPill({ label: "Cook Now", className: "pp-app-pill--title" });
+      if (typeof onAction === "function") {
+        cookBtn.addEventListener("click", () => onAction(actionOpenModal("home-cook-now")));
+      }
+      ctas.appendChild(cookBtn);
       dinnerCard.appendChild(ctas);
       root.appendChild(dinnerCard);
 
@@ -906,6 +939,78 @@
             actions: ["Scan barcode", "Search items"],
           }),
         );
+        return root;
+      }
+
+      if (kind === "recipe_detail") {
+        root.appendChild(
+          mkCard({
+            title: "One-Pot Creamy Tuscan Pasta",
+            sub: "Preview only. We'll match the cookbook recipe detail layout next.",
+            actions: ["Add to plan", "Start cooking"],
+          }),
+        );
+
+        const ingredients = el("div", "pp-app-card");
+        ingredients.appendChild(el("p", "pp-app-card-title", "Ingredients"));
+        ingredients.appendChild(el("p", "pp-app-card-sub", "Pantry coverage: 0/10 on hand  •  10 to buy"));
+        ingredients.appendChild(el("div", "pp-app-divider"));
+
+        const list = el("div", "pp-app-list");
+        [
+          { title: "Pasta", sub: "Need" },
+          { title: "Spinach", sub: "Need" },
+          { title: "Sun-dried tomatoes", sub: "Need" },
+          { title: "Cream", sub: "Need" },
+        ].forEach((item) => {
+          const row = document.createElement("button");
+          row.type = "button";
+          row.className = "pp-app-list-row";
+          const left = document.createElement("div");
+          left.appendChild(el("p", "pp-app-list-row-title", item.title));
+          left.appendChild(el("p", "pp-app-list-row-sub", item.sub));
+          row.appendChild(left);
+          row.appendChild(el("span", "pp-app-chip", "Preview"));
+          list.appendChild(row);
+        });
+        ingredients.appendChild(list);
+        root.appendChild(ingredients);
+        return root;
+      }
+
+      if (kind === "cook_now") {
+        root.appendChild(
+          mkCard({
+            title: "Cooking Steps",
+            sub: "Preview only. We'll mirror the in-cook controls from the app next.",
+            actions: ["Start Cooking"],
+          }),
+        );
+
+        const steps = el("div", "pp-app-card");
+        steps.appendChild(el("p", "pp-app-card-title", "Step list"));
+        steps.appendChild(el("p", "pp-app-card-sub", "One-Pot Creamy Tuscan Pasta"));
+        steps.appendChild(el("div", "pp-app-divider"));
+
+        const list = el("div", "pp-app-list");
+        [
+          { title: "Prep ingredients", sub: "5 min" },
+          { title: "Cook pasta", sub: "10 min" },
+          { title: "Finish sauce", sub: "8 min" },
+        ].forEach((item) => {
+          const row = document.createElement("button");
+          row.type = "button";
+          row.className = "pp-app-list-row";
+          const left = document.createElement("div");
+          left.appendChild(el("p", "pp-app-list-row-title", item.title));
+          left.appendChild(el("p", "pp-app-list-row-sub", item.sub));
+          row.appendChild(left);
+          row.appendChild(el("span", "pp-app-chip", "Preview"));
+          list.appendChild(row);
+        });
+
+        steps.appendChild(list);
+        root.appendChild(steps);
         return root;
       }
 

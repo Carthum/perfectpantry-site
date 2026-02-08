@@ -921,6 +921,13 @@ html.pp-tour-locked body {
   overflow: hidden;
 }
 
+.pp-app-recipe-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .pp-app-recipe-title {
   margin: 0;
   font-size: 14px;
@@ -1160,10 +1167,18 @@ html.pp-tour-locked body {
   width: 62px;
   height: 62px;
   border-radius: 18px;
+  overflow: hidden;
   background:
     radial-gradient(circle at 30% 20%, rgba(210, 122, 61, 0.22), transparent 55%),
     rgba(233, 214, 191, 0.92);
   border: 1px solid rgba(58, 42, 26, 0.12);
+}
+
+.pp-meal-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .pp-meal-meta {
@@ -2646,6 +2661,13 @@ html.pp-tour-locked body {
     radial-gradient(circle at 30% 20%, rgba(210, 122, 61, 0.18), transparent 55%),
     radial-gradient(circle at 80% 55%, rgba(95, 127, 87, 0.18), transparent 58%),
     rgba(233, 214, 191, 0.82);
+}
+
+.pp-recipe-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .pp-recipe-nut-head {

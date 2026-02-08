@@ -1056,10 +1056,10 @@
 
       const grid = el("div", "pp-app-grid");
       const recipes = [
-        { title: "Bang Bang Shrimp", meta: "25 min  •  4 servings" },
-        { title: "Chicken Tikka Masala", meta: "45 min  •  4 servings" },
-        { title: "Pico de Gallo", meta: "15 min  •  6 servings" },
-        { title: "Skillet tacos", meta: "20 min  •  4 servings" },
+        { title: "Bang Bang Shrimp", meta: "25 min  •  4 servings", thumb: "assets/objects/obj_bowl_spices.png" },
+        { title: "Chicken Tikka Masala", meta: "45 min  •  4 servings", thumb: "assets/objects/obj_bowl_tomato.png" },
+        { title: "Pico de Gallo", meta: "15 min  •  6 servings", thumb: "assets/objects/obj_bowl_basil.png" },
+        { title: "Skillet tacos", meta: "20 min  •  4 servings", thumb: "assets/objects/obj_basil_tomato.png" },
       ];
       recipes.forEach((r) => {
         const card = document.createElement("button");
@@ -1068,7 +1068,11 @@
         if (typeof onAction === "function") {
           card.addEventListener("click", () => onAction(actionSetPhoneModal("recipeView")));
         }
-        card.appendChild(el("div", "pp-app-recipe-thumb"));
+        const thumb = el("div", "pp-app-recipe-thumb");
+        if (r && r.thumb) {
+          thumb.appendChild(imgEl({ src: r.thumb, className: "pp-app-recipe-thumb-img", alt: "" }));
+        }
+        card.appendChild(thumb);
         card.appendChild(el("p", "pp-app-recipe-title", r.title));
         card.appendChild(el("p", "pp-app-recipe-meta", r.meta));
         grid.appendChild(card);
@@ -1092,17 +1096,22 @@
 
       const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday"];
       const meals = [
-        "Vegetarian BLT with Avocado",
-        "Chicken Avocado Wrap - Paleo",
-        "Salmon in Green Chili Cream Sauce",
-        "Spicy Avocado Chicken",
+        { title: "Vegetarian BLT with Avocado", thumb: "assets/objects/obj_bowl_basil.png" },
+        { title: "Chicken Avocado Wrap - Paleo", thumb: "assets/objects/obj_basil_tomato.png" },
+        { title: "Salmon in Green Chili Cream Sauce", thumb: "assets/objects/obj_bowl_spices.png" },
+        { title: "Spicy Avocado Chicken", thumb: "assets/objects/obj_bowl_tomato.png" },
       ];
       dayNames.forEach((day, idx) => {
+        const meal = meals[idx] || {};
         const card = el("div", "pp-app-card pp-meal-card");
-        card.appendChild(el("div", "pp-meal-thumb"));
+        const thumb = el("div", "pp-meal-thumb");
+        if (meal && meal.thumb) {
+          thumb.appendChild(imgEl({ src: meal.thumb, className: "pp-meal-thumb-img", alt: "" }));
+        }
+        card.appendChild(thumb);
         const meta = el("div", "pp-meal-meta");
         meta.appendChild(el("p", "pp-meal-title", `${day}  •  2/${idx + 2}`));
-        meta.appendChild(el("p", "pp-meal-sub", meals[idx]));
+        meta.appendChild(el("p", "pp-meal-sub", meal.title || ""));
         meta.appendChild(el("p", "pp-meal-sub", `${idx + 1} of ${idx + 7} from pantry`));
         card.appendChild(meta);
 
@@ -2092,8 +2101,15 @@
       scroll.appendChild(headerCard);
 
       const hero = el("div", "pp-recipe-hero");
-      // Placeholder: styling matters most for the demo; swap with a real photo later.
-      hero.appendChild(el("div", "pp-recipe-hero-ph"));
+      const heroPh = el("div", "pp-recipe-hero-ph");
+      heroPh.appendChild(
+        imgEl({
+          src: "assets/objects/obj_bowl_tomato.png",
+          className: "pp-recipe-hero-img",
+          alt: "",
+        }),
+      );
+      hero.appendChild(heroPh);
       scroll.appendChild(hero);
 
       const nut = el("div", "pp-recipe-nut pp-app-card");
@@ -2689,6 +2705,10 @@
       "assets/objects/obj_pantry_item_shelf.png",
       "assets/objects/obj_tan_spice.png",
       "assets/objects/obj_garlic.png",
+      "assets/objects/obj_bowl_tomato.png",
+      "assets/objects/obj_bowl_basil.png",
+      "assets/objects/obj_bowl_spices.png",
+      "assets/objects/obj_basil_tomato.png",
       "assets/ingredients/apple.png",
       "assets/ingredients/banana.png",
       "assets/ingredients/avocado.png",

@@ -1571,15 +1571,15 @@ html.pp-tour-locked body {
 @media (min-width: 961px) and (hover: hover) and (pointer: fine) {
   /* Desktop-only nudges: align pantry items to the shelf art in the sticky scrolly stage. */
   .pp-pantry-item--apple {
-    top: 27.5%;
+    top: 25.5%;
   }
 
   .pp-pantry-item--banana {
-    top: 26.5%;
+    top: 24.5%;
   }
 
   .pp-pantry-item--avocado {
-    top: 58%;
+    top: 56.5%;
   }
 
   .pp-pantry-label--apple,

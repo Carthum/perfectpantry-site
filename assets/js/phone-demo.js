@@ -1785,7 +1785,6 @@
             menu.hidden = !open;
             menu.style.display = open ? "block" : "none";
             category.setAttribute("aria-expanded", open ? "true" : "false");
-            if (open) menu.scrollIntoView({ block: "nearest" });
           };
           const categories = [
             "Staples",
@@ -1943,7 +1942,6 @@
           menu.hidden = !open;
           menu.style.display = open ? "block" : "none";
           category.setAttribute("aria-expanded", open ? "true" : "false");
-          if (open) menu.scrollIntoView({ block: "nearest" });
         };
         [
           "Staples",

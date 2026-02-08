@@ -1132,10 +1132,10 @@
       return root;
     };
 
-    const renderShop = () => {
-      const root = el("div", "pp-screen pp-screen-shop");
+	    const renderShop = () => {
+	      const root = el("div", "pp-screen pp-screen-shop");
 
-      const topRow = el("div", "pp-top-row");
+	      const topRow = el("div", "pp-top-row");
       topRow.appendChild(buildPill({ label: "List", className: "pp-app-pill--title", leftIcon: "menu" }));
       const shoppingBtn = buildPill({ label: "Shopping", className: "pp-app-pill--title" });
       if (typeof onAction === "function") {
@@ -1148,13 +1148,24 @@
         ariaLabel: "Search (preview)",
       });
       searchBtn.dataset.downloadCta = "true";
-      topRow.appendChild(searchBtn);
-      root.appendChild(topRow);
+	      topRow.appendChild(searchBtn);
+	      root.appendChild(topRow);
 
-      root.appendChild(buildPill({ label: "Tomatillo Salsa Verde", className: "pp-app-pill--title pp-shop-recipe-pill" }));
+	      const hero = el("div", "pp-shop-hero");
+	      hero.appendChild(buildPill({ label: "Tomatillo Salsa Verde", className: "pp-app-pill--title pp-shop-recipe-pill" }));
+	      const prefs = el("div", "pp-shop-prefs");
+	      prefs.appendChild(el("p", "pp-app-card-kicker", "Preferences"));
+	      prefs.appendChild(el("p", "pp-shop-prefs-sub", "Example household defaults:"));
+	      const prefsChips = el("div", "pp-shop-prefs-chips");
+	      ["Gluten-free", "Dairy-free", "Nut-free", "No cilantro"].forEach((label) => {
+	        prefsChips.appendChild(el("span", "pp-app-chip", label));
+	      });
+	      prefs.appendChild(prefsChips);
+	      hero.appendChild(prefs);
+	      root.appendChild(hero);
 
-      const stageNode = el("div", "pp-shop-stage");
-      const itemsWrap = el("div", "pp-shop-items");
+	      const stageNode = el("div", "pp-shop-stage");
+	      const itemsWrap = el("div", "pp-shop-items");
 
       itemsWrap.appendChild(imgEl({ src: "assets/objects/obj_garlic.png", className: "pp-shop-item pp-shop-item--garlic", alt: "" }));
       itemsWrap.appendChild(imgEl({ src: "assets/ingredients/jalapeno.png", className: "pp-shop-item pp-shop-item--jalapeno", alt: "" }));

@@ -1002,11 +1002,11 @@ html.pp-tour-locked body {
 .pp-app-nav-indicator {
   position: absolute;
   /* A squared selection plate behind the icon+label (closer to the app). */
-  inset: 4px 6px 4px 6px;
+  inset: 2px 4px 2px 4px;
   /* Always stay behind the icon+label. */
   z-index: 0;
   pointer-events: none;
-  border-radius: 18px;
+  border-radius: 20px;
   background: rgba(233, 214, 191, 0.86);
   border: 1px solid rgba(58, 42, 26, 0.12);
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
@@ -1357,15 +1357,15 @@ html.pp-tour-locked body {
 @media (min-width: 961px) and (hover: hover) and (pointer: fine) {
   /* Desktop-only nudges: align pantry items to the shelf art in the sticky scrolly stage. */
   .pp-pantry-item--apple {
-    top: 36%;
+    top: 33%;
   }
 
   .pp-pantry-item--banana {
-    top: 35%;
+    top: 32%;
   }
 
   .pp-pantry-item--avocado {
-    top: 64%;
+    top: 61%;
   }
 
   .pp-pantry-label--apple,

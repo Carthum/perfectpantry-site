@@ -1706,13 +1706,6 @@
         // Default: link import.
         bodyNodes.push(buildField({ icon: "link", placeholder: "Paste a recipe link here" }));
         bodyNodes.push(buildSheetBtn({ label: "Import from Link", variant: "primary", downloadCta: true }));
-        bodyNodes.push(
-          el(
-            "p",
-            "pp-app-sheet-tip",
-            "Tip: Many recipe sites include a \"Recipe\" JSON block. We'll try to read that automatically.",
-          ),
-        );
         addRecipeFooter();
         return { bodyNodes, footerNodes };
       }

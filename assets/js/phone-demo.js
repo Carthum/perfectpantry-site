@@ -2113,13 +2113,17 @@
 
       const hero = el("div", "pp-recipe-hero");
       const heroPh = el("div", "pp-recipe-hero-ph");
-      heroPh.appendChild(
-        imgEl({
-          src: "assets/objects/obj_bowl_tomato.png",
-          className: "pp-recipe-hero-img",
-          alt: "",
-        }),
-      );
+      const heroImg = imgEl({
+        src: "assets/objects/flank_steak_w_peppers.png",
+        className: "pp-recipe-hero-img",
+        alt: "",
+      });
+      heroImg.addEventListener("error", () => {
+        if (heroImg.dataset.ppFallback === "1") return;
+        heroImg.dataset.ppFallback = "1";
+        heroImg.src = "assets/objects/obj_bowl_tomato.png";
+      });
+      heroPh.appendChild(heroImg);
       hero.appendChild(heroPh);
       scroll.appendChild(hero);
 
@@ -2147,12 +2151,7 @@
       });
       nut.appendChild(pills);
 
-      const tags = el("div", "pp-recipe-tags");
-      ["Gluten-free", "Dairy-free", "gluten free", "dairy free"].forEach((t) => {
-        tags.appendChild(el("span", "pp-recipe-tag", t));
-      });
-      nut.appendChild(tags);
-      nut.appendChild(el("div", "pp-recipe-nut-note", "Analysis via Spoonacular (cached on Supabase)"));
+      nut.appendChild(el("div", "pp-recipe-nut-note", "Analysis via Spoonacular"));
       scroll.appendChild(nut);
 
       const ingCard = el("div", "pp-recipe-ing pp-app-card");
@@ -2716,6 +2715,7 @@
       "assets/objects/obj_pantry_item_shelf.png",
       "assets/objects/obj_tan_spice.png",
       "assets/objects/obj_garlic.png",
+      "assets/objects/flank_steak_w_peppers.png",
       "assets/objects/obj_bowl_tomato.png",
       "assets/objects/obj_bowl_basil.png",
       "assets/objects/obj_bowl_spices.png",

@@ -15,9 +15,15 @@
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
 
-  const actionOpenModal = (id) => ({ type: "open_modal", id });
-  const actionCloseModal = () => ({ type: "close_modal" });
+  const actionSetPhoneModal = (modal, params) => ({
+    type: "set_phone_modal",
+    modal: modal ? String(modal) : null,
+    params: params && typeof params === "object" ? params : null,
+  });
+  const actionClosePhoneModal = () => actionSetPhoneModal(null);
   const actionSelectTab = (tab) => ({ type: "select_tab", tab });
+  const actionOpenDownloadCta = () => ({ type: "open_download_cta" });
+  const actionCloseDownloadCta = () => ({ type: "close_download_cta" });
 
   // Single source of truth for the demo.
   // Each step owns BOTH the left copy and the right phone UI state.
@@ -541,7 +547,7 @@
     }
   };
 
-  const createAppSimPhone = ({ mount, onAction, lockOuterScroll = true } = {}) => {
+  const createAppSimPhone = ({ mount, onAction } = {}) => {
     const wrap = document.createElement("div");
     wrap.className = "pp-demo pp-demo--appsim";
 
@@ -607,7 +613,7 @@
     const downloadScrim = el("div", "pp-app-download-scrim");
     const downloadCard = el("div", "pp-app-download-card");
     const downloadHeader = el("div", "pp-app-download-header");
-    const downloadTitle = el("h3", "pp-app-download-title", "Get Perfect Pantry");
+    const downloadTitle = el("h3", "pp-app-download-title", "Download the app");
     const downloadClose = document.createElement("button");
     downloadClose.type = "button";
     downloadClose.className = "pp-app-download-close";
@@ -616,28 +622,29 @@
     if (dlCloseIcon) downloadClose.appendChild(dlCloseIcon);
     downloadHeader.appendChild(downloadTitle);
     downloadHeader.appendChild(downloadClose);
-    const downloadBody = el(
-      "p",
-      "pp-app-download-body",
-      "This is a website demo. Download the app to complete this action.",
+    downloadCard.appendChild(downloadHeader);
+    downloadCard.appendChild(
+      el(
+        "p",
+        "pp-app-download-body",
+        "This is a preview-only demo. Get early access to the mobile app to save recipes, add pantry items, plan, and shop.",
+      ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
-    const mkStoreBtn = (label, href) => {
-      const a = document.createElement("a");
-      a.className = "pp-app-download-btn";
-      a.href = href;
-      a.target = "_blank";
-      a.rel = "noreferrer";
-      a.textContent = label;
-      return a;
-    };
-    downloadBtns.appendChild(mkStoreBtn("App Store", "https://example.com/app-store"));
-    downloadBtns.appendChild(mkStoreBtn("Google Play", "https://example.com/google-play"));
-    const downloadNote = el("p", "pp-app-download-note", "Coming soon.");
-    downloadCard.appendChild(downloadHeader);
-    downloadCard.appendChild(downloadBody);
+    const appStore = document.createElement("a");
+    appStore.className = "pp-app-download-btn";
+    appStore.href = "#waitlist";
+    appStore.textContent = "Join the waitlist";
+    const playStore = document.createElement("a");
+    playStore.className = "pp-app-download-btn";
+    playStore.href = "#waitlist";
+    playStore.textContent = "Get updates";
+    downloadBtns.appendChild(appStore);
+    downloadBtns.appendChild(playStore);
     downloadCard.appendChild(downloadBtns);
-    downloadCard.appendChild(downloadNote);
+    downloadCard.appendChild(
+      el("p", "pp-app-download-note", "No accounts or actions run on this website."),
+    );
     download.appendChild(downloadScrim);
     download.appendChild(downloadCard);
 
@@ -682,15 +689,32 @@
     app.appendChild(page);
     app.appendChild(download);
 
+    const phoneScreenRoot = el("div", "pp-phone-screen-root");
+    phoneScreenRoot.id = "phoneScreenRoot";
+    phoneScreenRoot.appendChild(app);
+
     screen.appendChild(splashImg);
     screen.appendChild(overlay);
-    screen.appendChild(app);
+    screen.appendChild(phoneScreenRoot);
 
     frame.appendChild(screen);
     phone.appendChild(frame);
     wrap.appendChild(phone);
 
     mount.replaceChildren(wrap);
+
+    // ESC must not close or revert any phone-demo state. Also prevent ESC from bubbling to
+    // site-level handlers while focus is inside the phone demo (desktop users tend to hit ESC
+    // instinctively to dismiss modals).
+    wrap.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key !== "Escape") return;
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      true,
+    );
 
     const clear = (node) => node.replaceChildren();
 
@@ -798,13 +822,13 @@
       const ctas = el("div", "pp-home-cta-row");
       const viewBtn = buildPill({ label: "View Recipe", className: "pp-app-pill--title" });
       if (typeof onAction === "function") {
-        viewBtn.addEventListener("click", () => onAction(actionOpenModal("recipe-view")));
+        viewBtn.addEventListener("click", () => onAction(actionSetPhoneModal("recipeView")));
       }
       ctas.appendChild(viewBtn);
 
       const cookBtn = buildPill({ label: "Cook Now", className: "pp-app-pill--title" });
       if (typeof onAction === "function") {
-        cookBtn.addEventListener("click", () => onAction(actionOpenModal("cook-view")));
+        cookBtn.addEventListener("click", () => onAction(actionSetPhoneModal("cookView")));
       }
       ctas.appendChild(cookBtn);
       dinnerCard.appendChild(ctas);
@@ -839,14 +863,14 @@
         mkAction({
           iconSvg: TAB_SVGS.cookbook,
           label: "Add New\nRecipe",
-          action: actionOpenModal("home-add-recipe-ai"),
+          action: actionSetPhoneModal("addRecipe", { mode: "ai" }),
         }),
       );
       actions.appendChild(
         mkAction({
           iconSvg: TAB_SVGS.pantry,
           label: "Add Pantry\nItem",
-          action: actionOpenModal("home-add-pantry-bulk"),
+          action: actionSetPhoneModal("addPantryItem", { mode: "bulk" }),
         }),
       );
       actionsCard.appendChild(actions);
@@ -952,7 +976,7 @@
         card.type = "button";
         card.className = "pp-app-recipe-card";
         if (typeof onAction === "function") {
-          card.addEventListener("click", () => onAction(actionOpenModal("recipe-view")));
+          card.addEventListener("click", () => onAction(actionSetPhoneModal("recipeView")));
         }
         card.appendChild(el("div", "pp-app-recipe-thumb"));
         card.appendChild(el("p", "pp-app-recipe-title", r.title));
@@ -995,7 +1019,7 @@
         const actions = el("div", "pp-meal-actions");
         const startCooking = buildPill({ label: "Start Cooking" });
         if (typeof onAction === "function") {
-          startCooking.addEventListener("click", () => onAction(actionOpenModal("cook-view")));
+          startCooking.addEventListener("click", () => onAction(actionSetPhoneModal("cookView")));
         }
         actions.appendChild(startCooking);
         actions.appendChild(buildPill({ label: "Replan Meal" }));
@@ -1014,7 +1038,7 @@
       topRow.appendChild(buildPill({ label: "List", className: "pp-app-pill--title", leftIcon: "menu" }));
       const shoppingBtn = buildPill({ label: "Shopping", className: "pp-app-pill--title" });
       if (typeof onAction === "function") {
-        shoppingBtn.addEventListener("click", () => onAction(actionOpenModal("shop-staples")));
+        shoppingBtn.addEventListener("click", () => onAction(actionSetPhoneModal("shopBulkPicker")));
       }
       topRow.appendChild(shoppingBtn);
       topRow.appendChild(buildCircle({ icon: "search", className: "pp-app-circle--muted", ariaLabel: "Search (preview)" }));
@@ -1075,11 +1099,16 @@
     let isPageOpen = false;
     let isDownloadOpen = false;
 
-    const allowBackdropClose = () =>
-      !!(
-        window.matchMedia &&
-        window.matchMedia("(min-width: 961px) and (hover: hover) and (pointer: fine)").matches
-      );
+    const openDownloadCta = () => {
+      if (typeof onAction === "function") onAction(actionOpenDownloadCta());
+    };
+
+    const setDownloadCtaOpen = (isOpen) => {
+      isDownloadOpen = !!isOpen;
+      download.classList.toggle("is-open", isDownloadOpen);
+      download.setAttribute("aria-hidden", isDownloadOpen ? "false" : "true");
+      syncOverlayChrome();
+    };
 
     const syncOverlayChrome = () => {
       const anyOverlay = isSheetOpen || isPageOpen || isDownloadOpen;
@@ -1088,28 +1117,8 @@
       nav.classList.toggle("is-hidden", anyOverlay);
       objectsLayer.classList.toggle("is-hidden", anyOverlay);
       fabsLayer.classList.toggle("is-hidden", anyOverlay);
-      // Only lock outer page scroll for the desktop scroll-driven tour.
-      // On small screens the demo is not scroll-driven; locking can leave the phone
-      // partially off-screen, which feels like a full-page overlay.
-      if (lockOuterScroll) {
-        document.documentElement.classList.toggle("pp-tour-locked", anyOverlay);
-      } else {
-        document.documentElement.classList.remove("pp-tour-locked");
-      }
-    };
-
-    const closeDownload = () => {
-      isDownloadOpen = false;
-      download.classList.remove("is-open");
-      download.setAttribute("aria-hidden", "true");
-      syncOverlayChrome();
-    };
-
-    const openDownload = () => {
-      isDownloadOpen = true;
-      download.classList.add("is-open");
-      download.setAttribute("aria-hidden", "false");
-      syncOverlayChrome();
+      // In-phone overlays must not affect the main page scroll/stack.
+      document.documentElement.classList.remove("pp-tour-locked");
     };
 
     const closePage = () => {
@@ -1174,8 +1183,11 @@
         btn.setAttribute("role", "tab");
         btn.setAttribute("aria-selected", String(opt.id === selectedId));
         btn.textContent = String(opt.label || opt.id || "");
-        if (opt.openId && typeof onAction === "function") {
-          btn.addEventListener("click", () => onAction(actionOpenModal(opt.openId)));
+        if (opt.modal && typeof onAction === "function") {
+          btn.addEventListener(
+            "click",
+            () => onAction(actionSetPhoneModal(opt.modal, opt.params)),
+          );
         }
         wrap.appendChild(btn);
       });
@@ -1335,7 +1347,7 @@
             label: "Cancel",
             variant: "secondary",
             onClick: () => {
-              if (typeof onAction === "function") onAction(actionCloseModal());
+              if (typeof onAction === "function") onAction(actionClosePhoneModal());
             },
           }),
         );
@@ -1346,10 +1358,10 @@
           buildSeg({
             selectedId: mode || "ai",
             options: [
-              { id: "ai", label: "AI", openId: "home-add-recipe-ai" },
-              { id: "link", label: "Link", openId: "home-add-recipe-link" },
-              { id: "photo", label: "Photo", openId: "home-add-recipe-photo" },
-              { id: "manual", label: "Manual", openId: "home-add-recipe-manual" },
+              { id: "ai", label: "AI", modal: "addRecipe", params: { mode: "ai" } },
+              { id: "link", label: "Link", modal: "addRecipe", params: { mode: "link" } },
+              { id: "photo", label: "Photo", modal: "addRecipe", params: { mode: "photo" } },
+              { id: "manual", label: "Manual", modal: "addRecipe", params: { mode: "manual" } },
             ],
           }),
         );
@@ -1481,10 +1493,10 @@
           buildSeg({
             selectedId: mode || "bulk",
             options: [
-              { id: "bulk", label: "Bulk", openId: "home-add-pantry-bulk" },
-              { id: "scan", label: "Scan", openId: "home-add-pantry-scan" },
-              { id: "search", label: "Search", openId: "home-add-pantry-search" },
-              { id: "manual", label: "Manual", openId: "home-add-pantry-manual" },
+              { id: "bulk", label: "Bulk", modal: "addPantryItem", params: { mode: "bulk" } },
+              { id: "scan", label: "Scan", modal: "addPantryItem", params: { mode: "scan" } },
+              { id: "search", label: "Search", modal: "addPantryItem", params: { mode: "search" } },
+              { id: "manual", label: "Manual", modal: "addPantryItem", params: { mode: "manual" } },
             ],
           }),
         );
@@ -1558,7 +1570,7 @@
             btn.addEventListener("click", () => {
               menu.hidden = true;
               if (label !== "Staples") {
-                openDownload();
+                openDownloadCta();
                 pantryBulkCategory = "Staples";
                 catLabel.textContent = pantryBulkCategory;
                 return;
@@ -1629,11 +1641,11 @@
             buildSheetBtn({
               label: "Cancel",
               variant: "secondary",
-              onClick: () => {
-                if (typeof onAction === "function") onAction(actionCloseModal());
-              },
-            }),
-          );
+                onClick: () => {
+                  if (typeof onAction === "function") onAction(actionClosePhoneModal());
+                },
+              }),
+            );
           return { bodyNodes, footerNodes };
         }
 
@@ -1703,7 +1715,7 @@
           btn.addEventListener("click", () => {
             menu.hidden = true;
             if (label !== "Staples") {
-              openDownload();
+              openDownloadCta();
               shopStaplesCategory = "Staples";
               catLabel.textContent = shopStaplesCategory;
               return;
@@ -1771,7 +1783,7 @@
             label: "Cancel",
             variant: "secondary",
             onClick: () => {
-              if (typeof onAction === "function") onAction(actionCloseModal());
+              if (typeof onAction === "function") onAction(actionClosePhoneModal());
             },
           }),
         );
@@ -1805,7 +1817,7 @@
         icon: "chevron_left",
         label: "Back",
         onClick: () => {
-          if (typeof onAction === "function") onAction(actionCloseModal());
+          if (typeof onAction === "function") onAction(actionClosePhoneModal());
         },
       });
       top.appendChild(back);
@@ -2049,7 +2061,7 @@
         icon: "chevron_left",
         label: "Back",
         onClick: () => {
-          if (typeof onAction === "function") onAction(actionCloseModal());
+          if (typeof onAction === "function") onAction(actionClosePhoneModal());
         },
       });
       topbar.appendChild(back);
@@ -2178,7 +2190,7 @@
 
       nextBtn.addEventListener("click", () => {
         if (stepIndex >= steps.length - 1) {
-          openDownload();
+          openDownloadCta();
           return;
         }
         stepIndex += 1;
@@ -2233,7 +2245,7 @@
       clear(fabsLayer);
       closeSheet();
       closePage();
-      closeDownload();
+      setDownloadCtaOpen(false);
     };
 
     const setTab = (tab) => {
@@ -2266,6 +2278,7 @@
       const tab = screenState && screenState.tab ? String(screenState.tab) : "";
       const sheetSpec = screenState && screenState.sheet ? screenState.sheet : null;
       const pageSpec = screenState && screenState.page ? screenState.page : null;
+      const downloadCtaOpen = !!(screenState && screenState.downloadCtaOpen);
 
       if (!tab) {
         setSplash();
@@ -2273,8 +2286,6 @@
       }
 
       setTab(tab);
-      // Download prompt is a transient overlay: always close it when the underlying screen changes.
-      closeDownload();
       if (pageSpec) {
         openPage(pageSpec);
         closeSheet();
@@ -2285,24 +2296,19 @@
         closeSheet();
         closePage();
       }
+
+      setDownloadCtaOpen(downloadCtaOpen);
     };
 
-    scrim.addEventListener("click", () => {
-      if (!allowBackdropClose()) return;
-      if (typeof onAction === "function") onAction(actionCloseModal());
-    });
-
     sheetClose.addEventListener("click", () => {
-      if (typeof onAction === "function") onAction(actionCloseModal());
-    });
-
-    downloadScrim.addEventListener("click", () => {
-      if (!allowBackdropClose()) return;
-      closeDownload();
+      if (typeof onAction === "function") onAction(actionClosePhoneModal());
     });
 
     downloadClose.addEventListener("click", () => {
-      closeDownload();
+      if (typeof onAction === "function") onAction(actionCloseDownloadCta());
+    });
+    downloadScrim.addEventListener("click", () => {
+      if (typeof onAction === "function") onAction(actionCloseDownloadCta());
     });
 
     // Single handler for any CTA that should prompt the "Download the app" hook.
@@ -2312,18 +2318,7 @@
       if (!target) return;
       event.preventDefault();
       event.stopPropagation();
-      openDownload();
-    });
-
-    window.addEventListener("keydown", (event) => {
-      if (event.key !== "Escape") return;
-      if (isDownloadOpen) {
-        closeDownload();
-        return;
-      }
-      if (isSheetOpen || isPageOpen) {
-        if (typeof onAction === "function") onAction(actionCloseModal());
-      }
+      openDownloadCta();
     });
 
     // Initialize in splash.
@@ -2470,67 +2465,159 @@
       "assets/ingredients/white_onion.png",
     ]);
 
-    // Build left copy from the screen model (guarantees sync with phone).
-    // In stage mode we include modal screens so the copy can swap when a hotspot is tapped.
-    const copyScreens = stageMode ? [...STEPS, ...MODAL_SCREENS] : [...STEPS];
+    // Build left copy from scroll-driven steps only.
+    // In-phone overlays should not affect the main scroll stage (desktop) or stacked content (mobile).
+    const copyScreens = [...STEPS];
     stack.replaceChildren(...copyScreens.map((screen, idx) => buildCopyArticle(screen, idx)));
     const stepNodesById = getStepNodesById(stack);
 
     let activeStepIndex = 0;
-    let activeModalId = null;
 
     const baseStep = () => STEPS[activeStepIndex] || STEPS[0];
-    const activeScreen = () => {
-      if (!activeModalId) return baseStep();
-      return modalById.get(activeModalId) || baseStep();
+
+    // In-phone navigation state (single source of truth for the phone UI).
+    // `route` is the base tab (driven by scroll on desktop, or tab taps on mobile).
+    // `modal` is an in-phone overlay screen (rendered inside the phone bezel).
+    let phoneNavState = {
+      route: null,
+      routeOverride: null,
+      modal: null,
+      params: null,
+      downloadCtaOpen: false,
+    };
+
+    const syncRouteFromBaseStep = () => {
+      const base = baseStep();
+      phoneNavState.route = base && base.tab ? String(base.tab) : null;
+    };
+
+    const normalizeMode = (raw, allowed, fallback) => {
+      const next = raw != null ? String(raw) : "";
+      return allowed.includes(next) ? next : fallback;
+    };
+
+    const modalStateToScreenId = (modal, params) => {
+      const kind = modal ? String(modal) : "";
+      const p = params && typeof params === "object" ? params : null;
+
+      switch (kind) {
+        case "addRecipe": {
+          const mode = normalizeMode(p && p.mode, ["ai", "link", "photo", "manual"], "ai");
+          return `home-add-recipe-${mode}`;
+        }
+        case "addPantryItem": {
+          const mode = normalizeMode(p && p.mode, ["bulk", "scan", "search", "manual"], "bulk");
+          return `home-add-pantry-${mode}`;
+        }
+        case "recipeView":
+          return "recipe-view";
+        case "cookView":
+          return "cook-view";
+        case "shopBulkPicker":
+          return "shop-staples";
+        default:
+          return null;
+      }
+    };
+
+    const activeOverlayScreen = () => {
+      if (!phoneNavState.modal) return null;
+      const id = modalStateToScreenId(phoneNavState.modal, phoneNavState.params);
+      if (!id) return null;
+      return modalById.get(id) || null;
+    };
+
+    const activePhoneScreen = () => {
+      const base = baseStep() || {};
+      const tab =
+        phoneNavState.routeOverride ||
+        phoneNavState.route ||
+        (base && base.tab ? String(base.tab) : "");
+      const overlay = activeOverlayScreen();
+      const downloadCtaOpen = !!phoneNavState.downloadCtaOpen;
+      if (!overlay) return { ...base, tab, downloadCtaOpen };
+      // Keep the base route/tab; render the overlay spec inside the phone root.
+      return {
+        ...base,
+        id: overlay.id,
+        tab,
+        sheet: overlay.sheet || null,
+        page: overlay.page || null,
+        downloadCtaOpen,
+      };
     };
 
     const phone = createAppSimPhone({
       mount,
-      lockOuterScroll: stageMode,
       onAction(action) {
         if (!action || typeof action !== "object") return;
 
         switch (action.type) {
-          case "open_modal": {
-            const nextId = String(action.id || "");
-            if (!nextId || !modalById.has(nextId)) return;
-            activeModalId = nextId;
+          case "open_download_cta": {
+            phoneNavState.downloadCtaOpen = true;
+            break;
+          }
+          case "close_download_cta": {
+            phoneNavState.downloadCtaOpen = false;
             break;
           }
           case "select_tab": {
-            if (stageMode) return;
             const nextTab = String(action.tab || "");
             const idx = STEPS.findIndex((s) => s && s.tab === nextTab);
             if (idx < 0) return;
-            activeStepIndex = idx;
-            activeModalId = null;
+            if (stageMode) {
+              // Desktop stage mode: keep the scrolly copy/background tied to scroll, but let the
+              // phone demo tabs navigate independently inside the phone bezel.
+              phoneNavState.routeOverride = nextTab;
+            } else {
+              activeStepIndex = idx;
+              phoneNavState.routeOverride = null;
+            }
+            phoneNavState.modal = null;
+            phoneNavState.params = null;
+            phoneNavState.downloadCtaOpen = false;
             break;
           }
-          case "close_modal": {
-            activeModalId = null;
+          case "set_phone_modal": {
+            const nextModal = action.modal ? String(action.modal) : null;
+            if (!nextModal) {
+              phoneNavState.modal = null;
+              phoneNavState.params = null;
+              break;
+            }
+
+            const nextParams =
+              action.params && typeof action.params === "object" ? action.params : null;
+            const nextId = modalStateToScreenId(nextModal, nextParams);
+            if (!nextId || !modalById.has(nextId)) return;
+
+            phoneNavState.modal = nextModal;
+            phoneNavState.params = nextParams;
             break;
           }
           default:
             return;
         }
 
-        const screen = activeScreen();
+        syncRouteFromBaseStep();
+        const screen = activePhoneScreen();
         if (stageMode) {
-          // Keep the scrolly section background tied to the scroll position (base step). When we
-          // changed it to the modal's bg, it looked like a full-page overlay instead of an in-phone
-          // modal/sheet.
-          stage.dataset.ppBg = baseStep().bg || "home";
-          setActiveCopyStep(stepNodesById, screen.id);
+          // Keep the scrolly section background and left-copy tied to the scroll position (base step).
+          // In-phone overlays must not "take over" the page on desktop.
+          const base = baseStep();
+          stage.dataset.ppBg = (base && base.bg) || "home";
+          setActiveCopyStep(stepNodesById, (base && base.id) || "");
         }
         phone.setScreen(screen);
       },
     });
 
     const render = () => {
-      const screen = activeScreen();
-      stage.dataset.ppBg = baseStep().bg || "home";
-      setActiveCopyStep(stepNodesById, screen.id);
+      syncRouteFromBaseStep();
+      const screen = activePhoneScreen();
+      const base = baseStep();
+      stage.dataset.ppBg = (base && base.bg) || "home";
+      setActiveCopyStep(stepNodesById, (base && base.id) || "");
       phone.setScreen(screen);
     };
 
@@ -2596,7 +2683,10 @@
         onStepIndex(stepIndex) {
           activeStepIndex = stepIndex;
           // Any scroll-driven step change closes transient modal UI so the demo stays deterministic.
-          activeModalId = null;
+          phoneNavState.routeOverride = null;
+          phoneNavState.modal = null;
+          phoneNavState.params = null;
+          phoneNavState.downloadCtaOpen = false;
           render();
         },
         onResize: syncPhoneWidth,
@@ -2608,7 +2698,11 @@
       stepNodesById.forEach((node) => setNodeInert(node, false));
       activeStepIndex = STEPS.length > 1 ? 1 : 0; // default to Home vs splash
       stage.dataset.ppBg = STEPS[activeStepIndex].bg || "home";
-      phone.setScreen(STEPS[activeStepIndex]);
+      syncRouteFromBaseStep();
+      phoneNavState.modal = null;
+      phoneNavState.params = null;
+      phoneNavState.downloadCtaOpen = false;
+      phone.setScreen(activePhoneScreen());
     }
 
     if (reduceMotion) stage.classList.add("pp-reduce-motion");

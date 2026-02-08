@@ -2517,7 +2517,10 @@
 
         const screen = activeScreen();
         if (stageMode) {
-          stage.dataset.ppBg = screen.bg || baseStep().bg || "home";
+          // Keep the scrolly section background tied to the scroll position (base step). When we
+          // changed it to the modal's bg, it looked like a full-page overlay instead of an in-phone
+          // modal/sheet.
+          stage.dataset.ppBg = baseStep().bg || "home";
           setActiveCopyStep(stepNodesById, screen.id);
         }
         phone.setScreen(screen);
@@ -2526,7 +2529,7 @@
 
     const render = () => {
       const screen = activeScreen();
-      stage.dataset.ppBg = screen.bg || baseStep().bg || "home";
+      stage.dataset.ppBg = baseStep().bg || "home";
       setActiveCopyStep(stepNodesById, screen.id);
       phone.setScreen(screen);
     };
@@ -2567,15 +2570,20 @@
 
       const safe = 10; // breathing room inside the sticky region
       const tipSpace = tipH + tipMargins;
-      const maxPhoneOuterH = Math.max(320, stickyContentH - tipSpace - safe);
-      const maxWByH = Math.floor((maxPhoneOuterH - framePad) * screenAspect);
+      // Fit the phone within the sticky viewport height. Previously we enforced a minimum
+      // height/width, which could push the phone partially off-screen on shorter viewports,
+      // making in-phone modals feel like a page overlay.
+      const maxPhoneOuterH = Math.max(1, stickyContentH - tipSpace - safe);
+      const maxOuterWByH = Math.floor(screenAspect * Math.max(1, maxPhoneOuterH - framePad) + framePad);
 
       const colW = aside ? aside.getBoundingClientRect().width : mount.getBoundingClientRect().width;
       const maxWByCol = Math.floor(colW - 4);
 
       const minW = 280;
       const maxW = 400;
-      const target = clamp(Math.min(maxWByH, maxWByCol, maxW), minW, maxW);
+      const maxOuterW = Math.max(1, Math.min(maxOuterWByH, maxWByCol, maxW));
+      const desired = clamp(maxOuterW, minW, maxW);
+      const target = Math.min(desired, maxOuterW);
       stage.style.setProperty("--pp-phone-demo-w", `${target}px`);
     };
 

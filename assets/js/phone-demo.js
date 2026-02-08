@@ -1888,8 +1888,7 @@
         bodyNodes.push(buildField({ icon: "search", placeholder: "Search foods & products" }));
         bodyNodes.push(
           buildSheetBtn({
-            label: "Search foods & products",
-            icon: "search",
+            label: "Search",
             variant: "primary",
             downloadCta: true,
           }),

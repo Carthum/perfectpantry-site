@@ -972,7 +972,7 @@ html.pp-tour-locked body {
   font: inherit;
 }
 
-.pp-app-nav-btn > * {
+.pp-app-nav-btn > :not(.pp-app-nav-indicator) {
   position: relative;
   z-index: 1;
 }
@@ -1003,6 +1003,9 @@ html.pp-tour-locked body {
   position: absolute;
   /* A squared selection plate behind the icon+label (closer to the app). */
   inset: 4px 6px 4px 6px;
+  /* Always stay behind the icon+label. */
+  z-index: 0;
+  pointer-events: none;
   border-radius: 18px;
   background: rgba(233, 214, 191, 0.86);
   border: 1px solid rgba(58, 42, 26, 0.12);
@@ -1281,6 +1284,7 @@ html.pp-tour-locked body {
   position: absolute;
   width: 150px;
   height: auto;
+  filter: drop-shadow(0 18px 16px rgba(0, 0, 0, 0.18));
 }
 
 .pp-pantry-item--apple {
@@ -1348,6 +1352,30 @@ html.pp-tour-locked body {
   left: 50%;
   transform: translateX(-50%);
   width: 64%;
+}
+
+@media (min-width: 961px) and (hover: hover) and (pointer: fine) {
+  /* Desktop-only nudges: align pantry items to the shelf art in the sticky scrolly stage. */
+  .pp-pantry-item--apple {
+    top: 36%;
+  }
+
+  .pp-pantry-item--banana {
+    top: 35%;
+  }
+
+  .pp-pantry-item--avocado {
+    top: 64%;
+  }
+
+  .pp-pantry-label--apple,
+  .pp-pantry-label--banana {
+    top: 48%;
+  }
+
+  .pp-pantry-label--avocado {
+    top: 82%;
+  }
 }
 
 .pp-shop-stage {

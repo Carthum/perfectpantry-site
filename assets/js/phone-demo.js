@@ -2132,7 +2132,7 @@
       const nutTitle = el("div", "pp-recipe-nut-title");
       const listSvg = iconEl("list");
       if (listSvg) nutTitle.appendChild(listSvg);
-      nutTitle.appendChild(el("span", "", "Nutrition & tags"));
+      nutTitle.appendChild(el("span", "", "Nutrition & Tags"));
       nutHead.appendChild(nutTitle);
       nutHead.appendChild(el("div", "pp-recipe-nut-servings", "4 servings"));
       nut.appendChild(nutHead);

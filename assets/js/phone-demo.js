@@ -1756,6 +1756,7 @@
             ),
           );
 
+          const menuWrap = el("div", "pp-app-sheet-menu-wrap");
           const row = el("div", "pp-app-sheet-row");
           const category = document.createElement("button");
           category.type = "button";
@@ -1773,7 +1774,7 @@
           });
           searchBtn.dataset.downloadCta = "true";
           row.appendChild(searchBtn);
-          bodyNodes.push(row);
+          menuWrap.appendChild(row);
 
           const menu = el("div", "pp-app-sheet-menu");
           menu.hidden = true;
@@ -1823,7 +1824,8 @@
             event.stopPropagation();
             setMenuOpen(menu.hidden);
           });
-          bodyNodes.push(menu);
+          menuWrap.appendChild(menu);
+          bodyNodes.push(menuWrap);
 
           bodyNodes.push(el("p", "pp-app-sheet-section", "Tap to add"));
           const grid = el("div", "pp-app-tile-grid");
@@ -1912,6 +1914,7 @@
           ),
         );
 
+        const menuWrap = el("div", "pp-app-sheet-menu-wrap");
         const row = el("div", "pp-app-sheet-row");
         const category = document.createElement("button");
         category.type = "button";
@@ -1930,7 +1933,7 @@
         });
         searchBtn.dataset.downloadCta = "true";
         row.appendChild(searchBtn);
-        bodyNodes.push(row);
+        menuWrap.appendChild(row);
 
         const menu = el("div", "pp-app-sheet-menu");
         menu.hidden = true;
@@ -1979,7 +1982,8 @@
           event.stopPropagation();
           setMenuOpen(menu.hidden);
         });
-        bodyNodes.push(menu);
+        menuWrap.appendChild(menu);
+        bodyNodes.push(menuWrap);
 
         bodyNodes.push(el("p", "pp-app-sheet-section", "Tap to add"));
         const grid = el("div", "pp-app-tile-grid");

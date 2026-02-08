@@ -2259,10 +2259,16 @@ html.pp-tour-locked body {
   font-size: 13px;
 }
 
-.pp-app-sheet-menu {
-  margin-top: -6px;
+.pp-app-sheet-menu-wrap {
   position: relative;
-  z-index: 5;
+}
+
+.pp-app-sheet-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 6px);
+  z-index: 100;
   border-radius: 22px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(255, 255, 255, 0.62);

@@ -240,6 +240,39 @@
       },
     },
     {
+      id: "pantry-item-apple",
+      bg: "pantry",
+      tab: "pantry",
+      sheet: { title: "Apple", kind: "pantry_item_detail", item: "apple", align: "left" },
+      copy: {
+        kicker: "Pantry",
+        title: "Apple",
+        description: "Preview-only item detail view (layout only).",
+      },
+    },
+    {
+      id: "pantry-item-banana",
+      bg: "pantry",
+      tab: "pantry",
+      sheet: { title: "Banana", kind: "pantry_item_detail", item: "banana", align: "left" },
+      copy: {
+        kicker: "Pantry",
+        title: "Banana",
+        description: "Preview-only item detail view (layout only).",
+      },
+    },
+    {
+      id: "pantry-item-avocado",
+      bg: "pantry",
+      tab: "pantry",
+      sheet: { title: "Avocado", kind: "pantry_item_detail", item: "avocado", align: "left" },
+      copy: {
+        kicker: "Pantry",
+        title: "Avocado",
+        description: "Preview-only item detail view (layout only).",
+      },
+    },
+    {
       id: "recipe-view",
       bg: "cookbook",
       tab: "cookbook",
@@ -899,39 +932,62 @@
       root.appendChild(chipWrap);
 
       const stageNode = el("div", "pp-pantry-stage");
+      const openItemDetail = (itemId) => {
+        if (typeof onAction !== "function") return;
+        const id = itemId != null ? String(itemId) : "";
+        if (!id) return;
+        onAction(actionSetPhoneModal("pantryItemDetail", { item: id }));
+      };
+
+      const itemBtn = ({ id, title, src, cls }) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `pp-pantry-item ${cls || ""}`;
+        btn.setAttribute("aria-label", `${title} details (preview)`);
+        btn.appendChild(imgEl({ src, className: "pp-pantry-item-img", alt: "" }));
+        btn.addEventListener("click", () => openItemDetail(id));
+        return btn;
+      };
+
       stageNode.appendChild(
-        imgEl({
+        itemBtn({
+          id: "apple",
+          title: "Apple",
           src: "assets/ingredients/apple.png",
-          className: "pp-pantry-item pp-pantry-item--apple",
-          alt: "",
+          cls: "pp-pantry-item--apple",
         }),
       );
       stageNode.appendChild(
-        imgEl({
+        itemBtn({
+          id: "banana",
+          title: "Banana",
           src: "assets/ingredients/banana.png",
-          className: "pp-pantry-item pp-pantry-item--banana",
-          alt: "",
+          cls: "pp-pantry-item--banana",
         }),
       );
       stageNode.appendChild(
-        imgEl({
+        itemBtn({
+          id: "avocado",
+          title: "Avocado",
           src: "assets/ingredients/avocado.png",
-          className: "pp-pantry-item pp-pantry-item--avocado",
-          alt: "",
+          cls: "pp-pantry-item--avocado",
         }),
       );
 
-      const label = ({ cls, title, sub }) => {
-        const node = document.createElement("div");
+      const labelBtn = ({ id, cls, title, sub }) => {
+        const node = document.createElement("button");
+        node.type = "button";
         node.className = `pp-pantry-label ${cls}`;
+        node.setAttribute("aria-label", `${title} details (preview)`);
         node.appendChild(el("strong", "", title));
         node.appendChild(el("span", "", sub));
+        node.addEventListener("click", () => openItemDetail(id));
         return node;
       };
 
-      stageNode.appendChild(label({ cls: "pp-pantry-label--apple", title: "Apple", sub: "Exp 1d" }));
-      stageNode.appendChild(label({ cls: "pp-pantry-label--banana", title: "Banana", sub: "Exp 1d" }));
-      stageNode.appendChild(label({ cls: "pp-pantry-label--avocado", title: "Avocado", sub: "Exp 1d" }));
+      stageNode.appendChild(labelBtn({ id: "apple", cls: "pp-pantry-label--apple", title: "Apple", sub: "Exp 1d" }));
+      stageNode.appendChild(labelBtn({ id: "banana", cls: "pp-pantry-label--banana", title: "Banana", sub: "Exp 1d" }));
+      stageNode.appendChild(labelBtn({ id: "avocado", cls: "pp-pantry-label--avocado", title: "Avocado", sub: "Exp 0d" }));
 
       root.appendChild(stageNode);
       return root;
@@ -1352,6 +1408,137 @@
           }),
         );
       };
+
+      if (kind === "pantry_item_detail") {
+        const itemId = sheetSpec && sheetSpec.item ? String(sheetSpec.item) : "apple";
+
+        // These values are sourced from `/Users/benadgie/Desktop/meal_planner/assets/catalog/usda_generic_nutrition.json`.
+        const ITEMS = {
+          apple: {
+            title: "Apple",
+            src: "assets/ingredients/apple.png",
+            qty: 1,
+            expires: "1d",
+            category: "Produce",
+            nutrition: { per: "100g", kcal: 58.2, protein_g: 0.1, carbs_g: 15.7, fat_g: 0.2 },
+            recipe: {
+              title: "Apple Cinnamon Overnight Oats",
+              meta: "Pantry —",
+            },
+          },
+          banana: {
+            title: "Banana",
+            src: "assets/ingredients/banana.png",
+            qty: 1,
+            expires: "1d",
+            category: "Produce",
+            nutrition: { per: "100g", kcal: 85.0, protein_g: 0.7, carbs_g: 20.1, fat_g: 0.2 },
+            recipe: {
+              title: "Banana Peanut Smoothie",
+              meta: "Pantry —",
+            },
+          },
+          avocado: {
+            title: "Avocado",
+            src: "assets/ingredients/avocado.png",
+            qty: 1,
+            expires: "0d",
+            category: "Produce",
+            nutrition: { per: "100g", kcal: 206.0, protein_g: 1.8, carbs_g: 8.3, fat_g: 20.3 },
+            recipe: {
+              title: "Avocado Salsa (without the avocado)",
+              meta: "Pantry —",
+            },
+          },
+        };
+
+        const item = ITEMS[itemId] || ITEMS.apple;
+
+        const fmt1 = (value) => {
+          const n = Number(value);
+          if (!Number.isFinite(n)) return "";
+          const s = n.toFixed(1);
+          return s.endsWith(".0") ? s.slice(0, -2) : s;
+        };
+
+        const buildNutritionCell = (label, value) => {
+          const node = el("div", "pp-nutrition-cell");
+          node.appendChild(el("div", "pp-nutrition-label", label));
+          node.appendChild(el("div", "pp-nutrition-value", value));
+          return node;
+        };
+
+        const wrap = el("div", "pp-pantry-detail");
+
+        const hero = el("div", "pp-pantry-detail-hero");
+        hero.dataset.item = itemId;
+        hero.appendChild(
+          imgEl({
+            src: "assets/objects/obj_pantry_item_shelf.png",
+            className: "pp-pantry-detail-shelf",
+            alt: "",
+          }),
+        );
+        hero.appendChild(
+          imgEl({
+            src: item.src,
+            className: "pp-pantry-detail-img",
+            alt: "",
+          }),
+        );
+        wrap.appendChild(hero);
+
+        const details = el("div", "pp-app-card pp-pantry-detail-card");
+        details.appendChild(el("h2", "pp-pantry-detail-name", item.title));
+        const pills = el("div", "pp-pantry-detail-pills");
+        pills.appendChild(el("span", "pp-pantry-detail-pill", `Qty: ${item.qty}`));
+        pills.appendChild(el("span", "pp-pantry-detail-pill", `Expires: ${item.expires}`));
+        pills.appendChild(el("span", "pp-pantry-detail-pill", item.category));
+        details.appendChild(pills);
+        wrap.appendChild(details);
+
+        const useItUp = el("div", "pp-pantry-detail-useitup");
+        useItUp.appendChild(el("h3", "pp-pantry-detail-section-title", "Use It Up"));
+        useItUp.appendChild(el("p", "pp-pantry-detail-section-sub", `Nutrition (${item.nutrition.per})`));
+
+        const grid = el("div", "pp-nutrition-grid");
+        grid.appendChild(buildNutritionCell("Calories", `${fmt1(item.nutrition.kcal)} kcal`));
+        grid.appendChild(buildNutritionCell("Protein", `${fmt1(item.nutrition.protein_g)} g`));
+        grid.appendChild(buildNutritionCell("Carbs", `${fmt1(item.nutrition.carbs_g)} g`));
+        grid.appendChild(buildNutritionCell("Fat", `${fmt1(item.nutrition.fat_g)} g`));
+        useItUp.appendChild(grid);
+
+        const recipe = document.createElement("button");
+        recipe.type = "button";
+        recipe.className = "pp-useitup-recipe";
+        recipe.dataset.downloadCta = "true";
+        recipe.appendChild(el("div", "pp-useitup-thumb"));
+        const recipeMeta = el("div", "pp-useitup-meta");
+        recipeMeta.appendChild(el("div", "pp-useitup-title", item.recipe.title));
+        recipeMeta.appendChild(el("div", "pp-useitup-sub", item.recipe.meta));
+        recipe.appendChild(recipeMeta);
+        useItUp.appendChild(recipe);
+
+        const actions = el("div", "pp-useitup-actions");
+        const cookNow = document.createElement("button");
+        cookNow.type = "button";
+        cookNow.className = "pp-useitup-action";
+        cookNow.dataset.downloadCta = "true";
+        cookNow.textContent = "Cook now";
+        const addToPlan = document.createElement("button");
+        addToPlan.type = "button";
+        addToPlan.className = "pp-useitup-action";
+        addToPlan.dataset.downloadCta = "true";
+        addToPlan.textContent = "Add to plan";
+        actions.appendChild(cookNow);
+        actions.appendChild(addToPlan);
+        useItUp.appendChild(actions);
+
+        wrap.appendChild(useItUp);
+
+        bodyNodes.push(wrap);
+        return { bodyNodes, footerNodes };
+      }
 
       if (kind === "add_recipe") {
         bodyNodes.push(
@@ -2508,6 +2695,10 @@
         case "addPantryItem": {
           const mode = normalizeMode(p && p.mode, ["bulk", "scan", "search", "manual"], "bulk");
           return `home-add-pantry-${mode}`;
+        }
+        case "pantryItemDetail": {
+          const item = normalizeMode(p && p.item, ["apple", "banana", "avocado"], "apple");
+          return `pantry-item-${item}`;
         }
         case "recipeView":
           return "recipe-view";

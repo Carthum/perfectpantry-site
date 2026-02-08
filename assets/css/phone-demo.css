@@ -1282,9 +1282,20 @@ html.pp-tour-locked body {
 
 .pp-pantry-item {
   position: absolute;
+  display: block;
   width: 150px;
   height: auto;
   filter: drop-shadow(0 18px 16px rgba(0, 0, 0, 0.18));
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pp-pantry-item-img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .pp-pantry-item--apple {
@@ -1322,6 +1333,8 @@ html.pp-tour-locked body {
   align-content: center;
   text-align: center;
   padding: 8px 10px;
+  font: inherit;
+  cursor: pointer;
 }
 
 .pp-pantry-label strong {
@@ -1354,14 +1367,215 @@ html.pp-tour-locked body {
   width: 64%;
 }
 
+.pp-pantry-detail {
+  display: grid;
+  gap: 16px;
+}
+
+.pp-pantry-detail-hero {
+  position: relative;
+  height: 240px;
+  border-radius: 28px;
+  border: 1px solid rgba(58, 42, 26, 0.14);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(210, 122, 61, 0.14), transparent 58%),
+    rgba(244, 231, 214, 0.6);
+  overflow: hidden;
+}
+
+.pp-pantry-detail-shelf {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 94%;
+  max-width: 360px;
+  height: auto;
+  filter: drop-shadow(0 18px 20px rgba(0, 0, 0, 0.18));
+}
+
+.pp-pantry-detail-img {
+  position: absolute;
+  left: 50%;
+  bottom: 44px;
+  transform: translateX(-50%);
+  width: 46%;
+  max-width: 220px;
+  height: auto;
+  filter: drop-shadow(0 16px 16px rgba(0, 0, 0, 0.2));
+}
+
+.pp-pantry-detail-hero[data-item="apple"] .pp-pantry-detail-img {
+  width: 38%;
+  bottom: 48px;
+}
+
+.pp-pantry-detail-hero[data-item="banana"] .pp-pantry-detail-img {
+  width: 56%;
+  bottom: 52px;
+}
+
+.pp-pantry-detail-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px 18px 16px;
+}
+
+.pp-pantry-detail-name {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 950;
+  letter-spacing: -0.02em;
+}
+
+.pp-pantry-detail-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.pp-pantry-detail-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(58, 42, 26, 0.14);
+  background: rgba(106, 86, 66, 0.14);
+  font-size: 16px;
+  font-weight: 900;
+  color: rgba(58, 42, 26, 0.86);
+  letter-spacing: -0.01em;
+}
+
+.pp-pantry-detail-useitup {
+  border-radius: 28px;
+  border: 1px solid rgba(58, 42, 26, 0.16);
+  background: rgba(244, 231, 214, 0.82);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.pp-pantry-detail-section-title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 950;
+  letter-spacing: -0.02em;
+}
+
+.pp-pantry-detail-section-sub {
+  margin: -6px 0 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 750;
+  color: rgba(58, 42, 26, 0.72);
+}
+
+.pp-nutrition-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pp-nutrition-cell {
+  border-radius: 20px;
+  border: 1px solid rgba(58, 42, 26, 0.12);
+  background: rgba(255, 255, 255, 0.54);
+  padding: 12px 12px 10px;
+}
+
+.pp-nutrition-label {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(58, 42, 26, 0.62);
+}
+
+.pp-nutrition-value {
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  color: rgba(58, 42, 26, 0.92);
+}
+
+.pp-useitup-recipe {
+  width: 100%;
+  text-align: left;
+  border-radius: 26px;
+  border: 1px solid rgba(58, 42, 26, 0.16);
+  background: rgba(244, 231, 214, 0.88);
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  font: inherit;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
+}
+
+.pp-useitup-thumb {
+  width: 76px;
+  height: 76px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(210, 122, 61, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 55%, rgba(95, 127, 87, 0.18), transparent 58%),
+    rgba(233, 214, 191, 0.85);
+  border: 1px solid rgba(58, 42, 26, 0.12);
+}
+
+.pp-useitup-title {
+  font-size: 16px;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.pp-useitup-sub {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 750;
+  color: rgba(106, 86, 66, 0.85);
+}
+
+.pp-useitup-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pp-useitup-action {
+  border-radius: 999px;
+  border: 1px solid rgba(58, 42, 26, 0.16);
+  background: rgba(255, 255, 255, 0.52);
+  padding: 14px 16px;
+  font: inherit;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.12);
+  color: rgba(58, 42, 26, 0.9);
+}
+
 @media (min-width: 961px) and (hover: hover) and (pointer: fine) {
   /* Desktop-only nudges: align pantry items to the shelf art in the sticky scrolly stage. */
   .pp-pantry-item--apple {
-    top: 30%;
+    top: 27.5%;
   }
 
   .pp-pantry-item--banana {
-    top: 29%;
+    top: 26.5%;
   }
 
   .pp-pantry-item--avocado {

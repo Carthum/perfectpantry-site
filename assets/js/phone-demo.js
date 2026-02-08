@@ -801,6 +801,7 @@
         const svg = iconEl(icon);
         if (svg) btn.appendChild(svg);
         fabsLayer.appendChild(btn);
+        return btn;
       };
 
       const addFabImg = ({ cls, src, ariaLabel }) => {
@@ -810,6 +811,7 @@
         btn.setAttribute("aria-label", ariaLabel || "Preview only");
         btn.appendChild(imgEl({ src, className: "", alt: "" }));
         fabsLayer.appendChild(btn);
+        return btn;
       };
 
       if (tab === "home") {
@@ -822,11 +824,31 @@
           src: "assets/objects/obj_tan_spice.png",
           ariaLabel: "Tools (preview)",
         });
-        addFabSvg({ cls: "pp-app-fab--plus", icon: "plus", ariaLabel: "Add item (preview)" });
+        const addItem = addFabSvg({
+          cls: "pp-app-fab--plus",
+          icon: "plus",
+          ariaLabel: "Add item (preview)",
+        });
+        if (typeof onAction === "function") {
+          addItem.addEventListener(
+            "click",
+            () => onAction(actionSetPhoneModal("addPantryItem", { mode: "search" })),
+          );
+        }
       }
 
       if (tab === "cookbook") {
-        addFabSvg({ cls: "pp-app-fab--plus", icon: "plus", ariaLabel: "Add recipe (preview)" });
+        const addRecipe = addFabSvg({
+          cls: "pp-app-fab--plus",
+          icon: "plus",
+          ariaLabel: "Add recipe (preview)",
+        });
+        if (typeof onAction === "function") {
+          addRecipe.addEventListener(
+            "click",
+            () => onAction(actionSetPhoneModal("addRecipe", { mode: "ai" })),
+          );
+        }
       }
 
       if (tab === "shop") {
@@ -924,7 +946,13 @@
           rightIcon: "chevron_down",
         }),
       );
-      topRow.appendChild(buildCircle({ icon: "search", className: "pp-app-circle--muted", ariaLabel: "Search (preview)" }));
+      const searchBtn = buildCircle({
+        icon: "search",
+        className: "pp-app-circle--muted",
+        ariaLabel: "Search (preview)",
+      });
+      searchBtn.dataset.downloadCta = "true";
+      topRow.appendChild(searchBtn);
       root.appendChild(topRow);
 
       const chipWrap = el("div", "pp-chip-wrap");
@@ -1000,7 +1028,13 @@
 
       const row = el("div", "pp-cookbook-row");
       row.appendChild(buildPill({ label: "Cookbook", className: "pp-app-pill--title", rightIcon: "chevron_down" }));
-      row.appendChild(buildCircle({ icon: "search", className: "pp-app-circle--muted", ariaLabel: "Search (preview)" }));
+      const searchBtn = buildCircle({
+        icon: "search",
+        className: "pp-app-circle--muted",
+        ariaLabel: "Search (preview)",
+      });
+      searchBtn.dataset.downloadCta = "true";
+      row.appendChild(searchBtn);
       hud.appendChild(row);
 
       const filterRow = el("div", "pp-cookbook-row pp-cookbook-row--filters");
@@ -1078,7 +1112,9 @@
           startCooking.addEventListener("click", () => onAction(actionSetPhoneModal("cookView")));
         }
         actions.appendChild(startCooking);
-        actions.appendChild(buildPill({ label: "Replan Meal" }));
+        const replan = buildPill({ label: "Replan Meal" });
+        replan.dataset.downloadCta = "true";
+        actions.appendChild(replan);
         card.appendChild(actions);
 
         root.appendChild(card);
@@ -1097,7 +1133,13 @@
         shoppingBtn.addEventListener("click", () => onAction(actionSetPhoneModal("shopBulkPicker")));
       }
       topRow.appendChild(shoppingBtn);
-      topRow.appendChild(buildCircle({ icon: "search", className: "pp-app-circle--muted", ariaLabel: "Search (preview)" }));
+      const searchBtn = buildCircle({
+        icon: "search",
+        className: "pp-app-circle--muted",
+        ariaLabel: "Search (preview)",
+      });
+      searchBtn.dataset.downloadCta = "true";
+      topRow.appendChild(searchBtn);
       root.appendChild(topRow);
 
       root.appendChild(buildPill({ label: "Tomatillo Salsa Verde", className: "pp-app-pill--title pp-shop-recipe-pill" }));
@@ -1735,6 +1777,16 @@
 
           const menu = el("div", "pp-app-sheet-menu");
           menu.hidden = true;
+          menu.style.display = "none";
+          category.setAttribute("aria-expanded", "false");
+
+          const setMenuOpen = (isOpen) => {
+            const open = !!isOpen;
+            menu.hidden = !open;
+            menu.style.display = open ? "" : "none";
+            category.setAttribute("aria-expanded", open ? "true" : "false");
+            if (open) menu.scrollIntoView({ block: "nearest" });
+          };
           const categories = [
             "Staples",
             "Produce",
@@ -1754,8 +1806,9 @@
             btn.type = "button";
             btn.className = "pp-app-sheet-menu-item";
             btn.textContent = label;
-            btn.addEventListener("click", () => {
-              menu.hidden = true;
+            btn.addEventListener("click", (event) => {
+              event.stopPropagation();
+              setMenuOpen(false);
               if (label !== "Staples") {
                 openDownloadCta();
                 pantryBulkCategory = "Staples";
@@ -1767,8 +1820,9 @@
             });
             menu.appendChild(btn);
           });
-          category.addEventListener("click", () => {
-            menu.hidden = !menu.hidden;
+          category.addEventListener("click", (event) => {
+            event.stopPropagation();
+            setMenuOpen(menu.hidden);
           });
           bodyNodes.push(menu);
 

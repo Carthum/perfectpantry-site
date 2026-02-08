@@ -1021,6 +1021,45 @@
       return root;
     };
 
+    const RECIPE_THUMB_FALLBACK = "assets/objects/obj_bowl_tomato.png";
+    // Static-site friendly "manifest" of available recipe thumbnails.
+    // Keep this list in sync with `assets/recipes/*`.
+    const RECIPE_THUMB_MANIFEST = new Set([
+      "assets/recipes/bang_bang_shrimp.png",
+      "assets/recipes/chicken_avocado_wrap_paleo.png",
+      "assets/recipes/chicken_tikka_masala.png",
+      "assets/recipes/pico_de_gallo.png",
+      "assets/recipes/salmon_in_green_chili_cream_sauce.png",
+      "assets/recipes/skillet_tacos.png",
+      "assets/recipes/spicy_avocado_chicken.png",
+      "assets/recipes/vegetarian_blt_with_avocado.png",
+    ]);
+
+    const toRecipeSlug = (value) =>
+      String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/['’]/g, "")
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_+|_+$/g, "");
+
+    const recipeThumbSrc = (titleOrSlug) => {
+      const slug = toRecipeSlug(titleOrSlug);
+      if (!slug) return RECIPE_THUMB_FALLBACK;
+      const candidates = [
+        `assets/recipes/${slug}.png`,
+        `assets/recipes/${slug}.jpg`,
+        `assets/recipes/${slug}.jpeg`,
+        `assets/recipes/${slug}.webp`,
+      ];
+      for (const candidate of candidates) {
+        if (RECIPE_THUMB_MANIFEST.has(candidate)) return candidate;
+      }
+      return RECIPE_THUMB_FALLBACK;
+    };
+
     const renderCookbook = () => {
       const root = el("div", "pp-screen pp-screen-cookbook");
 
@@ -1056,10 +1095,10 @@
 
       const grid = el("div", "pp-app-grid");
       const recipes = [
-        { title: "Bang Bang Shrimp", meta: "25 min  •  4 servings", thumb: "assets/objects/obj_bowl_spices.png" },
-        { title: "Chicken Tikka Masala", meta: "45 min  •  4 servings", thumb: "assets/objects/obj_bowl_tomato.png" },
-        { title: "Pico de Gallo", meta: "15 min  •  6 servings", thumb: "assets/objects/obj_bowl_basil.png" },
-        { title: "Skillet tacos", meta: "20 min  •  4 servings", thumb: "assets/objects/obj_basil_tomato.png" },
+        { title: "Bang Bang Shrimp", meta: "25 min  •  4 servings" },
+        { title: "Chicken Tikka Masala", meta: "45 min  •  4 servings" },
+        { title: "Pico de Gallo", meta: "15 min  •  6 servings" },
+        { title: "Skillet tacos", meta: "20 min  •  4 servings" },
       ];
       recipes.forEach((r) => {
         const card = document.createElement("button");
@@ -1069,9 +1108,8 @@
           card.addEventListener("click", () => onAction(actionSetPhoneModal("recipeView")));
         }
         const thumb = el("div", "pp-app-recipe-thumb");
-        if (r && r.thumb) {
-          thumb.appendChild(imgEl({ src: r.thumb, className: "pp-app-recipe-thumb-img", alt: "" }));
-        }
+        const thumbSrc = recipeThumbSrc(r && r.title);
+        thumb.appendChild(imgEl({ src: thumbSrc, className: "pp-app-recipe-thumb-img", alt: "" }));
         card.appendChild(thumb);
         card.appendChild(el("p", "pp-app-recipe-title", r.title));
         card.appendChild(el("p", "pp-app-recipe-meta", r.meta));
@@ -1096,18 +1134,17 @@
 
       const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday"];
       const meals = [
-        { title: "Vegetarian BLT with Avocado", thumb: "assets/objects/obj_bowl_basil.png" },
-        { title: "Chicken Avocado Wrap - Paleo", thumb: "assets/objects/obj_basil_tomato.png" },
-        { title: "Salmon in Green Chili Cream Sauce", thumb: "assets/objects/obj_bowl_spices.png" },
-        { title: "Spicy Avocado Chicken", thumb: "assets/objects/obj_bowl_tomato.png" },
+        { title: "Vegetarian BLT with Avocado" },
+        { title: "Chicken Avocado Wrap - Paleo" },
+        { title: "Salmon in Green Chili Cream Sauce" },
+        { title: "Spicy Avocado Chicken" },
       ];
       dayNames.forEach((day, idx) => {
         const meal = meals[idx] || {};
         const card = el("div", "pp-app-card pp-meal-card");
         const thumb = el("div", "pp-meal-thumb");
-        if (meal && meal.thumb) {
-          thumb.appendChild(imgEl({ src: meal.thumb, className: "pp-meal-thumb-img", alt: "" }));
-        }
+        const thumbSrc = recipeThumbSrc(meal && meal.title);
+        thumb.appendChild(imgEl({ src: thumbSrc, className: "pp-meal-thumb-img", alt: "" }));
         card.appendChild(thumb);
         const meta = el("div", "pp-meal-meta");
         meta.appendChild(el("p", "pp-meal-title", `${day}  •  2/${idx + 2}`));
@@ -2720,6 +2757,14 @@
       "assets/objects/obj_bowl_basil.png",
       "assets/objects/obj_bowl_spices.png",
       "assets/objects/obj_basil_tomato.png",
+      "assets/recipes/bang_bang_shrimp.png",
+      "assets/recipes/chicken_tikka_masala.png",
+      "assets/recipes/pico_de_gallo.png",
+      "assets/recipes/skillet_tacos.png",
+      "assets/recipes/vegetarian_blt_with_avocado.png",
+      "assets/recipes/chicken_avocado_wrap_paleo.png",
+      "assets/recipes/salmon_in_green_chili_cream_sauce.png",
+      "assets/recipes/spicy_avocado_chicken.png",
       "assets/ingredients/apple.png",
       "assets/ingredients/banana.png",
       "assets/ingredients/avocado.png",

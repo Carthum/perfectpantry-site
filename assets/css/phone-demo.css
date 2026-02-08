@@ -2502,6 +2502,13 @@ html.pp-tour-locked body {
   color: var(--pp-app-ink);
 }
 
+.pp-page--recipe {
+  background-image: url("../backgrounds/bg_onboarding_wood.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .pp-page--cook {
   background: rgba(244, 231, 214, 0.98);
 }

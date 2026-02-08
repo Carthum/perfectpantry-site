@@ -1783,7 +1783,7 @@
           const setMenuOpen = (isOpen) => {
             const open = !!isOpen;
             menu.hidden = !open;
-            menu.style.display = open ? "" : "none";
+            menu.style.display = open ? "block" : "none";
             category.setAttribute("aria-expanded", open ? "true" : "false");
             if (open) menu.scrollIntoView({ block: "nearest" });
           };
@@ -1935,6 +1935,16 @@
 
         const menu = el("div", "pp-app-sheet-menu");
         menu.hidden = true;
+        menu.style.display = "none";
+        category.setAttribute("aria-expanded", "false");
+
+        const setMenuOpen = (isOpen) => {
+          const open = !!isOpen;
+          menu.hidden = !open;
+          menu.style.display = open ? "block" : "none";
+          category.setAttribute("aria-expanded", open ? "true" : "false");
+          if (open) menu.scrollIntoView({ block: "nearest" });
+        };
         [
           "Staples",
           "Produce",
@@ -1953,8 +1963,9 @@
           btn.type = "button";
           btn.className = "pp-app-sheet-menu-item";
           btn.textContent = label;
-          btn.addEventListener("click", () => {
-            menu.hidden = true;
+          btn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            setMenuOpen(false);
             if (label !== "Staples") {
               openDownloadCta();
               shopStaplesCategory = "Staples";
@@ -1966,8 +1977,9 @@
           });
           menu.appendChild(btn);
         });
-        category.addEventListener("click", () => {
-          menu.hidden = !menu.hidden;
+        category.addEventListener("click", (event) => {
+          event.stopPropagation();
+          setMenuOpen(menu.hidden);
         });
         bodyNodes.push(menu);
 

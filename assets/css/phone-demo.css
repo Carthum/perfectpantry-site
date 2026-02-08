@@ -278,6 +278,9 @@ html.pp-tour-locked body {
   background: var(--pp-app-parchment);
   aspect-ratio: 1170 / 2532;
   touch-action: pan-y;
+  /* Ensure in-phone overlays (scrims, sheets) cannot visually bleed beyond the phone. */
+  isolation: isolate;
+  contain: paint;
 }
 
 .pp-phone-screen .pp-phone-scene {

@@ -298,6 +298,18 @@
       },
     },
     {
+      id: "cookbook-filters",
+      bg: "cookbook",
+      tab: "cookbook",
+      sheet: { title: "Cookbook filters", kind: "cookbook_filters", align: "right" },
+      copy: {
+        kicker: "Cookbook",
+        title: "Cookbook filters",
+        description:
+          "Filter drawer preview. Any dropdown interaction will prompt app download.",
+      },
+    },
+    {
       id: "shop-staples",
       bg: "shopping",
       tab: "shop",
@@ -1275,6 +1287,9 @@
         className: "pp-app-circle--muted pp-cookbook-menu-btn",
         ariaLabel: "Cookbook menu (preview)",
       });
+      if (typeof onAction === "function") {
+        menuBtn.addEventListener("click", () => onAction(actionSetPhoneModal("cookbookFilters")));
+      }
       topLine.appendChild(menuBtn);
       root.appendChild(topLine);
 
@@ -2058,6 +2073,7 @@
     };
 
     let isSheetOpen = false;
+    let activeSheetAlign = "center";
     let isPageOpen = false;
     let isDownloadOpen = false;
 
@@ -2074,11 +2090,13 @@
 
     const syncOverlayChrome = () => {
       const anyOverlay = isSheetOpen || isPageOpen || isDownloadOpen;
+      const rightDrawerOnly =
+        isSheetOpen && !isPageOpen && !isDownloadOpen && activeSheetAlign === "right";
       // Hide tab bar + decorative layers so overlays feel like real app screens.
-      app.classList.toggle("is-overlay-open", anyOverlay);
-      nav.classList.toggle("is-hidden", anyOverlay);
-      objectsLayer.classList.toggle("is-hidden", anyOverlay);
-      fabsLayer.classList.toggle("is-hidden", anyOverlay);
+      app.classList.toggle("is-overlay-open", anyOverlay && !rightDrawerOnly);
+      nav.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
+      objectsLayer.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
+      fabsLayer.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
       // In-phone overlays must not affect the main page scroll/stack.
       document.documentElement.classList.remove("pp-tour-locked");
     };
@@ -2097,6 +2115,7 @@
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
       sheet.dataset.ppAlign = "center";
+      activeSheetAlign = "center";
       sheetTitle.textContent = "";
       clear(sheetBody);
       clear(sheetFooter);
@@ -2909,6 +2928,58 @@
         return { bodyNodes, footerNodes };
       }
 
+      if (kind === "cookbook_filters") {
+        const wrap = el("div", "pp-cookbook-filters");
+        const buildDropdown = (label) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "pp-cookbook-filter-dropdown";
+          btn.dataset.downloadCta = "true";
+          btn.appendChild(el("span", "", label));
+          const chevron = iconEl("chevron_down");
+          if (chevron) btn.appendChild(chevron);
+          return btn;
+        };
+
+        wrap.appendChild(el("p", "pp-cookbook-filter-section", "Search"));
+        const searchField = el("div", "pp-cookbook-filter-search");
+        const searchIcon = iconEl("search");
+        if (searchIcon) searchField.appendChild(searchIcon);
+        searchField.appendChild(el("span", "", "Search cookbook"));
+        wrap.appendChild(searchField);
+
+        wrap.appendChild(el("p", "pp-cookbook-filter-section", "Sources"));
+        const sourceGrid = el("div", "pp-cookbook-source-grid");
+        ["Private recipes", "Public recipes", "Cooking Basics", "Cookbook"].forEach((label) => {
+          sourceGrid.appendChild(el("div", "pp-cookbook-source-chip", label));
+        });
+        wrap.appendChild(sourceGrid);
+
+        wrap.appendChild(el("p", "pp-cookbook-filter-section", "Category"));
+        const categoryGroup = el("div", "pp-cookbook-dropdown-group");
+        categoryGroup.appendChild(buildDropdown("All categories"));
+        categoryGroup.appendChild(buildDropdown("All subcategories"));
+        wrap.appendChild(categoryGroup);
+
+        wrap.appendChild(el("p", "pp-cookbook-filter-section", "Cuisine"));
+        wrap.appendChild(buildDropdown("All cuisines"));
+
+        wrap.appendChild(el("p", "pp-cookbook-filter-section", "From your preferences"));
+        wrap.appendChild(buildDropdown("Not selected"));
+
+        const favoritesRow = el("div", "pp-cookbook-filter-toggle-row");
+        favoritesRow.appendChild(el("span", "", "Favorites only"));
+        const favoritesToggle = document.createElement("button");
+        favoritesToggle.type = "button";
+        favoritesToggle.className = "pp-cookbook-filter-toggle";
+        favoritesToggle.setAttribute("aria-label", "Favorites only (preview)");
+        favoritesRow.appendChild(favoritesToggle);
+        wrap.appendChild(favoritesRow);
+
+        bodyNodes.push(wrap);
+        return { bodyNodes, footerNodes };
+      }
+
       // Fallback.
       bodyNodes.push(el("p", "", "Preview only."));
       return { bodyNodes, footerNodes };
@@ -3349,6 +3420,7 @@
     const openSheet = (sheetSpec) => {
       if (!sheetSpec) return closeSheet();
       sheet.dataset.ppAlign = String(sheetSpec.align || "center");
+      activeSheetAlign = String(sheetSpec.align || "center");
       sheetTitle.textContent = String(sheetSpec.title || "Preview");
       const { bodyNodes, footerNodes } = renderSheetContent(sheetSpec);
       sheetBody.replaceChildren(...(bodyNodes || []));
@@ -3710,6 +3782,8 @@
           return "recipe-view";
         case "cookView":
           return "cook-view";
+        case "cookbookFilters":
+          return "cookbook-filters";
         case "shopBulkPicker":
           return "shop-staples";
         default:

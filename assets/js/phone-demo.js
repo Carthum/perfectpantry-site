@@ -1254,12 +1254,12 @@
       topShelfSurfaceInsetPct: 0.3,
       bottomShelfSurfaceInsetPct: 0.3,
       itemNudgePct: {
-        apple: 0.35,
-        banana: 0.45,
-        avocado: 0.35,
+        apple: 0.95,
+        banana: 1.05,
+        avocado: 0.9,
       },
-      labelTopOffsetFromTopShelfPct: 0,
-      labelTopOffsetFromBottomShelfPct: 8,
+      labelTopOffsetFromTopShelfPct: 4.4,
+      labelTopOffsetFromBottomShelfPct: 8.8,
     });
 
     const SHOP_LAYOUT = Object.freeze({

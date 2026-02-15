@@ -1250,6 +1250,271 @@
     let lastUiTab = null;
     let activeTab = null;
 
+    const PANTRY_LAYOUT = Object.freeze({
+      appleTopOffsetFromTopBoardPct: -20.5,
+      bananaTopOffsetFromTopBoardPct: -21.5,
+      avocadoTopOffsetFromBottomBoardPct: -15.5,
+      appleLabelTopOffsetFromTopBoardPct: 0,
+      bananaLabelTopOffsetFromTopBoardPct: 0,
+      avocadoLabelTopOffsetFromBottomBoardPct: 8,
+    });
+
+    const SHOP_LAYOUT = Object.freeze({
+      topRowTopPct: 6,
+      bottomRowTopOffsetFromBarPct: -36,
+      topRow: ["garlic", "jalapeno", "salt"],
+      bottomRow: ["oliveoil", "onion"],
+      itemXCenterPct: {
+        garlic: 20,
+        jalapeno: 50,
+        salt: 82,
+        oliveoil: 24,
+        onion: 61,
+      },
+      // Normalize by visual height so objects stay consistent across assets.
+      itemHeightRatio: 0.22,
+      itemHeightMinPx: 64,
+      itemHeightMaxPx: 88,
+      // Tiny per-asset correction for transparent padding differences.
+      itemScale: {
+        garlic: 1,
+        jalapeno: 1,
+        salt: 1,
+        oliveoil: 1.55,
+        onion: 0.76,
+      },
+      rowItemGapPx: 10,
+      rowSidePadPx: 8,
+      label: {
+        garlic: { widthRatio: 0.28, minPx: 88, maxPx: 118, gapPx: 9 },
+        jalapeno: { widthRatio: 0.3, minPx: 94, maxPx: 126, gapPx: 9 },
+        salt: { widthRatio: 0.3, minPx: 96, maxPx: 130, gapPx: 9 },
+        oliveoil: { widthRatio: 0.31, minPx: 98, maxPx: 136, gapPx: 10 },
+        onion: { widthRatio: 0.36, minPx: 114, maxPx: 164, gapPx: 11 },
+      },
+      labelBarClearancePx: 12,
+    });
+
+    let pantryLayoutRaf = 0;
+    let shopLayoutRaf = 0;
+
+    const cancelPantryLayoutSync = () => {
+      if (!pantryLayoutRaf) return;
+      cancelAnimationFrame(pantryLayoutRaf);
+      pantryLayoutRaf = 0;
+    };
+
+    const cancelShopLayoutSync = () => {
+      if (!shopLayoutRaf) return;
+      cancelAnimationFrame(shopLayoutRaf);
+      shopLayoutRaf = 0;
+    };
+
+    const syncPantryLayoutFromShelves = () => {
+      if (activeTab !== "pantry") return;
+      const stageNode = appContent.querySelector(".pp-pantry-stage");
+      const topBoard = objectsLayer.querySelector(".pp-obj--pantry-board-top");
+      const bottomBoard = objectsLayer.querySelector(".pp-obj--pantry-board-bottom");
+      if (!stageNode || !topBoard || !bottomBoard) return;
+
+      const stageRect = stageNode.getBoundingClientRect();
+      if (!stageRect.height) return;
+
+      const boardTopPct = (boardNode) => {
+        const rect = boardNode.getBoundingClientRect();
+        return ((rect.top - stageRect.top) / stageRect.height) * 100;
+      };
+
+      const topBoardPct = boardTopPct(topBoard);
+      const bottomBoardPct = boardTopPct(bottomBoard);
+      if (!Number.isFinite(topBoardPct) || !Number.isFinite(bottomBoardPct)) return;
+
+      const setTopPct = (selector, pct) => {
+        const node = stageNode.querySelector(selector);
+        if (!node) return;
+        node.style.top = `${clamp(pct, -8, 96)}%`;
+      };
+
+      setTopPct(
+        ".pp-pantry-item--apple",
+        topBoardPct + PANTRY_LAYOUT.appleTopOffsetFromTopBoardPct,
+      );
+      setTopPct(
+        ".pp-pantry-item--banana",
+        topBoardPct + PANTRY_LAYOUT.bananaTopOffsetFromTopBoardPct,
+      );
+      setTopPct(
+        ".pp-pantry-item--avocado",
+        bottomBoardPct + PANTRY_LAYOUT.avocadoTopOffsetFromBottomBoardPct,
+      );
+
+      setTopPct(
+        ".pp-pantry-label--apple",
+        topBoardPct + PANTRY_LAYOUT.appleLabelTopOffsetFromTopBoardPct,
+      );
+      setTopPct(
+        ".pp-pantry-label--banana",
+        topBoardPct + PANTRY_LAYOUT.bananaLabelTopOffsetFromTopBoardPct,
+      );
+      setTopPct(
+        ".pp-pantry-label--avocado",
+        bottomBoardPct + PANTRY_LAYOUT.avocadoLabelTopOffsetFromBottomBoardPct,
+      );
+    };
+
+    const requestPantryLayoutSync = () => {
+      cancelPantryLayoutSync();
+      pantryLayoutRaf = requestAnimationFrame(() => {
+        pantryLayoutRaf = 0;
+        syncPantryLayoutFromShelves();
+      });
+    };
+
+    const syncShopLayoutFromStage = () => {
+      if (activeTab !== "shop") return;
+      const stageNode = appContent.querySelector(".pp-shop-stage");
+      const itemsWrap = stageNode ? stageNode.querySelector(".pp-shop-items") : null;
+      const shopBar = stageNode ? stageNode.querySelector(".pp-shop-bar") : null;
+      if (!stageNode || !itemsWrap || !shopBar) return;
+
+      const stageRect = stageNode.getBoundingClientRect();
+      if (!stageRect.width || !stageRect.height) return;
+
+      const barRect = shopBar.getBoundingClientRect();
+      const barTopPct = ((barRect.top - stageRect.top) / stageRect.height) * 100;
+      const pxToStagePct = (px) => (px / stageRect.height) * 100;
+      const itemKeys = Object.keys(SHOP_LAYOUT.itemXCenterPct);
+      const topRowSet = new Set(SHOP_LAYOUT.topRow);
+      const targetItemHeightPx = clamp(
+        stageRect.width * SHOP_LAYOUT.itemHeightRatio,
+        SHOP_LAYOUT.itemHeightMinPx,
+        SHOP_LAYOUT.itemHeightMaxPx,
+      );
+
+      const itemMetricsByKey = new Map();
+      let pendingImageLoad = false;
+      itemKeys.forEach((key) => {
+        const node = itemsWrap.querySelector(`.pp-shop-item--${key}`);
+        if (!node) return;
+        const hasNaturalSize = node.naturalWidth > 0 && node.naturalHeight > 0;
+        if (!hasNaturalSize && !node.complete) pendingImageLoad = true;
+        const ratio =
+          hasNaturalSize
+            ? node.naturalWidth / node.naturalHeight
+            : (() => {
+                const rect = node.getBoundingClientRect();
+                return rect.width > 0 && rect.height > 0 ? rect.width / rect.height : 1;
+              })();
+        const scale = SHOP_LAYOUT.itemScale[key] || 1;
+        const visualHeight = targetItemHeightPx * scale;
+        const widthPx = Math.max(1, visualHeight * ratio);
+        itemMetricsByKey.set(key, { widthPx });
+      });
+
+      const resolveRowCenters = (keys) => {
+        const entries = keys
+          .map((key) => {
+            const desired = (stageRect.width * (SHOP_LAYOUT.itemXCenterPct[key] || 50)) / 100;
+            const metrics = itemMetricsByKey.get(key);
+            return { key, center: desired, width: metrics ? metrics.widthPx : targetItemHeightPx };
+          })
+          .sort((a, b) => a.center - b.center);
+        if (!entries.length) return new Map();
+
+        const gap = SHOP_LAYOUT.rowItemGapPx;
+        const sidePad = SHOP_LAYOUT.rowSidePadPx;
+
+        entries.forEach((entry) => {
+          const minCenter = entry.width / 2 + sidePad;
+          const maxCenter = stageRect.width - entry.width / 2 - sidePad;
+          entry.center = clamp(entry.center, minCenter, maxCenter);
+        });
+
+        for (let i = 1; i < entries.length; i += 1) {
+          const prev = entries[i - 1];
+          const cur = entries[i];
+          const minCenter = prev.center + (prev.width + cur.width) / 2 + gap;
+          if (cur.center < minCenter) cur.center = minCenter;
+        }
+
+        const rightBound =
+          stageRect.width - entries[entries.length - 1].width / 2 - sidePad;
+        const overflow = entries[entries.length - 1].center - rightBound;
+        if (overflow > 0) entries.forEach((entry) => (entry.center -= overflow));
+
+        const leftBound = entries[0].width / 2 + sidePad;
+        const underflow = leftBound - entries[0].center;
+        if (underflow > 0) entries.forEach((entry) => (entry.center += underflow));
+
+        for (let i = entries.length - 2; i >= 0; i -= 1) {
+          const next = entries[i + 1];
+          const cur = entries[i];
+          const maxCenter = next.center - (next.width + cur.width) / 2 - gap;
+          if (cur.center > maxCenter) cur.center = maxCenter;
+        }
+
+        return new Map(entries.map((entry) => [entry.key, entry.center]));
+      };
+
+      const centerByKey = new Map([
+        ...resolveRowCenters(SHOP_LAYOUT.topRow).entries(),
+        ...resolveRowCenters(SHOP_LAYOUT.bottomRow).entries(),
+      ]);
+
+      itemKeys.forEach((key) => {
+        const node = itemsWrap.querySelector(`.pp-shop-item--${key}`);
+        const metrics = itemMetricsByKey.get(key);
+        if (!node || !metrics) return;
+        const centerPx = centerByKey.get(key) || (stageRect.width * (SHOP_LAYOUT.itemXCenterPct[key] || 50)) / 100;
+        const topPct = topRowSet.has(key)
+          ? SHOP_LAYOUT.topRowTopPct
+          : barTopPct + SHOP_LAYOUT.bottomRowTopOffsetFromBarPct;
+
+        node.style.width = `${Math.round(metrics.widthPx)}px`;
+        node.style.left = `${(centerPx / stageRect.width) * 100}%`;
+        node.style.right = "auto";
+        node.style.top = `${clamp(topPct, 0, 92)}%`;
+        node.style.transform = "translateX(-50%)";
+      });
+
+      itemKeys.forEach((key) => {
+        const itemNode = itemsWrap.querySelector(`.pp-shop-item--${key}`);
+        const labelNode = itemsWrap.querySelector(`.pp-shop-label--${key}`);
+        const labelSpec = SHOP_LAYOUT.label[key];
+        if (!itemNode || !labelNode || !labelSpec) return;
+
+        const widthPx = clamp(
+          stageRect.width * labelSpec.widthRatio,
+          labelSpec.minPx,
+          labelSpec.maxPx,
+        );
+        const centerPx = centerByKey.get(key) || stageRect.width / 2;
+        labelNode.style.width = `${Math.round(widthPx)}px`;
+        labelNode.style.left = `${(centerPx / stageRect.width) * 100}%`;
+        labelNode.style.right = "auto";
+        labelNode.style.transform = "translateX(-50%)";
+
+        const itemRect = itemNode.getBoundingClientRect();
+        const itemBottomPct = ((itemRect.bottom - stageRect.top) / stageRect.height) * 100;
+        const gapPct = pxToStagePct(labelSpec.gapPx);
+        const labelHeightPct = pxToStagePct(labelNode.offsetHeight || 42);
+        const maxTopPct =
+          barTopPct - labelHeightPct - pxToStagePct(SHOP_LAYOUT.labelBarClearancePx);
+        const labelTopPct = clamp(itemBottomPct + gapPct, 0, maxTopPct);
+        labelNode.style.top = `${labelTopPct}%`;
+      });
+
+      if (pendingImageLoad) requestShopLayoutSync();
+    };
+
+    const requestShopLayoutSync = () => {
+      cancelShopLayoutSync();
+      shopLayoutRaf = requestAnimationFrame(() => {
+        shopLayoutRaf = 0;
+        syncShopLayoutFromStage();
+      });
+    };
+
     let isSheetOpen = false;
     let isPageOpen = false;
     let isDownloadOpen = false;
@@ -2550,6 +2815,8 @@
       splashImg.style.display = "block";
       app.setAttribute("aria-hidden", "true");
       setSelectedNavUi(null);
+      cancelPantryLayoutSync();
+      cancelShopLayoutSync();
       clear(appContent);
       clear(objectsLayer);
       clear(fabsLayer);
@@ -2582,6 +2849,16 @@
       clear(appContent);
       appContent.appendChild(renderOverviewForTab(tab));
       setSelectedNavUi(tab);
+      if (tab === "pantry") {
+        requestPantryLayoutSync();
+        cancelShopLayoutSync();
+      } else if (tab === "shop") {
+        requestShopLayoutSync();
+        cancelPantryLayoutSync();
+      } else {
+        cancelPantryLayoutSync();
+        cancelShopLayoutSync();
+      }
     };
 
     const setScreen = (screenState) => {
@@ -2634,7 +2911,13 @@
     // Initialize in splash.
     setSplash();
 
-    return { setScreen };
+    return {
+      setScreen,
+      syncLayout() {
+        if (activeTab === "pantry") requestPantryLayoutSync();
+        if (activeTab === "shop") requestShopLayoutSync();
+      },
+    };
   };
 
   const createScrollStageController = ({ stage, steps, onStepIndex, onResize }) => {
@@ -2999,6 +3282,7 @@
       const desired = clamp(maxOuterW, minW, maxW);
       const target = Math.min(desired, maxOuterW);
       stage.style.setProperty("--pp-phone-demo-w", `${target}px`);
+      if (phone && typeof phone.syncLayout === "function") phone.syncLayout();
     };
 
     if (stageMode) {

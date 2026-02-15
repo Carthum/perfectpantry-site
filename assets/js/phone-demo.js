@@ -1178,8 +1178,13 @@
 
     const RECIPE_THUMB_FALLBACK = "assets/objects/obj_bowl_tomato.png";
     // Static-site friendly "manifest" of available recipe thumbnails.
-    // Keep this list in sync with `assets/recipes/*`.
+    // Prefer object art first, then recipe card art.
     const RECIPE_THUMB_MANIFEST = new Set([
+      "assets/objects/flank_steak_w_peppers.png",
+      "assets/objects/obj_basil_tomato.png",
+      "assets/objects/obj_bowl_basil.png",
+      "assets/objects/obj_bowl_spices.png",
+      "assets/objects/obj_bowl_tomato.png",
       "assets/recipes/bang_bang_shrimp.png",
       "assets/recipes/chicken_avocado_wrap_paleo.png",
       "assets/recipes/chicken_tikka_masala.png",
@@ -1189,6 +1194,14 @@
       "assets/recipes/spicy_avocado_chicken.png",
       "assets/recipes/vegetarian_blt_with_avocado.png",
     ]);
+
+    // Pantry-detail sample recipes map to available object art.
+    const RECIPE_THUMB_OVERRIDES = Object.freeze({
+      apple_cinnamon_overnight_oats: "assets/objects/obj_bowl_spices.png",
+      banana_peanut_smoothie: "assets/objects/obj_bowl_basil.png",
+      avocado_salsa_without_the_avocado: "assets/objects/obj_basil_tomato.png",
+      shredded_flank_steak_with_peppers_ropa_vieja: "assets/objects/flank_steak_w_peppers.png",
+    });
 
     const toRecipeSlug = (value) =>
       String(value || "")
@@ -1203,7 +1216,17 @@
     const recipeThumbSrc = (titleOrSlug) => {
       const slug = toRecipeSlug(titleOrSlug);
       if (!slug) return RECIPE_THUMB_FALLBACK;
+      const override = RECIPE_THUMB_OVERRIDES[slug];
+      if (override && RECIPE_THUMB_MANIFEST.has(override)) return override;
       const candidates = [
+        `assets/objects/${slug}.png`,
+        `assets/objects/${slug}.jpg`,
+        `assets/objects/${slug}.jpeg`,
+        `assets/objects/${slug}.webp`,
+        `assets/objects/obj_${slug}.png`,
+        `assets/objects/obj_${slug}.jpg`,
+        `assets/objects/obj_${slug}.jpeg`,
+        `assets/objects/obj_${slug}.webp`,
         `assets/recipes/${slug}.png`,
         `assets/recipes/${slug}.jpg`,
         `assets/recipes/${slug}.jpeg`,
@@ -2345,7 +2368,15 @@
         recipe.type = "button";
         recipe.className = "pp-useitup-recipe";
         recipe.dataset.downloadCta = "true";
-        recipe.appendChild(el("div", "pp-useitup-thumb"));
+        const recipeThumb = el("div", "pp-useitup-thumb");
+        recipeThumb.appendChild(
+          imgEl({
+            src: recipeThumbSrc(item && item.recipe ? item.recipe.title : ""),
+            className: "pp-useitup-thumb-img",
+            alt: "",
+          }),
+        );
+        recipe.appendChild(recipeThumb);
         const recipeMeta = el("div", "pp-useitup-meta");
         recipeMeta.appendChild(el("div", "pp-useitup-title", item.recipe.title));
         recipeMeta.appendChild(el("div", "pp-useitup-sub", item.recipe.meta));

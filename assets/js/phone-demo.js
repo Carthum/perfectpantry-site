@@ -1281,10 +1281,26 @@
 
       const grid = el("div", "pp-app-grid");
       const recipes = [
-        { title: "Bang Bang Shrimp", meta: "25 min  •  4 servings" },
-        { title: "Chicken Tikka Masala", meta: "45 min  •  4 servings" },
-        { title: "Pico de Gallo", meta: "15 min  •  6 servings" },
-        { title: "Skillet tacos", meta: "20 min  •  4 servings" },
+        {
+          title: "Bang Bang Shrimp",
+          meta: "25 min  •  4 servings",
+          image: "assets/recipes/bang_bang_shrimp.png",
+        },
+        {
+          title: "Chicken Tikka Masala",
+          meta: "45 min  •  4 servings",
+          image: "assets/recipes/chicken_tikka_masala.png",
+        },
+        {
+          title: "Pico de Gallo",
+          meta: "15 min  •  6 servings",
+          image: "assets/recipes/pico_de_gallo.png",
+        },
+        {
+          title: "Skillet tacos",
+          meta: "20 min  •  4 servings",
+          image: "assets/recipes/skillet_tacos.png",
+        },
       ];
       recipes.forEach((r) => {
         const card = document.createElement("button");
@@ -1294,7 +1310,7 @@
           card.addEventListener("click", () => onAction(actionSetPhoneModal("recipeView")));
         }
         const thumb = el("div", "pp-app-recipe-thumb");
-        const thumbSrc = recipeThumbSrc(r && r.title);
+        const thumbSrc = (r && r.image) || recipeThumbSrc(r && r.title);
         thumb.appendChild(imgEl({ src: thumbSrc, className: "pp-app-recipe-thumb-img", alt: "" }));
         card.appendChild(thumb);
         card.appendChild(el("p", "pp-app-recipe-title", r.title));
@@ -1320,16 +1336,28 @@
 
       const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday"];
       const meals = [
-        { title: "Vegetarian BLT with Avocado" },
-        { title: "Chicken Avocado Wrap - Paleo" },
-        { title: "Salmon in Green Chili Cream Sauce" },
-        { title: "Spicy Avocado Chicken" },
+        {
+          title: "Vegetarian BLT with Avocado",
+          image: "assets/recipes/vegetarian_blt_with_avocado.png",
+        },
+        {
+          title: "Chicken Avocado Wrap - Paleo",
+          image: "assets/recipes/chicken_avocado_wrap_paleo.png",
+        },
+        {
+          title: "Salmon in Green Chili Cream Sauce",
+          image: "assets/recipes/salmon_in_green_chili_cream_sauce.png",
+        },
+        {
+          title: "Spicy Avocado Chicken",
+          image: "assets/recipes/spicy_avocado_chicken.png",
+        },
       ];
       dayNames.forEach((day, idx) => {
         const meal = meals[idx] || {};
         const card = el("div", "pp-app-card pp-meal-card");
         const thumb = el("div", "pp-meal-thumb");
-        const thumbSrc = recipeThumbSrc(meal && meal.title);
+        const thumbSrc = (meal && meal.image) || recipeThumbSrc(meal && meal.title);
         thumb.appendChild(imgEl({ src: thumbSrc, className: "pp-meal-thumb-img", alt: "" }));
         card.appendChild(thumb);
         const meta = el("div", "pp-meal-meta");

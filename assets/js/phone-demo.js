@@ -1380,7 +1380,13 @@
       weekRow.appendChild(buildPill({ label: "Week of 2/2", className: "pp-plan-week-pill pp-app-pill--title", rightIcon: "chevron_down" }));
       weekRow.appendChild(buildCircle({ icon: "chevron_right", className: "pp-app-circle--muted", ariaLabel: "Next week (preview)" }));
       hud.appendChild(weekRow);
-      hud.appendChild(buildPill({ label: "Auto-fill this week", className: "pp-app-pill--wide pp-app-pill--title", leftIcon: "sparkles" }));
+      hud.appendChild(
+        buildPill({
+          label: "Auto-fill this week",
+          className: "pp-app-pill--title pp-plan-autofill-pill",
+          leftIcon: "sparkles",
+        }),
+      );
       root.appendChild(hud);
 
       const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday"];

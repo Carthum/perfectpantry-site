@@ -1554,9 +1554,9 @@
 
     const SHOP_LAYOUT = Object.freeze({
       topRowTopPct: 8,
-      bottomRowTopPct: 24,
-      householdChipTopPct: 64,
-      householdRowTopPct: 72,
+      bottomRowTopPct: 21,
+      householdChipTopPct: 57,
+      householdRowTopPct: 65,
       topRow: ["garlic", "jalapeno", "salt"],
       bottomRow: ["oliveoil", "onion"],
       householdRow: ["dishdetergent", "trashbags"],
@@ -1585,7 +1585,7 @@
       },
       rowItemGapPx: 10,
       rowSidePadPx: 8,
-      labelGapPx: 10,
+      labelGapPx: 18,
       label: {
         garlic: { widthRatio: 0.28, minPx: 88, maxPx: 118 },
         jalapeno: { widthRatio: 0.3, minPx: 94, maxPx: 126 },
@@ -1595,7 +1595,7 @@
         dishdetergent: { widthRatio: 0.34, minPx: 118, maxPx: 176 },
         trashbags: { widthRatio: 0.31, minPx: 108, maxPx: 156 },
       },
-      labelBarClearancePx: 16,
+      labelBarClearancePx: 4,
     });
 
     const SPICE_LAYOUT = Object.freeze({
@@ -3535,6 +3535,7 @@
       appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
       if (tab !== lastUiTab) {
         appContent.scrollTop = 0;
+        appContent.scrollLeft = 0;
         lastUiTab = tab;
       }
 

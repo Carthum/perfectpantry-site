@@ -644,7 +644,7 @@ html.pp-tour-locked body {
   align-content: stretch;
   height: 100%;
   min-height: 0;
-  gap: 10px;
+  gap: 4px;
 }
 
 .pp-app-section {
@@ -1446,7 +1446,7 @@ html.pp-tour-locked body {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: 2px 0 126px;
+  padding: 0 0 126px;
 }
 
 .pp-spice-scroll::-webkit-scrollbar {
@@ -1457,8 +1457,8 @@ html.pp-tour-locked body {
 .pp-spice-stage {
   display: grid;
   align-content: start;
-  gap: 14px;
-  padding: 2px 2px 6px;
+  gap: 10px;
+  padding: 0 2px 6px;
 }
 
 .pp-spice-hero-rack {
@@ -1508,18 +1508,18 @@ html.pp-tour-locked body {
 
 .pp-spice-rows {
   display: grid;
-  gap: 16px;
+  gap: 12px;
 }
 
 .pp-spice-row {
   position: relative;
-  min-height: clamp(224px, 28vw, 272px);
+  min-height: clamp(208px, 25.5vw, 250px);
 }
 
 .pp-spice-shelf-img {
   position: absolute;
   left: 50%;
-  bottom: 68px;
+  bottom: 74px;
   transform: translateX(-50%);
   width: 94%;
   max-width: 332px;

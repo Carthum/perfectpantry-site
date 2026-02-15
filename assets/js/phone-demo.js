@@ -1482,13 +1482,13 @@
       jarTopNudgePx: 2.5,
       jarRowGapPx: 10,
       jarSidePadPx: 8,
-      jarWidthRatioByCount: {
-        1: 0.24,
-        2: 0.22,
-        3: 0.195,
+      jarVisualHeightRatioByCount: {
+        1: 0.245,
+        2: 0.232,
+        3: 0.222,
       },
-      jarWidthMinPx: 60,
-      jarWidthMaxPx: 92,
+      jarVisualHeightMinPx: 60,
+      jarVisualHeightMaxPx: 84,
       labelWidthRatioByCount: {
         1: 0.44,
         2: 0.36,
@@ -1732,11 +1732,13 @@
           shelfVisualTopPx + shelfVisualHeightPx * SPICE_LAYOUT.shelfSurfacePctWithinVisual;
 
         const count = Math.max(1, jarNodes.length);
-        const jarWidthRatio = SPICE_LAYOUT.jarWidthRatioByCount[count] || SPICE_LAYOUT.jarWidthRatioByCount[3];
-        const jarWidthPx = clamp(
-          rowRect.width * jarWidthRatio,
-          SPICE_LAYOUT.jarWidthMinPx,
-          SPICE_LAYOUT.jarWidthMaxPx,
+        const jarVisualHeightRatio =
+          SPICE_LAYOUT.jarVisualHeightRatioByCount[count] ||
+          SPICE_LAYOUT.jarVisualHeightRatioByCount[3];
+        const jarVisualHeightPx = clamp(
+          rowRect.width * jarVisualHeightRatio,
+          SPICE_LAYOUT.jarVisualHeightMinPx,
+          SPICE_LAYOUT.jarVisualHeightMaxPx,
         );
 
         const leftEdgePx = shelfVisualLeftPx + shelfVisualWidthPx * 0.16;
@@ -1750,14 +1752,32 @@
         jarNodes.forEach((jarNode, index) => {
           const key = `jar-${index}`;
           keys.push(key);
+          const jarImg = jarNode.querySelector("img");
+          const hasNaturalSize = !!(jarImg && jarImg.naturalWidth > 0 && jarImg.naturalHeight > 0);
+          if (jarImg && !hasNaturalSize && !jarImg.complete) pendingImageLoad = true;
+          const ratio =
+            hasNaturalSize
+              ? jarImg.naturalHeight / jarImg.naturalWidth
+              : (() => {
+                  const rect = jarNode.getBoundingClientRect();
+                  return rect.width > 0 ? rect.height / rect.width : 1.45;
+                })();
+          const alphaInsets =
+            hasNaturalSize && jarImg ? readImageAlphaInsets(jarImg) : EMPTY_ALPHA_INSETS;
+          const visualFillRatioY = Math.max(
+            0.24,
+            1 - (alphaInsets.top || 0) - (alphaInsets.bottom || 0),
+          );
+          const boxHeightPx = jarVisualHeightPx / visualFillRatioY;
+          const widthPx = Math.max(1, boxHeightPx / Math.max(0.2, ratio));
           const center =
             count <= 1
               ? (leftEdgePx + rightEdgePx) / 2
               : leftEdgePx + ((rightEdgePx - leftEdgePx) * index) / (count - 1);
-          const minCenter = jarWidthPx / 2 + SPICE_LAYOUT.jarSidePadPx;
-          const maxCenter = rowRect.width - jarWidthPx / 2 - SPICE_LAYOUT.jarSidePadPx;
+          const minCenter = widthPx / 2 + SPICE_LAYOUT.jarSidePadPx;
+          const maxCenter = rowRect.width - widthPx / 2 - SPICE_LAYOUT.jarSidePadPx;
           centerByKey.set(key, center);
-          widthByKey.set(key, jarWidthPx);
+          widthByKey.set(key, widthPx);
           minCenterByKey.set(key, minCenter);
           maxCenterByKey.set(key, maxCenter);
         });
@@ -1783,9 +1803,14 @@
                   const rect = jarNode.getBoundingClientRect();
                   return rect.width > 0 ? rect.height / rect.width : 1.45;
                 })();
-          const jarHeightPx = Math.max(1, jarWidthPx * ratio);
           const alphaInsets =
             hasNaturalSize && jarImg ? readImageAlphaInsets(jarImg) : EMPTY_ALPHA_INSETS;
+          const visualFillRatioY = Math.max(
+            0.24,
+            1 - (alphaInsets.top || 0) - (alphaInsets.bottom || 0),
+          );
+          const jarHeightPx = Math.max(1, jarVisualHeightPx / visualFillRatioY);
+          const jarWidthPx = Math.max(1, jarHeightPx / Math.max(0.2, ratio));
           const visualBottomInsetPx = jarHeightPx * (alphaInsets.bottom || 0);
           const jarTopPx =
             shelfSurfaceY -

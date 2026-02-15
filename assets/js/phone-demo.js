@@ -759,7 +759,6 @@
     };
 
     let activePantryView = "items";
-    let pantrySpiceDeepScrollTriggered = false;
 
     const renderObjectsForTab = (tab, pantryView = "items") => {
       clear(objectsLayer);
@@ -1155,7 +1154,6 @@
             label.type = "button";
             label.className =
               item && item.inStock ? "pp-spice-label" : "pp-spice-label is-unavailable";
-            label.dataset.downloadCta = "true";
             label.dataset.spiceItem = String((item && item.id) || "");
             label.appendChild(el("span", "pp-spice-label-text", (item && item.label) || ""));
             const chevron = iconEl("chevron_down");
@@ -1173,20 +1171,6 @@
 
       scrollNode.appendChild(stageNode);
       root.appendChild(scrollNode);
-
-      const checkDeepScrollTrigger = () => {
-        if (pantrySpiceDeepScrollTriggered) return;
-        const everydayChip = stageNode.querySelector("[data-spice-section=\"everyday\"]");
-        const everydayRow = stageNode.querySelector(".pp-spice-row[data-spice-section=\"everyday\"]");
-        if (!everydayChip || !everydayRow) return;
-        const threshold = everydayChip.offsetTop + Math.max(everydayRow.offsetHeight || 0, 180);
-        if (scrollNode.scrollTop >= threshold) {
-          pantrySpiceDeepScrollTriggered = true;
-          openDownloadCta();
-        }
-      };
-      scrollNode.addEventListener("scroll", checkDeepScrollTrigger, { passive: true });
-      requestAnimationFrame(checkDeepScrollTrigger);
 
       return root;
     };
@@ -3297,7 +3281,6 @@
     const setSplash = () => {
       activeTab = null;
       activePantryView = "items";
-      pantrySpiceDeepScrollTriggered = false;
       splashImg.style.display = "block";
       app.setAttribute("aria-hidden", "true");
       setSelectedNavUi(null);
@@ -3319,8 +3302,6 @@
         tab === "pantry" && String(pantryView || "") === "spice" ? "spice" : "items";
       const isSamePantryView = tab === "pantry" ? activePantryView === nextPantryView : true;
       if (tab === activeTab && isSamePantryView) return;
-
-      if (tab !== "pantry" || nextPantryView !== "spice") pantrySpiceDeepScrollTriggered = false;
 
       activeTab = tab;
       activePantryView = tab === "pantry" ? nextPantryView : "items";

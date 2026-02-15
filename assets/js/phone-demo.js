@@ -3021,6 +3021,7 @@
     const buildRecipeViewPage = () => {
       const root = el("div", "pp-page pp-page--recipe");
       const scroll = el("div", "pp-page-scroll");
+      const recipeTitleText = "Shredded Flank Steak with Peppers, (Ropa Vieja)";
 
       const top = el("div", "pp-page-topbar");
       const back = buildTopBarBtn({
@@ -3043,7 +3044,7 @@
       if (heartSvg) fav.appendChild(heartSvg);
       headRow.appendChild(fav);
       const headText = el("div", "pp-recipe-head-text");
-      headText.appendChild(el("div", "pp-recipe-title", "Shredded Flank Steak with Peppers, (Ropa Vieja)"));
+      headText.appendChild(el("div", "pp-recipe-title", recipeTitleText));
       const rating = el("div", "pp-recipe-rating");
       const starSvg = iconEl("star");
       if (starSvg) rating.appendChild(starSvg);
@@ -3052,12 +3053,11 @@
       headText.appendChild(rating);
       headRow.appendChild(headText);
       headerCard.appendChild(headRow);
-      scroll.appendChild(headerCard);
 
-      const hero = el("div", "pp-recipe-hero");
+      const hero = el("div", "pp-recipe-hero pp-recipe-head-hero");
       const heroPh = el("div", "pp-recipe-hero-ph");
       const heroImg = imgEl({
-        src: "assets/objects/flank_steak_w_peppers.png",
+        src: recipeThumbSrc(recipeTitleText),
         className: "pp-recipe-hero-img",
         alt: "",
       });
@@ -3068,7 +3068,8 @@
       });
       heroPh.appendChild(heroImg);
       hero.appendChild(heroPh);
-      scroll.appendChild(hero);
+      headerCard.appendChild(hero);
+      scroll.appendChild(headerCard);
 
       const nut = el("div", "pp-recipe-nut pp-app-card");
       const nutHead = el("div", "pp-recipe-nut-head");

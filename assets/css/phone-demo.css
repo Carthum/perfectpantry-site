@@ -642,6 +642,10 @@ html.pp-tour-locked body {
   overflow-x: hidden;
 }
 
+.pp-screen > * {
+  min-width: 0;
+}
+
 .pp-screen-pantry,
 .pp-screen-shop {
   grid-template-rows: auto auto 1fr;
@@ -1240,12 +1244,16 @@ html.pp-tour-locked body {
 
 .pp-meal-card {
   display: grid;
-  grid-template-columns: 62px 1fr auto;
+  grid-template-columns: 62px minmax(0, 1fr);
+  grid-template-areas:
+    "thumb meta"
+    "actions actions";
   gap: 14px;
-  align-items: center;
+  align-items: start;
 }
 
 .pp-meal-thumb {
+  grid-area: thumb;
   width: 62px;
   height: 62px;
   border-radius: 18px;
@@ -1264,8 +1272,10 @@ html.pp-tour-locked body {
 }
 
 .pp-meal-meta {
+  grid-area: meta;
   display: grid;
   gap: 2px;
+  min-width: 0;
 }
 
 .pp-meal-title {
@@ -1281,17 +1291,22 @@ html.pp-tour-locked body {
   font-size: var(--pp-type-body-sm);
   font-weight: 650;
   color: rgba(58, 42, 26, 0.72);
+  overflow-wrap: anywhere;
 }
 
 .pp-meal-actions {
+  grid-area: actions;
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+  margin-top: 2px;
 }
 
 .pp-meal-actions .pp-app-pill {
-  min-height: 48px;
+  width: 100%;
+  min-height: 44px;
   font-size: var(--pp-type-body-sm);
-  padding: 0 14px;
+  padding: 0 12px;
   box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
 }
 
@@ -1603,7 +1618,8 @@ html.pp-tour-locked body {
 
 .pp-spice-scroll {
   min-height: 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   padding: 0 0 126px;
@@ -1986,9 +2002,9 @@ html.pp-tour-locked body {
   position: relative;
   height: auto;
   min-height: 0;
-  min-height: 700px;
+  min-height: 640px;
   padding-top: 6px;
-  padding-bottom: 76px;
+  padding-bottom: 70px;
 }
 
 .pp-shop-hero {
@@ -2348,10 +2364,15 @@ html.pp-tour-locked body {
 .pp-app-sheet-body {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-width: none;
   padding: 12px 2px 8px;
+}
+
+.pp-app-sheet-body > * {
+  min-width: 0;
 }
 
 .pp-app-sheet-body::-webkit-scrollbar {
@@ -2630,6 +2651,8 @@ html.pp-tour-locked body {
   display: grid;
   align-content: start;
   gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 10px 2px 6px;
 }
 
@@ -3011,6 +3034,7 @@ html.pp-tour-locked body {
   display: flex;
   flex-direction: column;
   color: var(--pp-app-ink);
+  overflow: hidden;
 }
 
 .pp-page--recipe {
@@ -3036,6 +3060,10 @@ html.pp-tour-locked body {
   overscroll-behavior: contain;
   padding: 10px 12px 18px;
   scrollbar-width: none;
+}
+
+.pp-page-scroll > * {
+  min-width: 0;
 }
 
 .pp-page--recipe .pp-page-scroll {

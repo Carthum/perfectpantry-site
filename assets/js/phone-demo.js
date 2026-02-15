@@ -22,6 +22,7 @@
   });
   const actionClosePhoneModal = () => actionSetPhoneModal(null);
   const actionSelectTab = (tab) => ({ type: "select_tab", tab });
+  const actionSetPantryView = (view) => ({ type: "set_pantry_view", view });
   const actionOpenDownloadCta = () => ({ type: "open_download_cta" });
   const actionCloseDownloadCta = () => ({ type: "close_download_cta" });
 
@@ -757,7 +758,10 @@
       });
     };
 
-    const renderObjectsForTab = (tab) => {
+    let activePantryView = "items";
+    let pantrySpiceDeepScrollTriggered = false;
+
+    const renderObjectsForTab = (tab, pantryView = "items") => {
       clear(objectsLayer);
 
       const add = (src, cls) => {
@@ -783,14 +787,14 @@
         return;
       }
 
-      if (tab === "pantry") {
+      if (tab === "pantry" && pantryView === "items") {
         add("assets/objects/obj_pantry_shelf.png", "pp-obj--pantry-shelf");
         add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-top");
         add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-bottom");
       }
     };
 
-    const renderFabsForTab = (tab) => {
+    const renderFabsForTab = (tab, pantryView = "items") => {
       clear(fabsLayer);
 
       const addFabSvg = ({ cls, icon, ariaLabel }) => {
@@ -819,21 +823,29 @@
       }
 
       if (tab === "pantry") {
-        addFabImg({
+        const spiceFab = addFabImg({
           cls: "pp-app-fab--spice",
           src: "assets/objects/obj_tan_spice.png",
-          ariaLabel: "Tools (preview)",
-        });
-        const addItem = addFabSvg({
-          cls: "pp-app-fab--plus",
-          icon: "plus",
-          ariaLabel: "Add item (preview)",
+          ariaLabel: "Spice rack (preview)",
         });
         if (typeof onAction === "function") {
-          addItem.addEventListener(
-            "click",
-            () => onAction(actionSetPhoneModal("addPantryItem", { mode: "search" })),
+          spiceFab.addEventListener("click", () =>
+            onAction(actionSetPantryView(pantryView === "spice" ? "items" : "spice")),
           );
+        }
+
+        if (pantryView === "items") {
+          const addItem = addFabSvg({
+            cls: "pp-app-fab--plus",
+            icon: "plus",
+            ariaLabel: "Add item (preview)",
+          });
+          if (typeof onAction === "function") {
+            addItem.addEventListener(
+              "click",
+              () => onAction(actionSetPhoneModal("addPantryItem", { mode: "search" })),
+            );
+          }
         }
       }
 
@@ -1024,6 +1036,158 @@
       stageNode.appendChild(labelBtn({ id: "avocado", cls: "pp-pantry-label--avocado", title: "Avocado", sub: "Exp 0d" }));
 
       root.appendChild(stageNode);
+      return root;
+    };
+
+    const SPICE_JAR_ASSET = Object.freeze({
+      green: "assets/objects/obj_green_spice.png",
+      grey: "assets/objects/obj_grey_spice.png",
+      red: "assets/objects/obj_red_spice.png",
+      white: "assets/objects/obj_white_spice.png",
+      brown: "assets/objects/obj_brown_spice.png",
+      tan: "assets/objects/obj_tan_spice.png",
+    });
+
+    const SPICE_SECTIONS = [
+      {
+        id: "essentials",
+        title: "Essentials",
+        count: 3,
+        items: [
+          { id: "salt", label: "Salt", inStock: true, tone: "white" },
+          { id: "black-pepper", label: "Black Pepper", inStock: true, tone: "brown" },
+          { id: "white-pepper", label: "White Pepper", inStock: true, tone: "white" },
+        ],
+      },
+      {
+        id: "everyday",
+        title: "Everyday",
+        count: 10,
+        items: [
+          { id: "garlic-powder", label: "Garlic Powder", inStock: true, tone: "brown" },
+          { id: "onion-powder", label: "Onion Powder", inStock: true, tone: "tan" },
+          { id: "paprika", label: "Paprika", inStock: true, tone: "red" },
+          { id: "smoked-paprika", label: "Smoked Paprika", inStock: true, tone: "red" },
+          { id: "cumin", label: "Cumin", inStock: false, tone: "grey" },
+          { id: "chili-powder", label: "Chili Powder", inStock: false, tone: "grey" },
+          { id: "oregano", label: "Oregano", inStock: true, tone: "green" },
+          { id: "turmeric", label: "Turmeric", inStock: true, tone: "tan" },
+          { id: "cinnamon", label: "Cinnamon", inStock: false, tone: "grey" },
+          { id: "ginger", label: "Ginger", inStock: false, tone: "grey" },
+        ],
+      },
+    ];
+
+    const renderPantrySpice = () => {
+      const root = el("div", "pp-screen pp-screen-pantry-spice");
+
+      const topRow = el("div", "pp-top-row pp-top-row--spice");
+      topRow.appendChild(
+        buildPill({
+          label: "A–Z",
+          className: "pp-app-pill--title pp-top-pill pp-top-pill--list pp-top-pill--az",
+        }),
+      );
+      topRow.appendChild(
+        buildPill({
+          label: "Spice Rack",
+          className: "pp-app-pill--title pp-top-pill pp-top-pill--main pp-top-pill--spice-main",
+        }),
+      );
+      const searchBtn = buildCircle({
+        icon: "search",
+        className: "pp-app-circle--muted",
+        ariaLabel: "Search spices (preview)",
+      });
+      searchBtn.dataset.downloadCta = "true";
+      topRow.appendChild(searchBtn);
+      root.appendChild(topRow);
+
+      const scrollNode = el("div", "pp-spice-scroll");
+      const stageNode = el("div", "pp-spice-stage");
+      stageNode.appendChild(
+        imgEl({
+          src: "assets/objects/obj_spice_rack.png",
+          className: "pp-spice-hero-rack",
+          alt: "",
+        }),
+      );
+
+      const chunkItems = (items, size) => {
+        const chunks = [];
+        for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size));
+        return chunks;
+      };
+
+      SPICE_SECTIONS.forEach((section) => {
+        const chip = el("div", "pp-spice-section-chip");
+        chip.dataset.spiceSection = section.id;
+        chip.appendChild(el("span", "pp-spice-section-chip-label", section.title));
+        chip.appendChild(el("span", "pp-spice-section-count", String(section.count)));
+        stageNode.appendChild(chip);
+
+        const rowsWrap = el("div", "pp-spice-rows");
+        chunkItems(section.items || [], 3).forEach((rowItems, rowIndex) => {
+          const row = el("div", "pp-spice-row");
+          row.dataset.spiceSection = section.id;
+          row.dataset.spiceRow = String(rowIndex);
+          row.dataset.spiceCount = String(rowItems.length);
+          row.appendChild(
+            imgEl({
+              src: "assets/objects/obj_pantry_item_shelf.png",
+              className: "pp-spice-shelf-img",
+              alt: "",
+            }),
+          );
+
+          rowItems.forEach((item) => {
+            const jarTone = item && item.tone ? String(item.tone) : "tan";
+            const jarSrc = SPICE_JAR_ASSET[jarTone] || SPICE_JAR_ASSET.tan;
+            const jar = document.createElement("button");
+            jar.type = "button";
+            jar.className = item && item.inStock ? "pp-spice-jar" : "pp-spice-jar is-unavailable";
+            jar.dataset.downloadCta = "true";
+            jar.dataset.spiceItem = String((item && item.id) || "");
+            jar.appendChild(imgEl({ src: jarSrc, className: "pp-spice-jar-img", alt: "" }));
+            row.appendChild(jar);
+
+            const label = document.createElement("button");
+            label.type = "button";
+            label.className =
+              item && item.inStock ? "pp-spice-label" : "pp-spice-label is-unavailable";
+            label.dataset.downloadCta = "true";
+            label.dataset.spiceItem = String((item && item.id) || "");
+            label.appendChild(el("span", "pp-spice-label-text", (item && item.label) || ""));
+            const chevron = iconEl("chevron_down");
+            if (chevron) {
+              chevron.classList.add("pp-spice-label-chevron");
+              label.appendChild(chevron);
+            }
+            row.appendChild(label);
+          });
+
+          rowsWrap.appendChild(row);
+        });
+        stageNode.appendChild(rowsWrap);
+      });
+
+      scrollNode.appendChild(stageNode);
+      root.appendChild(scrollNode);
+
+      const checkDeepScrollTrigger = () => {
+        if (pantrySpiceDeepScrollTriggered) return;
+        const everydayChip = stageNode.querySelector("[data-spice-section=\"everyday\"]");
+        const everydayRow = stageNode.querySelector(".pp-spice-row[data-spice-section=\"everyday\"]");
+        if (!everydayChip || !everydayRow) return;
+        const threshold = everydayChip.offsetTop + Math.max(everydayRow.offsetHeight || 0, 180);
+        if (scrollNode.scrollTop >= threshold) {
+          pantrySpiceDeepScrollTriggered = true;
+          openDownloadCta();
+        }
+      };
+      scrollNode.addEventListener("scroll", checkDeepScrollTrigger, { passive: true });
+      requestAnimationFrame(checkDeepScrollTrigger);
+
       return root;
     };
 
@@ -1245,12 +1409,12 @@
       return root;
     };
 
-    const renderOverviewForTab = (tab) => {
+    const renderOverviewForTab = (tab, pantryView = "items") => {
       switch (tab) {
         case "home":
           return renderHome();
         case "pantry":
-          return renderPantry();
+          return pantryView === "spice" ? renderPantrySpice() : renderPantry();
         case "cookbook":
           return renderCookbook();
         case "plan":
@@ -1311,6 +1475,28 @@
         onion: { widthRatio: 0.36, minPx: 114, maxPx: 164, gapPx: 11 },
       },
       labelBarClearancePx: 12,
+    });
+
+    const SPICE_LAYOUT = Object.freeze({
+      shelfSurfacePctWithinVisual: 0.18,
+      jarTopNudgePx: 2.5,
+      jarRowGapPx: 10,
+      jarSidePadPx: 8,
+      jarWidthRatioByCount: {
+        1: 0.24,
+        2: 0.22,
+        3: 0.195,
+      },
+      jarWidthMinPx: 60,
+      jarWidthMaxPx: 92,
+      labelWidthRatioByCount: {
+        1: 0.44,
+        2: 0.36,
+        3: 0.31,
+      },
+      labelWidthMinPx: 96,
+      labelWidthMaxPx: 174,
+      labelGapFromShelfPx: 8,
     });
 
     const EMPTY_ALPHA_INSETS = Object.freeze({
@@ -1377,12 +1563,19 @@
     };
 
     let pantryLayoutRaf = 0;
+    let spiceLayoutRaf = 0;
     let shopLayoutRaf = 0;
 
     const cancelPantryLayoutSync = () => {
       if (!pantryLayoutRaf) return;
       cancelAnimationFrame(pantryLayoutRaf);
       pantryLayoutRaf = 0;
+    };
+
+    const cancelPantrySpiceLayoutSync = () => {
+      if (!spiceLayoutRaf) return;
+      cancelAnimationFrame(spiceLayoutRaf);
+      spiceLayoutRaf = 0;
     };
 
     const cancelShopLayoutSync = () => {
@@ -1392,7 +1585,7 @@
     };
 
     const syncPantryLayoutFromShelves = () => {
-      if (activeTab !== "pantry") return;
+      if (activeTab !== "pantry" || activePantryView !== "items") return;
       const stageNode = appContent.querySelector(".pp-pantry-stage");
       const topBoard = objectsLayer.querySelector(".pp-obj--pantry-board-top");
       const bottomBoard = objectsLayer.querySelector(".pp-obj--pantry-board-bottom");
@@ -1461,6 +1654,178 @@
       pantryLayoutRaf = requestAnimationFrame(() => {
         pantryLayoutRaf = 0;
         syncPantryLayoutFromShelves();
+      });
+    };
+
+    const syncPantrySpiceLayout = () => {
+      if (activeTab !== "pantry" || activePantryView !== "spice") return;
+      const stageNode = appContent.querySelector(".pp-spice-stage");
+      if (!stageNode) return;
+
+      const rows = stageNode.querySelectorAll(".pp-spice-row");
+      if (!rows.length) return;
+
+      const resolveCenters = ({ keys, centerByKey, widthByKey, minCenterByKey, maxCenterByKey }) => {
+        const entries = keys
+          .map((key) => ({
+            key,
+            center: centerByKey.get(key) || 0,
+            width: widthByKey.get(key) || SPICE_LAYOUT.jarWidthMinPx,
+            minCenter: minCenterByKey.get(key) || 0,
+            maxCenter: maxCenterByKey.get(key) || 0,
+          }))
+          .sort((a, b) => a.center - b.center);
+        if (!entries.length) return new Map();
+
+        entries.forEach((entry) => {
+          entry.center = clamp(entry.center, entry.minCenter, entry.maxCenter);
+        });
+
+        for (let i = 1; i < entries.length; i += 1) {
+          const prev = entries[i - 1];
+          const cur = entries[i];
+          const minCenter =
+            prev.center + (prev.width + cur.width) / 2 + SPICE_LAYOUT.jarRowGapPx;
+          if (cur.center < minCenter) cur.center = minCenter;
+        }
+
+        const overflow = entries[entries.length - 1].center - entries[entries.length - 1].maxCenter;
+        if (overflow > 0) entries.forEach((entry) => (entry.center -= overflow));
+
+        const underflow = entries[0].minCenter - entries[0].center;
+        if (underflow > 0) entries.forEach((entry) => (entry.center += underflow));
+
+        for (let i = entries.length - 2; i >= 0; i -= 1) {
+          const next = entries[i + 1];
+          const cur = entries[i];
+          const maxCenter =
+            next.center - (next.width + cur.width) / 2 - SPICE_LAYOUT.jarRowGapPx;
+          if (cur.center > maxCenter) cur.center = maxCenter;
+        }
+
+        return new Map(entries.map((entry) => [entry.key, entry.center]));
+      };
+
+      let pendingImageLoad = false;
+
+      rows.forEach((row) => {
+        const shelfNode = row.querySelector(".pp-spice-shelf-img");
+        const jarNodes = Array.from(row.querySelectorAll(".pp-spice-jar"));
+        const labelNodes = Array.from(row.querySelectorAll(".pp-spice-label"));
+        if (!shelfNode || !jarNodes.length) return;
+
+        const rowRect = row.getBoundingClientRect();
+        const shelfRect = shelfNode.getBoundingClientRect();
+        if (!rowRect.width || !rowRect.height || !shelfRect.width || !shelfRect.height) return;
+
+        const hasShelfNaturalSize = shelfNode.naturalWidth > 0 && shelfNode.naturalHeight > 0;
+        if (!hasShelfNaturalSize && !shelfNode.complete) pendingImageLoad = true;
+        const shelfAlpha = hasShelfNaturalSize ? readImageAlphaInsets(shelfNode) : EMPTY_ALPHA_INSETS;
+        const shelfVisualLeftPx =
+          shelfRect.left - rowRect.left + shelfRect.width * (shelfAlpha.left || 0);
+        const shelfVisualTopPx = shelfRect.top - rowRect.top + shelfRect.height * (shelfAlpha.top || 0);
+        const shelfVisualWidthPx =
+          shelfRect.width * (1 - (shelfAlpha.left || 0) - (shelfAlpha.right || 0));
+        const shelfVisualHeightPx =
+          shelfRect.height * (1 - (shelfAlpha.top || 0) - (shelfAlpha.bottom || 0));
+        const shelfSurfaceY =
+          shelfVisualTopPx + shelfVisualHeightPx * SPICE_LAYOUT.shelfSurfacePctWithinVisual;
+
+        const count = Math.max(1, jarNodes.length);
+        const jarWidthRatio = SPICE_LAYOUT.jarWidthRatioByCount[count] || SPICE_LAYOUT.jarWidthRatioByCount[3];
+        const jarWidthPx = clamp(
+          rowRect.width * jarWidthRatio,
+          SPICE_LAYOUT.jarWidthMinPx,
+          SPICE_LAYOUT.jarWidthMaxPx,
+        );
+
+        const leftEdgePx = shelfVisualLeftPx + shelfVisualWidthPx * 0.16;
+        const rightEdgePx = shelfVisualLeftPx + shelfVisualWidthPx * 0.84;
+        const keys = [];
+        const centerByKey = new Map();
+        const widthByKey = new Map();
+        const minCenterByKey = new Map();
+        const maxCenterByKey = new Map();
+
+        jarNodes.forEach((jarNode, index) => {
+          const key = `jar-${index}`;
+          keys.push(key);
+          const center =
+            count <= 1
+              ? (leftEdgePx + rightEdgePx) / 2
+              : leftEdgePx + ((rightEdgePx - leftEdgePx) * index) / (count - 1);
+          const minCenter = jarWidthPx / 2 + SPICE_LAYOUT.jarSidePadPx;
+          const maxCenter = rowRect.width - jarWidthPx / 2 - SPICE_LAYOUT.jarSidePadPx;
+          centerByKey.set(key, center);
+          widthByKey.set(key, jarWidthPx);
+          minCenterByKey.set(key, minCenter);
+          maxCenterByKey.set(key, maxCenter);
+        });
+
+        const resolvedCenterByKey = resolveCenters({
+          keys,
+          centerByKey,
+          widthByKey,
+          minCenterByKey,
+          maxCenterByKey,
+        });
+
+        jarNodes.forEach((jarNode, index) => {
+          const key = `jar-${index}`;
+          const centerPx = resolvedCenterByKey.get(key) || rowRect.width / 2;
+          const jarImg = jarNode.querySelector("img");
+          const hasNaturalSize = !!(jarImg && jarImg.naturalWidth > 0 && jarImg.naturalHeight > 0);
+          if (jarImg && !hasNaturalSize && !jarImg.complete) pendingImageLoad = true;
+          const ratio =
+            hasNaturalSize
+              ? jarImg.naturalHeight / jarImg.naturalWidth
+              : (() => {
+                  const rect = jarNode.getBoundingClientRect();
+                  return rect.width > 0 ? rect.height / rect.width : 1.45;
+                })();
+          const jarHeightPx = Math.max(1, jarWidthPx * ratio);
+          const alphaInsets =
+            hasNaturalSize && jarImg ? readImageAlphaInsets(jarImg) : EMPTY_ALPHA_INSETS;
+          const visualBottomInsetPx = jarHeightPx * (alphaInsets.bottom || 0);
+          const jarTopPx =
+            shelfSurfaceY -
+            (jarHeightPx - visualBottomInsetPx) +
+            SPICE_LAYOUT.jarTopNudgePx;
+
+          jarNode.style.width = `${Math.round(jarWidthPx)}px`;
+          jarNode.style.left = `${(centerPx / rowRect.width) * 100}%`;
+          jarNode.style.top = `${clamp(jarTopPx, 0, rowRect.height - 48)}px`;
+          jarNode.style.transform = "translateX(-50%)";
+        });
+
+        const labelWidthRatio =
+          SPICE_LAYOUT.labelWidthRatioByCount[count] || SPICE_LAYOUT.labelWidthRatioByCount[3];
+        const labelWidthPx = clamp(
+          rowRect.width * labelWidthRatio,
+          SPICE_LAYOUT.labelWidthMinPx,
+          SPICE_LAYOUT.labelWidthMaxPx,
+        );
+        const shelfBottomPx = shelfRect.bottom - rowRect.top;
+
+        labelNodes.forEach((labelNode, index) => {
+          const key = `jar-${index}`;
+          const centerPx = resolvedCenterByKey.get(key) || rowRect.width / 2;
+          const topPx = shelfBottomPx + SPICE_LAYOUT.labelGapFromShelfPx;
+          labelNode.style.width = `${Math.round(labelWidthPx)}px`;
+          labelNode.style.left = `${(centerPx / rowRect.width) * 100}%`;
+          labelNode.style.top = `${clamp(topPx, 0, rowRect.height - 46)}px`;
+          labelNode.style.transform = "translateX(-50%)";
+        });
+      });
+
+      if (pendingImageLoad) requestPantrySpiceLayoutSync();
+    };
+
+    const requestPantrySpiceLayoutSync = () => {
+      cancelPantrySpiceLayoutSync();
+      spiceLayoutRaf = requestAnimationFrame(() => {
+        spiceLayoutRaf = 0;
+        syncPantrySpiceLayout();
       });
     };
 
@@ -2906,10 +3271,13 @@
 
     const setSplash = () => {
       activeTab = null;
+      activePantryView = "items";
+      pantrySpiceDeepScrollTriggered = false;
       splashImg.style.display = "block";
       app.setAttribute("aria-hidden", "true");
       setSelectedNavUi(null);
       cancelPantryLayoutSync();
+      cancelPantrySpiceLayoutSync();
       cancelShopLayoutSync();
       clear(appContent);
       clear(objectsLayer);
@@ -2919,19 +3287,26 @@
       setDownloadCtaOpen(false);
     };
 
-    const setTab = (tab) => {
+    const setTab = (tab, pantryView = "items") => {
       if (!tab) return setSplash();
-      if (tab === activeTab) return;
+
+      const nextPantryView =
+        tab === "pantry" && String(pantryView || "") === "spice" ? "spice" : "items";
+      const isSamePantryView = tab === "pantry" ? activePantryView === nextPantryView : true;
+      if (tab === activeTab && isSamePantryView) return;
+
+      if (tab !== "pantry" || nextPantryView !== "spice") pantrySpiceDeepScrollTriggered = false;
 
       activeTab = tab;
+      activePantryView = tab === "pantry" ? nextPantryView : "items";
       splashImg.style.display = "none";
       app.setAttribute("aria-hidden", "false");
 
       app.dataset.ppTab = tab;
       app.dataset.ppBg = bgKeyForTab(tab);
 
-      renderObjectsForTab(tab);
-      renderFabsForTab(tab);
+      renderObjectsForTab(tab, activePantryView);
+      renderFabsForTab(tab, activePantryView);
 
       const fixedLayout = tab === "pantry" || tab === "shop";
       appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
@@ -2941,22 +3316,32 @@
       }
 
       clear(appContent);
-      appContent.appendChild(renderOverviewForTab(tab));
+      appContent.appendChild(renderOverviewForTab(tab, activePantryView));
       setSelectedNavUi(tab);
       if (tab === "pantry") {
-        requestPantryLayoutSync();
+        if (activePantryView === "spice") {
+          requestPantrySpiceLayoutSync();
+          cancelPantryLayoutSync();
+        } else {
+          requestPantryLayoutSync();
+          cancelPantrySpiceLayoutSync();
+        }
         cancelShopLayoutSync();
       } else if (tab === "shop") {
         requestShopLayoutSync();
         cancelPantryLayoutSync();
+        cancelPantrySpiceLayoutSync();
       } else {
         cancelPantryLayoutSync();
+        cancelPantrySpiceLayoutSync();
         cancelShopLayoutSync();
       }
     };
 
     const setScreen = (screenState) => {
       const tab = screenState && screenState.tab ? String(screenState.tab) : "";
+      const pantryView =
+        screenState && String(screenState.pantryView || "") === "spice" ? "spice" : "items";
       const sheetSpec = screenState && screenState.sheet ? screenState.sheet : null;
       const pageSpec = screenState && screenState.page ? screenState.page : null;
       const downloadCtaOpen = !!(screenState && screenState.downloadCtaOpen);
@@ -2966,7 +3351,7 @@
         return;
       }
 
-      setTab(tab);
+      setTab(tab, pantryView);
       if (pageSpec) {
         openPage(pageSpec);
         closeSheet();
@@ -3008,7 +3393,10 @@
     return {
       setScreen,
       syncLayout() {
-        if (activeTab === "pantry") requestPantryLayoutSync();
+        if (activeTab === "pantry") {
+          if (activePantryView === "spice") requestPantrySpiceLayoutSync();
+          else requestPantryLayoutSync();
+        }
         if (activeTab === "shop") requestShopLayoutSync();
       },
     };
@@ -3128,6 +3516,12 @@
       "assets/objects/obj_pantry_shelf.png",
       "assets/objects/obj_pantry_item_shelf.png",
       "assets/objects/obj_tan_spice.png",
+      "assets/objects/obj_spice_rack.png",
+      "assets/objects/obj_green_spice.png",
+      "assets/objects/obj_grey_spice.png",
+      "assets/objects/obj_red_spice.png",
+      "assets/objects/obj_white_spice.png",
+      "assets/objects/obj_brown_spice.png",
       "assets/objects/obj_garlic.png",
       "assets/objects/flank_steak_w_peppers.png",
       "assets/objects/obj_bowl_tomato.png",
@@ -3181,6 +3575,7 @@
     let phoneNavState = {
       route: null,
       routeOverride: null,
+      pantryView: "items",
       modal: null,
       params: null,
       downloadCtaOpen: false,
@@ -3237,14 +3632,17 @@
         phoneNavState.routeOverride ||
         phoneNavState.route ||
         (base && base.tab ? String(base.tab) : "");
+      const pantryView = tab === "pantry" && phoneNavState.pantryView === "spice" ? "spice" : "items";
+      if (tab !== "pantry") phoneNavState.pantryView = "items";
       const overlay = activeOverlayScreen();
       const downloadCtaOpen = !!phoneNavState.downloadCtaOpen;
-      if (!overlay) return { ...base, tab, downloadCtaOpen };
+      if (!overlay) return { ...base, tab, pantryView, downloadCtaOpen };
       // Keep the base route/tab; render the overlay spec inside the phone root.
       return {
         ...base,
         id: overlay.id,
         tab,
+        pantryView,
         sheet: overlay.sheet || null,
         page: overlay.page || null,
         downloadCtaOpen,
@@ -3277,6 +3675,15 @@
               activeStepIndex = idx;
               phoneNavState.routeOverride = null;
             }
+            phoneNavState.modal = null;
+            phoneNavState.params = null;
+            phoneNavState.downloadCtaOpen = false;
+            if (nextTab !== "pantry") phoneNavState.pantryView = "items";
+            break;
+          }
+          case "set_pantry_view": {
+            phoneNavState.pantryView =
+              String(action.view || "") === "spice" ? "spice" : "items";
             phoneNavState.modal = null;
             phoneNavState.params = null;
             phoneNavState.downloadCtaOpen = false;
@@ -3389,6 +3796,7 @@
           activeStepIndex = stepIndex;
           // Any scroll-driven step change closes transient modal UI so the demo stays deterministic.
           phoneNavState.routeOverride = null;
+          phoneNavState.pantryView = "items";
           phoneNavState.modal = null;
           phoneNavState.params = null;
           phoneNavState.downloadCtaOpen = false;
@@ -3404,6 +3812,7 @@
       activeStepIndex = STEPS.length > 1 ? 1 : 0; // default to Home vs splash
       stage.dataset.ppBg = STEPS[activeStepIndex].bg || "home";
       syncRouteFromBaseStep();
+      phoneNavState.pantryView = "items";
       phoneNavState.modal = null;
       phoneNavState.params = null;
       phoneNavState.downloadCtaOpen = false;

@@ -1254,9 +1254,9 @@
       topShelfSurfaceInsetPct: 0.3,
       bottomShelfSurfaceInsetPct: 0.3,
       itemNudgePct: {
-        apple: 0.95,
-        banana: 1.05,
-        avocado: 0.9,
+        apple: 1.45,
+        banana: 1.55,
+        avocado: 1.4,
       },
       labelTopOffsetFromTopShelfPct: 4.4,
       labelTopOffsetFromBottomShelfPct: 8.8,

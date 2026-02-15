@@ -1181,6 +1181,14 @@
     // Prefer object art first, then recipe card art.
     const RECIPE_THUMB_MANIFEST = new Set([
       "assets/objects/flank_steak_w_peppers.png",
+      "assets/objects/bang_bang_shrimp.png",
+      "assets/objects/chicken_avocado_wraps.png",
+      "assets/objects/chicken_tikka_masala.png",
+      "assets/objects/pico_de_gallo.png",
+      "assets/objects/salmon_in_green_sauce.png",
+      "assets/objects/skillet_tacos.png",
+      "assets/objects/spicy_avocado_chicken.png",
+      "assets/objects/vegetarian_blt.png",
       "assets/objects/obj_basil_tomato.png",
       "assets/objects/obj_bowl_basil.png",
       "assets/objects/obj_bowl_spices.png",
@@ -1197,14 +1205,14 @@
 
     // Deterministic title -> image mapping used across pantry detail, cookbook, and plan.
     const RECIPE_THUMB_OVERRIDES = Object.freeze({
-      bang_bang_shrimp: "assets/recipes/bang_bang_shrimp.png",
-      chicken_avocado_wrap_paleo: "assets/recipes/chicken_avocado_wrap_paleo.png",
-      chicken_tikka_masala: "assets/recipes/chicken_tikka_masala.png",
-      pico_de_gallo: "assets/recipes/pico_de_gallo.png",
-      salmon_in_green_chili_cream_sauce: "assets/recipes/salmon_in_green_chili_cream_sauce.png",
-      skillet_tacos: "assets/recipes/skillet_tacos.png",
-      spicy_avocado_chicken: "assets/recipes/spicy_avocado_chicken.png",
-      vegetarian_blt_with_avocado: "assets/recipes/vegetarian_blt_with_avocado.png",
+      bang_bang_shrimp: "assets/objects/bang_bang_shrimp.png",
+      chicken_avocado_wrap_paleo: "assets/objects/chicken_avocado_wraps.png",
+      chicken_tikka_masala: "assets/objects/chicken_tikka_masala.png",
+      pico_de_gallo: "assets/objects/pico_de_gallo.png",
+      salmon_in_green_chili_cream_sauce: "assets/objects/salmon_in_green_sauce.png",
+      skillet_tacos: "assets/objects/skillet_tacos.png",
+      spicy_avocado_chicken: "assets/objects/spicy_avocado_chicken.png",
+      vegetarian_blt_with_avocado: "assets/objects/vegetarian_blt.png",
       apple_cinnamon_overnight_oats: "assets/objects/obj_bowl_spices.png",
       banana_peanut_smoothie: "assets/objects/obj_bowl_basil.png",
       avocado_salsa_without_the_avocado: "assets/objects/obj_basil_tomato.png",
@@ -1284,22 +1292,22 @@
         {
           title: "Bang Bang Shrimp",
           meta: "25 min  •  4 servings",
-          image: "assets/recipes/bang_bang_shrimp.png",
+          image: "assets/objects/bang_bang_shrimp.png",
         },
         {
           title: "Chicken Tikka Masala",
           meta: "45 min  •  4 servings",
-          image: "assets/recipes/chicken_tikka_masala.png",
+          image: "assets/objects/chicken_tikka_masala.png",
         },
         {
           title: "Pico de Gallo",
           meta: "15 min  •  6 servings",
-          image: "assets/recipes/pico_de_gallo.png",
+          image: "assets/objects/pico_de_gallo.png",
         },
         {
           title: "Skillet tacos",
           meta: "20 min  •  4 servings",
-          image: "assets/recipes/skillet_tacos.png",
+          image: "assets/objects/skillet_tacos.png",
         },
       ];
       recipes.forEach((r) => {
@@ -1338,19 +1346,19 @@
       const meals = [
         {
           title: "Vegetarian BLT with Avocado",
-          image: "assets/recipes/vegetarian_blt_with_avocado.png",
+          image: "assets/objects/vegetarian_blt.png",
         },
         {
           title: "Chicken Avocado Wrap - Paleo",
-          image: "assets/recipes/chicken_avocado_wrap_paleo.png",
+          image: "assets/objects/chicken_avocado_wraps.png",
         },
         {
           title: "Salmon in Green Chili Cream Sauce",
-          image: "assets/recipes/salmon_in_green_chili_cream_sauce.png",
+          image: "assets/objects/salmon_in_green_sauce.png",
         },
         {
           title: "Spicy Avocado Chicken",
-          image: "assets/recipes/spicy_avocado_chicken.png",
+          image: "assets/objects/spicy_avocado_chicken.png",
         },
       ];
       dayNames.forEach((day, idx) => {
@@ -3596,6 +3604,14 @@
       "assets/objects/obj_red_spice.png",
       "assets/objects/obj_white_spice.png",
       "assets/objects/obj_brown_spice.png",
+      "assets/objects/bang_bang_shrimp.png",
+      "assets/objects/chicken_avocado_wraps.png",
+      "assets/objects/chicken_tikka_masala.png",
+      "assets/objects/pico_de_gallo.png",
+      "assets/objects/salmon_in_green_sauce.png",
+      "assets/objects/skillet_tacos.png",
+      "assets/objects/spicy_avocado_chicken.png",
+      "assets/objects/vegetarian_blt.png",
       "assets/objects/obj_garlic.png",
       "assets/objects/flank_steak_w_peppers.png",
       "assets/objects/obj_bowl_tomato.png",

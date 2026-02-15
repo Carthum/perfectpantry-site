@@ -938,11 +938,17 @@
       const root = el("div", "pp-screen pp-screen-pantry");
 
       const topRow = el("div", "pp-top-row");
-      topRow.appendChild(buildPill({ label: "List", className: "pp-app-pill--title", leftIcon: "menu" }));
+      topRow.appendChild(
+        buildPill({
+          label: "List",
+          className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
+          leftIcon: "menu",
+        }),
+      );
       topRow.appendChild(
         buildPill({
           label: "All Items (8)",
-          className: "pp-app-pill--title",
+          className: "pp-app-pill--title pp-top-pill pp-top-pill--main",
           rightIcon: "chevron_down",
         }),
       );
@@ -1169,12 +1175,21 @@
       return root;
     };
 
-	    const renderShop = () => {
-	      const root = el("div", "pp-screen pp-screen-shop");
+		    const renderShop = () => {
+		      const root = el("div", "pp-screen pp-screen-shop");
 
-	      const topRow = el("div", "pp-top-row");
-      topRow.appendChild(buildPill({ label: "List", className: "pp-app-pill--title", leftIcon: "menu" }));
-      const shoppingBtn = buildPill({ label: "Shopping", className: "pp-app-pill--title" });
+		      const topRow = el("div", "pp-top-row");
+      topRow.appendChild(
+        buildPill({
+          label: "List",
+          className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
+          leftIcon: "menu",
+        }),
+      );
+      const shoppingBtn = buildPill({
+        label: "Shopping",
+        className: "pp-app-pill--title pp-top-pill pp-top-pill--main",
+      });
       if (typeof onAction === "function") {
         shoppingBtn.addEventListener("click", () => onAction(actionSetPhoneModal("shopBulkPicker")));
       }

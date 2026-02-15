@@ -785,8 +785,8 @@ html.pp-tour-locked body {
 
 .pp-top-row {
   display: grid;
-  grid-template-columns: 124px 1fr 54px;
-  gap: 12px;
+  grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(40px, 48px);
+  gap: 8px;
   align-items: center;
 }
 
@@ -796,6 +796,42 @@ html.pp-tour-locked body {
 
 .pp-top-row .pp-app-pill {
   width: 100%;
+  min-height: clamp(44px, 4.9vw, 50px);
+  padding: 0 clamp(10px, 1.1vw, 14px);
+}
+
+.pp-top-row .pp-top-pill {
+  font-size: clamp(13px, 1.25vw, 16px);
+  letter-spacing: -0.015em;
+}
+
+.pp-top-row .pp-top-pill > span {
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.pp-top-row .pp-top-pill--list {
+  font-size: clamp(12.5px, 1.15vw, 15px);
+  padding: 0 clamp(8px, 0.95vw, 12px);
+}
+
+.pp-top-row .pp-top-pill--main {
+  padding: 0 clamp(12px, 1.3vw, 18px);
+}
+
+.pp-top-row .pp-top-pill svg {
+  width: clamp(15px, 1.3vw, 18px);
+  height: clamp(15px, 1.3vw, 18px);
+}
+
+.pp-top-row .pp-app-circle {
+  width: clamp(44px, 4.9vw, 50px);
+  height: clamp(44px, 4.9vw, 50px);
+}
+
+.pp-top-row .pp-app-circle svg {
+  width: clamp(18px, 2vw, 21px);
+  height: clamp(18px, 2vw, 21px);
 }
 
 .pp-chip-wrap {

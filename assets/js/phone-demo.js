@@ -1195,8 +1195,16 @@
       "assets/recipes/vegetarian_blt_with_avocado.png",
     ]);
 
-    // Pantry-detail sample recipes map to available object art.
+    // Deterministic title -> image mapping used across pantry detail, cookbook, and plan.
     const RECIPE_THUMB_OVERRIDES = Object.freeze({
+      bang_bang_shrimp: "assets/recipes/bang_bang_shrimp.png",
+      chicken_avocado_wrap_paleo: "assets/recipes/chicken_avocado_wrap_paleo.png",
+      chicken_tikka_masala: "assets/recipes/chicken_tikka_masala.png",
+      pico_de_gallo: "assets/recipes/pico_de_gallo.png",
+      salmon_in_green_chili_cream_sauce: "assets/recipes/salmon_in_green_chili_cream_sauce.png",
+      skillet_tacos: "assets/recipes/skillet_tacos.png",
+      spicy_avocado_chicken: "assets/recipes/spicy_avocado_chicken.png",
+      vegetarian_blt_with_avocado: "assets/recipes/vegetarian_blt_with_avocado.png",
       apple_cinnamon_overnight_oats: "assets/objects/obj_bowl_spices.png",
       banana_peanut_smoothie: "assets/objects/obj_bowl_basil.png",
       avocado_salsa_without_the_avocado: "assets/objects/obj_basil_tomato.png",

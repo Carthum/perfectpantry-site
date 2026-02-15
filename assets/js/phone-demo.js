@@ -1478,7 +1478,7 @@
       itemsWrap.appendChild(imgEl({ src: "assets/objects/obj_white_spice.png", className: "pp-shop-item pp-shop-item--salt", alt: "" }));
       itemsWrap.appendChild(imgEl({ src: "assets/ingredients/olive_oil.png", className: "pp-shop-item pp-shop-item--oliveoil", alt: "" }));
       itemsWrap.appendChild(imgEl({ src: "assets/ingredients/white_onion.png", className: "pp-shop-item pp-shop-item--onion", alt: "" }));
-      itemsWrap.appendChild(el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Household 2"));
+      itemsWrap.appendChild(el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Household"));
       itemsWrap.appendChild(
         imgEl({
           src: "assets/objects/dishwashing_detergent.png",
@@ -1553,9 +1553,10 @@
     });
 
     const SHOP_LAYOUT = Object.freeze({
-      topRowTopPct: 6,
-      bottomRowTopOffsetFromBarPct: -36,
-      householdRowTopOffsetFromBarPct: -20,
+      topRowTopPct: 8,
+      bottomRowTopPct: 30,
+      householdChipTopPct: 54,
+      householdRowTopPct: 63,
       topRow: ["garlic", "jalapeno", "salt"],
       bottomRow: ["oliveoil", "onion"],
       householdRow: ["dishdetergent", "trashbags"],
@@ -1579,8 +1580,8 @@
         salt: 1,
         oliveoil: 1.55,
         onion: 0.76,
-        dishdetergent: 0.94,
-        trashbags: 0.94,
+        dishdetergent: 0.9,
+        trashbags: 0.9,
       },
       rowItemGapPx: 10,
       rowSidePadPx: 8,
@@ -1593,7 +1594,7 @@
         dishdetergent: { widthRatio: 0.34, minPx: 118, maxPx: 176, gapPx: 9 },
         trashbags: { widthRatio: 0.31, minPx: 108, maxPx: 156, gapPx: 9 },
       },
-      labelBarClearancePx: 12,
+      labelBarClearancePx: 16,
     });
 
     const SPICE_LAYOUT = Object.freeze({
@@ -2074,8 +2075,8 @@
         const topPct = topRowSet.has(key)
           ? SHOP_LAYOUT.topRowTopPct
           : householdRowSet.has(key)
-            ? barTopPct + SHOP_LAYOUT.householdRowTopOffsetFromBarPct
-            : barTopPct + SHOP_LAYOUT.bottomRowTopOffsetFromBarPct;
+            ? SHOP_LAYOUT.householdRowTopPct
+            : SHOP_LAYOUT.bottomRowTopPct;
 
         node.style.width = `${Math.round(metrics.widthPx)}px`;
         node.style.left = `${(centerPx / stageRect.width) * 100}%`;
@@ -2113,11 +2114,7 @@
 
       const householdChip = itemsWrap.querySelector(".pp-shop-section-chip--household");
       if (householdChip) {
-        const chipTopPct =
-          barTopPct +
-          SHOP_LAYOUT.householdRowTopOffsetFromBarPct -
-          pxToStagePct((householdChip.offsetHeight || 36) + 14);
-        householdChip.style.top = `${clamp(chipTopPct, 0, 90)}%`;
+        householdChip.style.top = `${clamp(SHOP_LAYOUT.householdChipTopPct, 0, 90)}%`;
       }
 
       if (pendingImageLoad) requestShopLayoutSync();
@@ -3528,7 +3525,7 @@
       renderObjectsForTab(tab, activePantryView);
       renderFabsForTab(tab, activePantryView);
 
-      const fixedLayout = tab === "pantry" || tab === "shop";
+      const fixedLayout = tab === "pantry";
       appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
       if (tab !== lastUiTab) {
         appContent.scrollTop = 0;

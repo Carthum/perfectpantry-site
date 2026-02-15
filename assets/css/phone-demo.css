@@ -1980,9 +1980,11 @@ html.pp-tour-locked body {
 
 .pp-shop-stage {
   position: relative;
-  height: 100%;
+  height: auto;
   min-height: 0;
+  min-height: 860px;
   padding-top: 6px;
+  padding-bottom: 102px;
 }
 
 .pp-shop-hero {
@@ -2050,6 +2052,7 @@ html.pp-tour-locked body {
   font-weight: 820;
   color: rgba(58, 42, 26, 0.84);
   white-space: nowrap;
+  text-align: center;
 }
 
 .pp-shop-section-chip--household {
@@ -2127,6 +2130,8 @@ html.pp-tour-locked body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  line-height: 1.08;
   font-family: var(--font-display);
   font-size: var(--pp-type-body-md);
   font-weight: 790;

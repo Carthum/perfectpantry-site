@@ -1554,9 +1554,9 @@
 
     const SHOP_LAYOUT = Object.freeze({
       topRowTopPct: 8,
-      bottomRowTopPct: 30,
-      householdChipTopPct: 54,
-      householdRowTopPct: 63,
+      bottomRowTopPct: 24,
+      householdChipTopPct: 64,
+      householdRowTopPct: 72,
       topRow: ["garlic", "jalapeno", "salt"],
       bottomRow: ["oliveoil", "onion"],
       householdRow: ["dishdetergent", "trashbags"],
@@ -1585,14 +1585,15 @@
       },
       rowItemGapPx: 10,
       rowSidePadPx: 8,
+      labelGapPx: 10,
       label: {
-        garlic: { widthRatio: 0.28, minPx: 88, maxPx: 118, gapPx: 9 },
-        jalapeno: { widthRatio: 0.3, minPx: 94, maxPx: 126, gapPx: 9 },
-        salt: { widthRatio: 0.3, minPx: 96, maxPx: 130, gapPx: 9 },
-        oliveoil: { widthRatio: 0.31, minPx: 98, maxPx: 136, gapPx: 10 },
-        onion: { widthRatio: 0.36, minPx: 114, maxPx: 164, gapPx: 11 },
-        dishdetergent: { widthRatio: 0.34, minPx: 118, maxPx: 176, gapPx: 9 },
-        trashbags: { widthRatio: 0.31, minPx: 108, maxPx: 156, gapPx: 9 },
+        garlic: { widthRatio: 0.28, minPx: 88, maxPx: 118 },
+        jalapeno: { widthRatio: 0.3, minPx: 94, maxPx: 126 },
+        salt: { widthRatio: 0.3, minPx: 96, maxPx: 130 },
+        oliveoil: { widthRatio: 0.31, minPx: 98, maxPx: 136 },
+        onion: { widthRatio: 0.36, minPx: 114, maxPx: 164 },
+        dishdetergent: { widthRatio: 0.34, minPx: 118, maxPx: 176 },
+        trashbags: { widthRatio: 0.31, minPx: 108, maxPx: 156 },
       },
       labelBarClearancePx: 16,
     });
@@ -2103,8 +2104,13 @@
         labelNode.style.transform = "translateX(-50%)";
 
         const itemRect = itemNode.getBoundingClientRect();
-        const itemBottomPct = ((itemRect.bottom - stageRect.top) / stageRect.height) * 100;
-        const gapPct = pxToStagePct(labelSpec.gapPx);
+        const hasNaturalSize = itemNode.naturalWidth > 0 && itemNode.naturalHeight > 0;
+        if (!hasNaturalSize && !itemNode.complete) pendingImageLoad = true;
+        const alphaInsets = hasNaturalSize ? readImageAlphaInsets(itemNode) : EMPTY_ALPHA_INSETS;
+        const visualBottomPx =
+          itemRect.bottom - stageRect.top - itemRect.height * (alphaInsets.bottom || 0);
+        const itemBottomPct = (visualBottomPx / stageRect.height) * 100;
+        const gapPct = pxToStagePct(SHOP_LAYOUT.labelGapPx);
         const labelHeightPct = pxToStagePct(labelNode.offsetHeight || 42);
         const maxTopPct =
           barTopPct - labelHeightPct - pxToStagePct(SHOP_LAYOUT.labelBarClearancePx);

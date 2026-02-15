@@ -1154,6 +1154,7 @@
             label.type = "button";
             label.className =
               item && item.inStock ? "pp-spice-label" : "pp-spice-label is-unavailable";
+            label.dataset.downloadCta = "true";
             label.dataset.spiceItem = String((item && item.id) || "");
             label.appendChild(el("span", "pp-spice-label-text", (item && item.label) || ""));
             const chevron = iconEl("chevron_down");

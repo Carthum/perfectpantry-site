@@ -2000,11 +2000,10 @@ html.pp-tour-locked body {
 
 .pp-shop-stage {
   position: relative;
-  height: auto;
+  height: 100%;
   min-height: 0;
-  min-height: 640px;
-  padding-top: 6px;
-  padding-bottom: 70px;
+  padding-top: 4px;
+  padding-bottom: 8px;
 }
 
 .pp-shop-hero {
@@ -2052,6 +2051,7 @@ html.pp-tour-locked body {
 .pp-shop-items {
   position: relative;
   height: 100%;
+  min-height: 0;
 }
 
 .pp-shop-section-chip {
@@ -2208,7 +2208,7 @@ html.pp-tour-locked body {
   position: absolute;
   left: 14px;
   right: 14px;
-  bottom: 22px;
+  bottom: 14px;
   z-index: 3;
   display: grid;
   grid-template-columns: 54px 1fr 54px;
@@ -2217,7 +2217,7 @@ html.pp-tour-locked body {
 }
 
 .pp-shop-bar .pp-app-pill {
-  min-height: 54px;
+  min-height: 52px;
   font-size: var(--pp-type-display-md);
   font-family: var(--font-display);
   font-weight: 790;
@@ -2431,8 +2431,8 @@ html.pp-tour-locked body {
 
 .pp-app-seg {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-auto-flow: row;
   gap: 10px;
   padding: 10px;
   border-radius: 999px;
@@ -2452,6 +2452,10 @@ html.pp-tour-locked body {
   font-weight: 900;
   color: rgba(58, 42, 26, 0.92);
   cursor: pointer;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pp-app-seg-btn[aria-selected="true"] {
@@ -2469,6 +2473,7 @@ html.pp-tour-locked body {
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(255, 255, 255, 0.42);
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.12);
+  min-width: 0;
 }
 
 .pp-app-field svg {
@@ -2489,6 +2494,7 @@ html.pp-tour-locked body {
   font-weight: 800;
   color: rgba(58, 42, 26, 0.86);
   outline: none;
+  min-width: 0;
 }
 
 .pp-app-field textarea {
@@ -2526,10 +2532,18 @@ html.pp-tour-locked body {
   align-items: center;
 }
 
+.pp-app-sheet-row > * {
+  min-width: 0;
+}
+
 .pp-app-sheet-grid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+.pp-app-sheet-grid2 > * {
+  min-width: 0;
 }
 
 .pp-app-sheet-pill {

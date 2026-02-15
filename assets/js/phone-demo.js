@@ -1553,10 +1553,10 @@
     });
 
     const SHOP_LAYOUT = Object.freeze({
-      topRowTopPct: 12,
-      bottomRowTopPct: 32,
-      householdChipTopPct: 58,
-      householdRowTopPct: 66,
+      topRowTopPct: 8,
+      bottomRowTopPct: 26,
+      householdChipTopPct: 46,
+      householdRowTopPct: 52,
       topRow: ["garlic", "jalapeno", "salt"],
       bottomRow: ["oliveoil", "onion"],
       householdRow: ["dishdetergent", "trashbags"],
@@ -1585,7 +1585,7 @@
       },
       rowItemGapPx: 10,
       rowSidePadPx: 8,
-      labelGapPx: 8,
+      labelGapPx: 7,
       label: {
         garlic: { widthRatio: 0.28, minPx: 88, maxPx: 118 },
         jalapeno: { widthRatio: 0.3, minPx: 94, maxPx: 126 },
@@ -1595,7 +1595,7 @@
         dishdetergent: { widthRatio: 0.34, minPx: 118, maxPx: 176 },
         trashbags: { widthRatio: 0.31, minPx: 108, maxPx: 156 },
       },
-      labelBarClearancePx: 14,
+      labelBarClearancePx: 10,
     });
 
     const SPICE_LAYOUT = Object.freeze({
@@ -3468,6 +3468,11 @@
             ? buildCookViewPage()
             : el("div", "pp-page", "Preview only.");
       page.appendChild(node);
+      const pageScroll = node.querySelector(".pp-page-scroll");
+      if (pageScroll) {
+        pageScroll.scrollTop = 0;
+        pageScroll.scrollLeft = 0;
+      }
       page.dataset.ppKind = kind;
       isPageOpen = true;
       page.classList.add("is-open");
@@ -3482,6 +3487,8 @@
       sheetTitle.textContent = String(sheetSpec.title || "Preview");
       const { bodyNodes, footerNodes } = renderSheetContent(sheetSpec);
       sheetBody.replaceChildren(...(bodyNodes || []));
+      sheetBody.scrollTop = 0;
+      sheetBody.scrollLeft = 0;
       sheetFooter.replaceChildren(...(footerNodes || []));
       sheetFooter.hidden = !(footerNodes && footerNodes.length);
       isSheetOpen = true;
@@ -3513,7 +3520,17 @@
       const nextPantryView =
         tab === "pantry" && String(pantryView || "") === "spice" ? "spice" : "items";
       const isSamePantryView = tab === "pantry" ? activePantryView === nextPantryView : true;
-      if (tab === activeTab && isSamePantryView) return;
+      if (tab === activeTab && isSamePantryView) {
+        appContent.scrollTop = 0;
+        appContent.scrollLeft = 0;
+        if (tab === "pantry") {
+          if (activePantryView === "spice") requestPantrySpiceLayoutSync();
+          else requestPantryLayoutSync();
+        } else if (tab === "shop") {
+          requestShopLayoutSync();
+        }
+        return;
+      }
 
       activeTab = tab;
       activePantryView = tab === "pantry" ? nextPantryView : "items";
@@ -3526,7 +3543,7 @@
       renderObjectsForTab(tab, activePantryView);
       renderFabsForTab(tab, activePantryView);
 
-      const fixedLayout = tab === "pantry";
+      const fixedLayout = tab === "pantry" || tab === "shop";
       appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
       if (tab !== lastUiTab) {
         appContent.scrollTop = 0;

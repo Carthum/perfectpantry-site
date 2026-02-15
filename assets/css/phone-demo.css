@@ -474,6 +474,13 @@ html.pp-tour-locked body {
   grid-template-rows: 1fr 88px;
   color: var(--pp-app-ink);
   font-family: var(--font-body);
+  /* Unified in-phone type scale across Home, Pantry, Cookbook, Plan, and Shop. */
+  --pp-type-display-xl: clamp(18px, calc(var(--pp-phone-demo-w, 360px) * 0.052), 21px);
+  --pp-type-display-lg: clamp(16px, calc(var(--pp-phone-demo-w, 360px) * 0.047), 18px);
+  --pp-type-display-md: clamp(14px, calc(var(--pp-phone-demo-w, 360px) * 0.042), 16px);
+  --pp-type-body-md: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.036), 13.5px);
+  --pp-type-body-sm: clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.032), 12px);
+  --pp-type-caption: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 11px);
 }
 
 .pp-app[aria-hidden="true"] {
@@ -663,14 +670,14 @@ html.pp-tour-locked body {
 .pp-app-card-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 850;
+  font-size: var(--pp-type-display-xl);
+  font-weight: 820;
   letter-spacing: -0.02em;
 }
 
 .pp-app-card-kicker {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--pp-type-caption);
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -679,7 +686,7 @@ html.pp-tour-locked body {
 
 .pp-app-card-sub {
   margin: 6px 0 0;
-  font-size: 13px;
+  font-size: var(--pp-type-body-sm);
   font-weight: 650;
   color: rgba(58, 42, 26, 0.7);
 }
@@ -690,7 +697,7 @@ html.pp-tour-locked body {
   align-items: baseline;
   justify-content: space-between;
   gap: 10px;
-  font-size: 13px;
+  font-size: var(--pp-type-body-sm);
 }
 
 .pp-app-divider {
@@ -713,8 +720,8 @@ html.pp-tour-locked body {
   background: rgba(244, 231, 214, 0.92);
   color: var(--pp-app-ink);
   font: inherit;
-  font-weight: 800;
-  font-size: 15px;
+  font-weight: 760;
+  font-size: var(--pp-type-body-md);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -756,8 +763,8 @@ html.pp-tour-locked body {
 
 .pp-app-pill--title {
   font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 820;
+  font-size: var(--pp-type-display-md);
+  font-weight: 780;
   letter-spacing: -0.02em;
 }
 
@@ -782,7 +789,7 @@ html.pp-tour-locked body {
 }
 
 .pp-home-cta-row .pp-app-pill--title {
-  font-size: 17px;
+  font-size: var(--pp-type-display-md);
   letter-spacing: -0.01em;
 }
 
@@ -809,7 +816,7 @@ html.pp-tour-locked body {
 }
 
 .pp-top-row .pp-top-pill {
-  font-size: clamp(13px, 1.25vw, 16px);
+  font-size: var(--pp-type-display-md);
   letter-spacing: -0.015em;
 }
 
@@ -819,7 +826,7 @@ html.pp-tour-locked body {
 }
 
 .pp-top-row .pp-top-pill--list {
-  font-size: clamp(12.5px, 1.15vw, 15px);
+  font-size: var(--pp-type-body-md);
   padding: 0 clamp(8px, 0.95vw, 12px);
 }
 
@@ -837,12 +844,12 @@ html.pp-tour-locked body {
 }
 
 .pp-top-row--spice .pp-top-pill--list {
-  font-size: clamp(12px, 1.05vw, 14px);
+  font-size: var(--pp-type-body-sm);
   padding: 0 clamp(9px, 0.95vw, 12px);
 }
 
 .pp-top-row--spice .pp-top-pill--main {
-  font-size: clamp(13px, 1.18vw, 15px);
+  font-size: var(--pp-type-body-md);
   letter-spacing: -0.012em;
   padding: 0 clamp(13px, 1.35vw, 18px);
 }
@@ -903,7 +910,7 @@ html.pp-tour-locked body {
   border-radius: 999px;
   background: rgba(233, 214, 191, 0.9);
   border: 1px solid rgba(74, 47, 27, 0.14);
-  font-size: 13px;
+  font-size: var(--pp-type-body-sm);
   font-weight: 800;
   color: rgba(74, 47, 27, 0.88);
 }
@@ -989,13 +996,13 @@ html.pp-tour-locked body {
 
 .pp-app-recipe-title {
   margin: 0;
-  font-size: 14px;
-  font-weight: 900;
+  font-size: var(--pp-type-body-md);
+  font-weight: 860;
 }
 
 .pp-app-recipe-meta {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--pp-type-body-sm);
   font-weight: 700;
   color: rgba(106, 86, 66, 0.85);
 }
@@ -1058,7 +1065,7 @@ html.pp-tour-locked body {
 }
 
 .pp-app-nav-label {
-  font-size: 11px;
+  font-size: var(--pp-type-caption);
   font-weight: 800;
   line-height: 1;
   max-width: 100%;
@@ -1185,8 +1192,8 @@ html.pp-tour-locked body {
 .pp-home-action-label {
   text-align: center;
   font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 780;
+  font-size: var(--pp-type-display-md);
+  font-weight: 760;
   line-height: 1.05;
   color: rgba(58, 42, 26, 0.92);
 }
@@ -1210,8 +1217,8 @@ html.pp-tour-locked body {
 .pp-plan-week-pill {
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 800;
+  font-size: var(--pp-type-display-lg);
+  font-weight: 780;
   letter-spacing: -0.02em;
 }
 
@@ -1248,14 +1255,14 @@ html.pp-tour-locked body {
 .pp-meal-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 820;
+  font-size: var(--pp-type-display-md);
+  font-weight: 800;
   line-height: 1.05;
 }
 
 .pp-meal-sub {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--pp-type-body-sm);
   font-weight: 650;
   color: rgba(58, 42, 26, 0.72);
 }
@@ -1267,7 +1274,7 @@ html.pp-tour-locked body {
 
 .pp-meal-actions .pp-app-pill {
   min-height: 48px;
-  font-size: 14px;
+  font-size: var(--pp-type-body-sm);
   padding: 0 14px;
   box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
 }
@@ -1293,7 +1300,7 @@ html.pp-tour-locked body {
   justify-content: flex-start;
   gap: 12px;
   font: inherit;
-  font-size: 14px;
+  font-size: var(--pp-type-body-md);
   font-weight: 720;
   letter-spacing: 0.01em;
   color: rgba(58, 42, 26, 0.78);
@@ -1550,13 +1557,13 @@ html.pp-tour-locked body {
 
 .pp-pantry-label strong {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: var(--pp-type-body-md);
   letter-spacing: -0.01em;
 }
 
 .pp-pantry-label span {
   margin-top: 2px;
-  font-size: 11px;
+  font-size: var(--pp-type-caption);
   font-weight: 750;
   color: rgba(58, 42, 26, 0.72);
 }
@@ -1621,8 +1628,8 @@ html.pp-tour-locked body {
 
 .pp-spice-section-chip-label {
   font-family: var(--font-display);
-  font-size: clamp(16px, 1.5vw, 22px);
-  font-weight: 860;
+  font-size: var(--pp-type-display-md);
+  font-weight: 820;
   letter-spacing: -0.012em;
   color: rgba(58, 42, 26, 0.92);
 }
@@ -1637,8 +1644,8 @@ html.pp-tour-locked body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: clamp(16px, 1.5vw, 22px);
-  font-weight: 860;
+  font-size: var(--pp-type-display-md);
+  font-weight: 820;
   letter-spacing: -0.01em;
   color: rgba(58, 42, 26, 0.84);
 }
@@ -1701,8 +1708,8 @@ html.pp-tour-locked body {
   padding: 6px 14px 7px;
   font: inherit;
   font-family: var(--font-display);
-  font-size: clamp(13px, 1.2vw, 17px);
-  font-weight: 840;
+  font-size: var(--pp-type-body-md);
+  font-weight: 810;
   letter-spacing: -0.012em;
   line-height: 1.03;
   color: rgba(58, 42, 26, 0.9);
@@ -1984,7 +1991,7 @@ html.pp-tour-locked body {
 
 .pp-shop-prefs-sub {
   margin: 4px 0 0;
-  font-size: 12.5px;
+  font-size: var(--pp-type-body-sm);
   font-weight: 720;
   color: rgba(58, 42, 26, 0.72);
 }
@@ -1998,7 +2005,7 @@ html.pp-tour-locked body {
 
 .pp-shop-prefs .pp-app-chip {
   padding: 7px 12px;
-  font-size: 12px;
+  font-size: var(--pp-type-caption);
 }
 
 .pp-shop-recipe-pill {
@@ -2069,8 +2076,8 @@ html.pp-tour-locked body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 820;
+  font-size: var(--pp-type-body-md);
+  font-weight: 790;
   color: rgba(58, 42, 26, 0.88);
 }
 
@@ -2120,9 +2127,9 @@ html.pp-tour-locked body {
 
 .pp-shop-bar .pp-app-pill {
   min-height: 54px;
-  font-size: 18px;
+  font-size: var(--pp-type-display-md);
   font-family: var(--font-display);
-  font-weight: 820;
+  font-weight: 790;
   letter-spacing: -0.01em;
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.18);
 }

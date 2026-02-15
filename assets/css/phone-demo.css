@@ -1272,50 +1272,50 @@ html.pp-tour-locked body {
   box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
 }
 
-.pp-cookbook-hud {
-  display: grid;
-  gap: 12px;
-  padding-top: 10px;
-}
-
-.pp-cookbook-row {
+.pp-cookbook-topline {
   display: grid;
   grid-template-columns: 1fr 54px;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
+  padding-top: 8px;
 }
 
-.pp-cookbook-row--filters {
-  grid-template-columns: 54px 1fr;
-}
-
-.pp-cookbook-chips {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 12px;
-  overflow: hidden;
-  padding-bottom: 2px;
-}
-
-.pp-cookbook-chip {
-  min-height: 46px;
-  padding: 0 18px;
+.pp-cookbook-searchbar {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 16px;
   border-radius: 999px;
-  border: 1px solid rgba(58, 42, 26, 0.18);
-  background: rgba(244, 231, 214, 0.92);
-  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(58, 42, 26, 0.16);
+  background: rgba(244, 231, 214, 0.9);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.13);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
   font: inherit;
-  font-weight: 850;
-  font-size: 16px;
-  color: rgba(58, 42, 26, 0.82);
+  font-size: 14px;
+  font-weight: 720;
+  letter-spacing: 0.01em;
+  color: rgba(58, 42, 26, 0.78);
   cursor: pointer;
-  white-space: nowrap;
 }
 
-.pp-cookbook-chip.is-selected {
-  background: rgba(74, 47, 27, 0.92);
-  border-color: rgba(74, 47, 27, 0.92);
-  color: var(--pp-app-parchment);
+.pp-cookbook-searchbar svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(58, 42, 26, 0.78);
+  flex: 0 0 auto;
+}
+
+.pp-cookbook-searchbar > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pp-cookbook-menu-btn {
+  width: 54px;
+  height: 54px;
 }
 
 .pp-recipe-overlays {

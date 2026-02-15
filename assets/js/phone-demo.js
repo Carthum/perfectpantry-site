@@ -1259,35 +1259,24 @@
     const renderCookbook = () => {
       const root = el("div", "pp-screen pp-screen-cookbook");
 
-      const hud = el("div", "pp-cookbook-hud");
+      const topLine = el("div", "pp-cookbook-topline");
+      const searchBar = document.createElement("button");
+      searchBar.type = "button";
+      searchBar.className = "pp-cookbook-searchbar";
+      searchBar.setAttribute("aria-label", "Search cookbook (preview)");
+      searchBar.dataset.downloadCta = "true";
+      const searchIcon = iconEl("search");
+      if (searchIcon) searchBar.appendChild(searchIcon);
+      searchBar.appendChild(el("span", "", "Search cookbook"));
+      topLine.appendChild(searchBar);
 
-      const row = el("div", "pp-cookbook-row");
-      row.appendChild(buildPill({ label: "Cookbook", className: "pp-app-pill--title", rightIcon: "chevron_down" }));
-      const searchBtn = buildCircle({
-        icon: "search",
-        className: "pp-app-circle--muted",
-        ariaLabel: "Search (preview)",
+      const menuBtn = buildCircle({
+        icon: "menu",
+        className: "pp-app-circle--muted pp-cookbook-menu-btn",
+        ariaLabel: "Cookbook menu (preview)",
       });
-      searchBtn.dataset.downloadCta = "true";
-      row.appendChild(searchBtn);
-      hud.appendChild(row);
-
-      const filterRow = el("div", "pp-cookbook-row pp-cookbook-row--filters");
-      filterRow.appendChild(buildCircle({ icon: "swap", className: "pp-app-circle--muted", ariaLabel: "Swap (preview)" }));
-      filterRow.appendChild(buildPill({ label: "Main Dish", className: "pp-app-pill--title", rightIcon: "chevron_down" }));
-      hud.appendChild(filterRow);
-
-      const chips = el("div", "pp-cookbook-chips");
-      ["All", "Burgers", "Casseroles", "Deep Fried"].forEach((labelText, idx) => {
-        const chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = idx === 0 ? "pp-cookbook-chip is-selected" : "pp-cookbook-chip";
-        chip.textContent = labelText;
-        chips.appendChild(chip);
-      });
-      hud.appendChild(chips);
-
-      root.appendChild(hud);
+      topLine.appendChild(menuBtn);
+      root.appendChild(topLine);
 
       const grid = el("div", "pp-app-grid");
       const recipes = [
@@ -1310,6 +1299,21 @@
           title: "Skillet tacos",
           meta: "20 min  •  4 servings",
           image: "assets/objects/skillet_tacos.png",
+        },
+        {
+          title: "Apple Cinnamon Overnight Oats",
+          meta: "10 min  •  2 servings",
+          image: "assets/objects/apple_cinnamon_overnight_oats.png",
+        },
+        {
+          title: "Banana Peanut Smoothie",
+          meta: "5 min  •  1 serving",
+          image: "assets/objects/banana_peanut_smoothie.png",
+        },
+        {
+          title: "Avocado Salsa (without the avocado)",
+          meta: "12 min  •  4 servings",
+          image: "assets/objects/pico_de_gallo.png",
         },
       ];
       recipes.forEach((r) => {

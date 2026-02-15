@@ -875,7 +875,7 @@
       }
 
       if (tab === "shop") {
-        addFabSvg({ cls: "pp-app-fab--plus", icon: "plus", ariaLabel: "Add item (preview)" });
+        // Shop uses the bottom bar add button as the single add-item CTA.
       }
     };
 
@@ -1466,33 +1466,41 @@
 	      topRow.appendChild(searchBtn);
 	      root.appendChild(topRow);
 
-	      const hero = el("div", "pp-shop-hero");
-	      hero.appendChild(buildPill({ label: "Tomatillo Salsa Verde", className: "pp-app-pill--title pp-shop-recipe-pill" }));
-	      const prefs = el("div", "pp-shop-prefs");
-	      prefs.appendChild(el("p", "pp-app-card-kicker", "Preferences"));
-	      prefs.appendChild(el("p", "pp-shop-prefs-sub", "Example household defaults:"));
-	      const prefsChips = el("div", "pp-shop-prefs-chips");
-	      ["Gluten-free", "Dairy-free", "Nut-free", "No cilantro"].forEach((label) => {
-	        prefsChips.appendChild(el("span", "pp-app-chip", label));
-	      });
-	      prefs.appendChild(prefsChips);
-	      hero.appendChild(prefs);
-	      root.appendChild(hero);
+      const hero = el("div", "pp-shop-hero");
+      hero.appendChild(buildPill({ label: "Tomatillo Salsa Verde", className: "pp-app-pill--title pp-shop-recipe-pill" }));
+      root.appendChild(hero);
 
 	      const stageNode = el("div", "pp-shop-stage");
 	      const itemsWrap = el("div", "pp-shop-items");
 
       itemsWrap.appendChild(imgEl({ src: "assets/objects/obj_garlic.png", className: "pp-shop-item pp-shop-item--garlic", alt: "" }));
       itemsWrap.appendChild(imgEl({ src: "assets/ingredients/jalapeno.png", className: "pp-shop-item pp-shop-item--jalapeno", alt: "" }));
-      itemsWrap.appendChild(imgEl({ src: "assets/objects/obj_tan_spice.png", className: "pp-shop-item pp-shop-item--salt", alt: "" }));
+      itemsWrap.appendChild(imgEl({ src: "assets/objects/obj_white_spice.png", className: "pp-shop-item pp-shop-item--salt", alt: "" }));
       itemsWrap.appendChild(imgEl({ src: "assets/ingredients/olive_oil.png", className: "pp-shop-item pp-shop-item--oliveoil", alt: "" }));
       itemsWrap.appendChild(imgEl({ src: "assets/ingredients/white_onion.png", className: "pp-shop-item pp-shop-item--onion", alt: "" }));
+      itemsWrap.appendChild(el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Household 2"));
+      itemsWrap.appendChild(
+        imgEl({
+          src: "assets/objects/dishwashing_detergent.png",
+          className: "pp-shop-item pp-shop-item--dishdetergent",
+          alt: "",
+        }),
+      );
+      itemsWrap.appendChild(
+        imgEl({
+          src: "assets/objects/trash_bag_black.png",
+          className: "pp-shop-item pp-shop-item--trashbags",
+          alt: "",
+        }),
+      );
 
       itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--garlic", "Garlic"));
       itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--jalapeno", "Jalapeno"));
       itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--salt", "Kosher Salt"));
       itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--oliveoil", "Olive oil"));
       itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--onion", "White Onion"));
+      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--dishdetergent", "Dishwashing detergent"));
+      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--trashbags", "Trash bags"));
 
       stageNode.appendChild(itemsWrap);
 
@@ -1501,7 +1509,11 @@
       const complete = buildPill({ label: "Complete shopping", className: "pp-app-pill--wide" });
       complete.dataset.downloadCta = "true";
       bar.appendChild(complete);
-      bar.appendChild(buildCircle({ icon: "plus", ariaLabel: "Add item (preview)" }));
+      const addBtn = buildCircle({ icon: "plus", ariaLabel: "Add item (preview)" });
+      if (typeof onAction === "function") {
+        addBtn.addEventListener("click", () => onAction(actionSetPhoneModal("shopBulkPicker")));
+      }
+      bar.appendChild(addBtn);
       stageNode.appendChild(bar);
 
       root.appendChild(stageNode);
@@ -1543,14 +1555,18 @@
     const SHOP_LAYOUT = Object.freeze({
       topRowTopPct: 6,
       bottomRowTopOffsetFromBarPct: -36,
+      householdRowTopOffsetFromBarPct: -20,
       topRow: ["garlic", "jalapeno", "salt"],
       bottomRow: ["oliveoil", "onion"],
+      householdRow: ["dishdetergent", "trashbags"],
       itemXCenterPct: {
         garlic: 20,
         jalapeno: 50,
         salt: 82,
         oliveoil: 24,
         onion: 61,
+        dishdetergent: 28,
+        trashbags: 74,
       },
       // Normalize by visual height so objects stay consistent across assets.
       itemHeightRatio: 0.22,
@@ -1563,6 +1579,8 @@
         salt: 1,
         oliveoil: 1.55,
         onion: 0.76,
+        dishdetergent: 0.94,
+        trashbags: 0.94,
       },
       rowItemGapPx: 10,
       rowSidePadPx: 8,
@@ -1572,6 +1590,8 @@
         salt: { widthRatio: 0.3, minPx: 96, maxPx: 130, gapPx: 9 },
         oliveoil: { widthRatio: 0.31, minPx: 98, maxPx: 136, gapPx: 10 },
         onion: { widthRatio: 0.36, minPx: 114, maxPx: 164, gapPx: 11 },
+        dishdetergent: { widthRatio: 0.34, minPx: 118, maxPx: 176, gapPx: 9 },
+        trashbags: { widthRatio: 0.31, minPx: 108, maxPx: 156, gapPx: 9 },
       },
       labelBarClearancePx: 12,
     });
@@ -1968,6 +1988,7 @@
       const pxToStagePct = (px) => (px / stageRect.height) * 100;
       const itemKeys = Object.keys(SHOP_LAYOUT.itemXCenterPct);
       const topRowSet = new Set(SHOP_LAYOUT.topRow);
+      const householdRowSet = new Set(SHOP_LAYOUT.householdRow);
       const targetItemHeightPx = clamp(
         stageRect.width * SHOP_LAYOUT.itemHeightRatio,
         SHOP_LAYOUT.itemHeightMinPx,
@@ -2042,6 +2063,7 @@
       const centerByKey = new Map([
         ...resolveRowCenters(SHOP_LAYOUT.topRow).entries(),
         ...resolveRowCenters(SHOP_LAYOUT.bottomRow).entries(),
+        ...resolveRowCenters(SHOP_LAYOUT.householdRow).entries(),
       ]);
 
       itemKeys.forEach((key) => {
@@ -2051,7 +2073,9 @@
         const centerPx = centerByKey.get(key) || (stageRect.width * (SHOP_LAYOUT.itemXCenterPct[key] || 50)) / 100;
         const topPct = topRowSet.has(key)
           ? SHOP_LAYOUT.topRowTopPct
-          : barTopPct + SHOP_LAYOUT.bottomRowTopOffsetFromBarPct;
+          : householdRowSet.has(key)
+            ? barTopPct + SHOP_LAYOUT.householdRowTopOffsetFromBarPct
+            : barTopPct + SHOP_LAYOUT.bottomRowTopOffsetFromBarPct;
 
         node.style.width = `${Math.round(metrics.widthPx)}px`;
         node.style.left = `${(centerPx / stageRect.width) * 100}%`;
@@ -2086,6 +2110,15 @@
         const labelTopPct = clamp(itemBottomPct + gapPct, 0, maxTopPct);
         labelNode.style.top = `${labelTopPct}%`;
       });
+
+      const householdChip = itemsWrap.querySelector(".pp-shop-section-chip--household");
+      if (householdChip) {
+        const chipTopPct =
+          barTopPct +
+          SHOP_LAYOUT.householdRowTopOffsetFromBarPct -
+          pxToStagePct((householdChip.offsetHeight || 36) + 14);
+        householdChip.style.top = `${clamp(chipTopPct, 0, 90)}%`;
+      }
 
       if (pendingImageLoad) requestShopLayoutSync();
     };
@@ -3709,6 +3742,8 @@
       "assets/objects/obj_red_spice.png",
       "assets/objects/obj_white_spice.png",
       "assets/objects/obj_brown_spice.png",
+      "assets/objects/dishwashing_detergent.png",
+      "assets/objects/trash_bag_black.png",
       "assets/objects/bang_bang_shrimp.png",
       "assets/objects/chicken_avocado_wraps.png",
       "assets/objects/chicken_tikka_masala.png",

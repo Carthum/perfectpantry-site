@@ -2032,6 +2032,30 @@ html.pp-tour-locked body {
   height: 100%;
 }
 
+.pp-shop-section-chip {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(58, 42, 26, 0.14);
+  background: rgba(233, 214, 191, 0.86);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--pp-type-body-sm);
+  font-weight: 820;
+  color: rgba(58, 42, 26, 0.84);
+  white-space: nowrap;
+}
+
+.pp-shop-section-chip--household {
+  top: 66%;
+}
+
 .pp-shop-item {
   position: absolute;
   width: 120px;
@@ -2074,6 +2098,22 @@ html.pp-tour-locked body {
   transform: translateX(-50%);
   width: 28%;
   max-width: 160px;
+}
+
+.pp-shop-item--dishdetergent {
+  top: 71%;
+  left: 28%;
+  transform: translateX(-50%);
+  width: 18%;
+  max-width: 92px;
+}
+
+.pp-shop-item--trashbags {
+  top: 71%;
+  left: 74%;
+  transform: translateX(-50%);
+  width: 18%;
+  max-width: 92px;
 }
 
 .pp-shop-label {
@@ -2123,6 +2163,20 @@ html.pp-tour-locked body {
   left: 50%;
   transform: translateX(-50%);
   width: 180px;
+}
+
+.pp-shop-label--dishdetergent {
+  top: 85%;
+  left: 28%;
+  transform: translateX(-50%);
+  width: 174px;
+}
+
+.pp-shop-label--trashbags {
+  top: 85%;
+  left: 74%;
+  transform: translateX(-50%);
+  width: 142px;
 }
 
 .pp-shop-bar {

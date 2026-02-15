@@ -1330,6 +1330,26 @@
           meta: "12 min  •  4 servings",
           image: "assets/objects/pico_de_gallo.png",
         },
+        {
+          title: "Vegetarian BLT with Avocado",
+          meta: "20 min  •  2 servings",
+          image: "assets/objects/vegetarian_blt.png",
+        },
+        {
+          title: "Chicken Avocado Wrap - Paleo",
+          meta: "25 min  •  2 servings",
+          image: "assets/objects/chicken_avocado_wraps.png",
+        },
+        {
+          title: "Salmon in Green Chili Cream Sauce",
+          meta: "30 min  •  2 servings",
+          image: "assets/objects/salmon_in_green_sauce.png",
+        },
+        {
+          title: "Spicy Avocado Chicken",
+          meta: "35 min  •  2 servings",
+          image: "assets/objects/spicy_avocado_chicken.png",
+        },
       ];
       recipes.forEach((r) => {
         const card = document.createElement("button");

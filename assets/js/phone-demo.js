@@ -1251,12 +1251,15 @@
     let activeTab = null;
 
     const PANTRY_LAYOUT = Object.freeze({
-      appleTopOffsetFromTopBoardPct: -20.5,
-      bananaTopOffsetFromTopBoardPct: -21.5,
-      avocadoTopOffsetFromBottomBoardPct: -15.5,
-      appleLabelTopOffsetFromTopBoardPct: 0,
-      bananaLabelTopOffsetFromTopBoardPct: 0,
-      avocadoLabelTopOffsetFromBottomBoardPct: 8,
+      topShelfSurfaceInsetPct: 0.3,
+      bottomShelfSurfaceInsetPct: 0.3,
+      itemNudgePct: {
+        apple: 0.35,
+        banana: 0.45,
+        avocado: 0.35,
+      },
+      labelTopOffsetFromTopShelfPct: 0,
+      labelTopOffsetFromBottomShelfPct: 8,
     });
 
     const SHOP_LAYOUT = Object.freeze({
@@ -1295,6 +1298,69 @@
       labelBarClearancePx: 12,
     });
 
+    const EMPTY_ALPHA_INSETS = Object.freeze({
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    });
+
+    const imageAlphaInsetCache = new Map();
+
+    const readImageAlphaInsets = (imgNode) => {
+      if (!imgNode) return EMPTY_ALPHA_INSETS;
+      const cacheKey = String(imgNode.currentSrc || imgNode.src || "");
+      if (!cacheKey) return EMPTY_ALPHA_INSETS;
+      const cached = imageAlphaInsetCache.get(cacheKey);
+      if (cached) return cached;
+
+      const width = Number(imgNode.naturalWidth) || 0;
+      const height = Number(imgNode.naturalHeight) || 0;
+      if (!width || !height) return EMPTY_ALPHA_INSETS;
+
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        if (!ctx) return EMPTY_ALPHA_INSETS;
+
+        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(imgNode, 0, 0, width, height);
+        const alpha = ctx.getImageData(0, 0, width, height).data;
+
+        let minX = width;
+        let minY = height;
+        let maxX = -1;
+        let maxY = -1;
+        for (let y = 0; y < height; y += 1) {
+          const rowStart = y * width * 4;
+          for (let x = 0; x < width; x += 1) {
+            const a = alpha[rowStart + x * 4 + 3];
+            if (a <= 8) continue;
+            if (x < minX) minX = x;
+            if (x > maxX) maxX = x;
+            if (y < minY) minY = y;
+            if (y > maxY) maxY = y;
+          }
+        }
+
+        const insets =
+          maxX < 0 || maxY < 0
+            ? EMPTY_ALPHA_INSETS
+            : {
+                top: minY / height,
+                bottom: (height - 1 - maxY) / height,
+                left: minX / width,
+                right: (width - 1 - maxX) / width,
+              };
+        imageAlphaInsetCache.set(cacheKey, insets);
+        return insets;
+      } catch (_error) {
+        return EMPTY_ALPHA_INSETS;
+      }
+    };
+
     let pantryLayoutRaf = 0;
     let shopLayoutRaf = 0;
 
@@ -1328,6 +1394,8 @@
       const topBoardPct = boardTopPct(topBoard);
       const bottomBoardPct = boardTopPct(bottomBoard);
       if (!Number.isFinite(topBoardPct) || !Number.isFinite(bottomBoardPct)) return;
+      const topShelfPct = topBoardPct + PANTRY_LAYOUT.topShelfSurfaceInsetPct;
+      const bottomShelfPct = bottomBoardPct + PANTRY_LAYOUT.bottomShelfSurfaceInsetPct;
 
       const setTopPct = (selector, pct) => {
         const node = stageNode.querySelector(selector);
@@ -1335,31 +1403,42 @@
         node.style.top = `${clamp(pct, -8, 96)}%`;
       };
 
-      setTopPct(
-        ".pp-pantry-item--apple",
-        topBoardPct + PANTRY_LAYOUT.appleTopOffsetFromTopBoardPct,
-      );
-      setTopPct(
-        ".pp-pantry-item--banana",
-        topBoardPct + PANTRY_LAYOUT.bananaTopOffsetFromTopBoardPct,
-      );
-      setTopPct(
-        ".pp-pantry-item--avocado",
-        bottomBoardPct + PANTRY_LAYOUT.avocadoTopOffsetFromBottomBoardPct,
-      );
+      const itemDefs = [
+        { key: "apple", selector: ".pp-pantry-item--apple", shelfPct: topShelfPct },
+        { key: "banana", selector: ".pp-pantry-item--banana", shelfPct: topShelfPct },
+        { key: "avocado", selector: ".pp-pantry-item--avocado", shelfPct: bottomShelfPct },
+      ];
+      let pendingImageLoad = false;
+      itemDefs.forEach(({ key, selector, shelfPct }) => {
+        const node = stageNode.querySelector(selector);
+        if (!node) return;
+        const hasNaturalSize = node.naturalWidth > 0 && node.naturalHeight > 0;
+        if (!hasNaturalSize && !node.complete) pendingImageLoad = true;
+
+        const rect = node.getBoundingClientRect();
+        if (!rect.height) return;
+        const itemHeightPct = (rect.height / stageRect.height) * 100;
+        const alphaInsets = hasNaturalSize ? readImageAlphaInsets(node) : EMPTY_ALPHA_INSETS;
+        const visualBottomInsetPct = itemHeightPct * (alphaInsets.bottom || 0);
+        const nudgePct = (PANTRY_LAYOUT.itemNudgePct && PANTRY_LAYOUT.itemNudgePct[key]) || 0;
+        const topPct = shelfPct - itemHeightPct + visualBottomInsetPct + nudgePct;
+        node.style.top = `${clamp(topPct, -8, 94)}%`;
+      });
 
       setTopPct(
         ".pp-pantry-label--apple",
-        topBoardPct + PANTRY_LAYOUT.appleLabelTopOffsetFromTopBoardPct,
+        topShelfPct + PANTRY_LAYOUT.labelTopOffsetFromTopShelfPct,
       );
       setTopPct(
         ".pp-pantry-label--banana",
-        topBoardPct + PANTRY_LAYOUT.bananaLabelTopOffsetFromTopBoardPct,
+        topShelfPct + PANTRY_LAYOUT.labelTopOffsetFromTopShelfPct,
       );
       setTopPct(
         ".pp-pantry-label--avocado",
-        bottomBoardPct + PANTRY_LAYOUT.avocadoLabelTopOffsetFromBottomBoardPct,
+        bottomShelfPct + PANTRY_LAYOUT.labelTopOffsetFromBottomShelfPct,
       );
+
+      if (pendingImageLoad) requestPantryLayoutSync();
     };
 
     const requestPantryLayoutSync = () => {

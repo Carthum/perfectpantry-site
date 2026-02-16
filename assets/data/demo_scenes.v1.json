@@ -49,7 +49,7 @@
       "tab": "home",
       "level": "detail",
       "headline": "Quick actions preview",
-      "body": "UI flow preview only. Buttons do not perform account or data actions.",
+      "body": "UI flow demo. Buttons do not perform account or data actions.",
       "image": "assets/demo/demo-home-quick-actions.png",
       "redactionPreset": "medium",
       "hotspots": [

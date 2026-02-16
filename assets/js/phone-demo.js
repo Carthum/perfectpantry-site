@@ -36,19 +36,11 @@
       tab: null,
       copy: {
         variant: "hero",
-        eyebrow: "Mobile app in active development",
+        eyebrow: "Welcome to Perfect Pantry",
         title: "The weekly food loop, finally in one place.",
         description:
-          "Perfect Pantry connects recipes, pantry inventory, meal planning, and shopping into one calm loop so dinner decisions get faster, grocery runs get cleaner, and food waste drops.",
-        ctas: [
-          { label: "Get early access", href: "#waitlist", className: "btn btn-primary" },
-          { label: "Start the demo", href: "#guided-tour", className: "btn btn-outline" },
-          { label: "Skip tour", href: "#tour-after", className: "btn btn-ghost" },
-        ],
-        notes: [
-          "Scroll to move the phone through Home, Pantry, Cookbook, Plan, and Shop.",
-          "Marketing site only for now. No memberships or checkout on the website.",
-        ],
+          "Perfect Pantry connects recipes, pantry inventory, meal planning, and shopping so weeknight decisions get easier and grocery trips stay focused.",
+        notes: ["Use the phone demo to explore Home, Pantry, Cookbook, Plan, and Shop."],
       },
     },
     {
@@ -57,12 +49,12 @@
       tab: "home",
       copy: {
         kicker: "Home",
-        title: "Start with a calm weekly dashboard",
+        title: "Your calm weekly dashboard",
         description:
-          "Home keeps the week visible: what is coming up, what needs restocking, and what to do next without digging through multiple views.",
+          "See what to cook next, what your pantry already covers, and what needs attention in one friendly view.",
         bullets: [
-          { strong: "Try it:", text: "tap the Quick Actions area on the phone." },
-          { strong: "Why it matters:", text: "fewer decisions, faster momentum." },
+          { strong: "Try it:", text: "tap Quick Actions to open Add Recipe and Add Pantry flows." },
+          { strong: "Why it matters:", text: "less decision fatigue and smoother daily momentum." },
         ],
       },
     },
@@ -72,15 +64,12 @@
       tab: "pantry",
       copy: {
         kicker: "Pantry",
-        title: "Inventory that stays lightweight",
+        title: "Inventory clarity without the spreadsheet feel",
         description:
-          "Track staples, quantities, and timing without turning your pantry into a second job. List and shelf-style views keep it usable.",
+          "Track staples, quantities, and timing without extra overhead, then make smarter plan and shopping decisions from real pantry coverage.",
         bullets: [
-          { strong: "Try it:", text: "tap an item row to open the detail preview." },
-          {
-            strong: "Why it matters:",
-            text: "plan and shop with real coverage, not guesses.",
-          },
+          { strong: "Try it:", text: "tap an item row to open detail with nutrition, age, and recipe ideas." },
+          { strong: "Why it matters:", text: "fewer duplicate purchases and less forgotten food." },
         ],
       },
     },
@@ -90,15 +79,12 @@
       tab: "cookbook",
       copy: {
         kicker: "Cookbook",
-        title: "Your household cookbook, private by default",
+        title: "A household cookbook that stays useful",
         description:
-          "Save recipes your household actually repeats. The detail view is optimized for cooking flow, not endless scrolling.",
+          "Keep trusted recipes close, pull them up quickly, and move from browsing to cooking without losing context.",
         bullets: [
-          { strong: "Try it:", text: "tap a recipe card to preview the detail layout." },
-          {
-            strong: "Why it matters:",
-            text: "reliable repeats and faster weeknight execution.",
-          },
+          { strong: "Try it:", text: "tap any recipe card to open the detail experience." },
+          { strong: "Why it matters:", text: "faster repeats, fewer dead-end recipe hunts." },
         ],
       },
     },
@@ -107,16 +93,13 @@
       bg: "home",
       tab: "plan",
       copy: {
-        kicker: "Plan",
-        title: "Place meals into the week in seconds",
+        kicker: "Meal Plan",
+        title: "Plan meals together, then adjust fast",
         description:
-          "Build a realistic baseline plan, then adjust without breaking everything. Planning is where time and pantry coverage tradeoffs become clear.",
+          "Invite household members so meal plans, pantry, and shopping stay shared. Month view helps you review what was planned and reused.",
         bullets: [
-          { strong: "Try it:", text: "tap a meal slot to open the slot detail preview." },
-          {
-            strong: "Why it matters:",
-            text: "fewer midweek pivots and less last-minute shopping.",
-          },
+          { strong: "Try it:", text: "tap a meal slot to open planning actions for that day." },
+          { strong: "Why it matters:", text: "everyone stays aligned from plan to pantry to shopping." },
         ],
       },
     },
@@ -125,19 +108,13 @@
       bg: "shopping",
       tab: "shop",
       copy: {
-        kicker: "Shop",
+        kicker: "Shopping",
         title: "Shop the gap, not the whole pantry",
         description:
-          "The list is generated from what your plan needs compared to what your pantry already covers, so trips stay clean and focused.",
+          "Add full recipes to your list, mix in staples and essentials, and keep shared shopping coordinated across households or by text.",
         bullets: [
-          {
-            strong: "Try it:",
-            text: "tap an item to preview the bulk picker and detail view.",
-          },
-          { strong: "Why it matters:", text: "fewer duplicates, less waste." },
-        ],
-        ctas: [
-          { label: "Continue down the page", href: "#tour-after", className: "btn btn-primary" },
+          { strong: "Try it:", text: "tap the Plus icon to preview the bulk picker." },
+          { strong: "Why it matters:", text: "quicker trips with cleaner lists and fewer duplicates." },
         ],
       },
     },
@@ -150,10 +127,10 @@
       tab: "home",
       sheet: { title: "Add Recipe", kind: "add_recipe", mode: "link", align: "center" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Add Recipe",
+        kicker: "Add New Recipe",
+        title: "Link mode",
         description:
-          "Paste a recipe link to import it. This mirrors the app's link-import flow (preview only).",
+          "Found a great recipe while browsing? Paste the link and move straight into cooking.",
       },
     },
     {
@@ -162,10 +139,10 @@
       tab: "home",
       sheet: { title: "Add Recipe", kind: "add_recipe", mode: "photo", align: "center" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Add Recipe",
+        kicker: "Add New Recipe",
+        title: "Photo mode",
         description:
-          "Capture a recipe from a photo or your library. Layout only for now (preview only).",
+          "Have a great recipe written down? Snap a photo and get your apron on.",
       },
     },
     {
@@ -174,10 +151,10 @@
       tab: "home",
       sheet: { title: "Add Recipe", kind: "add_recipe", mode: "ai", align: "center" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Add Recipe",
+        kicker: "Add New Recipe",
+        title: "AI mode",
         description:
-          "Describe what you want to cook and let the app draft a recipe. Layout only for now (preview only).",
+          "Add a quick description of what you want, then use dropdowns to guide it toward what you already have.",
       },
     },
     {
@@ -186,10 +163,10 @@
       tab: "home",
       sheet: { title: "Add Recipe", kind: "add_recipe", mode: "manual", align: "center" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Add Recipe",
+        kicker: "Add New Recipe",
+        title: "Manual mode",
         description:
-          "Create a recipe by typing it in. We'll refine fields and spacing to match the app.",
+          "Need detailed, precise steps? Manual mode gives you full control over the recipe structure.",
       },
     },
     {
@@ -198,10 +175,10 @@
       tab: "home",
       sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "search", align: "center" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Add Pantry Item",
+        kicker: "Add Pantry Item",
+        title: "Search mode",
         description:
-          "Search foods and products to add them to your pantry (preview only).",
+          "Quickly search for specific items and add exactly what you need.",
       },
     },
     {
@@ -210,10 +187,10 @@
       tab: "home",
       sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "scan", align: "center" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Add Pantry Item",
+        kicker: "Add Pantry Item",
+        title: "Scan mode",
         description:
-          "Scan a UPC to add an item. Layout only for now (preview only).",
+          "Scan specific products and use those products to tune shopping preferences.",
       },
     },
     {
@@ -222,10 +199,10 @@
       tab: "home",
       sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "manual", align: "center" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Add Pantry Item",
+        kicker: "Add Pantry Item",
+        title: "Manual mode",
         description:
-          "Add an item manually. We'll tighten the details once you confirm the exact UI.",
+          "Add a specific pantry item with the details that matter to your household.",
       },
     },
     {
@@ -234,10 +211,10 @@
       tab: "home",
       sheet: { title: "Bulk add", kind: "add_pantry_item", mode: "bulk", align: "left" },
       copy: {
-        kicker: "Quick Actions",
-        title: "Bulk add",
+        kicker: "Add Pantry Item",
+        title: "Bulk picker",
         description:
-          "Tap items to add. Your added items stay pinned while you browse (preview only).",
+          "Quickly add staples and everyday essentials in one pass.",
       },
     },
     {
@@ -246,9 +223,10 @@
       tab: "pantry",
       sheet: { title: "Apple", kind: "pantry_item_detail", item: "apple", align: "left" },
       copy: {
-        kicker: "Pantry",
-        title: "Apple",
-        description: "Preview-only item detail view (layout only).",
+        kicker: "Pantry Details",
+        title: "Item insights at a glance",
+        description:
+          "See nutrition info, product age, and recipe suggestions before ingredients go to waste.",
       },
     },
     {
@@ -257,9 +235,10 @@
       tab: "pantry",
       sheet: { title: "Banana", kind: "pantry_item_detail", item: "banana", align: "left" },
       copy: {
-        kicker: "Pantry",
-        title: "Banana",
-        description: "Preview-only item detail view (layout only).",
+        kicker: "Pantry Details",
+        title: "Item insights at a glance",
+        description:
+          "See nutrition info, product age, and recipe suggestions before ingredients go to waste.",
       },
     },
     {
@@ -268,9 +247,10 @@
       tab: "pantry",
       sheet: { title: "Avocado", kind: "pantry_item_detail", item: "avocado", align: "left" },
       copy: {
-        kicker: "Pantry",
-        title: "Avocado",
-        description: "Preview-only item detail view (layout only).",
+        kicker: "Pantry Details",
+        title: "Item insights at a glance",
+        description:
+          "See nutrition info, product age, and recipe suggestions before ingredients go to waste.",
       },
     },
     {
@@ -279,10 +259,15 @@
       tab: "cookbook",
       page: { kind: "recipe_view" },
       copy: {
-        kicker: "What's For Dinner?",
-        title: "View Recipe",
+        kicker: "View Recipe",
+        title: "Recipe details built for quick decisions",
         description:
-          "This is a demo preview of the recipe detail page. Buttons here will prompt you to download the app.",
+          "Everything needed to decide, prep, and cook is visible in one clear flow.",
+        bullets: [
+          { text: "Nutrition and ingredient flags provide quick reference (actual results may vary)." },
+          { text: "Ingredients already in your pantry are marked off." },
+          { text: "Items you still need can be added to shopping lists." },
+        ],
       },
     },
     {
@@ -291,10 +276,15 @@
       tab: "cookbook",
       page: { kind: "cook_view" },
       copy: {
-        kicker: "What's For Dinner?",
-        title: "Cook Now",
+        kicker: "Cook Now",
+        title: "Hands-free cooking when it matters most",
         description:
-          "This is a demo preview of cooking mode (steps, read-aloud, and hands-free concept).",
+          "Cooking mode keeps your flow moving while your hands stay on prep.",
+        bullets: [
+          { text: "Recipe steps can be read aloud." },
+          { text: "Hands-free step navigation keeps messy hands off your phone." },
+          { text: "Per-step ingredients stay visible while the full list updates as you progress." },
+        ],
       },
     },
     {
@@ -303,10 +293,17 @@
       tab: "cookbook",
       sheet: { title: "Cookbook filters", kind: "cookbook_filters", align: "right" },
       copy: {
-        kicker: "Cookbook",
-        title: "Cookbook filters",
+        kicker: "Cookbook Filters",
+        title: "Find the right recipe faster",
         description:
-          "Filter drawer preview. Any dropdown interaction will prompt app download.",
+          "Filter by source, dish type, and cuisine to land on the best fit for tonight.",
+        bullets: [
+          {
+            text: "Recipes come from your household, public recipes, cooking basics, and the Perfect Pantry cookbook.",
+          },
+          { text: "Categories include mains, sides, appetizers, and more." },
+          { text: "Cuisine and preference dropdowns quickly surface the flavors you love." },
+        ],
       },
     },
     {
@@ -315,13 +312,29 @@
       tab: "shop",
       sheet: { title: "Shop staples", kind: "shop_staples", align: "left" },
       copy: {
-        kicker: "Shop",
-        title: "Shop staples",
+        kicker: "Shopping",
+        title: "Bulk staples made simple",
         description:
-          "Bulk picker demo. Add-to-list is preview only and will prompt an app download.",
+          "Quickly add staples or full-recipe needs, then share lists across households or by text.",
       },
     },
   ];
+
+  const PANTRY_SPICE_COPY = {
+    id: "pantry-spice",
+    bg: "pantry",
+    tab: "pantry",
+    copy: {
+      kicker: "Spice Rack",
+      title: "Track spices before you rebuy them",
+      description:
+        "Keep your spice inventory current so you do not buy the third jar of something already in the rack.",
+      bullets: [
+        { strong: "Try it:", text: "tap the spice jar icon to toggle the spice rack view." },
+        { strong: "Why it matters:", text: "fewer duplicates, less clutter, and cleaner pantry coverage." },
+      ],
+    },
+  };
 
   const preloadImages = (paths) => {
     const uniq = Array.from(new Set((paths || []).filter(Boolean)));
@@ -673,7 +686,7 @@
       el(
         "p",
         "pp-app-download-body",
-        "This is a preview-only demo. Get early access to the mobile app to save recipes, add pantry items, plan, and shop.",
+        "Explore the interactive phone tour, then join the waitlist for launch updates and onboarding news.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
@@ -689,7 +702,7 @@
     downloadBtns.appendChild(playStore);
     downloadCard.appendChild(downloadBtns);
     downloadCard.appendChild(
-      el("p", "pp-app-download-note", "No accounts or actions run on this website."),
+      el("p", "pp-app-download-note", "Accounts and in-app actions happen in the mobile app."),
     );
     download.appendChild(downloadScrim);
     download.appendChild(downloadCard);
@@ -812,7 +825,7 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = `pp-app-fab ${cls}`;
-        btn.setAttribute("aria-label", ariaLabel || "Preview only");
+        btn.setAttribute("aria-label", ariaLabel || "Open action");
         const svg = iconEl(icon);
         if (svg) btn.appendChild(svg);
         fabsLayer.appendChild(btn);
@@ -823,21 +836,21 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = `pp-app-fab ${cls}`;
-        btn.setAttribute("aria-label", ariaLabel || "Preview only");
+        btn.setAttribute("aria-label", ariaLabel || "Open action");
         btn.appendChild(imgEl({ src, className: "", alt: "" }));
         fabsLayer.appendChild(btn);
         return btn;
       };
 
       if (tab === "home") {
-        addFabSvg({ cls: "pp-app-fab--gear", icon: "gear", ariaLabel: "Settings (preview)" });
+        addFabSvg({ cls: "pp-app-fab--gear", icon: "gear", ariaLabel: "Settings" });
       }
 
       if (tab === "pantry") {
         const spiceFab = addFabImg({
           cls: "pp-app-fab--spice",
           src: "assets/objects/obj_tan_spice.png",
-          ariaLabel: "Spice rack (preview)",
+          ariaLabel: "Spice rack",
         });
         if (typeof onAction === "function") {
           spiceFab.addEventListener("click", () =>
@@ -849,7 +862,7 @@
           const addItem = addFabSvg({
             cls: "pp-app-fab--plus",
             icon: "plus",
-            ariaLabel: "Add item (preview)",
+            ariaLabel: "Add item",
           });
           if (typeof onAction === "function") {
             addItem.addEventListener(
@@ -864,7 +877,7 @@
         const addRecipe = addFabSvg({
           cls: "pp-app-fab--plus",
           icon: "plus",
-          ariaLabel: "Add recipe (preview)",
+          ariaLabel: "Add recipe",
         });
         if (typeof onAction === "function") {
           addRecipe.addEventListener(
@@ -978,7 +991,7 @@
       const searchBtn = buildCircle({
         icon: "search",
         className: "pp-app-circle--muted",
-        ariaLabel: "Search (preview)",
+        ariaLabel: "Search",
       });
       searchBtn.dataset.downloadCta = "true";
       topRow.appendChild(searchBtn);
@@ -1000,7 +1013,7 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = `pp-pantry-item ${cls || ""}`;
-        btn.setAttribute("aria-label", `${title} details (preview)`);
+        btn.setAttribute("aria-label", `${title} details`);
         btn.appendChild(imgEl({ src, className: "pp-pantry-item-img", alt: "" }));
         btn.addEventListener("click", () => openItemDetail(id));
         return btn;
@@ -1035,7 +1048,7 @@
         const node = document.createElement("button");
         node.type = "button";
         node.className = `pp-pantry-label ${cls}`;
-        node.setAttribute("aria-label", `${title} details (preview)`);
+        node.setAttribute("aria-label", `${title} details`);
         node.appendChild(el("strong", "", title));
         node.appendChild(el("span", "", sub));
         node.addEventListener("click", () => openItemDetail(id));
@@ -1108,7 +1121,7 @@
       const searchBtn = buildCircle({
         icon: "search",
         className: "pp-app-circle--muted",
-        ariaLabel: "Search spices (preview)",
+        ariaLabel: "Search spices",
       });
       searchBtn.dataset.downloadCta = "true";
       topRow.appendChild(searchBtn);
@@ -1276,7 +1289,7 @@
       const searchBar = document.createElement("button");
       searchBar.type = "button";
       searchBar.className = "pp-cookbook-searchbar";
-      searchBar.setAttribute("aria-label", "Search cookbook (preview)");
+      searchBar.setAttribute("aria-label", "Search cookbook");
       searchBar.dataset.downloadCta = "true";
       const searchIcon = iconEl("search");
       if (searchIcon) searchBar.appendChild(searchIcon);
@@ -1286,7 +1299,7 @@
       const menuBtn = buildCircle({
         icon: "menu",
         className: "pp-app-circle--muted pp-cookbook-menu-btn",
-        ariaLabel: "Cookbook menu (preview)",
+        ariaLabel: "Cookbook menu",
       });
       if (typeof onAction === "function") {
         menuBtn.addEventListener("click", () => onAction(actionSetPhoneModal("cookbookFilters")));
@@ -1377,9 +1390,9 @@
 
       const hud = el("div", "pp-plan-hud");
       const weekRow = el("div", "pp-plan-week-row");
-      weekRow.appendChild(buildCircle({ icon: "chevron_left", className: "pp-app-circle--muted", ariaLabel: "Previous week (preview)" }));
+      weekRow.appendChild(buildCircle({ icon: "chevron_left", className: "pp-app-circle--muted", ariaLabel: "Previous week" }));
       weekRow.appendChild(buildPill({ label: "Week of 2/2", className: "pp-plan-week-pill pp-app-pill--title", rightIcon: "chevron_down" }));
-      weekRow.appendChild(buildCircle({ icon: "chevron_right", className: "pp-app-circle--muted", ariaLabel: "Next week (preview)" }));
+      weekRow.appendChild(buildCircle({ icon: "chevron_right", className: "pp-app-circle--muted", ariaLabel: "Next week" }));
       hud.appendChild(weekRow);
       hud.appendChild(
         buildPill({
@@ -1461,7 +1474,7 @@
       const searchBtn = buildCircle({
         icon: "search",
         className: "pp-app-circle--muted",
-        ariaLabel: "Search (preview)",
+        ariaLabel: "Search",
       });
       searchBtn.dataset.downloadCta = "true";
 		      topRow.appendChild(searchBtn);
@@ -1542,12 +1555,12 @@
 
       const bar = el("div", "pp-shop-bar");
       bar.appendChild(
-        buildCircle({ icon: "close", className: "pp-app-circle--danger", ariaLabel: "Cancel (preview)" }),
+        buildCircle({ icon: "close", className: "pp-app-circle--danger", ariaLabel: "Cancel" }),
       );
       const complete = buildPill({ label: "Complete shopping", className: "pp-app-pill--wide" });
       complete.dataset.downloadCta = "true";
       bar.appendChild(complete);
-      const addBtn = buildCircle({ icon: "plus", ariaLabel: "Add item (preview)" });
+      const addBtn = buildCircle({ icon: "plus", ariaLabel: "Add item" });
       if (typeof onAction === "function") {
         addBtn.addEventListener("click", () => onAction(actionSetPhoneModal("shopBulkPicker")));
       }
@@ -2765,7 +2778,7 @@
           const searchBtn = buildCircle({
             icon: "search",
             className: "pp-app-circle--sheet",
-            ariaLabel: "Search (preview)",
+            ariaLabel: "Search",
           });
           searchBtn.dataset.downloadCta = "true";
           row.appendChild(searchBtn);
@@ -2923,7 +2936,7 @@
         const searchBtn = buildCircle({
           icon: "search",
           className: "pp-app-circle--sheet",
-          ariaLabel: "Search (preview)",
+          ariaLabel: "Search",
         });
         searchBtn.dataset.downloadCta = "true";
         row.appendChild(searchBtn);
@@ -3083,7 +3096,7 @@
         const favoritesToggle = document.createElement("button");
         favoritesToggle.type = "button";
         favoritesToggle.className = "pp-cookbook-filter-toggle";
-        favoritesToggle.setAttribute("aria-label", "Favorites only (preview)");
+        favoritesToggle.setAttribute("aria-label", "Favorites only");
         favoritesRow.appendChild(favoritesToggle);
         wrap.appendChild(favoritesRow);
 
@@ -3092,7 +3105,7 @@
       }
 
       // Fallback.
-      bodyNodes.push(el("p", "", "Preview only."));
+      bodyNodes.push(el("p", "", "More details coming soon."));
       return { bodyNodes, footerNodes };
     };
 
@@ -3130,7 +3143,7 @@
       const fav = document.createElement("button");
       fav.type = "button";
       fav.className = "pp-recipe-fav";
-      fav.setAttribute("aria-label", "Favorite (preview)");
+      fav.setAttribute("aria-label", "Favorite");
       const heartSvg = iconEl("heart");
       if (heartSvg) fav.appendChild(heartSvg);
       headRow.appendChild(fav);
@@ -3255,7 +3268,7 @@
         cartBtn.dataset.downloadCta = "true";
         const svg = iconEl("cart");
         if (svg) cartBtn.appendChild(svg);
-        cartBtn.setAttribute("aria-label", "Add to list (preview)");
+        cartBtn.setAttribute("aria-label", "Add to list");
         row.appendChild(cartBtn);
         return row;
       };
@@ -3375,8 +3388,8 @@
       topbar.appendChild(back);
       topbar.appendChild(el("div", "pp-cook-topbar-title", "Cooking"));
       const topIcons = el("div", "pp-cook-topbar-icons");
-      topIcons.appendChild(buildTopBarBtn({ icon: "speaker", label: "Read aloud (preview)", downloadCta: true }));
-      topIcons.appendChild(buildTopBarBtn({ icon: "list", label: "All steps (preview)", downloadCta: true }));
+      topIcons.appendChild(buildTopBarBtn({ icon: "speaker", label: "Read aloud", downloadCta: true }));
+      topIcons.appendChild(buildTopBarBtn({ icon: "list", label: "All steps", downloadCta: true }));
       topbar.appendChild(topIcons);
       const finish = document.createElement("button");
       finish.type = "button";
@@ -3417,15 +3430,15 @@
       stepHead.appendChild(stepLabel);
       const stepBtns = el("div", "pp-cook-step-btns");
       stepBtns.appendChild(
-        buildTopBarBtn({ icon: "play", label: "Play (preview)", downloadCta: true, className: "pp-cook-iconbtn" }),
+        buildTopBarBtn({ icon: "play", label: "Play", downloadCta: true, className: "pp-cook-iconbtn" }),
       );
       stepBtns.appendChild(
-        buildTopBarBtn({ icon: "pause", label: "Pause (preview)", downloadCta: true, className: "pp-cook-iconbtn" }),
+        buildTopBarBtn({ icon: "pause", label: "Pause", downloadCta: true, className: "pp-cook-iconbtn" }),
       );
       stepBtns.appendChild(
         buildTopBarBtn({
           icon: "restart",
-          label: "Restart (preview)",
+          label: "Restart",
           downloadCta: true,
           className: "pp-cook-iconbtn",
         }),
@@ -3520,7 +3533,7 @@
           ? buildRecipeViewPage()
           : kind === "cook_view"
             ? buildCookViewPage()
-            : el("div", "pp-page", "Preview only.");
+            : el("div", "pp-page", "Screen coming soon.");
       page.appendChild(node);
       const pageScroll = node.querySelector(".pp-page-scroll");
       if (pageScroll) {
@@ -3790,6 +3803,9 @@
         .matches;
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
+    const tabToStepId = new Map(
+      STEPS.filter((s) => s && s.tab).map((s) => [String(s.tab), String(s.id)]),
+    );
 
     // Preload assets early so scroll-driven swaps don't flash.
     preloadImages([
@@ -3861,10 +3877,12 @@
       "assets/ingredients/white_onion.png",
     ]);
 
-    // Build left copy from scroll-driven steps only.
-    // In-phone overlays should not affect the main scroll stage (desktop) or stacked content (mobile).
-    const copyScreens = [...STEPS];
-    stack.replaceChildren(...copyScreens.map((screen, idx) => buildCopyArticle(screen, idx)));
+    // Desktop stage mode supports reactive copy for tabs + overlay screens.
+    // Mobile/stacked mode stays scroll-step only.
+    const stageCopyScreens = stageMode
+      ? [...STEPS, ...MODAL_SCREENS, PANTRY_SPICE_COPY]
+      : [...STEPS];
+    stack.replaceChildren(...stageCopyScreens.map((screen, idx) => buildCopyArticle(screen, idx)));
     const stepNodesById = getStepNodesById(stack);
 
     let activeStepIndex = 0;
@@ -3953,6 +3971,23 @@
       };
     };
 
+    const activeCopyId = () => {
+      const overlay = activeOverlayScreen();
+      if (overlay && overlay.id) return String(overlay.id);
+
+      const base = baseStep() || {};
+      const tab =
+        phoneNavState.routeOverride ||
+        phoneNavState.route ||
+        (base && base.tab ? String(base.tab) : "");
+
+      if (tab === "pantry" && phoneNavState.pantryView === "spice") {
+        return PANTRY_SPICE_COPY.id;
+      }
+      if (tab && tabToStepId.has(tab)) return tabToStepId.get(tab);
+      return (base && base.id) || STEPS[0].id;
+    };
+
     const phone = createAppSimPhone({
       mount,
       onAction(action) {
@@ -4021,7 +4056,7 @@
           // In-phone overlays must not "take over" the page on desktop.
           const base = baseStep();
           stage.dataset.ppBg = (base && base.bg) || "home";
-          setActiveCopyStep(stepNodesById, (base && base.id) || "");
+          setActiveCopyStep(stepNodesById, activeCopyId());
         }
         phone.setScreen(screen);
       },
@@ -4032,7 +4067,7 @@
       const screen = activePhoneScreen();
       const base = baseStep();
       stage.dataset.ppBg = (base && base.bg) || "home";
-      setActiveCopyStep(stepNodesById, (base && base.id) || "");
+      setActiveCopyStep(stepNodesById, activeCopyId());
       phone.setScreen(screen);
     };
 

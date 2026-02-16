@@ -115,7 +115,7 @@
     ],
     "detail": {
       "headline": "Bulk picker preview",
-      "body": "Pick a size and add to cart (preview only).",
+      "body": "Pick a size and add to cart.",
       "options": [
         { "label": "Small", "detail": "1–2 meals" },
         { "label": "Medium", "detail": "3–4 meals" },

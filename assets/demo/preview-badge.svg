@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" role="img" aria-label="Preview only badge">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" role="img" aria-label="Guided demo badge">
   <rect width="220" height="60" rx="30" fill="#2a3b31"/>
-  <text x="110" y="39" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#f6e7cf">Preview only</text>
+  <text x="110" y="39" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#f6e7cf">Guided demo</text>
 </svg>

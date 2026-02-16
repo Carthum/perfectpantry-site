@@ -808,10 +808,12 @@ html.pp-tour-locked body {
 
 .pp-top-row {
   display: grid;
-  grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(48px, 56px);
-  gap: 10px;
+  grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(52px, 60px);
+  gap: 8px;
   align-items: center;
-  padding-right: 2px;
+  padding-left: 1px;
+  padding-right: 4px;
+  overflow: visible;
 }
 
 .pp-top-row > * {
@@ -864,8 +866,8 @@ html.pp-tour-locked body {
 }
 
 .pp-top-row .pp-app-circle {
-  width: clamp(44px, 4.9vw, 50px);
-  height: clamp(44px, 4.9vw, 50px);
+  width: clamp(42px, 4.6vw, 48px);
+  height: clamp(42px, 4.6vw, 48px);
   justify-self: end;
 }
 
@@ -2239,12 +2241,17 @@ html.pp-tour-locked body {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: 8px 8px var(--pp-shop-scroll-pad-bottom, 196px);
+  padding: 8px 8px var(--pp-shop-scroll-pad-bottom, 236px);
 }
 
 .pp-shop-scroll::-webkit-scrollbar {
   width: 0;
   height: 0;
+}
+
+.pp-shop-scroll-spacer {
+  height: var(--pp-shop-scroll-pad-bottom, 236px);
+  flex: 0 0 auto;
 }
 
 .pp-shop-items--stacked {

@@ -1537,6 +1537,7 @@
       );
 
       scrollNode.appendChild(itemsWrap);
+      scrollNode.appendChild(el("div", "pp-shop-scroll-spacer"));
       stageNode.appendChild(scrollNode);
 
       const bar = el("div", "pp-shop-bar");
@@ -2017,6 +2018,7 @@
       const stageNode = appContent.querySelector(".pp-shop-stage");
       const itemsWrap = stageNode ? stageNode.querySelector(".pp-shop-items") : null;
       const scrollNode = stageNode ? stageNode.querySelector(".pp-shop-scroll") : null;
+      const spacerNode = scrollNode ? scrollNode.querySelector(".pp-shop-scroll-spacer") : null;
       const shopBar = stageNode ? stageNode.querySelector(".pp-shop-bar") : null;
       if (!stageNode || !itemsWrap || !shopBar) return;
       if (itemsWrap.classList.contains("pp-shop-items--stacked")) {
@@ -2024,8 +2026,9 @@
         const scrollRect = scrollNode.getBoundingClientRect();
         const barRect = shopBar.getBoundingClientRect();
         const overlapPx = Math.max(0, scrollRect.bottom - barRect.top);
-        const dynamicPadPx = Math.ceil(overlapPx + 76);
+        const dynamicPadPx = Math.ceil(overlapPx + barRect.height + 96);
         scrollNode.style.setProperty("--pp-shop-scroll-pad-bottom", `${dynamicPadPx}px`);
+        if (spacerNode) spacerNode.style.height = `${dynamicPadPx}px`;
         return;
       }
 

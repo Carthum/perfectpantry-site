@@ -2016,9 +2016,18 @@
       if (activeTab !== "shop") return;
       const stageNode = appContent.querySelector(".pp-shop-stage");
       const itemsWrap = stageNode ? stageNode.querySelector(".pp-shop-items") : null;
+      const scrollNode = stageNode ? stageNode.querySelector(".pp-shop-scroll") : null;
       const shopBar = stageNode ? stageNode.querySelector(".pp-shop-bar") : null;
       if (!stageNode || !itemsWrap || !shopBar) return;
-      if (itemsWrap.classList.contains("pp-shop-items--stacked")) return;
+      if (itemsWrap.classList.contains("pp-shop-items--stacked")) {
+        if (!scrollNode) return;
+        const scrollRect = scrollNode.getBoundingClientRect();
+        const barRect = shopBar.getBoundingClientRect();
+        const overlapPx = Math.max(0, scrollRect.bottom - barRect.top);
+        const dynamicPadPx = Math.ceil(overlapPx + 76);
+        scrollNode.style.setProperty("--pp-shop-scroll-pad-bottom", `${dynamicPadPx}px`);
+        return;
+      }
 
       const stageRect = stageNode.getBoundingClientRect();
       if (!stageRect.width || !stageRect.height) return;

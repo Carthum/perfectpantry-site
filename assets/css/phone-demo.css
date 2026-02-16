@@ -808,9 +808,10 @@ html.pp-tour-locked body {
 
 .pp-top-row {
   display: grid;
-  grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(40px, 48px);
-  gap: 8px;
+  grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(48px, 56px);
+  gap: 10px;
   align-items: center;
+  padding-right: 2px;
 }
 
 .pp-top-row > * {
@@ -865,6 +866,7 @@ html.pp-tour-locked body {
 .pp-top-row .pp-app-circle {
   width: clamp(44px, 4.9vw, 50px);
   height: clamp(44px, 4.9vw, 50px);
+  justify-self: end;
 }
 
 .pp-top-row .pp-app-circle svg {
@@ -2237,7 +2239,7 @@ html.pp-tour-locked body {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: 8px 8px 176px;
+  padding: 8px 8px var(--pp-shop-scroll-pad-bottom, 196px);
 }
 
 .pp-shop-scroll::-webkit-scrollbar {

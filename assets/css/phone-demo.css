@@ -2237,7 +2237,7 @@ html.pp-tour-locked body {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: 8px 8px 96px;
+  padding: 8px 8px 128px;
 }
 
 .pp-shop-scroll::-webkit-scrollbar {
@@ -2248,7 +2248,7 @@ html.pp-tour-locked body {
 .pp-shop-items--stacked {
   display: grid;
   align-content: start;
-  gap: 12px;
+  gap: 14px;
   padding: 2px 2px 4px;
   min-width: 0;
 }
@@ -2267,6 +2267,7 @@ html.pp-tour-locked body {
 .pp-shop-items--stacked .pp-shop-row--food-bottom {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding-inline: clamp(16px, 7%, 32px);
+  margin-top: 6px;
 }
 
 .pp-shop-items--stacked .pp-shop-row--household {
@@ -2318,7 +2319,7 @@ html.pp-tour-locked body {
 }
 
 .pp-shop-items--stacked .pp-shop-cell--oliveoil {
-  --pp-shop-item-scale: 1.24;
+  --pp-shop-item-scale: 1.14;
 }
 
 .pp-shop-items--stacked .pp-shop-cell--onion {
@@ -2339,7 +2340,16 @@ html.pp-tour-locked body {
   top: auto;
   transform: none;
   justify-self: center;
-  margin: 2px auto 0;
+  margin: 4px auto 0;
+  min-height: 52px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(58, 42, 26, 0.18);
+  background: rgba(244, 231, 214, 0.92);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+  font-size: var(--pp-type-body-md);
+  font-weight: 760;
+  color: var(--pp-app-ink);
   text-align: center;
 }
 
@@ -2366,6 +2376,10 @@ html.pp-tour-locked body {
 
   .pp-shop-items--stacked .pp-shop-row {
     gap: 8px;
+  }
+
+  .pp-shop-items--stacked .pp-shop-row--food-bottom {
+    margin-top: 4px;
   }
 
   .pp-shop-items--stacked .pp-shop-cell-asset {

@@ -1189,10 +1189,11 @@
     };
 
     const RECIPE_THUMB_FALLBACK = "assets/objects/obj_bowl_tomato.png";
+    const FLANK_STEAK_RECIPE_THUMB = "assets/objects/flank_steak_w_peppers.png?v=20260215-57";
     // Static-site friendly "manifest" of available recipe thumbnails.
     // Prefer object art first, then recipe card art.
     const RECIPE_THUMB_MANIFEST = new Set([
-      "assets/objects/flank_steak_w_peppers.png",
+      FLANK_STEAK_RECIPE_THUMB,
       "assets/objects/bang_bang_shrimp.png",
       "assets/objects/chicken_avocado_wraps.png",
       "assets/objects/chicken_tikka_masala.png",
@@ -1230,7 +1231,7 @@
       apple_cinnamon_overnight_oats: "assets/objects/apple_cinnamon_overnight_oats.png",
       banana_peanut_smoothie: "assets/objects/banana_peanut_smoothie.png",
       avocado_salsa_without_the_avocado: "assets/objects/pico_de_gallo.png",
-      shredded_flank_steak_with_peppers_ropa_vieja: "assets/objects/flank_steak_w_peppers.png",
+      shredded_flank_steak_with_peppers_ropa_vieja: FLANK_STEAK_RECIPE_THUMB,
     });
 
     const toRecipeSlug = (value) =>
@@ -3812,7 +3813,7 @@
       "assets/objects/spicy_avocado_chicken.png",
       "assets/objects/vegetarian_blt.png",
       "assets/objects/obj_garlic.png",
-      "assets/objects/flank_steak_w_peppers.png",
+      FLANK_STEAK_RECIPE_THUMB,
       "assets/objects/obj_bowl_tomato.png",
       "assets/objects/obj_bowl_basil.png",
       "assets/objects/obj_bowl_spices.png",

@@ -1193,7 +1193,7 @@
     // Static-site friendly "manifest" of available recipe thumbnails.
     // Prefer object art first, then recipe card art.
     const RECIPE_THUMB_MANIFEST = new Set([
-      FLANK_STEAK_RECIPE_THUMB,
+      "assets/objects/flank_steak_w_peppers.png?v=20260215-57",
       "assets/objects/bang_bang_shrimp.png",
       "assets/objects/chicken_avocado_wraps.png",
       "assets/objects/chicken_tikka_masala.png",
@@ -3813,7 +3813,7 @@
       "assets/objects/spicy_avocado_chicken.png",
       "assets/objects/vegetarian_blt.png",
       "assets/objects/obj_garlic.png",
-      FLANK_STEAK_RECIPE_THUMB,
+      "assets/objects/flank_steak_w_peppers.png?v=20260215-57",
       "assets/objects/obj_bowl_tomato.png",
       "assets/objects/obj_bowl_basil.png",
       "assets/objects/obj_bowl_spices.png",

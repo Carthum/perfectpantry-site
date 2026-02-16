@@ -1463,49 +1463,85 @@
         ariaLabel: "Search (preview)",
       });
       searchBtn.dataset.downloadCta = "true";
-	      topRow.appendChild(searchBtn);
-	      root.appendChild(topRow);
+		      topRow.appendChild(searchBtn);
+		      root.appendChild(topRow);
 
       const hero = el("div", "pp-shop-hero");
-      hero.appendChild(buildPill({ label: "Tomatillo Salsa Verde", className: "pp-app-pill--title pp-shop-recipe-pill" }));
+      hero.appendChild(
+        buildPill({
+          label: "Tomatillo Salsa Verde",
+          className: "pp-app-pill--title pp-shop-recipe-pill",
+        }),
+      );
       root.appendChild(hero);
 
-	      const stageNode = el("div", "pp-shop-stage");
-	      const itemsWrap = el("div", "pp-shop-items");
+      const buildShopCell = ({ key, src, label }) => {
+        const cell = el("div", `pp-shop-cell pp-shop-cell--${String(key || "")}`);
+        const asset = el("div", "pp-shop-cell-asset");
+        asset.appendChild(
+          imgEl({
+            src: String(src || ""),
+            className: `pp-shop-item-img pp-shop-item-img--${String(key || "")}`,
+            alt: "",
+          }),
+        );
+        cell.appendChild(asset);
+        cell.appendChild(el("div", "pp-shop-label", String(label || "")));
+        return cell;
+      };
 
-      itemsWrap.appendChild(imgEl({ src: "assets/objects/obj_garlic.png", className: "pp-shop-item pp-shop-item--garlic", alt: "" }));
-      itemsWrap.appendChild(imgEl({ src: "assets/ingredients/jalapeno.png", className: "pp-shop-item pp-shop-item--jalapeno", alt: "" }));
-      itemsWrap.appendChild(imgEl({ src: "assets/objects/obj_white_spice.png", className: "pp-shop-item pp-shop-item--salt", alt: "" }));
-      itemsWrap.appendChild(imgEl({ src: "assets/ingredients/olive_oil.png", className: "pp-shop-item pp-shop-item--oliveoil", alt: "" }));
-      itemsWrap.appendChild(imgEl({ src: "assets/ingredients/white_onion.png", className: "pp-shop-item pp-shop-item--onion", alt: "" }));
+      const buildShopRow = ({ className, items }) => {
+        const row = el("div", `pp-shop-row ${String(className || "")}`);
+        (Array.isArray(items) ? items : []).forEach((item) => row.appendChild(buildShopCell(item)));
+        return row;
+      };
+
+		      const stageNode = el("div", "pp-shop-stage");
+      const scrollNode = el("div", "pp-shop-scroll");
+		      const itemsWrap = el("div", "pp-shop-items pp-shop-items--stacked");
+
+      itemsWrap.appendChild(
+        buildShopRow({
+          className: "pp-shop-row--food-top",
+          items: [
+            { key: "garlic", src: "assets/objects/obj_garlic.png", label: "Garlic" },
+            { key: "jalapeno", src: "assets/ingredients/jalapeno.png", label: "Jalapeno" },
+            { key: "salt", src: "assets/objects/obj_white_spice.png", label: "Kosher Salt" },
+          ],
+        }),
+      );
+      itemsWrap.appendChild(
+        buildShopRow({
+          className: "pp-shop-row--food-bottom",
+          items: [
+            { key: "oliveoil", src: "assets/ingredients/olive_oil.png", label: "Olive oil" },
+            { key: "onion", src: "assets/ingredients/white_onion.png", label: "White Onion" },
+          ],
+        }),
+      );
+
       itemsWrap.appendChild(el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Household"));
       itemsWrap.appendChild(
-        imgEl({
-          src: "assets/objects/dishwashing_detergent.png",
-          className: "pp-shop-item pp-shop-item--dishdetergent",
-          alt: "",
-        }),
-      );
-      itemsWrap.appendChild(
-        imgEl({
-          src: "assets/objects/trash_bag_black.png",
-          className: "pp-shop-item pp-shop-item--trashbags",
-          alt: "",
+        buildShopRow({
+          className: "pp-shop-row--household",
+          items: [
+            {
+              key: "dishdetergent",
+              src: "assets/objects/dishwashing_detergent.png",
+              label: "Dishwashing detergent",
+            },
+            { key: "trashbags", src: "assets/objects/trash_bag_black.png", label: "Trash bags" },
+          ],
         }),
       );
 
-      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--garlic", "Garlic"));
-      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--jalapeno", "Jalapeno"));
-      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--salt", "Kosher Salt"));
-      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--oliveoil", "Olive oil"));
-      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--onion", "White Onion"));
-      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--dishdetergent", "Dishwashing detergent"));
-      itemsWrap.appendChild(el("div", "pp-shop-label pp-shop-label--trashbags", "Trash bags"));
-
-      stageNode.appendChild(itemsWrap);
+      scrollNode.appendChild(itemsWrap);
+      stageNode.appendChild(scrollNode);
 
       const bar = el("div", "pp-shop-bar");
-      bar.appendChild(buildCircle({ icon: "close", className: "pp-app-circle--danger", ariaLabel: "Cancel (preview)" }));
+      bar.appendChild(
+        buildCircle({ icon: "close", className: "pp-app-circle--danger", ariaLabel: "Cancel (preview)" }),
+      );
       const complete = buildPill({ label: "Complete shopping", className: "pp-app-pill--wide" });
       complete.dataset.downloadCta = "true";
       bar.appendChild(complete);
@@ -1981,6 +2017,7 @@
       const itemsWrap = stageNode ? stageNode.querySelector(".pp-shop-items") : null;
       const shopBar = stageNode ? stageNode.querySelector(".pp-shop-bar") : null;
       if (!stageNode || !itemsWrap || !shopBar) return;
+      if (itemsWrap.classList.contains("pp-shop-items--stacked")) return;
 
       const stageRect = stageNode.getBoundingClientRect();
       if (!stageRect.width || !stageRect.height) return;

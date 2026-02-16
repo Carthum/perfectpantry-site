@@ -2224,6 +2224,160 @@ html.pp-tour-locked body {
   letter-spacing: -0.01em;
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.18);
 }
+
+.pp-shop-stage {
+  display: flex;
+  flex-direction: column;
+}
+
+.pp-shop-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 8px 8px 96px;
+}
+
+.pp-shop-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.pp-shop-items--stacked {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 2px 2px 4px;
+  min-width: 0;
+}
+
+.pp-shop-items--stacked .pp-shop-row {
+  display: grid;
+  align-items: end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pp-shop-items--stacked .pp-shop-row--food-top {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pp-shop-items--stacked .pp-shop-row--food-bottom {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-inline: clamp(16px, 7%, 32px);
+}
+
+.pp-shop-items--stacked .pp-shop-row--household {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-inline: clamp(14px, 6%, 28px);
+}
+
+.pp-shop-items--stacked .pp-shop-cell {
+  --pp-shop-item-scale: 1;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+}
+
+.pp-shop-items--stacked .pp-shop-cell-asset {
+  width: 100%;
+  height: clamp(60px, 19vw, 84px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.pp-shop-items--stacked .pp-shop-item-img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: center bottom;
+  transform: scale(var(--pp-shop-item-scale));
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.18));
+  pointer-events: none;
+}
+
+.pp-shop-items--stacked .pp-shop-cell--garlic {
+  --pp-shop-item-scale: 0.98;
+}
+
+.pp-shop-items--stacked .pp-shop-cell--jalapeno {
+  --pp-shop-item-scale: 1.02;
+}
+
+.pp-shop-items--stacked .pp-shop-cell--salt {
+  --pp-shop-item-scale: 0.98;
+}
+
+.pp-shop-items--stacked .pp-shop-cell--oliveoil {
+  --pp-shop-item-scale: 1.24;
+}
+
+.pp-shop-items--stacked .pp-shop-cell--onion {
+  --pp-shop-item-scale: 0.84;
+}
+
+.pp-shop-items--stacked .pp-shop-cell--dishdetergent {
+  --pp-shop-item-scale: 0.92;
+}
+
+.pp-shop-items--stacked .pp-shop-cell--trashbags {
+  --pp-shop-item-scale: 0.92;
+}
+
+.pp-shop-items--stacked .pp-shop-section-chip {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  justify-self: center;
+  margin: 2px auto 0;
+  text-align: center;
+}
+
+.pp-shop-items--stacked .pp-shop-label {
+  position: static;
+  left: auto;
+  right: auto;
+  top: auto;
+  transform: none;
+  width: min(100%, 174px);
+  margin: 0 auto;
+  min-height: 42px;
+  padding: 0 12px;
+  white-space: normal;
+  text-align: center;
+  justify-content: center;
+  font-size: var(--pp-type-body-sm);
+}
+
+@media (max-width: 420px) {
+  .pp-shop-items--stacked {
+    gap: 10px;
+  }
+
+  .pp-shop-items--stacked .pp-shop-row {
+    gap: 8px;
+  }
+
+  .pp-shop-items--stacked .pp-shop-cell-asset {
+    height: clamp(56px, 18vw, 74px);
+  }
+
+  .pp-shop-items--stacked .pp-shop-label {
+    min-height: 40px;
+    font-size: var(--pp-type-caption);
+    padding: 0 11px;
+  }
+}
 .pp-app-modal {
   position: absolute;
   inset: 0;

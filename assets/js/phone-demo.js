@@ -2214,7 +2214,11 @@
     const buildSeg = ({ options, selectedId }) => {
       const wrap = el("div", "pp-app-seg");
       wrap.setAttribute("role", "tablist");
-      (options || []).forEach((opt) => {
+      const list = Array.isArray(options) ? options : [];
+      if (list.length > 0) wrap.classList.add(`pp-app-seg--count-${list.length}`);
+      if (list.length >= 4) wrap.classList.add("pp-app-seg--compact");
+
+      list.forEach((opt) => {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "pp-app-seg-btn";

@@ -4081,8 +4081,9 @@
       const colW = aside ? aside.getBoundingClientRect().width : mount.getBoundingClientRect().width;
       const maxWByCol = Math.floor(colW - 4);
 
-      const minW = 280;
-      const maxW = 400;
+      const compactMode = !stageMode || window.matchMedia("(max-width: 720px)").matches;
+      const minW = compactMode ? 250 : 280;
+      const maxW = compactMode ? 360 : 400;
       const maxOuterW = Math.max(1, Math.min(maxOuterWByH, maxWByCol, maxW));
       const desired = clamp(maxOuterW, minW, maxW);
       const target = Math.min(desired, maxOuterW);

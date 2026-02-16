@@ -721,8 +721,9 @@ html.pp-tour-locked body {
 }
 
 .pp-app-pill {
-  min-height: 54px;
-  padding: 0 18px;
+  min-height: clamp(44px, calc(var(--pp-phone-demo-w, 360px) * 0.135), 54px);
+  padding: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.02), 12px)
+    clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.05), 18px);
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.18);
   background: rgba(244, 231, 214, 0.92);
@@ -736,6 +737,7 @@ html.pp-tour-locked body {
   justify-content: center;
   gap: 8px;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+  min-width: 0;
   max-width: 100%;
   /* Never truncate button text in the demo. Wrap if needed. */
   overflow: visible;
@@ -746,7 +748,9 @@ html.pp-tour-locked body {
   overflow: visible;
   text-overflow: unset;
   white-space: normal;
-  line-height: 1.05;
+  line-height: 1.14;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .pp-app-pill:active {
@@ -808,7 +812,7 @@ html.pp-tour-locked body {
 
 .pp-top-row {
   display: grid;
-  grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(52px, 60px);
+  grid-template-columns: minmax(74px, auto) minmax(0, 1fr) minmax(48px, 60px);
   gap: 8px;
   align-items: center;
   padding-left: 1px;
@@ -832,8 +836,10 @@ html.pp-tour-locked body {
 }
 
 .pp-top-row .pp-top-pill > span {
-  white-space: nowrap;
-  line-height: 1;
+  white-space: normal;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .pp-top-row .pp-top-pill--list {
@@ -1077,11 +1083,13 @@ html.pp-tour-locked body {
 }
 
 .pp-app-nav-label {
-  font-size: var(--pp-type-caption);
+  font-size: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.026), 10.5px);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.14;
   max-width: 100%;
   white-space: nowrap;
+  overflow: visible;
+  text-align: center;
 }
 
 .pp-app-nav-indicator {
@@ -1350,7 +1358,9 @@ html.pp-tour-locked body {
 }
 
 .pp-cookbook-searchbar > span {
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
   overflow: visible;
   text-overflow: unset;
 }
@@ -2063,7 +2073,7 @@ html.pp-tour-locked body {
   left: 50%;
   transform: translateX(-50%);
   min-height: 34px;
-  padding: 0 14px;
+  padding: 6px 14px;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(233, 214, 191, 0.86);
@@ -2075,7 +2085,10 @@ html.pp-tour-locked body {
   font-size: var(--pp-type-body-sm);
   font-weight: 820;
   color: rgba(58, 42, 26, 0.84);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  line-height: 1.12;
   text-align: center;
 }
 
@@ -2652,14 +2665,16 @@ html.pp-tour-locked body {
   color: rgba(58, 42, 26, 0.92);
   cursor: pointer;
   min-width: 0;
-  white-space: nowrap;
+  min-height: clamp(34px, calc(var(--pp-phone-demo-w, 360px) * 0.1), 44px);
+  white-space: normal;
   word-break: normal;
-  overflow-wrap: normal;
+  overflow-wrap: anywhere;
   hyphens: none;
-  line-height: 1;
+  line-height: 1.08;
   text-align: center;
   overflow: visible;
   text-overflow: unset;
+  text-wrap: balance;
 }
 
 .pp-app-seg-btn[aria-selected="true"] {
@@ -3500,14 +3515,14 @@ html.pp-tour-locked body {
   font-size: 11px;
   font-weight: 850;
   color: rgba(58, 42, 26, 0.68);
-  line-height: 1;
+  line-height: 1.12;
 }
 
 .pp-recipe-pill-v {
   font-size: 12px;
   font-weight: 900;
   color: rgba(58, 42, 26, 0.88);
-  line-height: 1.05;
+  line-height: 1.12;
 }
 
 .pp-recipe-tags {
@@ -3648,7 +3663,7 @@ html.pp-tour-locked body {
   font-size: 14px;
   font-weight: 950;
   color: rgba(58, 42, 26, 0.9);
-  line-height: 1.05;
+  line-height: 1.12;
 }
 
 .pp-ing-sub {

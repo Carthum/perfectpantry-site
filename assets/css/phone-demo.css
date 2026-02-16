@@ -1346,7 +1346,7 @@ html.pp-tour-locked body {
 }
 
 .pp-cookbook-searchbar > span {
-  white-space: normal;
+  white-space: nowrap;
   overflow: visible;
   text-overflow: unset;
 }
@@ -2465,10 +2465,12 @@ html.pp-tour-locked body {
   color: rgba(58, 42, 26, 0.92);
   cursor: pointer;
   min-width: 0;
-  white-space: normal;
-  line-height: 1.06;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  line-height: 1;
   text-align: center;
-  overflow-wrap: anywhere;
   overflow: visible;
   text-overflow: unset;
 }
@@ -2713,13 +2715,21 @@ html.pp-tour-locked body {
 }
 
 .pp-app-seg-btn {
-  padding: 9px 10px;
-  font-size: 13px;
+  padding: 8px 8px;
+  font-size: clamp(11px, 2.2vw, 12px);
 }
 
 .pp-app-seg--compact .pp-app-seg-btn {
-  padding: 8px 7px;
-  font-size: 12px;
+  min-height: 34px;
+  padding: 7px 3px;
+  font-size: clamp(10px, 2vw, 11px);
+  font-weight: 840;
+  letter-spacing: 0;
+}
+
+.pp-app-seg--compact {
+  gap: 6px;
+  padding: 6px;
 }
 
 .pp-app-field {

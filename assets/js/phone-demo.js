@@ -686,18 +686,18 @@
       el(
         "p",
         "pp-app-download-body",
-        "Explore the interactive phone tour, then join the waitlist for launch updates and onboarding news.",
+        "Explore the interactive phone tour, then use support for launch updates and onboarding questions.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
     const appStore = document.createElement("a");
     appStore.className = "pp-app-download-btn";
-    appStore.href = "#waitlist";
-    appStore.textContent = "Join the waitlist";
+    appStore.href = "support.html";
+    appStore.textContent = "Contact support";
     const playStore = document.createElement("a");
     playStore.className = "pp-app-download-btn";
-    playStore.href = "#waitlist";
-    playStore.textContent = "Get updates";
+    playStore.href = "screenshots.html";
+    playStore.textContent = "See screenshots";
     downloadBtns.appendChild(appStore);
     downloadBtns.appendChild(playStore);
     downloadCard.appendChild(downloadBtns);

@@ -87,47 +87,6 @@
     return `mailto:${target}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(payload)}`;
   };
 
-  const setupWaitlistForm = () => {
-    const form = $("#waitlistForm");
-    const msg = $("#waitlistMessage");
-    if (!form) return;
-
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const data = new FormData(form);
-      const email = String(data.get("email") || "").trim();
-      if (!email) {
-        showMessage(msg, "Please add an email so we can contact you.", "error");
-        return;
-      }
-
-      const name = String(data.get("name") || "").trim() || "Not provided";
-      const household = String(data.get("household") || "").trim() || "Not provided";
-      const challenge = String(data.get("challenge") || "").trim() || "Not provided";
-      const notes = String(data.get("notes") || "").trim() || "None";
-
-      const subject = "Perfect Pantry waitlist request";
-      const lines = [
-        "New waitlist signup",
-        "",
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Household size: ${household}`,
-        `Biggest challenge: ${challenge}`,
-        `Notes: ${notes}`,
-      ];
-
-      window.location.href = buildMailto(subject, lines);
-      showMessage(
-        msg,
-        "Your mail app should open now with your waitlist message. If it does not, email support@perfectpantryapp.com.",
-        "success",
-      );
-      form.reset();
-    });
-  };
-
   const setupSupportForm = () => {
     const form = $("#supportForm");
     const msg = $("#supportMessage");
@@ -254,7 +213,6 @@
   setupAnchorClose();
   setupReveal();
   setupYear();
-  setupWaitlistForm();
   setupSupportForm();
   setupShotFilter();
   setupLightbox();

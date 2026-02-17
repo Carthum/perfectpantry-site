@@ -3,8 +3,7 @@
 This folder is a lightweight, responsive marketing/support site for **Perfect Pantry**.
 
 ## Files
-- `index.html` — Landing page + waitlist section
-- `tutorial.html` — Step-by-step tutorial layout (anchors + screenshots)
+- `index.html` — Landing page with interactive guided tour
 - `screenshots.html` — Screenshot gallery with filter + lightbox
 - `support.html` — FAQs + contact form (template)
 - `privacy.html` — Starter privacy policy page

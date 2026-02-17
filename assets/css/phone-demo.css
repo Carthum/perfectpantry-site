@@ -483,6 +483,13 @@ html.pp-tour-locked body {
   --pp-type-caption: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 11px);
 }
 
+.pp-app :where(button) {
+  -webkit-appearance: none;
+  appearance: none;
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
+}
+
 .pp-app[aria-hidden="true"] {
   display: none;
 }
@@ -950,6 +957,7 @@ html.pp-tour-locked body {
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(244, 231, 214, 0.88);
   font: inherit;
+  color: var(--pp-app-ink);
   cursor: pointer;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
@@ -989,6 +997,7 @@ html.pp-tour-locked body {
   gap: 10px;
   cursor: pointer;
   font: inherit;
+  color: var(--pp-app-ink);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
 }
 
@@ -1191,6 +1200,7 @@ html.pp-tour-locked body {
   align-content: center;
   gap: 10px;
   font: inherit;
+  color: var(--pp-app-ink);
   cursor: pointer;
 }
 
@@ -1597,6 +1607,7 @@ html.pp-tour-locked body {
   text-align: center;
   padding: 8px 10px;
   font: inherit;
+  color: var(--pp-app-ink);
   cursor: pointer;
 }
 
@@ -1931,6 +1942,7 @@ html.pp-tour-locked body {
   align-items: center;
   cursor: pointer;
   font: inherit;
+  color: var(--pp-app-ink);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
 }
 

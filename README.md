@@ -4,7 +4,6 @@ This folder is a lightweight, responsive marketing/support site for **Perfect Pa
 
 ## Files
 - `index.html` — Landing page with interactive guided tour
-- `screenshots.html` — Screenshot gallery with filter + lightbox
 - `support.html` — FAQs + contact form (template)
 - `privacy.html` — Starter privacy policy page
 - `assets/css/styles.css` — Styling (edit the CSS variables at the top to change the look)

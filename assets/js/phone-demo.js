@@ -696,8 +696,8 @@
     appStore.textContent = "Contact support";
     const playStore = document.createElement("a");
     playStore.className = "pp-app-download-btn";
-    playStore.href = "screenshots.html";
-    playStore.textContent = "See screenshots";
+    playStore.href = "privacy.html";
+    playStore.textContent = "Privacy policy";
     downloadBtns.appendChild(appStore);
     downloadBtns.appendChild(playStore);
     downloadCard.appendChild(downloadBtns);

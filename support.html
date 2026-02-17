@@ -75,118 +75,83 @@
         </div>
       </section>
 
-      <section class="section-tight" data-reveal>
-        <div class="grid-3">
-          <article class="surface info-card">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Response expectations</h3>
-            <p class="muted">Most requests get a response within 1 to 2 business days.</p>
-          </article>
-          <article class="surface info-card">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Best bug reports</h3>
-            <p class="muted">Include reproduction steps, device type, and a screenshot.</p>
-          </article>
-          <article class="surface info-card">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Feature feedback</h3>
-            <p class="muted">Tell us what task you are trying to complete and where flow breaks.</p>
-          </article>
-        </div>
-      </section>
-
       <section class="section" data-reveal>
-        <div class="grid-2">
-          <div class="surface form-shell">
-            <div class="section-head" style="margin-bottom: 0.8rem">
-              <p class="eyebrow">Contact support</p>
-              <h2>Send a support message</h2>
-              <p class="muted">
-                This form opens your email app with a prefilled support draft to
-                <strong>support@perfectpantryapp.com</strong>.
-              </p>
-            </div>
-
-            <form id="supportForm" aria-label="Support form">
-              <div class="form-row">
-                <label>
-                  Name
-                  <input name="name" autocomplete="name" placeholder="Your name" />
-                </label>
-                <label>
-                  Email
-                  <input
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    required
-                    placeholder="you@example.com"
-                  />
-                </label>
-              </div>
-
-              <div class="form-row">
-                <label>
-                  Category
-                  <select name="category">
-                    <option value="Bug report">Bug report</option>
-                    <option value="Feature request">Feature request</option>
-                    <option value="Account help">Account help</option>
-                    <option value="General question">General question</option>
-                  </select>
-                </label>
-                <label>
-                  Device
-                  <select name="device">
-                    <option value="iPhone">iPhone</option>
-                    <option value="Android">Android</option>
-                    <option value="Web (marketing site)">Web (marketing site)</option>
-                    <option value="Not sure" selected>Not sure</option>
-                  </select>
-                </label>
-              </div>
-
-              <div class="form-row">
-                <label>
-                  App version (if known)
-                  <input name="app_version" placeholder="Example: 1.0.0+1" />
-                </label>
-                <label>
-                  Urgency
-                  <select name="urgency">
-                    <option value="Low">Low</option>
-                    <option value="Medium" selected>Medium</option>
-                    <option value="High">High</option>
-                  </select>
-                </label>
-              </div>
-
-              <label>
-                Details
-                <textarea
-                  name="details"
-                  required
-                  placeholder="What happened? What did you expect instead?"
-                ></textarea>
-              </label>
-
-              <button class="btn btn-primary" type="submit">Create support email</button>
-              <p id="supportMessage" class="form-message" hidden></p>
-            </form>
+        <div class="surface form-shell">
+          <div class="section-head" style="margin-bottom: 0.8rem">
+            <p class="eyebrow">Contact support</p>
+            <h2>Send a support message</h2>
+            <p class="muted">
+              This form opens your email app with a prefilled support draft to
+              <strong>support@perfectpantryapp.com</strong>.
+            </p>
           </div>
 
-          <aside class="surface panel">
-            <div class="section-head" style="margin-bottom: 0.8rem">
-              <p class="eyebrow">Before you submit</p>
-              <h2>Checklist for faster resolution</h2>
+          <form id="supportForm" aria-label="Support form">
+            <div class="form-row">
+              <label>
+                Name
+                <input name="name" autocomplete="name" placeholder="Your name" />
+              </label>
+              <label>
+                Email
+                <input
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="you@example.com"
+                />
+              </label>
             </div>
-            <ul class="list-clean">
-              <li>Check the <a href="index.html#guided-tour">homepage guided tour</a> for expected workflow.</li>
-              <li>Attach screenshot(s) if UI behavior is unexpected.</li>
-              <li>Describe the exact step where behavior diverged.</li>
-              <li>Include app version and device model if available.</li>
-            </ul>
-            <p class="small" style="margin-top: 0.9rem">
-              Direct email: <a href="mailto:support@perfectpantryapp.com">support@perfectpantryapp.com</a>
-            </p>
-          </aside>
+
+            <div class="form-row">
+              <label>
+                Category
+                <select name="category">
+                  <option value="Bug report">Bug report</option>
+                  <option value="Feature request">Feature request</option>
+                  <option value="Account help">Account help</option>
+                  <option value="General question">General question</option>
+                </select>
+              </label>
+              <label>
+                Device
+                <select name="device">
+                  <option value="iPhone">iPhone</option>
+                  <option value="Android">Android</option>
+                  <option value="Web (marketing site)">Web (marketing site)</option>
+                  <option value="Not sure" selected>Not sure</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label>
+                App version (if known)
+                <input name="app_version" placeholder="Example: 1.0.0+1" />
+              </label>
+              <label>
+                Urgency
+                <select name="urgency">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              Details
+              <textarea
+                name="details"
+                required
+                placeholder="What happened? What did you expect instead?"
+              ></textarea>
+            </label>
+
+            <button class="btn btn-primary" type="submit">Create support email</button>
+            <p id="supportMessage" class="form-message" hidden></p>
+          </form>
         </div>
       </section>
 

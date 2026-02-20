@@ -108,7 +108,7 @@
         return;
       }
 
-      const subject = `Perfect Pantry support: ${String(data.get("category") || "General")}`;
+      const subject = `Pantry & Plate support: ${String(data.get("category") || "General")}`;
       const lines = [
         "Support request",
         "",
@@ -177,7 +177,7 @@
       if (!src) return;
 
       image.src = src;
-      image.alt = node.dataset.title || "Perfect Pantry screenshot";
+      image.alt = node.dataset.title || "Pantry & Plate screenshot";
       title.textContent = node.dataset.title || "Screenshot";
       copy.textContent = node.dataset.caption || "";
       modal.setAttribute("aria-hidden", "false");

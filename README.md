@@ -1,6 +1,6 @@
-# Perfect Pantry Website Template (HTML/CSS/JS)
+# Pantry & Plate Website Template (HTML/CSS/JS)
 
-This folder is a lightweight, responsive marketing/support site for **Perfect Pantry**.
+This folder is a lightweight, responsive marketing/support site for **Pantry & Plate**.
 
 ## Files
 - `index.html` — Landing page with interactive guided tour

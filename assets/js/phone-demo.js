@@ -3878,7 +3878,7 @@
     ]);
 
     // Desktop stage mode supports reactive copy for tabs + overlay screens.
-    // Mobile/stacked mode stays scroll-step only.
+    // Mobile/stacked mode keeps only the core step copy cards.
     const stageCopyScreens = stageMode
       ? [...STEPS, ...MODAL_SCREENS, PANTRY_SPICE_COPY]
       : [...STEPS];
@@ -4052,22 +4052,28 @@
         syncRouteFromBaseStep();
         const screen = activePhoneScreen();
         if (stageMode) {
-          // Keep the scrolly section background and left-copy tied to the scroll position (base step).
-          // In-phone overlays must not "take over" the page on desktop.
+          // Keep the scrolly section background tied to the scroll position (base step).
           const base = baseStep();
           stage.dataset.ppBg = (base && base.bg) || "home";
-          setActiveCopyStep(stepNodesById, activeCopyId());
         }
+        syncCopyState();
         phone.setScreen(screen);
       },
     });
+
+    const syncCopyState = () => {
+      const fallbackId = (baseStep() && baseStep().id) || (STEPS[0] && STEPS[0].id) || "";
+      const candidateId = activeCopyId();
+      const nextId = stepNodesById.has(candidateId) ? candidateId : fallbackId;
+      setActiveCopyStep(stepNodesById, nextId);
+    };
 
     const render = () => {
       syncRouteFromBaseStep();
       const screen = activePhoneScreen();
       const base = baseStep();
       stage.dataset.ppBg = (base && base.bg) || "home";
-      setActiveCopyStep(stepNodesById, activeCopyId());
+      syncCopyState();
       phone.setScreen(screen);
     };
 
@@ -4111,14 +4117,20 @@
       // height/width, which could push the phone partially off-screen on shorter viewports,
       // making in-phone modals feel like a page overlay.
       const maxPhoneOuterH = Math.max(1, stickyContentH - tipSpace - safe);
-      const maxOuterWByH = Math.floor(screenAspect * Math.max(1, maxPhoneOuterH - framePad) + framePad);
-
-      const colW = aside ? aside.getBoundingClientRect().width : mount.getBoundingClientRect().width;
-      const maxWByCol = Math.floor(colW - 4);
+      const maxOuterWByH = stageMode
+        ? Math.floor(screenAspect * Math.max(1, maxPhoneOuterH - framePad) + framePad)
+        : Number.POSITIVE_INFINITY;
 
       const compactMode = !stageMode || window.matchMedia("(max-width: 720px)").matches;
-      const minW = compactMode ? 250 : 280;
-      const maxW = compactMode ? 360 : 400;
+      const measuredColW = aside
+        ? aside.getBoundingClientRect().width
+        : mount.getBoundingClientRect().width;
+      const fallbackColW = Math.max(1, window.innerWidth - (compactMode ? 8 : 28));
+      const colW = Math.max(measuredColW, fallbackColW);
+      const colInset = compactMode ? 8 : 4;
+      const maxWByCol = Math.floor(colW - colInset);
+      const minW = compactMode ? 280 : 280;
+      const maxW = compactMode ? 420 : 400;
       const maxOuterW = Math.max(1, Math.min(maxOuterWByH, maxWByCol, maxW));
       const desired = clamp(maxOuterW, minW, maxW);
       const target = Math.min(desired, maxOuterW);
@@ -4157,12 +4169,16 @@
       phoneNavState.params = null;
       phoneNavState.downloadCtaOpen = false;
       phone.setScreen(activePhoneScreen());
+      syncCopyState();
     }
 
     if (reduceMotion) stage.classList.add("pp-reduce-motion");
 
     // Ensure initial sizing is correct even before the first resize.
     syncPhoneWidth();
+    window.addEventListener("resize", syncPhoneWidth, { passive: true });
+    window.addEventListener("load", syncPhoneWidth, { once: true });
+    window.setTimeout(syncPhoneWidth, 220);
     if (stageMode) render();
   };
 

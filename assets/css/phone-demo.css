@@ -4281,22 +4281,61 @@ html.pp-tour-locked body {
 
   .pp-scrolly-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .pp-tour-sentinels {
     display: none;
   }
 
+  .pp-tour-right {
+    order: -1;
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    padding-inline: clamp(0.5rem, 2.8vw, 0.95rem);
+  }
+
+  .pp-demo-hero-mount {
+    width: 100%;
+  }
+
+  .pp-demo-hero-mount .pp-phone {
+    width: min(var(--pp-phone-demo-w, 390px), 100%);
+  }
+
+  .pp-phone-frame {
+    padding: 10px;
+  }
+
+  .pp-tour-tip {
+    margin-top: 0.6rem;
+    max-width: 60ch;
+    text-align: center;
+    padding-inline: 0.35rem;
+  }
+
+  .pp-tour-left {
+    gap: 0.7rem;
+  }
+
   .pp-tour-stack {
-    gap: 1rem;
+    gap: 0;
   }
 
   .pp-tour-step {
     grid-area: auto;
-    opacity: 1;
+    display: none;
+    opacity: 0;
     transform: none;
-    pointer-events: auto;
+    pointer-events: none;
     transition: none;
+  }
+
+  .pp-tour-step.is-active {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    animation: ppTourCardIn 260ms ease;
   }
 
   /* When sticky is disabled, remove the artificial stage scroll height. */
@@ -4309,5 +4348,16 @@ html.pp-tour-locked body {
 @media (max-width: 860px) {
   .pp-demo-tabs {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@keyframes ppTourCardIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
   }
 }

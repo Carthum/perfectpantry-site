@@ -4273,6 +4273,10 @@ html.pp-tour-locked body {
 }
 
 @media (max-width: 960px), (hover: none) and (pointer: coarse) {
+  .pp-scrolly {
+    overflow-x: clip;
+  }
+
   .pp-scrolly-sticky {
     position: static;
     height: auto;
@@ -4282,6 +4286,7 @@ html.pp-tour-locked body {
   .pp-scrolly-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+    overflow-x: clip;
   }
 
   .pp-tour-sentinels {
@@ -4290,17 +4295,22 @@ html.pp-tour-locked body {
 
   .pp-tour-right {
     order: -1;
-    width: 100vw;
-    margin-inline: calc(50% - 50vw);
-    padding-inline: clamp(0.5rem, 2.8vw, 0.95rem);
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow-x: clip;
   }
 
   .pp-demo-hero-mount {
     width: 100%;
+    max-width: 100%;
+    padding-inline: clamp(0.4rem, 2.8vw, 0.85rem);
   }
 
   .pp-demo-hero-mount .pp-phone {
-    width: min(var(--pp-phone-demo-w, 390px), 100%);
+    width: min(var(--pp-phone-demo-w, 390px), 92vw);
+    max-width: 100%;
   }
 
   .pp-phone-frame {

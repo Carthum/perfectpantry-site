@@ -4404,6 +4404,11 @@ html.pp-tour-locked body {
   display: flex !important;
 }
 
+.pp-scrolly.pp-tour-stage {
+  overflow: visible !important;
+  overflow-x: visible !important;
+}
+
 .pp-scrolly.pp-tour-stage .pp-scrolly-grid {
   grid-template-columns: minmax(0, 1fr) minmax(320px, 420px) !important;
   gap: 2.25rem !important;

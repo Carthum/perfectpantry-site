@@ -27,6 +27,7 @@
   const actionCloseDownloadCta = () => ({ type: "close_download_cta" });
   const DESKTOP_STAGE_MIN_WIDTH = 961;
   const DESKTOP_STAGE_VIEWPORT_FALLBACK_MIN_WIDTH = 720;
+  const DESKTOP_STAGE_INPUT_MEDIA = "(hover: hover) and (pointer: fine)";
 
   // Single source of truth for the demo.
   // Each step owns BOTH the left copy and the right phone UI state.
@@ -621,7 +622,7 @@
     splashImg.decoding = "async";
     splashImg.loading = "eager";
     splashImg.alt = "Pantry & Plate loading screen";
-    splashImg.src = "assets/brand/pp-splash-tablet-source.png";
+    splashImg.src = "assets/brand/pp-splash-ios-source.png";
 
     const overlay = el("div", "pp-phone-overlay");
 
@@ -3809,13 +3810,16 @@
     const hasDesktopWidth =
       hasMatchMedia &&
       window.matchMedia(`(min-width: ${DESKTOP_STAGE_MIN_WIDTH}px)`).matches;
+    const hasDesktopInput =
+      hasMatchMedia && window.matchMedia(DESKTOP_STAGE_INPUT_MEDIA).matches;
     const screenWidth = window.screen
       ? Math.max(window.screen.width || 0, window.screen.availWidth || 0)
       : 0;
     const hasDesktopScreenFallbackWidth =
       screenWidth >= DESKTOP_STAGE_MIN_WIDTH &&
       viewportWidth >= DESKTOP_STAGE_VIEWPORT_FALLBACK_MIN_WIDTH;
-    const stageMode = hasDesktopWidth || hasDesktopScreenFallbackWidth;
+    const stageMode =
+      hasDesktopWidth || hasDesktopInput || hasDesktopScreenFallbackWidth;
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(
@@ -3824,7 +3828,7 @@
 
     // Preload assets early so scroll-driven swaps don't flash.
     preloadImages([
-      "assets/brand/pp-splash-tablet-source.png",
+      "assets/brand/pp-splash-ios-source.png",
       "assets/backgrounds/bg_home.jpg",
       "assets/backgrounds/bg_pantry.jpg",
       "assets/backgrounds/bg_cookbook.jpg",

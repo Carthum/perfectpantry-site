@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appID": "MC62AFMUSJ.com.perfectpantryapp.perfectpantry",
+        "appID": "MC62AFMUSJ.com.pantryandplate.app",
         "paths": [
           "/auth/callback/*",
           "/auth/callback"

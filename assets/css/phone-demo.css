@@ -4392,17 +4392,40 @@ html.pp-tour-locked body {
   }
 }
 
-@media (min-width: 961px) {
-  .pp-scrolly.pp-tour-stage .pp-scrolly-sticky {
-    position: -webkit-sticky !important;
-    position: sticky !important;
-    top: var(--nav-height) !important;
-    height: calc(100vh - var(--nav-height)) !important;
-    display: flex !important;
-  }
-
-  .pp-scrolly.pp-tour-stage .pp-scrolly-spacer {
-    display: block !important;
-    height: calc((var(--pp-step-count) - 1) * (100vh - var(--nav-height))) !important;
-  }
+@media.pp-scrolly.pp-tour-stage {
+  overflow-x: visible !important;
 }
+
+.pp-scrolly.pp-tour-stage .pp-scrolly-sticky {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: var(--nav-height) !important;
+  height: calc(100vh - var(--nav-height)) !important;
+  display: flex !important;
+}
+
+.pp-scrolly.pp-tour-stage .pp-scrolly-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px) !important;
+  gap: 2.25rem !important;
+  overflow-x: visible !important;
+}
+
+.pp-scrolly.pp-tour-stage .pp-tour-right {
+  order: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
+  padding-inline: 0 !important;
+  overflow-x: visible !important;
+}
+
+.pp-scrolly.pp-tour-stage .pp-tour-step {
+  grid-area: 1 / 1 !important;
+  display: block !important;
+}
+
+.pp-scrolly.pp-tour-stage .pp-scrolly-spacer {
+  display: block !important;
+  height: calc((var(--pp-step-count) - 1) * (100vh - var(--nav-height))) !important;
+}
+

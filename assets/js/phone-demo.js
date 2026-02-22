@@ -619,7 +619,7 @@
     splashImg.decoding = "async";
     splashImg.loading = "eager";
     splashImg.alt = "Pantry & Plate loading screen";
-    splashImg.src = "assets/brand/pp-splash-tablet-source.png";
+    splashImg.src = "assets/brand/pp-splash-ios-source.png";
 
     const overlay = el("div", "pp-phone-overlay");
 
@@ -3798,7 +3798,7 @@
     const reduceMotion = prefersReducedMotion();
     const stageMode =
       window.matchMedia &&
-      window.matchMedia("(min-width: 961px)").matches;
+      window.matchMedia("(min-width: 860px)").matches;
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(
@@ -3807,7 +3807,7 @@
 
     // Preload assets early so scroll-driven swaps don't flash.
     preloadImages([
-      "assets/brand/pp-splash-tablet-source.png",
+      "assets/brand/pp-splash-ios-source.png",
       "assets/backgrounds/bg_home.jpg",
       "assets/backgrounds/bg_pantry.jpg",
       "assets/backgrounds/bg_cookbook.jpg",

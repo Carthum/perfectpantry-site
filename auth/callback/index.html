@@ -11,7 +11,14 @@
         --ink-soft: #5b4130;
         --accent: #d17e2f;
         --line: rgba(76, 50, 30, 0.25);
+        --line-strong: rgba(76, 50, 30, 0.45);
         --card: rgba(255, 255, 255, 0.58);
+        --warn-bg: rgba(255, 236, 209, 0.78);
+        --warn-line: rgba(209, 126, 47, 0.35);
+        --ok-bg: rgba(225, 248, 233, 0.84);
+        --ok-line: rgba(63, 138, 85, 0.45);
+        --err-bg: rgba(255, 226, 223, 0.88);
+        --err-line: rgba(186, 69, 69, 0.45);
       }
 
       * {
@@ -60,9 +67,19 @@
         margin-top: 14px;
         padding: 10px 12px;
         border-radius: 12px;
-        border: 1px solid rgba(209, 126, 47, 0.35);
-        background: rgba(255, 236, 209, 0.74);
+        border: 1px solid var(--warn-line);
+        background: var(--warn-bg);
         font-weight: 600;
+      }
+
+      .status.ok {
+        border-color: var(--ok-line);
+        background: var(--ok-bg);
+      }
+
+      .status.error {
+        border-color: var(--err-line);
+        background: var(--err-bg);
       }
 
       .row {
@@ -81,6 +98,11 @@
         cursor: pointer;
         text-decoration: none;
         padding: 11px 14px;
+      }
+
+      button[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
       }
 
       .button-primary {
@@ -120,6 +142,39 @@
         color: #4b2f1d;
       }
 
+      .field {
+        margin-top: 12px;
+      }
+
+      .field label {
+        display: block;
+        font-size: 0.88rem;
+        font-weight: 800;
+        color: #5a3e2b;
+      }
+
+      .field input {
+        width: 100%;
+        margin-top: 6px;
+        border: 1px solid var(--line-strong);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 10px 12px;
+        font: inherit;
+        color: var(--ink);
+      }
+
+      .field input:focus {
+        outline: 2px solid rgba(209, 126, 47, 0.32);
+        border-color: rgba(209, 126, 47, 0.8);
+      }
+
+      .small {
+        margin-top: 8px;
+        font-size: 0.82rem;
+        color: #6d4f3a;
+      }
+
       .desktop-help {
         margin-top: 16px;
       }
@@ -140,12 +195,30 @@
       <section class="card">
         <h1 id="headline">Continue in Pantry & Plate</h1>
         <p>
-          This secure link can continue sign-in or password recovery in the Pantry & Plate app.
+          This secure link can continue sign-in or password recovery in Pantry & Plate.
         </p>
 
         <div id="status" class="status">Preparing secure handoff...</div>
 
-        <div class="row">
+        <form id="resetForm" class="block" hidden>
+          <p class="block-title">Reset password on this device</p>
+          <p class="small">Use at least 8 characters.</p>
+          <div class="field">
+            <label for="newPassword">New password</label>
+            <input id="newPassword" type="password" autocomplete="new-password" />
+          </div>
+          <div class="field">
+            <label for="confirmPassword">Confirm password</label>
+            <input id="confirmPassword" type="password" autocomplete="new-password" />
+          </div>
+          <div class="row">
+            <button id="savePasswordBtn" class="button-primary" type="submit">
+              Save new password
+            </button>
+          </div>
+        </form>
+
+        <div id="appActions" class="row">
           <a id="openBtn" class="button-link button-primary" href="#">
             Open Pantry & Plate
           </a>
@@ -153,12 +226,12 @@
             Copy app link
           </button>
           <button id="copyPhoneUrlBtn" class="button-secondary" type="button">
-            Copy phone-safe link
+            Copy current link
           </button>
         </div>
 
         <div class="block">
-          <p class="block-title">Phone-safe link</p>
+          <p class="block-title">Current link</p>
           <code id="phoneUrlText"></code>
         </div>
 
@@ -169,23 +242,24 @@
 
         <div id="desktopHelp" class="desktop-help" hidden>
           <p>
-            Open this flow on your phone to finish in the app. If needed, send yourself the
-            phone-safe link above.
+            If you prefer the app flow, open this link on your phone and continue there.
           </p>
           <ol>
             <li>Open Pantry & Plate on your phone.</li>
-            <li>Use your reset email link there, or paste the phone-safe link in mobile browser.</li>
-            <li>Set your new password in the in-app reset screen.</li>
+            <li>Open your reset email link, or paste the copied current link into mobile browser.</li>
+            <li>Complete the flow in the app.</li>
           </ol>
-          <p>
-            Need help? Visit <a href="/support.html">Support</a>.
-          </p>
+          <p>Need help? Visit <a href="/support.html">Support</a>.</p>
         </div>
       </section>
     </main>
 
     <script>
       (function () {
+        const SUPABASE_URL = "https://api.pantryandplate.app";
+        const SUPABASE_ANON_KEY = "sb_publishable_rc-WgqGuUSihr5yK8uS-ZQ_YV5FklsD";
+        const MIN_PASSWORD_LENGTH = 8;
+
         const statusEl = document.getElementById("status");
         const headlineEl = document.getElementById("headline");
         const openBtn = document.getElementById("openBtn");
@@ -194,32 +268,21 @@
         const phoneUrlText = document.getElementById("phoneUrlText");
         const appUrlText = document.getElementById("appUrlText");
         const desktopHelp = document.getElementById("desktopHelp");
+        const resetForm = document.getElementById("resetForm");
+        const newPasswordEl = document.getElementById("newPassword");
+        const confirmPasswordEl = document.getElementById("confirmPassword");
+        const savePasswordBtn = document.getElementById("savePasswordBtn");
 
-        const pageUrl = new URL(window.location.href);
-        const queryAndHash = new URLSearchParams(pageUrl.search);
-        const hash = pageUrl.hash ? pageUrl.hash.substring(1) : "";
-
-        if (hash) {
-          const hashParams = new URLSearchParams(hash);
-          hashParams.forEach((value, key) => {
-            queryAndHash.append(key, value);
-          });
+        function setStatus(message, tone) {
+          statusEl.textContent = message;
+          statusEl.classList.remove("ok", "error");
+          if (tone === "ok") statusEl.classList.add("ok");
+          if (tone === "error") statusEl.classList.add("error");
         }
 
-        const params = queryAndHash.toString();
-        const deepLinkBase = "pantryandplate://login-callback/";
-        const deepLink = params ? `${deepLinkBase}?${params}` : deepLinkBase;
-        const phoneSafeLink = pageUrl.toString();
-        const flowType = (queryAndHash.get("type") || "").toLowerCase();
-
-        const isRecovery = flowType === "recovery";
-        if (isRecovery) {
-          headlineEl.textContent = "Continue password reset in Pantry & Plate";
+        function maskForDisplay(url) {
+          return url.length > 220 ? url.slice(0, 216) + "..." : url;
         }
-
-        openBtn.href = deepLink;
-        phoneUrlText.textContent = phoneSafeLink;
-        appUrlText.textContent = deepLink;
 
         async function copyText(text, successMessage) {
           try {
@@ -236,36 +299,150 @@
               document.execCommand("copy");
               document.body.removeChild(node);
             }
-            statusEl.textContent = successMessage;
+            setStatus(successMessage, "ok");
           } catch (_err) {
-            statusEl.textContent = "Could not copy automatically. Select the link text and copy it manually.";
+            setStatus("Could not copy automatically. Select and copy the text manually.", "error");
           }
         }
+
+        const pageUrl = new URL(window.location.href);
+        const queryAndHash = new URLSearchParams(pageUrl.search);
+        const hash = pageUrl.hash ? pageUrl.hash.substring(1) : "";
+
+        if (hash) {
+          const hashParams = new URLSearchParams(hash);
+          hashParams.forEach((value, key) => {
+            queryAndHash.append(key, value);
+          });
+        }
+
+        const params = queryAndHash.toString();
+        const deepLinkBase = "pantryandplate://login-callback/";
+        const deepLink = params ? `${deepLinkBase}?${params}` : deepLinkBase;
+        const flowType = (queryAndHash.get("type") || "").toLowerCase();
+        const isRecovery = flowType === "recovery";
+        const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent || "");
+        const accessToken = (queryAndHash.get("access_token") || "").trim();
+
+        const errorDescription =
+          queryAndHash.get("error_description") || queryAndHash.get("error");
+
+        if (isRecovery) {
+          headlineEl.textContent = "Reset your password";
+        }
+
+        openBtn.href = deepLink;
+        phoneUrlText.textContent = maskForDisplay(pageUrl.toString());
+        appUrlText.textContent = maskForDisplay(deepLink);
 
         copyAppLinkBtn.addEventListener("click", function () {
           copyText(deepLink, "Copied app link.");
         });
 
         copyPhoneUrlBtn.addEventListener("click", function () {
-          copyText(phoneSafeLink, "Copied phone-safe link.");
+          copyText(pageUrl.toString(), "Copied current link.");
         });
 
-        const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent || "");
+        if (errorDescription) {
+          setStatus(`Link error: ${errorDescription}`, "error");
+        }
+
+        if (isRecovery && accessToken) {
+          resetForm.hidden = false;
+          if (!errorDescription) {
+            setStatus("Recovery link accepted. Set your new password below.", "ok");
+          }
+
+          let submitting = false;
+          resetForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            if (submitting) return;
+
+            const password = (newPasswordEl.value || "").trim();
+            const confirm = (confirmPasswordEl.value || "").trim();
+
+            if (password.length < MIN_PASSWORD_LENGTH) {
+              setStatus(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`, "error");
+              return;
+            }
+            if (password !== confirm) {
+              setStatus("Passwords do not match.", "error");
+              return;
+            }
+
+            submitting = true;
+            savePasswordBtn.disabled = true;
+            setStatus("Saving your new password...", "");
+
+            try {
+              const response = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  apikey: SUPABASE_ANON_KEY,
+                  Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({ password }),
+              });
+
+              let payload = null;
+              try {
+                payload = await response.json();
+              } catch (_err) {
+                payload = null;
+              }
+
+              if (!response.ok) {
+                const msg =
+                  (payload && (payload.msg || payload.error_description || payload.error)) ||
+                  "Could not update password. The link may be expired.";
+                throw new Error(msg);
+              }
+
+              fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+                method: "POST",
+                headers: {
+                  apikey: SUPABASE_ANON_KEY,
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }).catch(() => {});
+
+              setStatus("Password updated. You can now sign in with your new password.", "ok");
+              resetForm.reset();
+              if (window.history && window.history.replaceState) {
+                window.history.replaceState({}, document.title, "/auth/callback/");
+              }
+            } catch (error) {
+              setStatus(error.message || "Could not update password.", "error");
+            } finally {
+              submitting = false;
+              savePasswordBtn.disabled = false;
+            }
+          });
+        } else {
+          desktopHelp.hidden = false;
+          if (!errorDescription) {
+            if (isRecovery) {
+              setStatus(
+                "This recovery link is missing a usable token. Request a new reset email and try again.",
+                "error",
+              );
+            } else {
+              setStatus("Continue sign-in in the app, or copy this link to your phone.", "");
+            }
+          }
+        }
+
         if (isMobile) {
-          statusEl.textContent = "Trying to open Pantry & Plate...";
           window.setTimeout(function () {
             window.location.href = deepLink;
           }, 80);
-          window.setTimeout(function () {
-            statusEl.textContent = "If the app did not open, tap \"Open Pantry & Plate\".";
-          }, 1300);
-          return;
+          if (!(isRecovery && accessToken)) {
+            window.setTimeout(function () {
+              setStatus("If the app did not open, tap \"Open Pantry & Plate\".", "");
+            }, 1300);
+          }
         }
-
-        desktopHelp.hidden = false;
-        statusEl.textContent = isRecovery
-          ? "This recovery link opened on desktop. Finish reset in the mobile app."
-          : "This sign-in link opened on desktop. Continue in the mobile app.";
       })();
     </script>
   </body>

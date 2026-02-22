@@ -25,6 +25,7 @@
   const actionSetPantryView = (view) => ({ type: "set_pantry_view", view });
   const actionOpenDownloadCta = () => ({ type: "open_download_cta" });
   const actionCloseDownloadCta = () => ({ type: "close_download_cta" });
+  const DESKTOP_STAGE_MIN_WIDTH = 961;
 
   // Single source of truth for the demo.
   // Each step owns BOTH the left copy and the right phone UI state.
@@ -3705,7 +3706,13 @@
     };
   };
 
-  const createScrollStageController = ({ stage, steps, onStepIndex, onResize }) => {
+  const createScrollStageController = ({
+    stage,
+    steps,
+    onStepIndex,
+    onResize,
+    onScrollTick,
+  }) => {
     let activeStep = -1;
     let stageTop = 0;
     let stageHeight = 0;
@@ -3733,15 +3740,12 @@
 
     const progressToStepIndex = (progress01) => {
       if (steps.length <= 1) return 0;
-      return clamp(
-        Math.round(progress01 * (steps.length - 1)),
-        0,
-        steps.length - 1,
-      );
+      return clamp(Math.floor(progress01 * steps.length), 0, steps.length - 1);
     };
 
     const tick = () => {
       rafId = 0;
+      if (typeof onScrollTick === "function") onScrollTick();
       const next = progressToStepIndex(computeProgress());
       if (next === activeStep) return;
       activeStep = next;
@@ -3797,8 +3801,10 @@
 
     const reduceMotion = prefersReducedMotion();
     const stageMode =
-      window.matchMedia &&
-      window.matchMedia("(min-width: 860px)").matches;
+      !!(
+        window.matchMedia &&
+        window.matchMedia(`(min-width: ${DESKTOP_STAGE_MIN_WIDTH}px)`).matches
+      );
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(
@@ -4144,6 +4150,11 @@
       createScrollStageController({
         stage,
         steps: STEPS,
+        onScrollTick() {
+          if (!phoneNavState.routeOverride) return;
+          phoneNavState.routeOverride = null;
+          render();
+        },
         onStepIndex(stepIndex) {
           activeStepIndex = stepIndex;
           // Any scroll-driven step change closes transient modal UI so the demo stays deterministic.

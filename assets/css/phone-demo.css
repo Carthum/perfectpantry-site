@@ -4262,18 +4262,18 @@ html.pp-tour-locked body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pp-scrolly-sticky {
+  .pp-scrolly:not(.pp-tour-stage) .pp-scrolly-sticky {
     position: static;
     height: auto;
     padding: 1.1rem 0;
     display: block;
   }
 
-  .pp-tour-stack {
+  .pp-scrolly:not(.pp-tour-stage) .pp-tour-stack {
     gap: 1rem;
   }
 
-  .pp-tour-step {
+  .pp-scrolly:not(.pp-tour-stage) .pp-tour-step {
     grid-area: auto;
     opacity: 1;
     transform: none;
@@ -4281,18 +4281,22 @@ html.pp-tour-locked body {
     transition: none;
   }
 
-  .pp-tour-sentinels {
+  .pp-scrolly:not(.pp-tour-stage) .pp-tour-sentinels {
     display: none;
   }
 
   /* When sticky is disabled, remove the artificial stage scroll height. */
-  .pp-scrolly-spacer {
+  .pp-scrolly:not(.pp-tour-stage) .pp-scrolly-spacer {
     display: none;
     height: 0;
   }
+
+  .pp-scrolly.pp-tour-stage .pp-tour-step {
+    transition: none;
+  }
 }
 
-@media (max-width: 960px), (hover: none) and (pointer: coarse) {
+@media (max-width: 960px) {
   .pp-scrolly {
     overflow-x: clip;
   }
@@ -4392,10 +4396,6 @@ html.pp-tour-locked body {
   }
 }
 
-@media.pp-scrolly.pp-tour-stage {
-  overflow-x: visible !important;
-}
-
 .pp-scrolly.pp-tour-stage .pp-scrolly-sticky {
   position: -webkit-sticky !important;
   position: sticky !important;
@@ -4428,4 +4428,3 @@ html.pp-tour-locked body {
   display: block !important;
   height: calc((var(--pp-step-count) - 1) * (100vh - var(--nav-height))) !important;
 }
-

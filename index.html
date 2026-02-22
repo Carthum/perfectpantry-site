@@ -29,6 +29,23 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/pp-apple-touch-180.png" />
     <link rel="stylesheet" href="assets/css/styles.css?v=20260221-64" />
     <link rel="stylesheet" href="assets/css/phone-demo.css?v=20260222-68" />
+    <script>
+      (function () {
+        const path = window.location.pathname.replace(/\/+$/, "") || "/";
+        const isHome = path === "/" || path === "/index.html";
+        if (!isHome || !window.location.hash) return;
+
+        const hash = window.location.hash.substring(1);
+        const hashParams = new URLSearchParams(hash);
+        const flowType = (hashParams.get("type") || "").toLowerCase();
+        const hasAccessToken = (hashParams.get("access_token") || "").trim() !== "";
+
+        if (flowType === "recovery" && hasAccessToken) {
+          const target = `/auth/callback/${window.location.search}${window.location.hash}`;
+          window.location.replace(target);
+        }
+      })();
+    </script>
   </head>
   <body data-bg="home">
     <a class="skip-link" href="#main">Skip to content</a>

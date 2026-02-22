@@ -2220,8 +2220,6 @@
       nav.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
       objectsLayer.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
       fabsLayer.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
-      // In-phone overlays must not affect the main page scroll/stack.
-      document.documentElement.classList.remove("pp-tour-locked");
     };
 
     const closePage = () => {
@@ -3721,23 +3719,62 @@
     let stageHeight = 0;
     let viewportHeight = 1;
     let rafId = 0;
+    let lockedByWheel = false;
+    let lockedScrollY = 0;
+    let syntheticY = null;
 
     stage.style.setProperty("--pp-step-count", String(steps.length));
+
+    const getScrollY = () => window.scrollY || window.pageYOffset || 0;
+    const getRange = () => Math.max(1, stageHeight - viewportHeight);
+    const getStageEnd = () => stageTop + getRange();
+    const setPageLock = (isLocked) => {
+      document.documentElement.classList.toggle("pp-tour-locked", !!isLocked);
+    };
 
     const measure = () => {
       const navHeight = readCssPxVar("--nav-height", 0);
       viewportHeight = Math.max(1, window.innerHeight - navHeight);
 
       const rect = stage.getBoundingClientRect();
-      stageTop = rect.top + (window.scrollY || window.pageYOffset || 0);
+      stageTop = rect.top + getScrollY();
       stageHeight = stage.offsetHeight || rect.height || 0;
 
       if (typeof onResize === "function") onResize({ viewportHeight });
     };
 
+    const lockStage = () => {
+      if (lockedByWheel) return;
+      lockedByWheel = true;
+      const stageEnd = getStageEnd();
+      const lockMin = stageTop + 1;
+      const lockMax = stageEnd - 1;
+      const lockFloor = Math.min(lockMin, lockMax);
+      const lockCeil = Math.max(lockMin, lockMax);
+      lockedScrollY = clamp(getScrollY(), lockFloor, lockCeil);
+      syntheticY = lockedScrollY;
+      setPageLock(true);
+      window.scrollTo(0, lockedScrollY);
+    };
+
+    const unlockStage = (direction) => {
+      if (!lockedByWheel) return;
+      lockedByWheel = false;
+      syntheticY = null;
+      setPageLock(false);
+
+      const epsilon = 2;
+      const stageEnd = getStageEnd();
+      if (direction === "down") {
+        window.scrollTo(0, stageEnd + epsilon);
+      } else if (direction === "up") {
+        window.scrollTo(0, Math.max(0, stageTop - epsilon));
+      }
+    };
+
     const computeProgress = () => {
-      const y = window.scrollY || window.pageYOffset || 0;
-      const range = Math.max(1, stageHeight - viewportHeight);
+      const y = lockedByWheel && Number.isFinite(syntheticY) ? syntheticY : getScrollY();
+      const range = getRange();
       return clamp((y - stageTop) / range, 0, 1);
     };
 
@@ -3777,27 +3814,59 @@
       const deltaY = normalizeWheelDelta(event);
       if (Math.abs(deltaY) < 0.01) return;
 
-      const y = window.scrollY || window.pageYOffset || 0;
-      const range = Math.max(1, stageHeight - viewportHeight);
-      const stageEnd = stageTop + range;
+      const y = getScrollY();
+      const stageEnd = getStageEnd();
       const epsilon = 0.5;
+      const isNearStage =
+        y >= stageTop - epsilon &&
+        y <= stageEnd + epsilon &&
+        stage.getBoundingClientRect().bottom > 0 &&
+        stage.getBoundingClientRect().top < window.innerHeight;
+      if (!lockedByWheel && !isNearStage) return;
 
-      const handlesForward = deltaY > 0 && y >= stageTop - epsilon && y < stageEnd - epsilon;
-      const handlesBackward = deltaY < 0 && y <= stageEnd + epsilon && y > stageTop + epsilon;
-      if (!handlesForward && !handlesBackward) return;
+      if (!lockedByWheel) lockStage();
+      const cursorY = Number.isFinite(syntheticY) ? syntheticY : clamp(y, stageTop, stageEnd);
+      const atTop = cursorY <= stageTop + epsilon;
+      const atBottom = cursorY >= stageEnd - epsilon;
+      if ((deltaY < 0 && atTop) || (deltaY > 0 && atBottom)) {
+        event.preventDefault();
+        unlockStage(deltaY > 0 ? "down" : "up");
+        schedule();
+        return;
+      }
 
       const maxDelta = Math.max(48, viewportHeight * 0.42);
-      const boundedDelta = clamp(deltaY, -maxDelta, maxDelta);
-      const nextY = clamp(y + boundedDelta, stageTop, stageEnd);
+      const boundedDelta = clamp(deltaY * 1.15, -maxDelta, maxDelta);
+      const nextY = clamp(cursorY + boundedDelta, stageTop, stageEnd);
 
       event.preventDefault();
-      if (Math.abs(nextY - y) > 0.1) window.scrollTo(0, nextY);
+      syntheticY = nextY;
       schedule();
     };
 
-    const onScroll = () => schedule();
+    const onScroll = () => {
+      if (lockedByWheel) {
+        const y = getScrollY();
+        if (Math.abs(y - lockedScrollY) > 0.5) window.scrollTo(0, lockedScrollY);
+      }
+      schedule();
+    };
     const onWindowResize = () => {
       measure();
+      if (lockedByWheel) {
+        const stageEnd = getStageEnd();
+        const lockMin = stageTop + 1;
+        const lockMax = stageEnd - 1;
+        const lockFloor = Math.min(lockMin, lockMax);
+        const lockCeil = Math.max(lockMin, lockMax);
+        lockedScrollY = clamp(lockedScrollY, lockFloor, lockCeil);
+        syntheticY = clamp(
+          Number.isFinite(syntheticY) ? syntheticY : lockedScrollY,
+          stageTop,
+          stageEnd,
+        );
+        window.scrollTo(0, lockedScrollY);
+      }
       schedule();
     };
 
@@ -3824,6 +3893,9 @@
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("resize", onWindowResize);
         window.removeEventListener("wheel", onWheel);
+        setPageLock(false);
+        lockedByWheel = false;
+        syntheticY = null;
         if (rafId) window.cancelAnimationFrame(rafId);
         rafId = 0;
         if (ro) ro.disconnect();

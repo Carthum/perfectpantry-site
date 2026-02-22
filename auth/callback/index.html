@@ -222,6 +222,9 @@
           <a id="openBtn" class="button-link button-primary" href="#">
             Open Pantry & Plate
           </a>
+          <button id="showWebResetBtn" class="button-secondary" type="button" hidden>
+            Reset here instead
+          </button>
           <button id="copyAppLinkBtn" class="button-secondary" type="button">
             Copy app link
           </button>
@@ -263,6 +266,7 @@
         const statusEl = document.getElementById("status");
         const headlineEl = document.getElementById("headline");
         const openBtn = document.getElementById("openBtn");
+        const showWebResetBtn = document.getElementById("showWebResetBtn");
         const copyAppLinkBtn = document.getElementById("copyAppLinkBtn");
         const copyPhoneUrlBtn = document.getElementById("copyPhoneUrlBtn");
         const phoneUrlText = document.getElementById("phoneUrlText");
@@ -345,14 +349,41 @@
           copyText(pageUrl.toString(), "Copied current link.");
         });
 
+        function tryOpenApp() {
+          window.location.href = deepLink;
+        }
+
         if (errorDescription) {
           setStatus(`Link error: ${errorDescription}`, "error");
         }
 
         if (isRecovery && accessToken) {
-          resetForm.hidden = false;
-          if (!errorDescription) {
-            setStatus("Recovery link accepted. Set your new password below.", "ok");
+          if (isMobile) {
+            showWebResetBtn.hidden = false;
+            showWebResetBtn.addEventListener("click", function () {
+              resetForm.hidden = false;
+              desktopHelp.hidden = true;
+              showWebResetBtn.hidden = true;
+              setStatus("Reset in browser mode enabled. Set your new password below.", "ok");
+            });
+
+            if (!errorDescription) {
+              setStatus("Opening Pantry & Plate to continue password reset...", "");
+            }
+            window.setTimeout(tryOpenApp, 80);
+            window.setTimeout(function () {
+              if (!errorDescription) {
+                setStatus(
+                  "If the app did not open, tap \"Open Pantry & Plate\" or use \"Reset here instead\".",
+                  "",
+                );
+              }
+            }, 1300);
+          } else {
+            resetForm.hidden = false;
+            if (!errorDescription) {
+              setStatus("Recovery link accepted. Set your new password below.", "ok");
+            }
           }
 
           let submitting = false;
@@ -441,10 +472,8 @@
         }
 
         if (isMobile) {
-          window.setTimeout(function () {
-            window.location.href = deepLink;
-          }, 80);
           if (!(isRecovery && accessToken)) {
+            window.setTimeout(tryOpenApp, 80);
             window.setTimeout(function () {
               setStatus("If the app did not open, tap \"Open Pantry & Plate\".", "");
             }, 1300);

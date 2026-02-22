@@ -26,7 +26,6 @@
   const actionOpenDownloadCta = () => ({ type: "open_download_cta" });
   const actionCloseDownloadCta = () => ({ type: "close_download_cta" });
   const DESKTOP_STAGE_MIN_WIDTH = 961;
-  const DESKTOP_FINE_POINTER_FALLBACK_MIN_WIDTH = 720;
 
   // Single source of truth for the demo.
   // Each step owns BOTH the left copy and the right phone UI state.
@@ -3801,15 +3800,11 @@
     if (!stack) return;
 
     const reduceMotion = prefersReducedMotion();
-    const hasMatchMedia = !!window.matchMedia;
-    const hasDesktopWidth =
-      hasMatchMedia &&
-      window.matchMedia(`(min-width: ${DESKTOP_STAGE_MIN_WIDTH}px)`).matches;
-    const hasFinePointerDesktop =
-      hasMatchMedia &&
-      window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
-      window.innerWidth >= DESKTOP_FINE_POINTER_FALLBACK_MIN_WIDTH;
-    const stageMode = hasDesktopWidth || hasFinePointerDesktop;
+    const stageMode =
+      !!(
+        window.matchMedia &&
+        window.matchMedia(`(min-width: ${DESKTOP_STAGE_MIN_WIDTH}px)`).matches
+      );
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(

@@ -26,7 +26,7 @@
   const actionOpenDownloadCta = () => ({ type: "open_download_cta" });
   const actionCloseDownloadCta = () => ({ type: "close_download_cta" });
   const DESKTOP_STAGE_MIN_WIDTH = 961;
-  const DESKTOP_STAGE_VIEWPORT_FALLBACK_MIN_WIDTH = 720;
+  const DESKTOP_FINE_POINTER_FALLBACK_MIN_WIDTH = 720;
 
   // Single source of truth for the demo.
   // Each step owns BOTH the left copy and the right phone UI state.
@@ -621,7 +621,7 @@
     splashImg.decoding = "async";
     splashImg.loading = "eager";
     splashImg.alt = "Pantry & Plate loading screen";
-    splashImg.src = "assets/brand/pp-splash-tablet-source.png";
+    splashImg.src = "assets/brand/pp-splash-ios-source.png";
 
     const overlay = el("div", "pp-phone-overlay");
 
@@ -3802,20 +3802,14 @@
 
     const reduceMotion = prefersReducedMotion();
     const hasMatchMedia = !!window.matchMedia;
-    const viewportWidth = Math.max(
-      window.innerWidth || 0,
-      (document.documentElement && document.documentElement.clientWidth) || 0,
-    );
     const hasDesktopWidth =
       hasMatchMedia &&
       window.matchMedia(`(min-width: ${DESKTOP_STAGE_MIN_WIDTH}px)`).matches;
-    const screenWidth = window.screen
-      ? Math.max(window.screen.width || 0, window.screen.availWidth || 0)
-      : 0;
-    const hasDesktopScreenFallbackWidth =
-      screenWidth >= DESKTOP_STAGE_MIN_WIDTH &&
-      viewportWidth >= DESKTOP_STAGE_VIEWPORT_FALLBACK_MIN_WIDTH;
-    const stageMode = hasDesktopWidth || hasDesktopScreenFallbackWidth;
+    const hasFinePointerDesktop =
+      hasMatchMedia &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+      window.innerWidth >= DESKTOP_FINE_POINTER_FALLBACK_MIN_WIDTH;
+    const stageMode = hasDesktopWidth || hasFinePointerDesktop;
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(
@@ -3824,7 +3818,7 @@
 
     // Preload assets early so scroll-driven swaps don't flash.
     preloadImages([
-      "assets/brand/pp-splash-tablet-source.png",
+      "assets/brand/pp-splash-ios-source.png",
       "assets/backgrounds/bg_home.jpg",
       "assets/backgrounds/bg_pantry.jpg",
       "assets/backgrounds/bg_cookbook.jpg",
@@ -3966,7 +3960,7 @@
     const activePhoneScreen = () => {
       const base = baseStep() || {};
       const tab =
-        (stageMode ? null : phoneNavState.routeOverride) ||
+        phoneNavState.routeOverride ||
         phoneNavState.route ||
         (base && base.tab ? String(base.tab) : "");
       const pantryView = tab === "pantry" && phoneNavState.pantryView === "spice" ? "spice" : "items";
@@ -3992,7 +3986,7 @@
 
       const base = baseStep() || {};
       const tab =
-        (stageMode ? null : phoneNavState.routeOverride) ||
+        phoneNavState.routeOverride ||
         phoneNavState.route ||
         (base && base.tab ? String(base.tab) : "");
 
@@ -4022,8 +4016,9 @@
             const idx = STEPS.findIndex((s) => s && s.tab === nextTab);
             if (idx < 0) return;
             if (stageMode) {
-              // In desktop stage mode, scroll is the only source of truth.
-              break;
+              // Desktop stage mode: keep the scrolly copy/background tied to scroll, but let the
+              // phone demo tabs navigate independently inside the phone bezel.
+              phoneNavState.routeOverride = nextTab;
             } else {
               activeStepIndex = idx;
               phoneNavState.routeOverride = null;

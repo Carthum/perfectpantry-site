@@ -323,6 +323,8 @@
         const isRecovery = flowType === "recovery";
         const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent || "");
         const accessToken = (queryAndHash.get("access_token") || "").trim();
+        const authCode = (queryAndHash.get("code") || "").trim();
+        const state = (queryAndHash.get("state") || "").trim();
 
         const errorDescription =
           queryAndHash.get("error_description") || queryAndHash.get("error");
@@ -425,6 +427,11 @@
             if (isRecovery) {
               setStatus(
                 "This recovery link is missing a usable token. Request a new reset email and try again.",
+                "error",
+              );
+            } else if (authCode && state.isEmpty) {
+              setStatus(
+                "This link contains an app-issued auth code and must be completed in the app flow. For desktop reset, request a new reset email from the latest app build.",
                 "error",
               );
             } else {

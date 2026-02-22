@@ -3,117 +3,269 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Pantry & Plate — Opening App</title>
+    <title>Pantry & Plate - Continue in App</title>
     <style>
+      :root {
+        --paper: #f5ead9;
+        --ink: #3f2b1c;
+        --ink-soft: #5b4130;
+        --accent: #d17e2f;
+        --line: rgba(76, 50, 30, 0.25);
+        --card: rgba(255, 255, 255, 0.58);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          sans-serif;
         margin: 0;
-        background: #f4e7d6;
-        color: #3a2a1a;
+        min-height: 100vh;
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% -8%, #ffe8b7 0, transparent 40%),
+          radial-gradient(circle at 100% 0, #f3c694 0, transparent 36%),
+          var(--paper);
       }
-      .wrap {
-        max-width: 720px;
+
+      .layout {
+        max-width: 760px;
         margin: 0 auto;
-        padding: 28px 18px;
+        padding: 20px;
       }
+
       .card {
-        background: rgba(255, 255, 255, 0.45);
-        border: 1px solid rgba(74, 47, 27, 0.18);
-        border-radius: 18px;
-        padding: 18px;
-        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: var(--card);
+        box-shadow:
+          0 18px 38px rgba(60, 34, 13, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.52);
+        padding: 22px;
       }
+
       h1 {
-        font-size: 18px;
-        margin: 0 0 8px;
+        margin: 0;
+        font-size: clamp(1.2rem, 1rem + 1vw, 1.7rem);
       }
+
       p {
-        margin: 10px 0;
+        margin: 12px 0 0;
+        color: var(--ink-soft);
+        line-height: 1.45;
+      }
+
+      .status {
+        margin-top: 14px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(209, 126, 47, 0.35);
+        background: rgba(255, 236, 209, 0.74);
         font-weight: 600;
-        opacity: 0.85;
       }
-      .muted {
-        font-weight: 600;
-        opacity: 0.7;
-        font-size: 13px;
-      }
-      .btn {
-        display: inline-block;
-        padding: 12px 14px;
-        border-radius: 16px;
-        border: 1px solid rgba(74, 47, 27, 0.25);
-        background: #f4e7d6;
-        color: #4a2f1b;
-        font-weight: 800;
-        text-decoration: none;
-      }
+
       .row {
         display: flex;
-        gap: 10px;
         flex-wrap: wrap;
-        margin-top: 12px;
+        gap: 10px;
+        margin-top: 16px;
       }
+
+      button,
+      .button-link {
+        border: 0;
+        border-radius: 14px;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 11px 14px;
+      }
+
+      .button-primary {
+        background: linear-gradient(135deg, #d9893d, #b6661f);
+        color: #fffdf9;
+      }
+
+      .button-secondary {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.62);
+        color: var(--ink);
+      }
+
+      .block {
+        margin-top: 16px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.48);
+      }
+
+      .block-title {
+        margin: 0;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #795239;
+      }
+
       code {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          monospace;
-        font-size: 12px;
+        display: block;
+        margin-top: 8px;
+        word-break: break-all;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.78rem;
+        color: #4b2f1d;
+      }
+
+      .desktop-help {
+        margin-top: 16px;
+      }
+
+      .desktop-help[hidden] {
+        display: none;
+      }
+
+      .desktop-help ol {
+        margin: 8px 0 0;
+        padding-left: 1.2rem;
+        color: var(--ink-soft);
       }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <div class="card">
-        <h1>Opening Pantry & Plate…</h1>
-        <p>If nothing happens, tap “Open App”.</p>
+    <main class="layout">
+      <section class="card">
+        <h1 id="headline">Continue in Pantry & Plate</h1>
+        <p>
+          This secure link can continue sign-in or password recovery in the Pantry & Plate app.
+        </p>
+
+        <div id="status" class="status">Preparing secure handoff...</div>
 
         <div class="row">
-          <a id="openBtn" class="btn" href="#">Open App</a>
-          <!-- Optional store fallbacks. Replace later when you have store URLs -->
-          <a class="btn" href="#" onclick="return false;" style="opacity: 0.55"
-            >App Store (soon)</a
-          >
-          <a class="btn" href="#" onclick="return false;" style="opacity: 0.55"
-            >Google Play (soon)</a
-          >
+          <a id="openBtn" class="button-link button-primary" href="#">
+            Open Pantry & Plate
+          </a>
+          <button id="copyAppLinkBtn" class="button-secondary" type="button">
+            Copy app link
+          </button>
+          <button id="copyPhoneUrlBtn" class="button-secondary" type="button">
+            Copy phone-safe link
+          </button>
         </div>
 
-        <p class="muted" id="debug"></p>
-      </div>
-    </div>
+        <div class="block">
+          <p class="block-title">Phone-safe link</p>
+          <code id="phoneUrlText"></code>
+        </div>
+
+        <div class="block">
+          <p class="block-title">App deep link</p>
+          <code id="appUrlText"></code>
+        </div>
+
+        <div id="desktopHelp" class="desktop-help" hidden>
+          <p>
+            Open this flow on your phone to finish in the app. If needed, send yourself the
+            phone-safe link above.
+          </p>
+          <ol>
+            <li>Open Pantry & Plate on your phone.</li>
+            <li>Use your reset email link there, or paste the phone-safe link in mobile browser.</li>
+            <li>Set your new password in the in-app reset screen.</li>
+          </ol>
+          <p>
+            Need help? Visit <a href="/support.html">Support</a>.
+          </p>
+        </div>
+      </section>
+    </main>
 
     <script>
       (function () {
-        // This page receives Supabase auth links (invite / recovery / magic link) and forwards them into the app.
-        // We preserve ALL query params and fragment params.
-        const u = new URL(window.location.href);
-
-        // Supabase sometimes uses fragment (#) for params; keep both.
-        const query = u.searchParams.toString();
-        const fragment = u.hash ? u.hash.substring(1) : "";
-
-        // Build a deep link your app already supports:
-        // NOTE: You already have perfectpantry://login-callback/ handling for OAuth/recovery.
-        const base = "perfectpantry://login-callback/";
-        const parts = [];
-        if (query) parts.push(query);
-        if (fragment) parts.push(fragment);
-        const tail = parts.join("&");
-        const deepLink = tail ? base + "?" + tail : base;
-
-        const debug = document.getElementById("debug");
-        debug.textContent = "Redirecting…";
-
+        const statusEl = document.getElementById("status");
+        const headlineEl = document.getElementById("headline");
         const openBtn = document.getElementById("openBtn");
-        openBtn.href = deepLink;
+        const copyAppLinkBtn = document.getElementById("copyAppLinkBtn");
+        const copyPhoneUrlBtn = document.getElementById("copyPhoneUrlBtn");
+        const phoneUrlText = document.getElementById("phoneUrlText");
+        const appUrlText = document.getElementById("appUrlText");
+        const desktopHelp = document.getElementById("desktopHelp");
 
-        // Try to open the app immediately
-        // (Universal Links/App Links will open the app if configured; otherwise custom scheme tries)
-        setTimeout(() => {
-          window.location.href = deepLink;
-          debug.textContent =
-            "Tried to open app. If it didn’t open, tap “Open App”.";
-        }, 50);
+        const pageUrl = new URL(window.location.href);
+        const queryAndHash = new URLSearchParams(pageUrl.search);
+        const hash = pageUrl.hash ? pageUrl.hash.substring(1) : "";
+
+        if (hash) {
+          const hashParams = new URLSearchParams(hash);
+          hashParams.forEach((value, key) => {
+            queryAndHash.append(key, value);
+          });
+        }
+
+        const params = queryAndHash.toString();
+        const deepLinkBase = "pantryandplate://login-callback/";
+        const deepLink = params ? `${deepLinkBase}?${params}` : deepLinkBase;
+        const phoneSafeLink = pageUrl.toString();
+        const flowType = (queryAndHash.get("type") || "").toLowerCase();
+
+        const isRecovery = flowType === "recovery";
+        if (isRecovery) {
+          headlineEl.textContent = "Continue password reset in Pantry & Plate";
+        }
+
+        openBtn.href = deepLink;
+        phoneUrlText.textContent = phoneSafeLink;
+        appUrlText.textContent = deepLink;
+
+        async function copyText(text, successMessage) {
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(text);
+            } else {
+              const node = document.createElement("textarea");
+              node.value = text;
+              node.setAttribute("readonly", "");
+              node.style.position = "fixed";
+              node.style.opacity = "0";
+              document.body.appendChild(node);
+              node.select();
+              document.execCommand("copy");
+              document.body.removeChild(node);
+            }
+            statusEl.textContent = successMessage;
+          } catch (_err) {
+            statusEl.textContent = "Could not copy automatically. Select the link text and copy it manually.";
+          }
+        }
+
+        copyAppLinkBtn.addEventListener("click", function () {
+          copyText(deepLink, "Copied app link.");
+        });
+
+        copyPhoneUrlBtn.addEventListener("click", function () {
+          copyText(phoneSafeLink, "Copied phone-safe link.");
+        });
+
+        const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent || "");
+        if (isMobile) {
+          statusEl.textContent = "Trying to open Pantry & Plate...";
+          window.setTimeout(function () {
+            window.location.href = deepLink;
+          }, 80);
+          window.setTimeout(function () {
+            statusEl.textContent = "If the app did not open, tap \"Open Pantry & Plate\".";
+          }, 1300);
+          return;
+        }
+
+        desktopHelp.hidden = false;
+        statusEl.textContent = isRecovery
+          ? "This recovery link opened on desktop. Finish reset in the mobile app."
+          : "This sign-in link opened on desktop. Continue in the mobile app.";
       })();
     </script>
   </body>

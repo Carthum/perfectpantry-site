@@ -93,6 +93,7 @@ html.pp-tour-locked body {
 
 .pp-scrolly-sticky {
   box-sizing: border-box;
+  position: -webkit-sticky;
   position: sticky;
   top: var(--nav-height);
   z-index: 2;
@@ -161,6 +162,25 @@ html.pp-tour-locked body {
 .pp-scrolly.pp-tour-static .pp-scrolly-spacer {
   display: none;
   height: 0;
+}
+
+/* Stage mode is controlled by JS so desktop pinning remains deterministic. */
+.pp-scrolly.pp-tour-stage .pp-scrolly-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  display: flex;
+}
+
+.pp-scrolly.pp-tour-stage .pp-scrolly-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  gap: 2.25rem;
+}
+
+.pp-scrolly.pp-tour-stage .pp-scrolly-spacer {
+  display: block;
+  height: calc((var(--pp-step-count) - 1) * (100vh - var(--nav-height)));
 }
 
 .pp-tour-step {
@@ -4369,5 +4389,20 @@ html.pp-tour-locked body {
   100% {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (min-width: 961px) {
+  .pp-scrolly.pp-tour-stage .pp-scrolly-sticky {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: var(--nav-height) !important;
+    height: calc(100vh - var(--nav-height)) !important;
+    display: flex !important;
+  }
+
+  .pp-scrolly.pp-tour-stage .pp-scrolly-spacer {
+    display: block !important;
+    height: calc((var(--pp-step-count) - 1) * (100vh - var(--nav-height))) !important;
   }
 }

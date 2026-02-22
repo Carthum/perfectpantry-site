@@ -619,7 +619,7 @@
     splashImg.decoding = "async";
     splashImg.loading = "eager";
     splashImg.alt = "Pantry & Plate loading screen";
-    splashImg.src = "assets/brand/pp-splash-ios-source.png";
+    splashImg.src = "assets/brand/pp-splash-tablet-source.png";
 
     const overlay = el("div", "pp-phone-overlay");
 
@@ -3797,10 +3797,8 @@
 
     const reduceMotion = prefersReducedMotion();
     const stageMode =
-      !reduceMotion &&
       window.matchMedia &&
-      window.matchMedia("(min-width: 961px) and (hover: hover) and (pointer: fine)")
-        .matches;
+      window.matchMedia("(min-width: 961px)").matches;
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(
@@ -3809,7 +3807,7 @@
 
     // Preload assets early so scroll-driven swaps don't flash.
     preloadImages([
-      "assets/brand/pp-splash-ios-source.png",
+      "assets/brand/pp-splash-tablet-source.png",
       "assets/backgrounds/bg_home.jpg",
       "assets/backgrounds/bg_pantry.jpg",
       "assets/backgrounds/bg_cookbook.jpg",
@@ -4139,6 +4137,8 @@
     };
 
     if (stageMode) {
+      stage.classList.add("pp-tour-stage");
+      stage.classList.remove("pp-tour-static");
       // In stage mode, only the active step should be focusable.
       stepNodesById.forEach((node) => setNodeInert(node, true));
       createScrollStageController({
@@ -4159,6 +4159,7 @@
     } else {
       // Non-stage mode: fall back to a standard stacked layout and keep the phone interactive
       // so users can still explore overlays on smaller viewports.
+      stage.classList.remove("pp-tour-stage");
       stage.classList.add("pp-tour-static");
       stepNodesById.forEach((node) => setNodeInert(node, false));
       activeStepIndex = STEPS.length > 1 ? 1 : 0; // default to Home vs splash

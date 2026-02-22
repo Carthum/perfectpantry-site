@@ -3746,10 +3746,15 @@
     const lockStage = () => {
       if (lockedByWheel) return;
       lockedByWheel = true;
-      const y = getScrollY();
-      lockedScrollY = y;
-      syntheticY = clamp(y, stageTop, getStageEnd());
+      const stageEnd = getStageEnd();
+      const lockMin = stageTop + 1;
+      const lockMax = stageEnd - 1;
+      const lockFloor = Math.min(lockMin, lockMax);
+      const lockCeil = Math.max(lockMin, lockMax);
+      lockedScrollY = clamp(getScrollY(), lockFloor, lockCeil);
+      syntheticY = lockedScrollY;
       setPageLock(true);
+      window.scrollTo(0, lockedScrollY);
     };
 
     const unlockStage = (direction) => {
@@ -3843,13 +3848,27 @@
     };
 
     const onScroll = () => {
-      if (lockedByWheel) lockedScrollY = getScrollY();
+      if (lockedByWheel) {
+        const y = getScrollY();
+        if (Math.abs(y - lockedScrollY) > 0.5) window.scrollTo(0, lockedScrollY);
+      }
       schedule();
     };
     const onWindowResize = () => {
       measure();
       if (lockedByWheel) {
-        syntheticY = clamp(Number.isFinite(syntheticY) ? syntheticY : getScrollY(), stageTop, getStageEnd());
+        const stageEnd = getStageEnd();
+        const lockMin = stageTop + 1;
+        const lockMax = stageEnd - 1;
+        const lockFloor = Math.min(lockMin, lockMax);
+        const lockCeil = Math.max(lockMin, lockMax);
+        lockedScrollY = clamp(lockedScrollY, lockFloor, lockCeil);
+        syntheticY = clamp(
+          Number.isFinite(syntheticY) ? syntheticY : lockedScrollY,
+          stageTop,
+          stageEnd,
+        );
+        window.scrollTo(0, lockedScrollY);
       }
       schedule();
     };

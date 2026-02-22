@@ -3824,10 +3824,7 @@
         stage.getBoundingClientRect().top < window.innerHeight;
       if (!lockedByWheel && !isNearStage) return;
 
-      if (!lockedByWheel) {
-        if (deltaY <= 0) return;
-        lockStage();
-      }
+      if (!lockedByWheel) lockStage();
       const cursorY = Number.isFinite(syntheticY) ? syntheticY : clamp(y, stageTop, stageEnd);
       const atTop = cursorY <= stageTop + epsilon;
       const atBottom = cursorY >= stageEnd - epsilon;

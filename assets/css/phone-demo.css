@@ -19,6 +19,7 @@
 
 html.pp-tour-locked,
 html.pp-tour-locked body {
+  overflow: hidden;
   overscroll-behavior: none;
 }
 

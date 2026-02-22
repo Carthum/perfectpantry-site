@@ -3714,6 +3714,7 @@
     onStepIndex,
     onResize,
     onScrollTick,
+    captureWheelInput = false,
   }) => {
     let activeStep = -1;
     let stageTop = 0;
@@ -3759,6 +3760,41 @@
       rafId = window.requestAnimationFrame(tick);
     };
 
+    const normalizeWheelDelta = (event) => {
+      if (!event || typeof event.deltaY !== "number") return 0;
+      let delta = event.deltaY;
+      if (event.deltaMode === 1) delta *= 40;
+      else if (event.deltaMode === 2) delta *= window.innerHeight || 1;
+      return Number.isFinite(delta) ? delta : 0;
+    };
+
+    const onWheel = (event) => {
+      if (!captureWheelInput) return;
+      if (!event) return;
+      if (event.defaultPrevented) return;
+      if (event.ctrlKey || event.metaKey) return;
+
+      const deltaY = normalizeWheelDelta(event);
+      if (Math.abs(deltaY) < 0.01) return;
+
+      const y = window.scrollY || window.pageYOffset || 0;
+      const range = Math.max(1, stageHeight - viewportHeight);
+      const stageEnd = stageTop + range;
+      const epsilon = 0.5;
+
+      const handlesForward = deltaY > 0 && y >= stageTop - epsilon && y < stageEnd - epsilon;
+      const handlesBackward = deltaY < 0 && y <= stageEnd + epsilon && y > stageTop + epsilon;
+      if (!handlesForward && !handlesBackward) return;
+
+      const maxDelta = Math.max(48, viewportHeight * 0.42);
+      const boundedDelta = clamp(deltaY, -maxDelta, maxDelta);
+      const nextY = clamp(y + boundedDelta, stageTop, stageEnd);
+
+      event.preventDefault();
+      if (Math.abs(nextY - y) > 0.1) window.scrollTo(0, nextY);
+      schedule();
+    };
+
     const onScroll = () => schedule();
     const onWindowResize = () => {
       measure();
@@ -3770,6 +3806,7 @@
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onWindowResize);
+    window.addEventListener("wheel", onWheel, { passive: false });
 
     // Keep measurements accurate when fonts/layout settle.
     window.addEventListener("load", onWindowResize, { once: true });
@@ -3786,6 +3823,7 @@
       destroy() {
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("resize", onWindowResize);
+        window.removeEventListener("wheel", onWheel);
         if (rafId) window.cancelAnimationFrame(rafId);
         rafId = 0;
         if (ro) ro.disconnect();
@@ -4180,6 +4218,7 @@
           render();
         },
         onResize: syncPhoneWidth,
+        captureWheelInput: true,
       });
     } else {
       // Non-stage mode: fall back to a standard stacked layout and keep the phone interactive

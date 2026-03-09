@@ -125,7 +125,7 @@ html.pp-tour-locked body {
 .pp-tour-right {
   align-self: start;
   display: grid;
-  justify-items: center;
+  justify-items: start;
   width: 100%;
   min-width: 0;
 }
@@ -172,7 +172,6 @@ html.pp-tour-locked body {
 .pp-tour-step {
   grid-area: 1 / 1;
   width: 100%;
-  max-width: 920px;
   padding: clamp(1rem, 1.4vw, 1.45rem) clamp(1rem, 1.5vw, 1.4rem);
   position: relative;
   overflow: hidden;
@@ -210,7 +209,7 @@ html.pp-tour-locked body {
 }
 
 .pp-tour-step h2 {
-  max-width: 16.5ch;
+  max-width: min(100%, 19ch);
   font-size: clamp(2.2rem, 2vw + 1.2rem, 4rem);
   line-height: 0.98;
   text-wrap: balance;
@@ -296,8 +295,8 @@ html.pp-tour-locked body {
 .pp-demo-hero-mount {
   width: min(100%, 560px);
   display: grid;
-  justify-items: center;
-  margin-inline: auto;
+  justify-items: start;
+  margin-inline: 0;
 }
 
 .pp-demo-hero-mount .pp-phone {
@@ -312,12 +311,11 @@ html.pp-tour-locked body {
   }
 
   .pp-tour-step {
-    max-width: 860px;
     padding: 1rem 1rem;
   }
 
   .pp-tour-step h2 {
-    max-width: 15ch;
+    max-width: min(100%, 17ch);
     font-size: clamp(2rem, 1.55vw + 1rem, 3.25rem);
   }
 
@@ -335,12 +333,11 @@ html.pp-tour-locked body {
   }
 
   .pp-tour-step {
-    max-width: 760px;
     padding: 0.95rem 0.95rem;
   }
 
   .pp-tour-step h2 {
-    max-width: 14ch;
+    max-width: min(100%, 15.5ch);
     font-size: clamp(1.9rem, 1.2vw + 1rem, 2.7rem);
   }
 }

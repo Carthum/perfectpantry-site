@@ -1136,11 +1136,6 @@
       topRow.appendChild(searchBtn);
       root.appendChild(topRow);
 
-      const chipWrap = el("div", "pp-chip-wrap");
-      chipWrap.appendChild(el("span", "pp-app-chip", "Use first 3"));
-      chipWrap.appendChild(el("span", "pp-app-chip", "Staples 5"));
-      root.appendChild(chipWrap);
-
       const openItemDetail = (itemId) => {
         if (typeof onAction !== "function") return;
         const id = itemId != null ? String(itemId) : "";
@@ -1196,7 +1191,6 @@
                 title: "Olive Oil",
                 subtitle: "Pantry • 1 bottle • plan-ready",
                 mediaSrc: "assets/ingredients/olive_oil.png",
-                pills: [{ label: "In stock", tone: "sage" }],
                 downloadCta: true,
                 ariaLabel: "Olive oil pantry item",
               }),
@@ -1364,22 +1358,6 @@
       topRow.appendChild(searchBtn);
       root.appendChild(topRow);
 
-      const inStockCount = SPICE_SECTIONS.reduce(
-        (sum, section) =>
-          sum + (section.items || []).filter((item) => item && item.inStock).length,
-        0,
-      );
-      const restockCount = SPICE_SECTIONS.reduce(
-        (sum, section) =>
-          sum + (section.items || []).filter((item) => item && !item.inStock).length,
-        0,
-      );
-
-      const chipWrap = el("div", "pp-chip-wrap");
-      chipWrap.appendChild(el("span", "pp-app-chip", `In stock ${inStockCount}`));
-      chipWrap.appendChild(el("span", "pp-app-chip", `Restock ${restockCount}`));
-      root.appendChild(chipWrap);
-
       if (activeSpiceDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll");
         const stack = el("div", "pp-demo-list-stack");
@@ -1403,12 +1381,6 @@
                       ? "Ready to cook with"
                       : "Missing from the rack",
                   mediaSrc: SPICE_JAR_ASSET[jarTone] || SPICE_JAR_ASSET.tan,
-                  pills: [
-                    {
-                      label: item && item.inStock ? "In stock" : "Restock",
-                      tone: item && item.inStock ? "sage" : "alert",
-                    },
-                  ],
                   downloadCta: true,
                   ariaLabel: `${(item && item.label) || "Spice"} spice status`,
                 });
@@ -4249,7 +4221,9 @@
     const stageMode =
       !reduceMotion &&
       window.matchMedia &&
-      window.matchMedia("(min-width: 961px) and (hover: hover) and (pointer: fine)")
+      window.matchMedia(
+        "(min-width: 1025px) and (min-height: 761px) and (hover: hover) and (pointer: fine)",
+      )
         .matches;
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
@@ -4614,10 +4588,13 @@
 
       const colW = aside ? aside.getBoundingClientRect().width : mount.getBoundingClientRect().width;
       const maxWByCol = Math.floor(colW - 4);
-
-      const compactMode = !stageMode || window.matchMedia("(max-width: 720px)").matches;
-      const minW = compactMode ? 250 : 320;
-      const maxW = compactMode ? 360 : 520;
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+      const compactMode = !stageMode || viewportW <= 720;
+      const midDesktopMode = stageMode && (viewportW <= 1280 || viewportH <= 900);
+      const narrowDesktopMode = stageMode && (viewportW <= 1120 || viewportH <= 820);
+      const minW = compactMode ? 250 : narrowDesktopMode ? 270 : midDesktopMode ? 288 : 320;
+      const maxW = compactMode ? 360 : narrowDesktopMode ? 380 : midDesktopMode ? 430 : 520;
       const widthBySpace = Math.max(1, Math.min(maxOuterWByH, maxWByCol));
       const target = widthBySpace < minW ? widthBySpace : clamp(widthBySpace, minW, maxW);
       stage.style.setProperty("--pp-phone-demo-w", `${target}px`);

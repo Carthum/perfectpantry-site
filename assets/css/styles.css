@@ -113,7 +113,7 @@ img {
 }
 
 .container {
-  width: min(calc(100% - 2rem), var(--container));
+  width: min(calc(100% - clamp(2rem, 4vw, 4rem)), var(--container));
   margin-inline: auto;
 }
 
@@ -308,7 +308,7 @@ main {
 }
 
 .section {
-  padding: 3.5rem 0;
+  padding: clamp(2.75rem, 5vw, 3.5rem) 0;
 }
 
 .section-tight {

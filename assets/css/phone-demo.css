@@ -97,9 +97,9 @@ html.pp-tour-locked body {
   top: var(--nav-height);
   z-index: 2;
   height: calc(100vh - var(--nav-height));
-  padding: 1.1rem 0;
+  padding: clamp(0.9rem, 2vh, 1.5rem) 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .pp-scrolly-spacer {
@@ -109,20 +109,21 @@ html.pp-tour-locked body {
 .pp-scrolly-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, clamp(360px, 32vw, 520px));
-  gap: clamp(1.5rem, 3vw, 3.5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, clamp(320px, 30vw, 500px));
+  gap: clamp(1rem, 2.6vw, 2.6rem);
+  align-items: start;
 }
 
 .pp-tour-left {
   display: grid;
   gap: 1rem;
   align-content: start;
+  align-self: start;
   min-width: 0;
 }
 
 .pp-tour-right {
-  align-self: center;
+  align-self: start;
   display: grid;
   justify-items: center;
   width: 100%;
@@ -168,10 +169,13 @@ html.pp-tour-locked body {
 
 .pp-tour-step {
   grid-area: 1 / 1;
-  padding: 1.1rem 1.15rem;
+  width: min(100%, 72ch);
+  max-width: 100%;
+  padding: clamp(1rem, 1.4vw, 1.45rem) clamp(1rem, 1.5vw, 1.4rem);
   position: relative;
   overflow: hidden;
   align-self: start;
+  justify-self: start;
   opacity: 0;
   transform: translateY(16px);
   pointer-events: none;
@@ -201,6 +205,23 @@ html.pp-tour-locked body {
   pointer-events: auto;
   border-color: rgba(210, 122, 61, 0.45);
   box-shadow: var(--shadow-strong);
+}
+
+.pp-tour-step h2 {
+  max-width: 13.5ch;
+  font-size: clamp(2rem, 2.35vw + 0.9rem, 3.35rem);
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.pp-tour-step .hero-lead,
+.pp-tour-step .muted,
+.pp-tour-step .pp-tour-bullets {
+  max-width: 58ch;
+}
+
+.pp-tour-step .pp-tour-sections {
+  max-width: 68ch;
 }
 
 .pp-tour-kicker {
@@ -253,7 +274,7 @@ html.pp-tour-locked body {
 
 .pp-tour-tip {
   margin-top: 0.85rem;
-  max-width: 46ch;
+  max-width: min(46ch, 100%);
 }
 
 .pp-tour-sentinels {
@@ -280,6 +301,46 @@ html.pp-tour-locked body {
 .pp-demo-hero-mount .pp-phone {
   width: var(--pp-phone-demo-w, 360px);
   max-width: 100%;
+}
+
+@media (max-width: 1280px), (max-height: 900px) {
+  .pp-scrolly-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+    gap: clamp(0.9rem, 1.9vw, 1.5rem);
+  }
+
+  .pp-tour-step {
+    width: min(100%, 66ch);
+    padding: 1rem 1rem;
+  }
+
+  .pp-tour-step h2 {
+    max-width: 12.5ch;
+    font-size: clamp(1.85rem, 2vw + 0.85rem, 2.85rem);
+  }
+
+  .pp-tour-step .hero-lead,
+  .pp-tour-step .muted,
+  .pp-tour-step .pp-tour-bullets {
+    max-width: 54ch;
+  }
+}
+
+@media (max-width: 1120px), (max-height: 820px) {
+  .pp-scrolly-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    gap: 1rem;
+  }
+
+  .pp-tour-step {
+    width: min(100%, 60ch);
+    padding: 0.95rem 0.95rem;
+  }
+
+  .pp-tour-step h2 {
+    max-width: 12ch;
+    font-size: clamp(1.7rem, 1.55vw + 0.95rem, 2.45rem);
+  }
 }
 
 .pp-demo-hero-mount .pp-demo-caption {
@@ -4598,7 +4659,7 @@ html.pp-tour-locked body {
   }
 }
 
-@media (max-width: 960px), (hover: none) and (pointer: coarse) {
+@media (max-width: 1024px), (max-height: 760px), (hover: none) and (pointer: coarse) {
   .pp-scrolly-sticky {
     position: static;
     height: auto;

@@ -66,7 +66,7 @@
         kicker: "Pantry",
         title: "Inventory clarity without the spreadsheet feel",
         description:
-          "Track staples, quantities, and timing without extra overhead, then make smarter plan and shopping decisions from real pantry coverage.",
+          "Track staples, quantities, and timing in grouped lists, then make smarter plan and shopping decisions from real pantry coverage.",
         bullets: [
           { strong: "Try it:", text: "tap an item row to open detail with nutrition, age, and recipe ideas." },
           { strong: "Why it matters:", text: "fewer duplicate purchases and less forgotten food." },
@@ -111,7 +111,7 @@
         kicker: "Shopping",
         title: "Shop the gap, not the whole pantry",
         description:
-          "Add full recipes to your list, mix in staples and essentials, and keep shared shopping coordinated across households or by text.",
+          "Shopping lists stay grouped by recipe and household needs so you can move faster without missing the basics.",
         bullets: [
           { strong: "Try it:", text: "tap the Plus icon to preview the bulk picker." },
           { strong: "Why it matters:", text: "quicker trips with cleaner lists and fewer duplicates." },
@@ -122,99 +122,63 @@
 
   const MODAL_SCREENS = [
     {
-      id: "home-add-recipe-link",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "Add Recipe", kind: "add_recipe", mode: "link", align: "center" },
-      copy: {
-        kicker: "Add New Recipe",
-        title: "Link mode",
-        description:
-          "Found a great recipe while browsing? Paste the link and move straight into cooking.",
-      },
-    },
-    {
-      id: "home-add-recipe-photo",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "Add Recipe", kind: "add_recipe", mode: "photo", align: "center" },
-      copy: {
-        kicker: "Add New Recipe",
-        title: "Photo mode",
-        description:
-          "Have a great recipe written down? Snap a photo and get your apron on.",
-      },
-    },
-    {
-      id: "home-add-recipe-ai",
+      id: "home-add-recipe",
       bg: "home",
       tab: "home",
       sheet: { title: "Add Recipe", kind: "add_recipe", mode: "ai", align: "center" },
       copy: {
         kicker: "Add New Recipe",
-        title: "AI mode",
+        title: "Four capture paths, one recipe box",
         description:
-          "Add a quick description of what you want, then use dropdowns to guide it toward what you already have.",
+          "Import from wherever the recipe starts, then keep it private to your household or save it for broader use.",
+        sections: [
+          {
+            title: "AI mode",
+            text: "Describe what you want to cook, then shape it with filters and servings before saving.",
+          },
+          {
+            title: "Link mode",
+            text: "Paste a recipe URL when you already found something you want to try.",
+          },
+          {
+            title: "Photo mode",
+            text: "Turn handwritten cards or screenshots into editable recipe drafts.",
+          },
+          {
+            title: "Manual mode",
+            text: "Write the recipe from scratch when you want full control over the details.",
+          },
+        ],
       },
     },
     {
-      id: "home-add-recipe-manual",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "Add Recipe", kind: "add_recipe", mode: "manual", align: "center" },
-      copy: {
-        kicker: "Add New Recipe",
-        title: "Manual mode",
-        description:
-          "Need detailed, precise steps? Manual mode gives you full control over the recipe structure.",
-      },
-    },
-    {
-      id: "home-add-pantry-search",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "search", align: "center" },
-      copy: {
-        kicker: "Add Pantry Item",
-        title: "Search mode",
-        description:
-          "Quickly search for specific items and add exactly what you need.",
-      },
-    },
-    {
-      id: "home-add-pantry-scan",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "scan", align: "center" },
-      copy: {
-        kicker: "Add Pantry Item",
-        title: "Scan mode",
-        description:
-          "Scan specific products and use those products to tune shopping preferences.",
-      },
-    },
-    {
-      id: "home-add-pantry-manual",
-      bg: "home",
-      tab: "home",
-      sheet: { title: "Add Pantry Item", kind: "add_pantry_item", mode: "manual", align: "center" },
-      copy: {
-        kicker: "Add Pantry Item",
-        title: "Manual mode",
-        description:
-          "Add a specific pantry item with the details that matter to your household.",
-      },
-    },
-    {
-      id: "home-add-pantry-bulk",
+      id: "home-add-pantry",
       bg: "home",
       tab: "home",
       sheet: { title: "Bulk add", kind: "add_pantry_item", mode: "bulk", align: "left" },
       copy: {
         kicker: "Add Pantry Item",
-        title: "Bulk picker",
+        title: "Multiple add flows, one pantry list",
         description:
-          "Quickly add staples and everyday essentials in one pass.",
+          "Choose the fastest intake path for the item in front of you, from staples to specific packaged products.",
+        sections: [
+          {
+            title: "Bulk add",
+            text: "Fill the pantry quickly with common staples and weekly basics in one pass.",
+          },
+          {
+            title: "Search mode",
+            text: "Look up a specific ingredient when you know exactly what you want to add.",
+          },
+          {
+            title: "Scan mode",
+            text: "Scan packaged products to capture exact matches and future shopping preferences.",
+          },
+          {
+            title: "Manual mode",
+            text: "Enter custom names, quantities, and expiration details when the item is more specific.",
+          },
+        ],
       },
     },
     {
@@ -328,7 +292,7 @@
       kicker: "Spice Rack",
       title: "Track spices before you rebuy them",
       description:
-        "Keep your spice inventory current so you do not buy the third jar of something already in the rack.",
+        "See in-stock jars and refill needs in one grouped list so you do not buy the third jar of something already in the rack.",
       bullets: [
         { strong: "Try it:", text: "tap the spice jar icon to toggle the spice rack view." },
         { strong: "Why it matters:", text: "fewer duplicates, less clutter, and cleaner pantry coverage." },
@@ -397,6 +361,22 @@
     return ul;
   };
 
+  const buildSections = (sections) => {
+    if (!Array.isArray(sections) || !sections.length) return null;
+    const wrap = el("div", "pp-tour-sections");
+    sections.forEach((section) => {
+      const card = el("div", "pp-tour-section-card");
+      if (section && section.title) {
+        card.appendChild(el("h3", "pp-tour-section-title", section.title));
+      }
+      if (section && section.text) {
+        card.appendChild(el("p", "pp-tour-section-text", section.text));
+      }
+      wrap.appendChild(card);
+    });
+    return wrap;
+  };
+
   const buildCopyArticle = (step, index) => {
     const article = document.createElement("article");
     article.className = `pp-tour-step surface${index === 0 ? " is-active" : ""}`;
@@ -427,6 +407,9 @@
 
     const bullets = buildBullets(copy.bullets);
     if (bullets) article.appendChild(bullets);
+
+    const sections = buildSections(copy.sections);
+    if (sections) article.appendChild(sections);
 
     const ctas = buildCtas(copy.ctas);
     if (ctas) {
@@ -784,6 +767,8 @@
     };
 
     let activePantryView = "items";
+    let activePantryDisplayMode = "current";
+    let activeShopDisplayMode = "current";
 
     const renderObjectsForTab = (tab, pantryView = "items") => {
       clear(objectsLayer);
@@ -811,7 +796,11 @@
         return;
       }
 
-      if (tab === "pantry" && pantryView === "items") {
+      if (
+        tab === "pantry" &&
+        pantryView === "items" &&
+        activePantryDisplayMode === "current"
+      ) {
         add("assets/objects/obj_pantry_shelf.png", "pp-obj--pantry-shelf");
         add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-top");
         add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-bottom");
@@ -970,17 +959,137 @@
       return root;
     };
 
+    const buildDemoListPill = ({ label, tone = "default" }) => {
+      const pill = el("span", "pp-demo-list-pill", label);
+      if (tone && tone !== "default") pill.classList.add(`is-${tone}`);
+      return pill;
+    };
+
+    const buildDemoListRow = ({
+      title,
+      subtitle,
+      mediaSrc,
+      mediaIcon = "list",
+      mediaAlt = "",
+      pills = [],
+      checked = null,
+      onClick = null,
+      downloadCta = false,
+      ariaLabel = null,
+    }) => {
+      const interactive = typeof onClick === "function" || downloadCta;
+      const row = document.createElement(interactive ? "button" : "div");
+      if (row instanceof HTMLButtonElement) row.type = "button";
+      row.className = "pp-demo-list-row";
+      if (!interactive) row.classList.add("pp-demo-list-row--static");
+      if (downloadCta) row.dataset.downloadCta = "true";
+      if (ariaLabel) row.setAttribute("aria-label", ariaLabel);
+
+      const media = el("div", "pp-demo-list-row-media");
+      if (mediaSrc) {
+        media.appendChild(
+          imgEl({ src: mediaSrc, className: "pp-demo-list-row-media-img", alt: mediaAlt }),
+        );
+      } else {
+        const icon = iconEl(mediaIcon);
+        if (icon) media.appendChild(icon);
+      }
+      row.appendChild(media);
+
+      const copy = el("div", "pp-demo-list-row-copy");
+      copy.appendChild(el("div", "pp-demo-list-row-title", title || ""));
+      if (subtitle) copy.appendChild(el("div", "pp-demo-list-row-sub", subtitle));
+      row.appendChild(copy);
+
+      const tail = el("div", "pp-demo-list-row-tail");
+      if (checked !== null) {
+        tail.appendChild(
+          el(
+            "span",
+            checked ? "pp-demo-list-check is-checked" : "pp-demo-list-check",
+            checked ? "✓" : "",
+          ),
+        );
+      }
+      if (Array.isArray(pills) && pills.length) {
+        const tags = el("div", "pp-demo-list-row-tags");
+        pills.forEach((pill) => {
+          if (!pill || !pill.label) return;
+          tags.appendChild(
+            buildDemoListPill({ label: pill.label, tone: pill.tone || "default" }),
+          );
+        });
+        tail.appendChild(tags);
+      }
+      if (typeof onClick === "function") {
+        const chevron = iconEl("chevron_right");
+        if (chevron) {
+          chevron.classList.add("pp-demo-list-row-chevron");
+          tail.appendChild(chevron);
+        }
+        row.addEventListener("click", onClick);
+      }
+      row.appendChild(tail);
+
+      return row;
+    };
+
+    const buildDemoListSection = ({ title, subtitle, count, rows = [], className = "" }) => {
+      const section = el(
+        "section",
+        className ? `pp-demo-list-card ${className}` : "pp-demo-list-card",
+      );
+      const head = el("div", "pp-demo-list-section-head");
+      const copy = el("div", "pp-demo-list-section-copy");
+      copy.appendChild(el("h3", "pp-demo-list-section-title", title || ""));
+      if (subtitle) copy.appendChild(el("p", "pp-demo-list-section-sub", subtitle));
+      head.appendChild(copy);
+      if (count != null && count !== "") {
+        head.appendChild(el("span", "pp-demo-list-section-count", String(count)));
+      }
+      section.appendChild(head);
+      const list = el("div", "pp-demo-list-rows");
+      rows.forEach((row) => {
+        if (row) list.appendChild(row);
+      });
+      section.appendChild(list);
+      return section;
+    };
+
+    const buildDemoListSummary = ({ eyebrow, title, description, stats = [] }) => {
+      const card = el("section", "pp-demo-list-card pp-demo-list-card--summary");
+      if (eyebrow) card.appendChild(el("p", "pp-demo-list-summary-eyebrow", eyebrow));
+      if (title) card.appendChild(el("h3", "pp-demo-list-summary-title", title));
+      if (description) card.appendChild(el("p", "pp-demo-list-summary-sub", description));
+      if (Array.isArray(stats) && stats.length) {
+        const statGrid = el("div", "pp-demo-list-summary-stats");
+        stats.forEach((stat) => {
+          if (!stat || !stat.value || !stat.label) return;
+          const node = el("div", "pp-demo-list-summary-stat");
+          node.appendChild(el("strong", "", stat.value));
+          node.appendChild(el("span", "", stat.label));
+          statGrid.appendChild(node);
+        });
+        card.appendChild(statGrid);
+      }
+      return card;
+    };
+
     const renderPantry = () => {
       const root = el("div", "pp-screen pp-screen-pantry");
 
       const topRow = el("div", "pp-top-row");
-      topRow.appendChild(
-        buildPill({
-          label: "List",
-          className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
-          leftIcon: "menu",
-        }),
-      );
+      const viewToggle = buildPill({
+        label: activePantryDisplayMode === "list" ? "Current View" : "List View",
+        className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
+        leftIcon: "swap",
+      });
+      viewToggle.addEventListener("click", () => {
+        activePantryDisplayMode =
+          activePantryDisplayMode === "list" ? "current" : "list";
+        setTab("pantry", activePantryView);
+      });
+      topRow.appendChild(viewToggle);
       topRow.appendChild(
         buildPill({
           label: "All Items (8)",
@@ -998,16 +1107,109 @@
       root.appendChild(topRow);
 
       const chipWrap = el("div", "pp-chip-wrap");
-      chipWrap.appendChild(el("span", "pp-app-chip", "Produce 3"));
+      chipWrap.appendChild(el("span", "pp-app-chip", "Use first 3"));
+      chipWrap.appendChild(el("span", "pp-app-chip", "Staples 5"));
       root.appendChild(chipWrap);
 
-      const stageNode = el("div", "pp-pantry-stage");
       const openItemDetail = (itemId) => {
         if (typeof onAction !== "function") return;
         const id = itemId != null ? String(itemId) : "";
         if (!id) return;
         onAction(actionSetPhoneModal("pantryItemDetail", { item: id }));
       };
+
+      if (activePantryDisplayMode === "list") {
+        const scrollNode = el("div", "pp-demo-list-scroll");
+        const stack = el("div", "pp-demo-list-stack");
+
+        stack.appendChild(
+          buildDemoListSummary({
+            eyebrow: "Pantry overview",
+            title: "List view keeps timing obvious",
+            description:
+              "Grouped rows make it easy to spot what should be used first and what is already plan-ready.",
+            stats: [
+              { value: "8", label: "items tracked" },
+              { value: "3", label: "use first" },
+              { value: "5", label: "stable staples" },
+            ],
+          }),
+        );
+
+        stack.appendChild(
+          buildDemoListSection({
+            title: "Use first",
+            subtitle: "Produce nearing its ideal window",
+            count: 3,
+            rows: [
+              buildDemoListRow({
+                title: "Avocado",
+                subtitle: "Produce • Qty 1 • ripe today",
+                mediaSrc: "assets/ingredients/avocado.png",
+                pills: [{ label: "Today", tone: "alert" }],
+                onClick: () => openItemDetail("avocado"),
+                ariaLabel: "Avocado details",
+              }),
+              buildDemoListRow({
+                title: "Apple",
+                subtitle: "Produce • Qty 1 • crisp and ready",
+                mediaSrc: "assets/ingredients/apple.png",
+                pills: [{ label: "1 day", tone: "copper" }],
+                onClick: () => openItemDetail("apple"),
+                ariaLabel: "Apple details",
+              }),
+              buildDemoListRow({
+                title: "Banana",
+                subtitle: "Produce • Qty 1 • good for smoothies",
+                mediaSrc: "assets/ingredients/banana.png",
+                pills: [{ label: "1 day", tone: "copper" }],
+                onClick: () => openItemDetail("banana"),
+                ariaLabel: "Banana details",
+              }),
+            ],
+          }),
+        );
+
+        stack.appendChild(
+          buildDemoListSection({
+            title: "Pantry staples",
+            subtitle: "Longer-lasting items already on hand",
+            count: 5,
+            rows: [
+              buildDemoListRow({
+                title: "Olive Oil",
+                subtitle: "Pantry • 1 bottle • plan-ready",
+                mediaSrc: "assets/ingredients/olive_oil.png",
+                pills: [{ label: "In stock", tone: "sage" }],
+                downloadCta: true,
+                ariaLabel: "Olive oil pantry item",
+              }),
+              buildDemoListRow({
+                title: "Garlic",
+                subtitle: "Produce • 2 bulbs • weekly staple",
+                mediaSrc: "assets/ingredients/garlic.png",
+                pills: [{ label: "Staple", tone: "muted" }],
+                downloadCta: true,
+                ariaLabel: "Garlic pantry item",
+              }),
+              buildDemoListRow({
+                title: "Crushed Tomatoes",
+                subtitle: "Pantry • 2 cans • ready for sauces",
+                mediaSrc: "assets/ingredients/tomato.png",
+                pills: [{ label: "Plan-ready", tone: "sage" }],
+                downloadCta: true,
+                ariaLabel: "Crushed tomatoes pantry item",
+              }),
+            ],
+          }),
+        );
+
+        scrollNode.appendChild(stack);
+        root.appendChild(scrollNode);
+        return root;
+      }
+
+      const stageNode = el("div", "pp-pantry-stage");
 
       const itemBtn = ({ id, title, src, cls }) => {
         const btn = document.createElement("button");
@@ -1055,9 +1257,15 @@
         return node;
       };
 
-      stageNode.appendChild(labelBtn({ id: "apple", cls: "pp-pantry-label--apple", title: "Apple", sub: "Exp 1d" }));
-      stageNode.appendChild(labelBtn({ id: "banana", cls: "pp-pantry-label--banana", title: "Banana", sub: "Exp 1d" }));
-      stageNode.appendChild(labelBtn({ id: "avocado", cls: "pp-pantry-label--avocado", title: "Avocado", sub: "Exp 0d" }));
+      stageNode.appendChild(
+        labelBtn({ id: "apple", cls: "pp-pantry-label--apple", title: "Apple", sub: "Exp 1d" }),
+      );
+      stageNode.appendChild(
+        labelBtn({ id: "banana", cls: "pp-pantry-label--banana", title: "Banana", sub: "Exp 1d" }),
+      );
+      stageNode.appendChild(
+        labelBtn({ id: "avocado", cls: "pp-pantry-label--avocado", title: "Avocado", sub: "Exp 0d" }),
+      );
 
       root.appendChild(stageNode);
       return root;
@@ -1106,12 +1314,17 @@
       const root = el("div", "pp-screen pp-screen-pantry-spice");
 
       const topRow = el("div", "pp-top-row pp-top-row--spice");
-      topRow.appendChild(
-        buildPill({
-          label: "A–Z",
-          className: "pp-app-pill--title pp-top-pill pp-top-pill--list pp-top-pill--az",
-        }),
-      );
+      const viewToggle = buildPill({
+        label: activePantryDisplayMode === "list" ? "Current View" : "List View",
+        className: "pp-app-pill--title pp-top-pill pp-top-pill--list pp-top-pill--az",
+        leftIcon: "swap",
+      });
+      viewToggle.addEventListener("click", () => {
+        activePantryDisplayMode =
+          activePantryDisplayMode === "list" ? "current" : "list";
+        setTab("pantry", activePantryView);
+      });
+      topRow.appendChild(viewToggle);
       topRow.appendChild(
         buildPill({
           label: "Spice Rack",
@@ -1126,6 +1339,77 @@
       searchBtn.dataset.downloadCta = "true";
       topRow.appendChild(searchBtn);
       root.appendChild(topRow);
+
+      const inStockCount = SPICE_SECTIONS.reduce(
+        (sum, section) =>
+          sum + (section.items || []).filter((item) => item && item.inStock).length,
+        0,
+      );
+      const restockCount = SPICE_SECTIONS.reduce(
+        (sum, section) =>
+          sum + (section.items || []).filter((item) => item && !item.inStock).length,
+        0,
+      );
+
+      const chipWrap = el("div", "pp-chip-wrap");
+      chipWrap.appendChild(el("span", "pp-app-chip", `In stock ${inStockCount}`));
+      chipWrap.appendChild(el("span", "pp-app-chip", `Restock ${restockCount}`));
+      root.appendChild(chipWrap);
+
+      if (activePantryDisplayMode === "list") {
+        const scrollNode = el("div", "pp-demo-list-scroll");
+        const stack = el("div", "pp-demo-list-stack");
+        stack.appendChild(
+          buildDemoListSummary({
+            eyebrow: "Spice rack",
+            title: "Grouped to prevent duplicate jars",
+            description:
+              "See what is ready for cooking and what needs a refill before the next grocery run.",
+            stats: [
+              { value: String(inStockCount), label: "ready now" },
+              { value: String(restockCount), label: "to restock" },
+              { value: "2", label: "sections" },
+            ],
+          }),
+        );
+
+        SPICE_SECTIONS.forEach((section) => {
+          const sectionSubtitle =
+            section.id === "essentials"
+              ? "Core everyday seasonings"
+              : "Frequently used blends and aromatics";
+          stack.appendChild(
+            buildDemoListSection({
+              title: section.title,
+              subtitle: sectionSubtitle,
+              count: section.count,
+              rows: (section.items || []).map((item) => {
+                const jarTone = item && item.tone ? String(item.tone) : "tan";
+                return buildDemoListRow({
+                  title: (item && item.label) || "",
+                  subtitle:
+                    item && item.inStock
+                      ? "Ready to cook with"
+                      : "Missing from the rack",
+                  mediaSrc: SPICE_JAR_ASSET[jarTone] || SPICE_JAR_ASSET.tan,
+                  pills: [
+                    {
+                      label: item && item.inStock ? "In stock" : "Restock",
+                      tone: item && item.inStock ? "sage" : "alert",
+                    },
+                  ],
+                  downloadCta: true,
+                  ariaLabel: `${(item && item.label) || "Spice"} spice status`,
+                });
+              }),
+            }),
+          );
+        });
+
+        scrollNode.appendChild(stack);
+        root.appendChild(scrollNode);
+        return root;
+      }
 
       const scrollNode = el("div", "pp-spice-scroll");
       const stageNode = el("div", "pp-spice-stage");
@@ -1452,17 +1736,20 @@
       return root;
     };
 
-		    const renderShop = () => {
-		      const root = el("div", "pp-screen pp-screen-shop");
+    const renderShop = () => {
+      const root = el("div", "pp-screen pp-screen-shop");
 
-		      const topRow = el("div", "pp-top-row");
-      topRow.appendChild(
-        buildPill({
-          label: "List",
-          className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
-          leftIcon: "menu",
-        }),
-      );
+      const topRow = el("div", "pp-top-row");
+      const viewToggle = buildPill({
+        label: activeShopDisplayMode === "list" ? "Current View" : "List View",
+        className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
+        leftIcon: "swap",
+      });
+      viewToggle.addEventListener("click", () => {
+        activeShopDisplayMode = activeShopDisplayMode === "list" ? "current" : "list";
+        setTab("shop");
+      });
+      topRow.appendChild(viewToggle);
       const shoppingBtn = buildPill({
         label: "Shopping",
         className: "pp-app-pill--title pp-top-pill pp-top-pill--main",
@@ -1477,8 +1764,8 @@
         ariaLabel: "Search",
       });
       searchBtn.dataset.downloadCta = "true";
-		      topRow.appendChild(searchBtn);
-		      root.appendChild(topRow);
+      topRow.appendChild(searchBtn);
+      root.appendChild(topRow);
 
       const hero = el("div", "pp-shop-hero");
       hero.appendChild(
@@ -1489,69 +1776,188 @@
       );
       root.appendChild(hero);
 
-      const buildShopCell = ({ key, src, label }) => {
-        const cell = el("div", `pp-shop-cell pp-shop-cell--${String(key || "")}`);
-        const asset = el("div", "pp-shop-cell-asset");
-        asset.appendChild(
-          imgEl({
-            src: String(src || ""),
-            className: `pp-shop-item-img pp-shop-item-img--${String(key || "")}`,
-            alt: "",
+      const stageNode = el("div", "pp-shop-stage");
+      if (activeShopDisplayMode === "list") {
+        const scrollNode = el("div", "pp-demo-list-scroll pp-demo-list-scroll--shop");
+        const stack = el("div", "pp-demo-list-stack");
+
+        stack.appendChild(
+          buildDemoListSummary({
+            eyebrow: "Shared shopping",
+            title: "Recipe items and household needs stay together",
+            description:
+              "List view keeps grocery runs focused by grouping ingredients by context instead of scattering them around the screen.",
+            stats: [
+              { value: "6", label: "still needed" },
+              { value: "1", label: "recipe linked" },
+              { value: "2", label: "household adds" },
+            ],
           }),
         );
-        cell.appendChild(asset);
-        cell.appendChild(el("div", "pp-shop-label", String(label || "")));
-        return cell;
-      };
 
-      const buildShopRow = ({ className, items }) => {
-        const row = el("div", `pp-shop-row ${String(className || "")}`);
-        (Array.isArray(items) ? items : []).forEach((item) => row.appendChild(buildShopCell(item)));
-        return row;
-      };
+        stack.appendChild(
+          buildDemoListSection({
+            title: "Produce",
+            subtitle: "Items tied to tonight's recipe",
+            count: 3,
+            rows: [
+              buildDemoListRow({
+                title: "Garlic",
+                subtitle: "Tomatillo Salsa Verde • already picked",
+                mediaSrc: "assets/objects/obj_garlic.png",
+                pills: [{ label: "Recipe", tone: "muted" }],
+                checked: true,
+                downloadCta: true,
+                ariaLabel: "Garlic shopping list item",
+              }),
+              buildDemoListRow({
+                title: "Jalapeno",
+                subtitle: "Tomatillo Salsa Verde • need 2 peppers",
+                mediaSrc: "assets/ingredients/jalapeno.png",
+                pills: [{ label: "Need 2", tone: "copper" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "Jalapeno shopping list item",
+              }),
+              buildDemoListRow({
+                title: "White Onion",
+                subtitle: "Tomatillo Salsa Verde • need 1 onion",
+                mediaSrc: "assets/ingredients/white_onion.png",
+                pills: [{ label: "Need 1", tone: "copper" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "White onion shopping list item",
+              }),
+            ],
+          }),
+        );
 
-		      const stageNode = el("div", "pp-shop-stage");
-      const scrollNode = el("div", "pp-shop-scroll");
-		      const itemsWrap = el("div", "pp-shop-items pp-shop-items--stacked");
+        stack.appendChild(
+          buildDemoListSection({
+            title: "Pantry top-offs",
+            subtitle: "Recipe support and pantry gaps",
+            count: 2,
+            rows: [
+              buildDemoListRow({
+                title: "Kosher Salt",
+                subtitle: "Spice rack gap for the week",
+                mediaSrc: "assets/objects/obj_white_spice.png",
+                pills: [{ label: "Pantry gap", tone: "alert" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "Kosher salt shopping list item",
+              }),
+              buildDemoListRow({
+                title: "Olive Oil",
+                subtitle: "Top off before next meal plan run",
+                mediaSrc: "assets/ingredients/olive_oil.png",
+                pills: [{ label: "Top off", tone: "muted" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "Olive oil shopping list item",
+              }),
+            ],
+          }),
+        );
 
-      itemsWrap.appendChild(
-        buildShopRow({
-          className: "pp-shop-row--food-top",
-          items: [
-            { key: "garlic", src: "assets/objects/obj_garlic.png", label: "Garlic" },
-            { key: "jalapeno", src: "assets/ingredients/jalapeno.png", label: "Jalapeno" },
-            { key: "salt", src: "assets/objects/obj_white_spice.png", label: "Kosher Salt" },
-          ],
-        }),
-      );
-      itemsWrap.appendChild(
-        buildShopRow({
-          className: "pp-shop-row--food-bottom",
-          items: [
-            { key: "oliveoil", src: "assets/ingredients/olive_oil.png", label: "Olive oil" },
-            { key: "onion", src: "assets/ingredients/white_onion.png", label: "White Onion" },
-          ],
-        }),
-      );
+        stack.appendChild(
+          buildDemoListSection({
+            title: "Household",
+            subtitle: "Non-food restocks ride the same trip",
+            count: 2,
+            rows: [
+              buildDemoListRow({
+                title: "Dishwashing detergent",
+                subtitle: "Sink restock",
+                mediaSrc: "assets/objects/dishwashing_detergent.png",
+                pills: [{ label: "Household", tone: "muted" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "Dishwashing detergent shopping list item",
+              }),
+              buildDemoListRow({
+                title: "Trash bags",
+                subtitle: "Pantry pull-out bin restock",
+                mediaSrc: "assets/objects/trash_bag_black.png",
+                pills: [{ label: "Household", tone: "muted" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "Trash bags shopping list item",
+              }),
+            ],
+          }),
+        );
 
-      itemsWrap.appendChild(el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Household"));
-      itemsWrap.appendChild(
-        buildShopRow({
-          className: "pp-shop-row--household",
-          items: [
-            {
-              key: "dishdetergent",
-              src: "assets/objects/dishwashing_detergent.png",
-              label: "Dishwashing detergent",
-            },
-            { key: "trashbags", src: "assets/objects/trash_bag_black.png", label: "Trash bags" },
-          ],
-        }),
-      );
+        scrollNode.appendChild(stack);
+        stageNode.appendChild(scrollNode);
+      } else {
+        const buildShopCell = ({ key, src, label }) => {
+          const cell = el("div", `pp-shop-cell pp-shop-cell--${String(key || "")}`);
+          const asset = el("div", "pp-shop-cell-asset");
+          asset.appendChild(
+            imgEl({
+              src: String(src || ""),
+              className: `pp-shop-item-img pp-shop-item-img--${String(key || "")}`,
+              alt: "",
+            }),
+          );
+          cell.appendChild(asset);
+          cell.appendChild(el("div", "pp-shop-label", String(label || "")));
+          return cell;
+        };
 
-      scrollNode.appendChild(itemsWrap);
-      scrollNode.appendChild(el("div", "pp-shop-scroll-spacer"));
-      stageNode.appendChild(scrollNode);
+        const buildShopRow = ({ className, items }) => {
+          const row = el("div", `pp-shop-row ${String(className || "")}`);
+          (Array.isArray(items) ? items : []).forEach((item) =>
+            row.appendChild(buildShopCell(item)),
+          );
+          return row;
+        };
+
+        const scrollNode = el("div", "pp-shop-scroll");
+        const itemsWrap = el("div", "pp-shop-items pp-shop-items--stacked");
+
+        itemsWrap.appendChild(
+          buildShopRow({
+            className: "pp-shop-row--food-top",
+            items: [
+              { key: "garlic", src: "assets/objects/obj_garlic.png", label: "Garlic" },
+              { key: "jalapeno", src: "assets/ingredients/jalapeno.png", label: "Jalapeno" },
+              { key: "salt", src: "assets/objects/obj_white_spice.png", label: "Kosher Salt" },
+            ],
+          }),
+        );
+        itemsWrap.appendChild(
+          buildShopRow({
+            className: "pp-shop-row--food-bottom",
+            items: [
+              { key: "oliveoil", src: "assets/ingredients/olive_oil.png", label: "Olive oil" },
+              { key: "onion", src: "assets/ingredients/white_onion.png", label: "White Onion" },
+            ],
+          }),
+        );
+
+        itemsWrap.appendChild(
+          el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Household"),
+        );
+        itemsWrap.appendChild(
+          buildShopRow({
+            className: "pp-shop-row--household",
+            items: [
+              {
+                key: "dishdetergent",
+                src: "assets/objects/dishwashing_detergent.png",
+                label: "Dishwashing detergent",
+              },
+              { key: "trashbags", src: "assets/objects/trash_bag_black.png", label: "Trash bags" },
+            ],
+          }),
+        );
+
+        scrollNode.appendChild(itemsWrap);
+        scrollNode.appendChild(el("div", "pp-shop-scroll-spacer"));
+        stageNode.appendChild(scrollNode);
+      }
 
       const bar = el("div", "pp-shop-bar");
       bar.appendChild(
@@ -3917,12 +4323,10 @@
 
       switch (kind) {
         case "addRecipe": {
-          const mode = normalizeMode(p && p.mode, ["ai", "link", "photo", "manual"], "ai");
-          return `home-add-recipe-${mode}`;
+          return "home-add-recipe";
         }
         case "addPantryItem": {
-          const mode = normalizeMode(p && p.mode, ["bulk", "scan", "search", "manual"], "bulk");
-          return `home-add-pantry-${mode}`;
+          return "home-add-pantry";
         }
         case "pantryItemDetail": {
           const item = normalizeMode(p && p.item, ["apple", "banana", "avocado"], "apple");
@@ -3959,13 +4363,31 @@
       const overlay = activeOverlayScreen();
       const downloadCtaOpen = !!phoneNavState.downloadCtaOpen;
       if (!overlay) return { ...base, tab, pantryView, downloadCtaOpen };
+      let overlaySheet = overlay.sheet ? { ...overlay.sheet } : null;
+      if (overlaySheet && phoneNavState.modal === "addRecipe") {
+        overlaySheet.mode = normalizeMode(
+          phoneNavState.params && phoneNavState.params.mode,
+          ["ai", "link", "photo", "manual"],
+          "ai",
+        );
+      }
+      if (overlaySheet && phoneNavState.modal === "addPantryItem") {
+        const mode = normalizeMode(
+          phoneNavState.params && phoneNavState.params.mode,
+          ["bulk", "scan", "search", "manual"],
+          "bulk",
+        );
+        overlaySheet.mode = mode;
+        overlaySheet.title = mode === "bulk" ? "Bulk add" : "Add Pantry Item";
+        overlaySheet.align = mode === "bulk" ? "left" : "center";
+      }
       // Keep the base route/tab; render the overlay spec inside the phone root.
       return {
         ...base,
         id: overlay.id,
         tab,
         pantryView,
-        sheet: overlay.sheet || null,
+        sheet: overlaySheet,
         page: overlay.page || null,
         downloadCtaOpen,
       };

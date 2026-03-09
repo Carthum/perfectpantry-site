@@ -82,7 +82,7 @@
   };
 
   const buildMailto = (subject, bodyLines) => {
-    const target = "support@perfectpantryapp.com";
+    const target = "support@pantryandplate.app";
     const payload = bodyLines.join("\n");
     return `mailto:${target}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(payload)}`;
   };
@@ -125,7 +125,7 @@
       window.location.href = buildMailto(subject, lines);
       showMessage(
         msg,
-        "Your mail app should open now with the support draft. If it does not, email support@perfectpantryapp.com directly.",
+        "Your mail app should open now with the support draft. If it does not, email support@pantryandplate.app directly.",
         "success",
       );
       form.reset();

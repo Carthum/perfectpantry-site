@@ -109,8 +109,8 @@ html.pp-tour-locked body {
 .pp-scrolly-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
-  gap: 2.25rem;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, clamp(360px, 32vw, 520px));
+  gap: clamp(1.5rem, 3vw, 3.5rem);
   align-items: center;
 }
 
@@ -118,12 +118,15 @@ html.pp-tour-locked body {
   display: grid;
   gap: 1rem;
   align-content: start;
+  min-width: 0;
 }
 
 .pp-tour-right {
   align-self: center;
   display: grid;
   justify-items: center;
+  width: 100%;
+  min-width: 0;
 }
 
 .pp-tour-mobile-demo {
@@ -168,6 +171,7 @@ html.pp-tour-locked body {
   padding: 1.1rem 1.15rem;
   position: relative;
   overflow: hidden;
+  align-self: start;
   opacity: 0;
   transform: translateY(16px);
   pointer-events: none;
@@ -267,7 +271,7 @@ html.pp-tour-locked body {
 }
 
 .pp-demo-hero-mount {
-  width: 100%;
+  width: min(100%, 560px);
   display: grid;
   justify-items: center;
   margin-inline: auto;
@@ -848,11 +852,11 @@ html.pp-tour-locked body {
 
 .pp-top-row {
   display: grid;
-  grid-template-columns: minmax(74px, auto) minmax(0, 1fr) minmax(48px, 60px);
-  gap: 8px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) auto;
+  gap: 10px;
   align-items: center;
-  padding-left: 1px;
-  padding-right: 4px;
+  padding-left: 0;
+  padding-right: 0;
   overflow: visible;
 }
 
@@ -860,31 +864,76 @@ html.pp-tour-locked body {
   min-width: 0;
 }
 
+.pp-view-toggle {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(58, 42, 26, 0.18);
+  background: rgba(244, 231, 214, 0.94);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+}
+
+.pp-view-toggle-btn {
+  min-width: 0;
+  min-height: clamp(34px, calc(var(--pp-phone-demo-w, 360px) * 0.105), 40px);
+  padding: 0 clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 12px);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(58, 42, 26, 0.68);
+  font: inherit;
+  font-size: var(--pp-type-body-sm);
+  font-weight: 820;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.pp-view-toggle-btn:hover {
+  color: rgba(58, 42, 26, 0.92);
+}
+
+.pp-view-toggle-btn.is-active {
+  background: rgba(255, 250, 244, 0.98);
+  color: rgba(58, 42, 26, 0.96);
+  box-shadow: 0 6px 14px rgba(58, 42, 26, 0.12);
+}
+
+.pp-view-toggle-btn:focus-visible {
+  outline: 2px solid rgba(182, 99, 46, 0.48);
+  outline-offset: 2px;
+}
+
 .pp-top-row .pp-app-pill {
   width: 100%;
-  min-height: clamp(44px, 4.9vw, 50px);
-  padding: 0 clamp(10px, 1.1vw, 14px);
+  min-height: clamp(42px, calc(var(--pp-phone-demo-w, 360px) * 0.13), 48px);
+  padding: 0 clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.038), 16px);
 }
 
 .pp-top-row .pp-top-pill {
-  font-size: var(--pp-type-display-md);
-  letter-spacing: -0.015em;
+  font-size: var(--pp-type-body-md);
+  letter-spacing: -0.01em;
 }
 
 .pp-top-row .pp-top-pill > span {
-  white-space: normal;
-  line-height: 1.08;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
-}
-
-.pp-top-row .pp-top-pill--list {
-  font-size: var(--pp-type-body-md);
-  padding: 0 clamp(8px, 0.95vw, 12px);
+  white-space: nowrap;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pp-top-row .pp-top-pill--main {
-  padding: 0 clamp(12px, 1.3vw, 18px);
+  justify-content: flex-start;
+  text-align: left;
 }
 
 .pp-top-row .pp-top-pill svg {
@@ -892,24 +941,14 @@ html.pp-tour-locked body {
   height: clamp(15px, 1.3vw, 18px);
 }
 
-.pp-top-row--spice .pp-app-pill {
-  min-height: clamp(42px, 4.6vw, 48px);
-}
-
-.pp-top-row--spice .pp-top-pill--list {
-  font-size: var(--pp-type-body-sm);
-  padding: 0 clamp(9px, 0.95vw, 12px);
-}
-
 .pp-top-row--spice .pp-top-pill--main {
   font-size: var(--pp-type-body-md);
   letter-spacing: -0.012em;
-  padding: 0 clamp(13px, 1.35vw, 18px);
 }
 
 .pp-top-row .pp-app-circle {
-  width: clamp(42px, 4.6vw, 48px);
-  height: clamp(42px, 4.6vw, 48px);
+  width: clamp(40px, calc(var(--pp-phone-demo-w, 360px) * 0.125), 46px);
+  height: clamp(40px, calc(var(--pp-phone-demo-w, 360px) * 0.125), 46px);
   justify-self: end;
 }
 

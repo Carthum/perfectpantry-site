@@ -23,8 +23,14 @@
   const actionClosePhoneModal = () => actionSetPhoneModal(null);
   const actionSelectTab = (tab) => ({ type: "select_tab", tab });
   const actionSetPantryView = (view) => ({ type: "set_pantry_view", view });
+  const actionSetDisplayMode = (target, mode) => ({
+    type: "set_display_mode",
+    target: target ? String(target) : "",
+    mode: mode ? String(mode) : "",
+  });
   const actionOpenDownloadCta = () => ({ type: "open_download_cta" });
   const actionCloseDownloadCta = () => ({ type: "close_download_cta" });
+  const normalizeDisplayMode = (mode) => (String(mode || "") === "list" ? "list" : "cards");
 
   // Single source of truth for the demo.
   // Each step owns BOTH the left copy and the right phone UI state.
@@ -68,7 +74,14 @@
         description:
           "Track staples, quantities, and timing in grouped lists, then make smarter plan and shopping decisions from real pantry coverage.",
         bullets: [
-          { strong: "Try it:", text: "tap an item row to open detail with nutrition, age, and recipe ideas." },
+          {
+            strong: "Try it:",
+            text: "use the List / Cards toggle to swap between grouped timing and shelf-style browsing.",
+          },
+          {
+            strong: "In list view:",
+            text: "use-first ingredients and stable staples stay separated so timing is obvious at a glance.",
+          },
           { strong: "Why it matters:", text: "fewer duplicate purchases and less forgotten food." },
         ],
       },
@@ -113,7 +126,14 @@
         description:
           "Shopping lists stay grouped by recipe and household needs so you can move faster without missing the basics.",
         bullets: [
-          { strong: "Try it:", text: "tap the Plus icon to preview the bulk picker." },
+          {
+            strong: "Try it:",
+            text: "use the List / Cards toggle to swap between spatial browsing and aisle-friendly rows.",
+          },
+          {
+            strong: "In list view:",
+            text: "recipe items and household restocks stay grouped together so one trip covers both.",
+          },
           { strong: "Why it matters:", text: "quicker trips with cleaner lists and fewer duplicates." },
         ],
       },
@@ -294,7 +314,14 @@
       description:
         "See in-stock jars and refill needs in one grouped list so you do not buy the third jar of something already in the rack.",
       bullets: [
-        { strong: "Try it:", text: "tap the spice jar icon to toggle the spice rack view." },
+        {
+          strong: "Try it:",
+          text: "tap the spice jar icon for Spice Rack, then use List / Cards to swap browsing styles.",
+        },
+        {
+          strong: "In list view:",
+          text: "in-stock jars and restocks stay grouped so refill gaps stand out before the next trip.",
+        },
         { strong: "Why it matters:", text: "fewer duplicates, less clutter, and cleaner pantry coverage." },
       ],
     },
@@ -563,6 +590,30 @@
     return btn;
   };
 
+  const buildDisplayToggle = ({ activeMode = "cards", ariaLabel, onSelect }) => {
+    const toggle = el("div", "pp-view-toggle");
+    toggle.setAttribute("role", "group");
+    toggle.setAttribute("aria-label", ariaLabel || "View mode");
+
+    [
+      { mode: "list", label: "List" },
+      { mode: "cards", label: "Cards" },
+    ].forEach(({ mode, label }) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "pp-view-toggle-btn";
+      if (mode === activeMode) btn.classList.add("is-active");
+      btn.setAttribute("aria-pressed", String(mode === activeMode));
+      btn.textContent = label;
+      if (typeof onSelect === "function") {
+        btn.addEventListener("click", () => onSelect(mode));
+      }
+      toggle.appendChild(btn);
+    });
+
+    return toggle;
+  };
+
   const buildCircle = ({ icon, className, ariaLabel }) => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -767,8 +818,8 @@
     };
 
     let activePantryView = "items";
-    let activePantryDisplayMode = "current";
-    let activeShopDisplayMode = "current";
+    let activePantryDisplayMode = "cards";
+    let activeShopDisplayMode = "cards";
 
     const renderObjectsForTab = (tab, pantryView = "items") => {
       clear(objectsLayer);
@@ -799,7 +850,7 @@
       if (
         tab === "pantry" &&
         pantryView === "items" &&
-        activePantryDisplayMode === "current"
+        activePantryDisplayMode === "cards"
       ) {
         add("assets/objects/obj_pantry_shelf.png", "pp-obj--pantry-shelf");
         add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-top");
@@ -1056,45 +1107,32 @@
       return section;
     };
 
-    const buildDemoListSummary = ({ eyebrow, title, description, stats = [] }) => {
-      const card = el("section", "pp-demo-list-card pp-demo-list-card--summary");
-      if (eyebrow) card.appendChild(el("p", "pp-demo-list-summary-eyebrow", eyebrow));
-      if (title) card.appendChild(el("h3", "pp-demo-list-summary-title", title));
-      if (description) card.appendChild(el("p", "pp-demo-list-summary-sub", description));
-      if (Array.isArray(stats) && stats.length) {
-        const statGrid = el("div", "pp-demo-list-summary-stats");
-        stats.forEach((stat) => {
-          if (!stat || !stat.value || !stat.label) return;
-          const node = el("div", "pp-demo-list-summary-stat");
-          node.appendChild(el("strong", "", stat.value));
-          node.appendChild(el("span", "", stat.label));
-          statGrid.appendChild(node);
-        });
-        card.appendChild(statGrid);
-      }
-      return card;
-    };
-
     const renderPantry = () => {
       const root = el("div", "pp-screen pp-screen-pantry");
 
       const topRow = el("div", "pp-top-row");
-      const viewToggle = buildPill({
-        label: activePantryDisplayMode === "list" ? "Current View" : "List View",
-        className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
-        leftIcon: "swap",
-      });
-      viewToggle.addEventListener("click", () => {
-        activePantryDisplayMode =
-          activePantryDisplayMode === "list" ? "current" : "list";
-        setTab("pantry", activePantryView);
+      const viewToggle = buildDisplayToggle({
+        activeMode: activePantryDisplayMode,
+        ariaLabel: "Pantry view mode",
+        onSelect: (mode) => {
+          const nextMode = normalizeDisplayMode(mode);
+          if (nextMode === activePantryDisplayMode) return;
+          if (typeof onAction === "function") {
+            onAction(actionSetDisplayMode("pantry", nextMode));
+            return;
+          }
+          activePantryDisplayMode = nextMode;
+          setTab("pantry", activePantryView, {
+            pantryDisplayMode: activePantryDisplayMode,
+            shopDisplayMode: activeShopDisplayMode,
+          });
+        },
       });
       topRow.appendChild(viewToggle);
       topRow.appendChild(
         buildPill({
-          label: "All Items (8)",
+          label: "All Items",
           className: "pp-app-pill--title pp-top-pill pp-top-pill--main",
-          rightIcon: "chevron_down",
         }),
       );
       const searchBtn = buildCircle({
@@ -1121,20 +1159,6 @@
       if (activePantryDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll");
         const stack = el("div", "pp-demo-list-stack");
-
-        stack.appendChild(
-          buildDemoListSummary({
-            eyebrow: "Pantry overview",
-            title: "List view keeps timing obvious",
-            description:
-              "Grouped rows make it easy to spot what should be used first and what is already plan-ready.",
-            stats: [
-              { value: "8", label: "items tracked" },
-              { value: "3", label: "use first" },
-              { value: "5", label: "stable staples" },
-            ],
-          }),
-        );
 
         stack.appendChild(
           buildDemoListSection({
@@ -1314,15 +1338,22 @@
       const root = el("div", "pp-screen pp-screen-pantry-spice");
 
       const topRow = el("div", "pp-top-row pp-top-row--spice");
-      const viewToggle = buildPill({
-        label: activePantryDisplayMode === "list" ? "Current View" : "List View",
-        className: "pp-app-pill--title pp-top-pill pp-top-pill--list pp-top-pill--az",
-        leftIcon: "swap",
-      });
-      viewToggle.addEventListener("click", () => {
-        activePantryDisplayMode =
-          activePantryDisplayMode === "list" ? "current" : "list";
-        setTab("pantry", activePantryView);
+      const viewToggle = buildDisplayToggle({
+        activeMode: activePantryDisplayMode,
+        ariaLabel: "Spice rack view mode",
+        onSelect: (mode) => {
+          const nextMode = normalizeDisplayMode(mode);
+          if (nextMode === activePantryDisplayMode) return;
+          if (typeof onAction === "function") {
+            onAction(actionSetDisplayMode("pantry", nextMode));
+            return;
+          }
+          activePantryDisplayMode = nextMode;
+          setTab("pantry", activePantryView, {
+            pantryDisplayMode: activePantryDisplayMode,
+            shopDisplayMode: activeShopDisplayMode,
+          });
+        },
       });
       topRow.appendChild(viewToggle);
       topRow.appendChild(
@@ -1359,19 +1390,6 @@
       if (activePantryDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll");
         const stack = el("div", "pp-demo-list-stack");
-        stack.appendChild(
-          buildDemoListSummary({
-            eyebrow: "Spice rack",
-            title: "Grouped to prevent duplicate jars",
-            description:
-              "See what is ready for cooking and what needs a refill before the next grocery run.",
-            stats: [
-              { value: String(inStockCount), label: "ready now" },
-              { value: String(restockCount), label: "to restock" },
-              { value: "2", label: "sections" },
-            ],
-          }),
-        );
 
         SPICE_SECTIONS.forEach((section) => {
           const sectionSubtitle =
@@ -1740,14 +1758,22 @@
       const root = el("div", "pp-screen pp-screen-shop");
 
       const topRow = el("div", "pp-top-row");
-      const viewToggle = buildPill({
-        label: activeShopDisplayMode === "list" ? "Current View" : "List View",
-        className: "pp-app-pill--title pp-top-pill pp-top-pill--list",
-        leftIcon: "swap",
-      });
-      viewToggle.addEventListener("click", () => {
-        activeShopDisplayMode = activeShopDisplayMode === "list" ? "current" : "list";
-        setTab("shop");
+      const viewToggle = buildDisplayToggle({
+        activeMode: activeShopDisplayMode,
+        ariaLabel: "Shopping view mode",
+        onSelect: (mode) => {
+          const nextMode = normalizeDisplayMode(mode);
+          if (nextMode === activeShopDisplayMode) return;
+          if (typeof onAction === "function") {
+            onAction(actionSetDisplayMode("shop", nextMode));
+            return;
+          }
+          activeShopDisplayMode = nextMode;
+          setTab("shop", "items", {
+            pantryDisplayMode: activePantryDisplayMode,
+            shopDisplayMode: activeShopDisplayMode,
+          });
+        },
       });
       topRow.appendChild(viewToggle);
       const shoppingBtn = buildPill({
@@ -1780,20 +1806,6 @@
       if (activeShopDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll pp-demo-list-scroll--shop");
         const stack = el("div", "pp-demo-list-stack");
-
-        stack.appendChild(
-          buildDemoListSummary({
-            eyebrow: "Shared shopping",
-            title: "Recipe items and household needs stay together",
-            description:
-              "List view keeps grocery runs focused by grouping ingredients by context instead of scattering them around the screen.",
-            stats: [
-              { value: "6", label: "still needed" },
-              { value: "1", label: "recipe linked" },
-              { value: "2", label: "household adds" },
-            ],
-          }),
-        );
 
         stack.appendChild(
           buildDemoListSection({
@@ -3973,6 +3985,8 @@
     const setSplash = () => {
       activeTab = null;
       activePantryView = "items";
+      activePantryDisplayMode = "cards";
+      activeShopDisplayMode = "cards";
       splashImg.style.display = "block";
       app.setAttribute("aria-hidden", "true");
       setSelectedNavUi(null);
@@ -3987,13 +4001,27 @@
       setDownloadCtaOpen(false);
     };
 
-    const setTab = (tab, pantryView = "items") => {
+    const setTab = (tab, pantryView = "items", displayModes = {}) => {
       if (!tab) return setSplash();
 
       const nextPantryView =
         tab === "pantry" && String(pantryView || "") === "spice" ? "spice" : "items";
+      const nextPantryDisplayMode =
+        displayModes && Object.prototype.hasOwnProperty.call(displayModes, "pantryDisplayMode")
+          ? normalizeDisplayMode(displayModes.pantryDisplayMode)
+          : activePantryDisplayMode;
+      const nextShopDisplayMode =
+        displayModes && Object.prototype.hasOwnProperty.call(displayModes, "shopDisplayMode")
+          ? normalizeDisplayMode(displayModes.shopDisplayMode)
+          : activeShopDisplayMode;
       const isSamePantryView = tab === "pantry" ? activePantryView === nextPantryView : true;
-      if (tab === activeTab && isSamePantryView) {
+      const isSameDisplayMode =
+        tab === "pantry"
+          ? activePantryDisplayMode === nextPantryDisplayMode
+          : tab === "shop"
+            ? activeShopDisplayMode === nextShopDisplayMode
+            : true;
+      if (tab === activeTab && isSamePantryView && isSameDisplayMode) {
         appContent.scrollTop = 0;
         appContent.scrollLeft = 0;
         if (tab === "pantry") {
@@ -4007,6 +4035,8 @@
 
       activeTab = tab;
       activePantryView = tab === "pantry" ? nextPantryView : "items";
+      activePantryDisplayMode = nextPantryDisplayMode;
+      activeShopDisplayMode = nextShopDisplayMode;
       splashImg.style.display = "none";
       app.setAttribute("aria-hidden", "false");
 
@@ -4051,6 +4081,14 @@
       const tab = screenState && screenState.tab ? String(screenState.tab) : "";
       const pantryView =
         screenState && String(screenState.pantryView || "") === "spice" ? "spice" : "items";
+      const pantryDisplayMode =
+        screenState && Object.prototype.hasOwnProperty.call(screenState, "pantryDisplayMode")
+          ? normalizeDisplayMode(screenState.pantryDisplayMode)
+          : activePantryDisplayMode;
+      const shopDisplayMode =
+        screenState && Object.prototype.hasOwnProperty.call(screenState, "shopDisplayMode")
+          ? normalizeDisplayMode(screenState.shopDisplayMode)
+          : activeShopDisplayMode;
       const sheetSpec = screenState && screenState.sheet ? screenState.sheet : null;
       const pageSpec = screenState && screenState.page ? screenState.page : null;
       const downloadCtaOpen = !!(screenState && screenState.downloadCtaOpen);
@@ -4060,7 +4098,7 @@
         return;
       }
 
-      setTab(tab, pantryView);
+      setTab(tab, pantryView, { pantryDisplayMode, shopDisplayMode });
       if (pageSpec) {
         openPage(pageSpec);
         closeSheet();
@@ -4302,6 +4340,8 @@
       route: null,
       routeOverride: null,
       pantryView: "items",
+      pantryDisplayMode: "cards",
+      shopDisplayMode: "cards",
       modal: null,
       params: null,
       downloadCtaOpen: false,
@@ -4359,10 +4399,14 @@
         phoneNavState.route ||
         (base && base.tab ? String(base.tab) : "");
       const pantryView = tab === "pantry" && phoneNavState.pantryView === "spice" ? "spice" : "items";
+      const pantryDisplayMode = normalizeDisplayMode(phoneNavState.pantryDisplayMode);
+      const shopDisplayMode = normalizeDisplayMode(phoneNavState.shopDisplayMode);
       if (tab !== "pantry") phoneNavState.pantryView = "items";
       const overlay = activeOverlayScreen();
       const downloadCtaOpen = !!phoneNavState.downloadCtaOpen;
-      if (!overlay) return { ...base, tab, pantryView, downloadCtaOpen };
+      if (!overlay) {
+        return { ...base, tab, pantryView, pantryDisplayMode, shopDisplayMode, downloadCtaOpen };
+      }
       let overlaySheet = overlay.sheet ? { ...overlay.sheet } : null;
       if (overlaySheet && phoneNavState.modal === "addRecipe") {
         overlaySheet.mode = normalizeMode(
@@ -4387,6 +4431,8 @@
         id: overlay.id,
         tab,
         pantryView,
+        pantryDisplayMode,
+        shopDisplayMode,
         sheet: overlaySheet,
         page: overlay.page || null,
         downloadCtaOpen,
@@ -4448,6 +4494,18 @@
             phoneNavState.modal = null;
             phoneNavState.params = null;
             phoneNavState.downloadCtaOpen = false;
+            break;
+          }
+          case "set_display_mode": {
+            const target = String(action.target || "");
+            const mode = normalizeDisplayMode(action.mode);
+            if (target === "pantry") {
+              phoneNavState.pantryDisplayMode = mode;
+            } else if (target === "shop") {
+              phoneNavState.shopDisplayMode = mode;
+            } else {
+              return;
+            }
             break;
           }
           case "set_phone_modal": {
@@ -4539,11 +4597,10 @@
       const maxWByCol = Math.floor(colW - 4);
 
       const compactMode = !stageMode || window.matchMedia("(max-width: 720px)").matches;
-      const minW = compactMode ? 250 : 280;
-      const maxW = compactMode ? 360 : 400;
-      const maxOuterW = Math.max(1, Math.min(maxOuterWByH, maxWByCol, maxW));
-      const desired = clamp(maxOuterW, minW, maxW);
-      const target = Math.min(desired, maxOuterW);
+      const minW = compactMode ? 250 : 320;
+      const maxW = compactMode ? 360 : 520;
+      const widthBySpace = Math.max(1, Math.min(maxOuterWByH, maxWByCol));
+      const target = widthBySpace < minW ? widthBySpace : clamp(widthBySpace, minW, maxW);
       stage.style.setProperty("--pp-phone-demo-w", `${target}px`);
       if (phone && typeof phone.syncLayout === "function") phone.syncLayout();
     };

@@ -2460,10 +2460,14 @@ html.pp-tour-locked body {
 }
 
 .pp-shop-recipe-pill {
-  margin-top: 10px;
+  margin-top: 6px;
   justify-self: center;
   width: auto;
-  max-width: 92%;
+  max-width: 88%;
+  min-height: 44px;
+  padding-inline: 14px;
+  font-size: clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.032), 13px);
+  line-height: 1.08;
 }
 
 .pp-shop-items {
@@ -2627,22 +2631,25 @@ html.pp-tour-locked body {
 
 .pp-shop-bar {
   position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 22px;
+  left: 10px;
+  right: 10px;
+  bottom: 14px;
   z-index: 3;
   display: grid;
-  grid-template-columns: 56px 1fr 56px;
-  gap: 12px;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 10px;
   align-items: center;
 }
 
 .pp-shop-bar .pp-app-pill {
-  min-height: 52px;
-  font-size: var(--pp-type-display-md);
+  min-height: 44px;
+  padding: 0 10px;
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 12px);
   font-family: var(--font-display);
   font-weight: 790;
   letter-spacing: -0.01em;
+  line-height: 1.02;
+  text-wrap: balance;
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.18);
 }
 
@@ -2674,7 +2681,7 @@ html.pp-tour-locked body {
 .pp-shop-items--stacked {
   display: grid;
   align-content: start;
-  gap: 14px;
+  gap: 10px;
   padding: 2px 2px 12px;
   min-width: 0;
 }
@@ -2682,7 +2689,7 @@ html.pp-tour-locked body {
 .pp-shop-items--stacked .pp-shop-row {
   display: grid;
   align-items: end;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -2693,7 +2700,7 @@ html.pp-tour-locked body {
 .pp-shop-items--stacked .pp-shop-row--food-bottom {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding-inline: clamp(16px, 7%, 32px);
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
 .pp-shop-items--stacked .pp-shop-row--household {
@@ -2706,13 +2713,13 @@ html.pp-tour-locked body {
   display: grid;
   justify-items: center;
   align-content: start;
-  gap: 7px;
+  gap: 5px;
   min-width: 0;
 }
 
 .pp-shop-items--stacked .pp-shop-cell-asset {
   width: 100%;
-  height: clamp(60px, 19vw, 84px);
+  height: clamp(52px, 16vw, 72px);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -2767,13 +2774,13 @@ html.pp-tour-locked body {
   transform: none;
   justify-self: center;
   margin: 4px auto 0;
-  min-height: 52px;
-  padding: 0 18px;
+  min-height: 44px;
+  padding: 0 16px;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.18);
   background: rgba(244, 231, 214, 0.92);
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
-  font-size: var(--pp-type-body-md);
+  font-size: clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.031), 12px);
   font-weight: 760;
   color: var(--pp-app-ink);
   text-align: center;
@@ -2785,24 +2792,26 @@ html.pp-tour-locked body {
   right: auto;
   top: auto;
   transform: none;
-  width: min(100%, 174px);
+  width: min(100%, 156px);
   margin: 0 auto;
-  min-height: 42px;
-  padding: 0 12px;
+  min-height: 36px;
+  padding: 0 10px;
   white-space: normal;
   text-align: center;
   justify-content: center;
-  font-size: var(--pp-type-body-sm);
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 11px);
+  line-height: 1.04;
+  text-wrap: balance;
 }
 
 .pp-shop-bar .pp-app-circle {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
 }
 
 .pp-shop-bar .pp-app-circle svg {
-  width: 22px;
-  height: 22px;
+  width: 19px;
+  height: 19px;
 }
 
 @media (max-width: 420px) {
@@ -3269,9 +3278,11 @@ html.pp-tour-locked body {
 
 /* Sheet sizing tuned closer to the reference screenshots. */
 .pp-app-sheet-title {
-  font-size: 20px;
+  font-size: clamp(16px, calc(var(--pp-phone-demo-w, 360px) * 0.047), 20px);
   font-weight: 950;
   letter-spacing: -0.01em;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
 .pp-app-sheet-close {
@@ -3287,7 +3298,7 @@ html.pp-tour-locked body {
 .pp-app-sheet-body {
   display: grid;
   align-content: start;
-  gap: 12px;
+  gap: 10px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px 2px 6px;
@@ -3322,42 +3333,55 @@ html.pp-tour-locked body {
 
 .pp-app-seg-btn {
   padding: 8px 8px;
-  font-size: clamp(11px, 2.2vw, 12px);
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 12px);
+  line-height: 1.03;
 }
 
 .pp-app-seg--compact .pp-app-seg-btn {
-  min-height: 34px;
-  padding: 7px 3px;
-  font-size: clamp(10px, 2vw, 11px);
+  min-height: 30px;
+  padding: 6px 3px;
+  font-size: clamp(8.5px, calc(var(--pp-phone-demo-w, 360px) * 0.024), 10px);
   font-weight: 840;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
 }
 
 .pp-app-seg--compact {
-  gap: 6px;
-  padding: 6px;
+  gap: 4px;
+  padding: 4px;
 }
 
 .pp-app-field {
-  grid-template-columns: 28px 1fr;
-  gap: 10px;
-  padding: 12px 14px;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+  padding: 11px 12px;
   border-radius: 20px;
 }
 
 .pp-app-field svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .pp-app-field input,
 .pp-app-field textarea {
-  font-size: 15px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 14px);
   font-weight: 760;
 }
 
+.pp-app-field input {
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .pp-app-field textarea {
-  min-height: 68px;
+  min-height: 62px;
+  line-height: 1.2;
 }
 
 .pp-app-field--noicon {
@@ -3370,9 +3394,27 @@ html.pp-tour-locked body {
 
 .pp-app-sheet-sub {
   margin: 0;
-  font-size: 14px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 14px);
   font-weight: 850;
   color: rgba(58, 42, 26, 0.82);
+  line-height: 1.15;
+}
+
+.pp-app-sheet-row {
+  gap: 10px;
+}
+
+.pp-app-sheet-grid2 {
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  gap: 10px;
+}
+
+.pp-app-sheet-grid2 .pp-app-field {
+  padding-inline: 10px;
+}
+
+.pp-app-sheet-grid2 .pp-app-field input {
+  font-size: clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 13px);
 }
 
 .pp-app-sheet-tip {
@@ -3389,13 +3431,13 @@ html.pp-tour-locked body {
 
 .pp-app-sheet-stack {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .pp-app-sheet-pill {
-  padding: 12px 14px;
+  padding: 11px 12px;
   border-radius: 22px;
-  font-size: 14px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 13px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
@@ -3489,7 +3531,7 @@ html.pp-tour-locked body {
   border-radius: 20px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(233, 214, 191, 0.62);
-  padding: 12px 12px 10px;
+  padding: 10px 10px 9px;
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.22);
 }
 
@@ -3509,7 +3551,7 @@ html.pp-tour-locked body {
 
 .pp-app-sheet-surface-note {
   margin-top: 8px;
-  font-size: 11px;
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.026), 11px);
   font-weight: 750;
   text-align: center;
   color: rgba(58, 42, 26, 0.68);
@@ -3562,7 +3604,7 @@ html.pp-tour-locked body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   margin: 0;
   padding: 10px 14px;
   border-radius: 20px;
@@ -3573,7 +3615,7 @@ html.pp-tour-locked body {
 
 .pp-app-stepper-label {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.031), 13px);
   font-weight: 900;
   color: rgba(58, 42, 26, 0.82);
 }
@@ -3629,7 +3671,7 @@ html.pp-tour-locked body {
 .pp-app-inline-add {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
 }
 
 .pp-app-inline-add .pp-app-field {
@@ -3637,8 +3679,8 @@ html.pp-tour-locked body {
 }
 
 .pp-app-inline-add-btn {
-  width: 46px;
-  min-height: 46px;
+  width: 42px;
+  min-height: 42px;
   padding: 0;
   border-radius: 18px;
 }

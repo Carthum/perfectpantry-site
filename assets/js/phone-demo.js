@@ -2052,15 +2052,15 @@
       jarVisualHeightMinPx: 60,
       jarVisualHeightMaxPx: 84,
       labelWidthRatioByCount: {
-        1: 0.4,
-        2: 0.32,
-        3: 0.27,
+        1: 0.38,
+        2: 0.29,
+        3: 0.24,
       },
-      labelWidthMinPx: 88,
-      labelWidthMaxPx: 152,
-      labelGapFromShelfPx: 8,
-      labelGapPx: 8,
-      labelSidePadPx: 6,
+      labelWidthMinPx: 74,
+      labelWidthMaxPx: 128,
+      labelGapFromShelfPx: 3,
+      labelGapPx: 6,
+      labelSidePadPx: 12,
     });
 
     const EMPTY_ALPHA_INSETS = Object.freeze({
@@ -2465,11 +2465,13 @@
           jarNode.style.transform = "translateX(-50%)";
         });
 
-        const shelfBottomPx = shelfRect.bottom - rowRect.top;
+        const shelfVisualBottomPx = shelfVisualTopPx + shelfVisualHeightPx;
         const labelCenterByKey = new Map();
         const labelWidthByKey = new Map();
         const labelMinCenterByKey = new Map();
         const labelMaxCenterByKey = new Map();
+        const usableLabelLeftPx = SPICE_LAYOUT.labelSidePadPx;
+        const usableLabelRightPx = rowRect.width - SPICE_LAYOUT.labelSidePadPx;
 
         labelNodes.forEach((labelNode, index) => {
           const key = `jar-${index}`;
@@ -2479,7 +2481,13 @@
           const labelWidthRatio =
             SPICE_LAYOUT.labelWidthRatioByCount[count] || SPICE_LAYOUT.labelWidthRatioByCount[3];
           const lengthBoost =
-            labelText.length > 13 ? 1.18 : labelText.length > 10 ? 1.1 : labelText.length > 8 ? 1.04 : 1;
+            labelText.length > 13
+              ? 1.12
+              : labelText.length > 10
+                ? 1.06
+                : labelText.length > 8
+                  ? 1.02
+                  : 1;
           const labelWidthPx = clamp(
             rowRect.width * labelWidthRatio * lengthBoost,
             SPICE_LAYOUT.labelWidthMinPx,
@@ -2487,10 +2495,10 @@
           );
           labelWidthByKey.set(key, labelWidthPx);
           labelCenterByKey.set(key, resolvedCenterByKey.get(key) || rowRect.width / 2);
-          labelMinCenterByKey.set(key, labelWidthPx / 2 + SPICE_LAYOUT.labelSidePadPx);
+          labelMinCenterByKey.set(key, usableLabelLeftPx + labelWidthPx / 2);
           labelMaxCenterByKey.set(
             key,
-            rowRect.width - labelWidthPx / 2 - SPICE_LAYOUT.labelSidePadPx,
+            usableLabelRightPx - labelWidthPx / 2,
           );
         });
 
@@ -2506,7 +2514,7 @@
         labelNodes.forEach((labelNode, index) => {
           const key = `jar-${index}`;
           const centerPx = resolvedLabelCenterByKey.get(key) || rowRect.width / 2;
-          const topPx = shelfBottomPx + SPICE_LAYOUT.labelGapFromShelfPx;
+          const topPx = shelfVisualBottomPx + SPICE_LAYOUT.labelGapFromShelfPx;
           const labelWidthPx = labelWidthByKey.get(key) || SPICE_LAYOUT.labelWidthMinPx;
           labelNode.style.width = `${Math.round(labelWidthPx)}px`;
           labelNode.style.left = `${(centerPx / rowRect.width) * 100}%`;
@@ -3657,8 +3665,10 @@
       headText.appendChild(rating);
       headRow.appendChild(headText);
       headerCard.appendChild(headRow);
+      scroll.appendChild(headerCard);
 
-      const hero = el("div", "pp-recipe-hero pp-recipe-head-hero");
+      const heroCard = el("div", "pp-recipe-hero-card pp-app-card");
+      const hero = el("div", "pp-recipe-hero");
       const heroPh = el("div", "pp-recipe-hero-ph");
       const heroImg = imgEl({
         src: recipeThumbSrc(recipeTitleText),
@@ -3672,8 +3682,8 @@
       });
       heroPh.appendChild(heroImg);
       hero.appendChild(heroPh);
-      headerCard.appendChild(hero);
-      scroll.appendChild(headerCard);
+      heroCard.appendChild(hero);
+      scroll.appendChild(heroCard);
 
       const nut = el("div", "pp-recipe-nut pp-app-card");
       const nutHead = el("div", "pp-recipe-nut-head");
@@ -3887,16 +3897,20 @@
       });
       topbar.appendChild(back);
       topbar.appendChild(el("div", "pp-cook-topbar-title", "Cooking"));
-      const topIcons = el("div", "pp-cook-topbar-icons");
-      topIcons.appendChild(buildTopBarBtn({ icon: "speaker", label: "Read aloud", downloadCta: true }));
-      topIcons.appendChild(buildTopBarBtn({ icon: "list", label: "All steps", downloadCta: true }));
-      topbar.appendChild(topIcons);
+      const topActions = el("div", "pp-cook-topbar-actions");
+      topActions.appendChild(
+        buildTopBarBtn({ icon: "speaker", label: "Read aloud", downloadCta: true }),
+      );
+      topActions.appendChild(
+        buildTopBarBtn({ icon: "list", label: "All steps", downloadCta: true }),
+      );
       const finish = document.createElement("button");
       finish.type = "button";
       finish.className = "pp-cook-finish";
       finish.dataset.downloadCta = "true";
       finish.textContent = "Finish";
-      topbar.appendChild(finish);
+      topActions.appendChild(finish);
+      topbar.appendChild(topActions);
       scroll.appendChild(topbar);
 
       const progressCard = el("div", "pp-cook-progress pp-app-card");

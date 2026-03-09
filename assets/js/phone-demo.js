@@ -76,7 +76,7 @@
         bullets: [
           {
             strong: "Try it:",
-            text: "use the List / Cards toggle to swap between grouped timing and shelf-style browsing.",
+            text: "use the List / Cards toggle to change the pantry item layout without leaving Pantry.",
           },
           {
             strong: "In list view:",
@@ -316,7 +316,7 @@
       bullets: [
         {
           strong: "Try it:",
-          text: "tap the spice jar icon for Spice Rack, then use List / Cards to swap browsing styles.",
+          text: "tap the spice jar icon to open Spice Rack, then use List / Cards to change only the rack layout.",
         },
         {
           strong: "In list view:",
@@ -818,7 +818,8 @@
     };
 
     let activePantryView = "items";
-    let activePantryDisplayMode = "cards";
+    let activePantryItemsDisplayMode = "cards";
+    let activeSpiceDisplayMode = "cards";
     let activeShopDisplayMode = "cards";
 
     const renderObjectsForTab = (tab, pantryView = "items") => {
@@ -850,7 +851,7 @@
       if (
         tab === "pantry" &&
         pantryView === "items" &&
-        activePantryDisplayMode === "cards"
+        activePantryItemsDisplayMode === "cards"
       ) {
         add("assets/objects/obj_pantry_shelf.png", "pp-obj--pantry-shelf");
         add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-top");
@@ -1112,18 +1113,19 @@
 
       const topRow = el("div", "pp-top-row");
       const viewToggle = buildDisplayToggle({
-        activeMode: activePantryDisplayMode,
-        ariaLabel: "Pantry view mode",
+        activeMode: activePantryItemsDisplayMode,
+        ariaLabel: "Pantry items view mode",
         onSelect: (mode) => {
           const nextMode = normalizeDisplayMode(mode);
-          if (nextMode === activePantryDisplayMode) return;
+          if (nextMode === activePantryItemsDisplayMode) return;
           if (typeof onAction === "function") {
             onAction(actionSetDisplayMode("pantry", nextMode));
             return;
           }
-          activePantryDisplayMode = nextMode;
+          activePantryItemsDisplayMode = nextMode;
           setTab("pantry", activePantryView, {
-            pantryDisplayMode: activePantryDisplayMode,
+            pantryDisplayMode: activePantryItemsDisplayMode,
+            spiceDisplayMode: activeSpiceDisplayMode,
             shopDisplayMode: activeShopDisplayMode,
           });
         },
@@ -1156,7 +1158,7 @@
         onAction(actionSetPhoneModal("pantryItemDetail", { item: id }));
       };
 
-      if (activePantryDisplayMode === "list") {
+      if (activePantryItemsDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll");
         const stack = el("div", "pp-demo-list-stack");
 
@@ -1339,18 +1341,19 @@
 
       const topRow = el("div", "pp-top-row pp-top-row--spice");
       const viewToggle = buildDisplayToggle({
-        activeMode: activePantryDisplayMode,
+        activeMode: activeSpiceDisplayMode,
         ariaLabel: "Spice rack view mode",
         onSelect: (mode) => {
           const nextMode = normalizeDisplayMode(mode);
-          if (nextMode === activePantryDisplayMode) return;
+          if (nextMode === activeSpiceDisplayMode) return;
           if (typeof onAction === "function") {
-            onAction(actionSetDisplayMode("pantry", nextMode));
+            onAction(actionSetDisplayMode("spice", nextMode));
             return;
           }
-          activePantryDisplayMode = nextMode;
+          activeSpiceDisplayMode = nextMode;
           setTab("pantry", activePantryView, {
-            pantryDisplayMode: activePantryDisplayMode,
+            pantryDisplayMode: activePantryItemsDisplayMode,
+            spiceDisplayMode: activeSpiceDisplayMode,
             shopDisplayMode: activeShopDisplayMode,
           });
         },
@@ -1387,7 +1390,7 @@
       chipWrap.appendChild(el("span", "pp-app-chip", `Restock ${restockCount}`));
       root.appendChild(chipWrap);
 
-      if (activePantryDisplayMode === "list") {
+      if (activeSpiceDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll");
         const stack = el("div", "pp-demo-list-stack");
 
@@ -1770,7 +1773,8 @@
           }
           activeShopDisplayMode = nextMode;
           setTab("shop", "items", {
-            pantryDisplayMode: activePantryDisplayMode,
+            pantryDisplayMode: activePantryItemsDisplayMode,
+            spiceDisplayMode: activeSpiceDisplayMode,
             shopDisplayMode: activeShopDisplayMode,
           });
         },
@@ -3985,7 +3989,8 @@
     const setSplash = () => {
       activeTab = null;
       activePantryView = "items";
-      activePantryDisplayMode = "cards";
+      activePantryItemsDisplayMode = "cards";
+      activeSpiceDisplayMode = "cards";
       activeShopDisplayMode = "cards";
       splashImg.style.display = "block";
       app.setAttribute("aria-hidden", "true");
@@ -4009,7 +4014,11 @@
       const nextPantryDisplayMode =
         displayModes && Object.prototype.hasOwnProperty.call(displayModes, "pantryDisplayMode")
           ? normalizeDisplayMode(displayModes.pantryDisplayMode)
-          : activePantryDisplayMode;
+          : activePantryItemsDisplayMode;
+      const nextSpiceDisplayMode =
+        displayModes && Object.prototype.hasOwnProperty.call(displayModes, "spiceDisplayMode")
+          ? normalizeDisplayMode(displayModes.spiceDisplayMode)
+          : activeSpiceDisplayMode;
       const nextShopDisplayMode =
         displayModes && Object.prototype.hasOwnProperty.call(displayModes, "shopDisplayMode")
           ? normalizeDisplayMode(displayModes.shopDisplayMode)
@@ -4017,7 +4026,9 @@
       const isSamePantryView = tab === "pantry" ? activePantryView === nextPantryView : true;
       const isSameDisplayMode =
         tab === "pantry"
-          ? activePantryDisplayMode === nextPantryDisplayMode
+          ? nextPantryView === "spice"
+            ? activeSpiceDisplayMode === nextSpiceDisplayMode
+            : activePantryItemsDisplayMode === nextPantryDisplayMode
           : tab === "shop"
             ? activeShopDisplayMode === nextShopDisplayMode
             : true;
@@ -4035,7 +4046,8 @@
 
       activeTab = tab;
       activePantryView = tab === "pantry" ? nextPantryView : "items";
-      activePantryDisplayMode = nextPantryDisplayMode;
+      activePantryItemsDisplayMode = nextPantryDisplayMode;
+      activeSpiceDisplayMode = nextSpiceDisplayMode;
       activeShopDisplayMode = nextShopDisplayMode;
       splashImg.style.display = "none";
       app.setAttribute("aria-hidden", "false");
@@ -4084,7 +4096,11 @@
       const pantryDisplayMode =
         screenState && Object.prototype.hasOwnProperty.call(screenState, "pantryDisplayMode")
           ? normalizeDisplayMode(screenState.pantryDisplayMode)
-          : activePantryDisplayMode;
+          : activePantryItemsDisplayMode;
+      const spiceDisplayMode =
+        screenState && Object.prototype.hasOwnProperty.call(screenState, "spiceDisplayMode")
+          ? normalizeDisplayMode(screenState.spiceDisplayMode)
+          : activeSpiceDisplayMode;
       const shopDisplayMode =
         screenState && Object.prototype.hasOwnProperty.call(screenState, "shopDisplayMode")
           ? normalizeDisplayMode(screenState.shopDisplayMode)
@@ -4098,7 +4114,7 @@
         return;
       }
 
-      setTab(tab, pantryView, { pantryDisplayMode, shopDisplayMode });
+      setTab(tab, pantryView, { pantryDisplayMode, spiceDisplayMode, shopDisplayMode });
       if (pageSpec) {
         openPage(pageSpec);
         closeSheet();
@@ -4341,6 +4357,7 @@
       routeOverride: null,
       pantryView: "items",
       pantryDisplayMode: "cards",
+      spiceDisplayMode: "cards",
       shopDisplayMode: "cards",
       modal: null,
       params: null,
@@ -4400,12 +4417,21 @@
         (base && base.tab ? String(base.tab) : "");
       const pantryView = tab === "pantry" && phoneNavState.pantryView === "spice" ? "spice" : "items";
       const pantryDisplayMode = normalizeDisplayMode(phoneNavState.pantryDisplayMode);
+      const spiceDisplayMode = normalizeDisplayMode(phoneNavState.spiceDisplayMode);
       const shopDisplayMode = normalizeDisplayMode(phoneNavState.shopDisplayMode);
       if (tab !== "pantry") phoneNavState.pantryView = "items";
       const overlay = activeOverlayScreen();
       const downloadCtaOpen = !!phoneNavState.downloadCtaOpen;
       if (!overlay) {
-        return { ...base, tab, pantryView, pantryDisplayMode, shopDisplayMode, downloadCtaOpen };
+        return {
+          ...base,
+          tab,
+          pantryView,
+          pantryDisplayMode,
+          spiceDisplayMode,
+          shopDisplayMode,
+          downloadCtaOpen,
+        };
       }
       let overlaySheet = overlay.sheet ? { ...overlay.sheet } : null;
       if (overlaySheet && phoneNavState.modal === "addRecipe") {
@@ -4432,6 +4458,7 @@
         tab,
         pantryView,
         pantryDisplayMode,
+        spiceDisplayMode,
         shopDisplayMode,
         sheet: overlaySheet,
         page: overlay.page || null,
@@ -4501,6 +4528,8 @@
             const mode = normalizeDisplayMode(action.mode);
             if (target === "pantry") {
               phoneNavState.pantryDisplayMode = mode;
+            } else if (target === "spice") {
+              phoneNavState.spiceDisplayMode = mode;
             } else if (target === "shop") {
               phoneNavState.shopDisplayMode = mode;
             } else {

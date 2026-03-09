@@ -28,7 +28,7 @@
   --font-body: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
   --font-display: "Fraunces", "Iowan Old Style", "Times New Roman", serif;
 
-  --container: 1360px;
+  --container: 1520px;
   --nav-height: 78px;
   --transition: 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
 

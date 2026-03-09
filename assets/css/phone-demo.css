@@ -1043,7 +1043,7 @@ html.pp-tour-locked body {
 }
 
 .pp-demo-list-scroll--shop {
-  padding-bottom: 148px;
+  padding-bottom: var(--pp-demo-list-scroll-shop-pad, 184px);
 }
 
 .pp-demo-list-scroll::-webkit-scrollbar {
@@ -1324,6 +1324,60 @@ html.pp-tour-locked body {
   height: 16px;
   color: rgba(58, 42, 26, 0.52);
   flex: none;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-row {
+  grid-template-columns: 44px minmax(0, 1fr);
+  grid-template-areas:
+    "media copy"
+    "media tail";
+  align-items: start;
+  row-gap: 6px;
+  column-gap: 10px;
+  padding: 10px 11px 12px;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-row-media {
+  grid-area: media;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-row-copy {
+  grid-area: copy;
+  padding-top: 1px;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-row-title {
+  font-size: 13px;
+  line-height: 1.04;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-row-sub {
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1.24;
+  text-wrap: pretty;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-row-tail {
+  grid-area: tail;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-row-tags {
+  justify-content: flex-start;
+}
+
+.pp-demo-list-scroll--shop .pp-demo-list-pill {
+  min-height: 24px;
+  padding: 0 9px;
+  font-size: 9px;
+  line-height: 1;
 }
 
 .pp-app-list {
@@ -2101,13 +2155,13 @@ html.pp-tour-locked body {
 
 .pp-spice-row {
   position: relative;
-  min-height: clamp(188px, 23.5vw, 226px);
+  min-height: clamp(176px, 22vw, 210px);
 }
 
 .pp-spice-shelf-img {
   position: absolute;
   left: 50%;
-  bottom: 58px;
+  bottom: 50px;
   transform: translateX(-50%);
   width: 94%;
   max-width: 332px;
@@ -2140,7 +2194,7 @@ html.pp-tour-locked body {
 
 .pp-spice-label {
   position: absolute;
-  min-height: 44px;
+  min-height: 42px;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.92);
@@ -2150,25 +2204,26 @@ html.pp-tour-locked body {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 5px 9px 6px;
+  padding: 4px 8px 5px;
+  box-sizing: border-box;
   font: inherit;
   font-family: var(--font-display);
-  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 11.5px);
+  font-size: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.026), 10.75px);
   font-weight: 810;
   letter-spacing: -0.012em;
   line-height: 1;
   color: rgba(58, 42, 26, 0.9);
   text-align: center;
   cursor: pointer;
-  max-width: min(37%, 128px);
+  max-width: min(34%, 120px);
   min-width: 0;
 }
 
 .pp-spice-label-text {
   display: block;
   min-width: 0;
-  line-height: 1.02;
-  text-wrap: balance;
+  line-height: 1.04;
+  text-wrap: pretty;
 }
 
 .pp-spice-label-chevron {

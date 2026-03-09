@@ -2054,13 +2054,13 @@
       labelWidthRatioByCount: {
         1: 0.38,
         2: 0.29,
-        3: 0.24,
+        3: 0.22,
       },
-      labelWidthMinPx: 74,
-      labelWidthMaxPx: 128,
-      labelGapFromShelfPx: 3,
+      labelWidthMinPx: 72,
+      labelWidthMaxPx: 120,
+      labelGapFromJarPx: 6,
       labelGapPx: 6,
-      labelSidePadPx: 12,
+      labelSidePadPx: 18,
     });
 
     const EMPTY_ALPHA_INSETS = Object.freeze({
@@ -2389,6 +2389,7 @@
         const widthByKey = new Map();
         const minCenterByKey = new Map();
         const maxCenterByKey = new Map();
+        const jarVisualBottomByKey = new Map();
 
         jarNodes.forEach((jarNode, index) => {
           const key = `jar-${index}`;
@@ -2458,14 +2459,15 @@
             shelfSurfaceY -
             (jarHeightPx - visualBottomInsetPx) +
             SPICE_LAYOUT.jarTopNudgePx;
+          const jarVisualBottomPx = jarTopPx + jarHeightPx - visualBottomInsetPx;
 
           jarNode.style.width = `${Math.round(jarWidthPx)}px`;
           jarNode.style.left = `${(centerPx / rowRect.width) * 100}%`;
           jarNode.style.top = `${clamp(jarTopPx, 0, rowRect.height - 48)}px`;
           jarNode.style.transform = "translateX(-50%)";
+          jarVisualBottomByKey.set(key, jarVisualBottomPx);
         });
 
-        const shelfVisualBottomPx = shelfVisualTopPx + shelfVisualHeightPx;
         const labelCenterByKey = new Map();
         const labelWidthByKey = new Map();
         const labelMinCenterByKey = new Map();
@@ -2514,7 +2516,8 @@
         labelNodes.forEach((labelNode, index) => {
           const key = `jar-${index}`;
           const centerPx = resolvedLabelCenterByKey.get(key) || rowRect.width / 2;
-          const topPx = shelfVisualBottomPx + SPICE_LAYOUT.labelGapFromShelfPx;
+          const referenceBottomPx = jarVisualBottomByKey.get(key) || shelfSurfaceY;
+          const topPx = referenceBottomPx + SPICE_LAYOUT.labelGapFromJarPx;
           const labelWidthPx = labelWidthByKey.get(key) || SPICE_LAYOUT.labelWidthMinPx;
           labelNode.style.width = `${Math.round(labelWidthPx)}px`;
           labelNode.style.left = `${(centerPx / rowRect.width) * 100}%`;
@@ -2537,11 +2540,21 @@
     const syncShopLayoutFromStage = () => {
       if (activeTab !== "shop") return;
       const stageNode = appContent.querySelector(".pp-shop-stage");
+      const listScrollNode = stageNode ? stageNode.querySelector(".pp-demo-list-scroll--shop") : null;
       const itemsWrap = stageNode ? stageNode.querySelector(".pp-shop-items") : null;
       const scrollNode = stageNode ? stageNode.querySelector(".pp-shop-scroll") : null;
       const spacerNode = scrollNode ? scrollNode.querySelector(".pp-shop-scroll-spacer") : null;
       const shopBar = stageNode ? stageNode.querySelector(".pp-shop-bar") : null;
-      if (!stageNode || !itemsWrap || !shopBar) return;
+      if (!stageNode || !shopBar) return;
+      if (listScrollNode) {
+        const scrollRect = listScrollNode.getBoundingClientRect();
+        const barRect = shopBar.getBoundingClientRect();
+        const overlapPx = Math.max(0, scrollRect.bottom - barRect.top);
+        const dynamicPadPx = Math.ceil(overlapPx + barRect.height + 104);
+        listScrollNode.style.setProperty("--pp-demo-list-scroll-shop-pad", `${dynamicPadPx}px`);
+        return;
+      }
+      if (!itemsWrap) return;
       if (itemsWrap.classList.contains("pp-shop-items--stacked")) {
         if (!scrollNode) return;
         const scrollRect = scrollNode.getBoundingClientRect();

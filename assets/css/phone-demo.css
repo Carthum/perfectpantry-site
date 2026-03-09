@@ -1936,7 +1936,7 @@ html.pp-tour-locked body {
 .pp-pantry-stage {
   position: relative;
   height: 100%;
-  min-height: 0;
+  min-height: clamp(300px, calc(var(--pp-phone-demo-w, 360px) * 1.06), 420px);
 }
 
 .pp-pantry-item {
@@ -1981,8 +1981,8 @@ html.pp-tour-locked body {
 
 .pp-pantry-label {
   position: absolute;
-  width: 38%;
-  min-height: 68px;
+  width: clamp(92px, 29%, 122px);
+  min-height: 56px;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.92);
@@ -1991,7 +1991,7 @@ html.pp-tour-locked body {
   justify-items: center;
   align-content: center;
   text-align: center;
-  padding: 8px 10px;
+  padding: 7px 10px;
   font: inherit;
   color: var(--pp-app-ink);
   cursor: pointer;
@@ -1999,13 +1999,14 @@ html.pp-tour-locked body {
 
 .pp-pantry-label strong {
   font-family: var(--font-display);
-  font-size: var(--pp-type-body-md);
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.034), 13px);
   letter-spacing: -0.01em;
+  line-height: 1.04;
 }
 
 .pp-pantry-label span {
-  margin-top: 2px;
-  font-size: var(--pp-type-caption);
+  margin-top: 1px;
+  font-size: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.026), 10px);
   font-weight: 750;
   color: rgba(58, 42, 26, 0.72);
 }
@@ -2024,7 +2025,7 @@ html.pp-tour-locked body {
   top: 80%;
   left: 50%;
   transform: translateX(-50%);
-  width: 64%;
+  width: clamp(116px, 36%, 146px);
 }
 
 .pp-spice-scroll {
@@ -2139,7 +2140,7 @@ html.pp-tour-locked body {
 
 .pp-spice-label {
   position: absolute;
-  min-height: 56px;
+  min-height: 48px;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.92);
@@ -2147,26 +2148,31 @@ html.pp-tour-locked body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 6px 14px 7px;
+  gap: 6px;
+  padding: 6px 11px 7px;
   font: inherit;
   font-family: var(--font-display);
-  font-size: var(--pp-type-body-md);
+  font-size: clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.031), 12.5px);
   font-weight: 810;
   letter-spacing: -0.012em;
-  line-height: 1.03;
+  line-height: 1.04;
   color: rgba(58, 42, 26, 0.9);
   text-align: center;
   cursor: pointer;
+  max-width: min(42%, 152px);
+  min-width: 0;
 }
 
 .pp-spice-label-text {
   display: block;
+  min-width: 0;
+  text-wrap: balance;
 }
 
 .pp-spice-label-chevron {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
+  flex: none;
   color: rgba(58, 42, 26, 0.56);
 }
 
@@ -3478,6 +3484,8 @@ html.pp-tour-locked body {
 
 .pp-app-sheet-surface {
   margin: 0;
+  box-sizing: border-box;
+  min-width: 0;
   border-radius: 20px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(233, 214, 191, 0.62);
@@ -3509,27 +3517,31 @@ html.pp-tour-locked body {
 
 .pp-app-mini-seg {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  padding: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 6px;
   border-radius: 18px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(244, 231, 214, 0.62);
+  min-width: 0;
 }
 
 .pp-app-mini-seg-btn {
   position: relative;
+  min-width: 0;
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(255, 255, 255, 0.68);
-  padding: 8px 12px;
-  padding-left: 30px;
+  padding: 8px 8px 8px 24px;
   font: inherit;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 900;
   color: rgba(58, 42, 26, 0.9);
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pp-app-mini-seg-btn[aria-selected="true"] {
@@ -3539,10 +3551,10 @@ html.pp-tour-locked body {
 .pp-app-mini-seg-btn[aria-selected="true"]::before {
   content: "\2713";
   position: absolute;
-  left: 12px;
+  left: 9px;
   top: 50%;
   transform: translateY(-52%);
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(58, 42, 26, 0.88);
 }
 
@@ -3794,14 +3806,16 @@ html.pp-tour-locked body {
 .pp-recipe-head-text {
   display: grid;
   gap: 6px;
+  min-width: 0;
 }
 
 .pp-recipe-title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: clamp(14px, calc(var(--pp-phone-demo-w, 360px) * 0.041), 16px);
   font-weight: 950;
   letter-spacing: -0.01em;
   line-height: 1.05;
+  text-wrap: balance;
 }
 
 .pp-recipe-rating {

@@ -76,7 +76,7 @@
         bullets: [
           {
             strong: "Try it:",
-            text: "use the List / Cards toggle to change the pantry item layout without leaving Pantry.",
+            text: "use the view button to swap between List and Cards without leaving Pantry.",
           },
           {
             strong: "In list view:",
@@ -128,7 +128,7 @@
         bullets: [
           {
             strong: "Try it:",
-            text: "use the List / Cards toggle to swap between spatial browsing and aisle-friendly rows.",
+            text: "use the view button to swap between Cards and List without leaving Shopping.",
           },
           {
             strong: "In list view:",
@@ -316,7 +316,7 @@
       bullets: [
         {
           strong: "Try it:",
-          text: "tap the spice jar icon to open Spice Rack, then use List / Cards to change only the rack layout.",
+          text: "tap the spice jar icon to open Spice Rack, then use the view button to swap between List and Cards.",
         },
         {
           strong: "In list view:",
@@ -591,27 +591,17 @@
   };
 
   const buildDisplayToggle = ({ activeMode = "cards", ariaLabel, onSelect }) => {
-    const toggle = el("div", "pp-view-toggle");
-    toggle.setAttribute("role", "group");
-    toggle.setAttribute("aria-label", ariaLabel || "View mode");
-
-    [
-      { mode: "list", label: "List" },
-      { mode: "cards", label: "Cards" },
-    ].forEach(({ mode, label }) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "pp-view-toggle-btn";
-      if (mode === activeMode) btn.classList.add("is-active");
-      btn.setAttribute("aria-pressed", String(mode === activeMode));
-      btn.textContent = label;
-      if (typeof onSelect === "function") {
-        btn.addEventListener("click", () => onSelect(mode));
-      }
-      toggle.appendChild(btn);
+    const nextMode = activeMode === "list" ? "cards" : "list";
+    const btn = buildPill({
+      label: nextMode === "list" ? "List" : "Cards",
+      className: "pp-app-pill--title pp-top-pill pp-top-pill--view pp-view-toggle",
     });
-
-    return toggle;
+    btn.setAttribute("aria-label", ariaLabel || "Change view");
+    btn.dataset.ppNextMode = nextMode;
+    if (typeof onSelect === "function") {
+      btn.addEventListener("click", () => onSelect(nextMode));
+    }
+    return btn;
   };
 
   const buildCircle = ({ icon, className, ariaLabel }) => {

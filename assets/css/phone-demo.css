@@ -852,8 +852,8 @@ html.pp-tour-locked body {
 
 .pp-top-row {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) auto;
-  gap: 10px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.026), 12px);
   align-items: center;
   padding-left: 0;
   padding-right: 0;
@@ -865,56 +865,13 @@ html.pp-tour-locked body {
 }
 
 .pp-view-toggle {
-  width: 100%;
+  width: clamp(84px, calc(var(--pp-phone-demo-w, 360px) * 0.28), 104px);
   min-width: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px;
-  padding: 4px;
-  border-radius: 999px;
-  border: 1px solid rgba(58, 42, 26, 0.18);
-  background: rgba(244, 231, 214, 0.94);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
-}
-
-.pp-view-toggle-btn {
-  min-width: 0;
-  min-height: clamp(34px, calc(var(--pp-phone-demo-w, 360px) * 0.105), 40px);
-  padding: 0 clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 12px);
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: rgba(58, 42, 26, 0.68);
-  font: inherit;
-  font-size: var(--pp-type-body-sm);
-  font-weight: 820;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    background 180ms ease,
-    color 180ms ease,
-    box-shadow 180ms ease,
-    transform 180ms ease;
-}
-
-.pp-view-toggle-btn:hover {
-  color: rgba(58, 42, 26, 0.92);
-}
-
-.pp-view-toggle-btn.is-active {
-  background: rgba(255, 250, 244, 0.98);
-  color: rgba(58, 42, 26, 0.96);
-  box-shadow: 0 6px 14px rgba(58, 42, 26, 0.12);
-}
-
-.pp-view-toggle-btn:focus-visible {
-  outline: 2px solid rgba(182, 99, 46, 0.48);
-  outline-offset: 2px;
+  justify-self: start;
+  flex: 0 0 auto;
 }
 
 .pp-top-row .pp-app-pill {
-  width: 100%;
   min-height: clamp(42px, calc(var(--pp-phone-demo-w, 360px) * 0.13), 48px);
   padding: 0 clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.038), 16px);
 }
@@ -922,6 +879,10 @@ html.pp-tour-locked body {
 .pp-top-row .pp-top-pill {
   font-size: var(--pp-type-body-md);
   letter-spacing: -0.01em;
+}
+
+.pp-top-row .pp-top-pill--view {
+  padding-inline: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.04), 15px);
 }
 
 .pp-top-row .pp-top-pill > span {
@@ -932,6 +893,7 @@ html.pp-tour-locked body {
 }
 
 .pp-top-row .pp-top-pill--main {
+  width: 100%;
   justify-content: flex-start;
   text-align: left;
 }

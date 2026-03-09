@@ -1411,11 +1411,13 @@
       };
 
       SPICE_SECTIONS.forEach((section) => {
+        const sectionNode = el("section", "pp-spice-section");
+        sectionNode.dataset.spiceSection = section.id;
         const chip = el("div", "pp-spice-section-chip");
         chip.dataset.spiceSection = section.id;
         chip.appendChild(el("span", "pp-spice-section-chip-label", section.title));
         chip.appendChild(el("span", "pp-spice-section-count", String(section.count)));
-        stageNode.appendChild(chip);
+        sectionNode.appendChild(chip);
 
         const rowsWrap = el("div", "pp-spice-rows");
         chunkItems(section.items || [], 3).forEach((rowItems, rowIndex) => {
@@ -1459,7 +1461,8 @@
 
           rowsWrap.appendChild(row);
         });
-        stageNode.appendChild(rowsWrap);
+        sectionNode.appendChild(rowsWrap);
+        stageNode.appendChild(sectionNode);
       });
 
       scrollNode.appendChild(stageNode);
@@ -1983,9 +1986,9 @@
         banana: 4.55,
         avocado: 4.4,
       },
-      labelGapAboveItemPx: 10,
+      labelGapBelowShelfPx: 8,
       labelRowGapPx: 10,
-      labelSidePadPx: 10,
+      labelSidePadPx: 14,
       labelWidthPxByKey: {
         apple: { ratio: 0.27, min: 92, max: 114 },
         banana: { ratio: 0.29, min: 98, max: 122 },
@@ -2054,13 +2057,13 @@
       labelWidthRatioByCount: {
         1: 0.38,
         2: 0.29,
-        3: 0.22,
+        3: 0.21,
       },
-      labelWidthMinPx: 72,
-      labelWidthMaxPx: 120,
-      labelGapFromJarPx: 6,
+      labelWidthMinPx: 70,
+      labelWidthMaxPx: 114,
+      labelGapBelowShelfPx: 5,
       labelGapPx: 6,
-      labelSidePadPx: 18,
+      labelSidePadPx: 22,
     });
 
     const EMPTY_ALPHA_INSETS = Object.freeze({
@@ -2215,28 +2218,46 @@
       if (!Number.isFinite(topBoardPct) || !Number.isFinite(bottomBoardPct)) return;
       const topShelfPct = topBoardPct + PANTRY_LAYOUT.topShelfSurfaceInsetPct;
       const bottomShelfPct = bottomBoardPct + PANTRY_LAYOUT.bottomShelfSurfaceInsetPct;
+      let pendingImageLoad = false;
+      const shelfBottomByKey = new Map();
+      [
+        ["top", topBoard],
+        ["bottom", bottomBoard],
+      ].forEach(([key, boardNode]) => {
+        if (!boardNode) return;
+        const hasNaturalSize = boardNode.naturalWidth > 0 && boardNode.naturalHeight > 0;
+        if (!hasNaturalSize && !boardNode.complete) pendingImageLoad = true;
+        const rect = boardNode.getBoundingClientRect();
+        if (!rect.height) return;
+        const alphaInsets = hasNaturalSize ? readImageAlphaInsets(boardNode) : EMPTY_ALPHA_INSETS;
+        const visualBottomPx =
+          rect.top - stageRect.top + rect.height * (1 - (alphaInsets.bottom || 0));
+        shelfBottomByKey.set(String(key), visualBottomPx);
+      });
 
       const itemDefs = [
         {
           key: "apple",
           selector: ".pp-pantry-item--apple",
           labelSelector: ".pp-pantry-label--apple",
+          shelfKey: "top",
           shelfPct: topShelfPct,
         },
         {
           key: "banana",
           selector: ".pp-pantry-item--banana",
           labelSelector: ".pp-pantry-label--banana",
+          shelfKey: "top",
           shelfPct: topShelfPct,
         },
         {
           key: "avocado",
           selector: ".pp-pantry-item--avocado",
           labelSelector: ".pp-pantry-label--avocado",
+          shelfKey: "bottom",
           shelfPct: bottomShelfPct,
         },
       ];
-      let pendingImageLoad = false;
       const itemMetrics = new Map();
 
       itemDefs.forEach(({ key, selector, shelfPct }) => {
@@ -2282,15 +2303,21 @@
           widthCfg.max,
         );
         labelNode.style.width = `${Math.round(labelWidthPx)}px`;
-        labelWidthByKey.set(key, labelWidthPx);
+        const measuredLabelRect = labelNode.getBoundingClientRect();
+        const measuredWidthPx = clamp(
+          measuredLabelRect.width || labelWidthPx,
+          widthCfg.min,
+          widthCfg.max,
+        );
+        labelWidthByKey.set(key, measuredWidthPx);
         labelPreferredCenterByKey.set(key, metric.centerPx);
         labelMinCenterByKey.set(
           key,
-          labelWidthPx / 2 + PANTRY_LAYOUT.labelSidePadPx,
+          measuredWidthPx / 2 + PANTRY_LAYOUT.labelSidePadPx,
         );
         labelMaxCenterByKey.set(
           key,
-          stageRect.width - labelWidthPx / 2 - PANTRY_LAYOUT.labelSidePadPx,
+          stageRect.width - measuredWidthPx / 2 - PANTRY_LAYOUT.labelSidePadPx,
         );
       });
 
@@ -2304,14 +2331,18 @@
         gapPx: PANTRY_LAYOUT.labelRowGapPx,
       });
 
-      itemDefs.forEach(({ key, labelSelector }) => {
+      itemDefs.forEach(({ key, labelSelector, shelfKey }) => {
         const labelNode = stageNode.querySelector(labelSelector);
         const metric = itemMetrics.get(key);
         const labelWidthPx = labelWidthByKey.get(key);
         if (!labelNode || !metric || !labelWidthPx) return;
 
+        const preferredCenterPx = labelPreferredCenterByKey.get(key) || metric.centerPx;
+        const minCenterPx = labelMinCenterByKey.get(key) || labelWidthPx / 2;
+        const maxCenterPx = labelMaxCenterByKey.get(key) || stageRect.width - labelWidthPx / 2;
         labelNode.style.left = `${(
-          ((resolvedTopLabelCenters.get(key) || labelPreferredCenterByKey.get(key) || metric.centerPx) /
+          ((resolvedTopLabelCenters.get(key) ||
+            clamp(preferredCenterPx, minCenterPx, maxCenterPx)) /
             stageRect.width) *
           100
         )}%`;
@@ -2320,8 +2351,11 @@
 
         const labelRect = labelNode.getBoundingClientRect();
         const labelHeightPx = Math.max(44, labelRect.height || labelNode.offsetHeight || 0);
+        const shelfBottomPx =
+          shelfBottomByKey.get(String(shelfKey)) ||
+          metric.topPx + PANTRY_LAYOUT.labelGapBelowShelfPx;
         const labelTopPx = clamp(
-          metric.topPx - labelHeightPx - PANTRY_LAYOUT.labelGapAboveItemPx,
+          shelfBottomPx + PANTRY_LAYOUT.labelGapBelowShelfPx,
           4,
           stageRect.height - labelHeightPx - 6,
         );
@@ -2369,6 +2403,7 @@
           shelfRect.width * (1 - (shelfAlpha.left || 0) - (shelfAlpha.right || 0));
         const shelfVisualHeightPx =
           shelfRect.height * (1 - (shelfAlpha.top || 0) - (shelfAlpha.bottom || 0));
+        const shelfVisualBottomPx = shelfVisualTopPx + shelfVisualHeightPx;
         const shelfSurfaceY =
           shelfVisualTopPx + shelfVisualHeightPx * SPICE_LAYOUT.shelfSurfacePctWithinVisual;
 
@@ -2495,12 +2530,18 @@
             SPICE_LAYOUT.labelWidthMinPx,
             SPICE_LAYOUT.labelWidthMaxPx,
           );
-          labelWidthByKey.set(key, labelWidthPx);
+          labelNode.style.width = `${Math.round(labelWidthPx)}px`;
+          const measuredLabelRect = labelNode.getBoundingClientRect();
+          const measuredWidthPx = Math.max(1, Math.round(measuredLabelRect.width || labelWidthPx));
+          labelWidthByKey.set(key, measuredWidthPx);
           labelCenterByKey.set(key, resolvedCenterByKey.get(key) || rowRect.width / 2);
-          labelMinCenterByKey.set(key, usableLabelLeftPx + labelWidthPx / 2);
+          labelMinCenterByKey.set(
+            key,
+            usableLabelLeftPx + (labelWidthByKey.get(key) || labelWidthPx) / 2,
+          );
           labelMaxCenterByKey.set(
             key,
-            usableLabelRightPx - labelWidthPx / 2,
+            usableLabelRightPx - (labelWidthByKey.get(key) || labelWidthPx) / 2,
           );
         });
 
@@ -2516,8 +2557,11 @@
         labelNodes.forEach((labelNode, index) => {
           const key = `jar-${index}`;
           const centerPx = resolvedLabelCenterByKey.get(key) || rowRect.width / 2;
-          const referenceBottomPx = jarVisualBottomByKey.get(key) || shelfSurfaceY;
-          const topPx = referenceBottomPx + SPICE_LAYOUT.labelGapFromJarPx;
+          const referenceBottomPx = Math.max(
+            jarVisualBottomByKey.get(key) || shelfSurfaceY,
+            shelfVisualBottomPx,
+          );
+          const topPx = referenceBottomPx + SPICE_LAYOUT.labelGapBelowShelfPx;
           const labelWidthPx = labelWidthByKey.get(key) || SPICE_LAYOUT.labelWidthMinPx;
           labelNode.style.width = `${Math.round(labelWidthPx)}px`;
           labelNode.style.left = `${(centerPx / rowRect.width) * 100}%`;

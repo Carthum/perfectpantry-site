@@ -1999,6 +1999,12 @@
       },
     });
 
+    const isTightPantryDesktopStage = () =>
+      !!window.matchMedia &&
+      window.matchMedia(
+        "(min-width: 1025px) and (max-width: 1180px) and (min-height: 761px) and (hover: hover) and (pointer: fine)",
+      ).matches;
+
     const SHOP_LAYOUT = Object.freeze({
       topRowTopPct: 8,
       bottomRowTopPct: 26,
@@ -2215,6 +2221,13 @@
 
       const stageRect = stageNode.getBoundingClientRect();
       if (!stageRect.height) return;
+      const extraDesktopLiftPctByKey = isTightPantryDesktopStage()
+        ? {
+            apple: 1.6,
+            banana: 1.8,
+            avocado: 1.4,
+          }
+        : null;
 
       const boardTopPct = (boardNode) => {
         const rect = boardNode.getBoundingClientRect();
@@ -2277,7 +2290,10 @@
         const alphaInsets = hasNaturalSize ? readImageAlphaInsets(node) : EMPTY_ALPHA_INSETS;
         const visualBottomInsetPct = itemHeightPct * (alphaInsets.bottom || 0);
         const nudgePct = (PANTRY_LAYOUT.itemNudgePct && PANTRY_LAYOUT.itemNudgePct[key]) || 0;
-        const topPct = shelfPct - itemHeightPct + visualBottomInsetPct + nudgePct;
+        const extraDesktopLiftPct =
+          (extraDesktopLiftPctByKey && extraDesktopLiftPctByKey[key]) || 0;
+        const topPct =
+          shelfPct - itemHeightPct + visualBottomInsetPct + nudgePct - extraDesktopLiftPct;
         node.style.top = `${clamp(topPct, -8, 94)}%`;
 
         const nextRect = node.getBoundingClientRect();

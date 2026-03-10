@@ -1999,12 +1999,6 @@
       },
     });
 
-    const isTightPantryDesktopStage = () =>
-      !!window.matchMedia &&
-      window.matchMedia(
-        "(min-width: 1025px) and (max-width: 1180px) and (min-height: 761px) and (hover: hover) and (pointer: fine)",
-      ).matches;
-
     const SHOP_LAYOUT = Object.freeze({
       topRowTopPct: 8,
       bottomRowTopPct: 26,
@@ -2221,13 +2215,6 @@
 
       const stageRect = stageNode.getBoundingClientRect();
       if (!stageRect.height) return;
-      const extraDesktopLiftPctByKey = isTightPantryDesktopStage()
-        ? {
-            apple: 1.6,
-            banana: 1.8,
-            avocado: 1.4,
-          }
-        : null;
 
       const boardTopPct = (boardNode) => {
         const rect = boardNode.getBoundingClientRect();
@@ -2290,10 +2277,7 @@
         const alphaInsets = hasNaturalSize ? readImageAlphaInsets(node) : EMPTY_ALPHA_INSETS;
         const visualBottomInsetPct = itemHeightPct * (alphaInsets.bottom || 0);
         const nudgePct = (PANTRY_LAYOUT.itemNudgePct && PANTRY_LAYOUT.itemNudgePct[key]) || 0;
-        const extraDesktopLiftPct =
-          (extraDesktopLiftPctByKey && extraDesktopLiftPctByKey[key]) || 0;
-        const topPct =
-          shelfPct - itemHeightPct + visualBottomInsetPct + nudgePct - extraDesktopLiftPct;
+        const topPct = shelfPct - itemHeightPct + visualBottomInsetPct + nudgePct;
         node.style.top = `${clamp(topPct, -8, 94)}%`;
 
         const nextRect = node.getBoundingClientRect();
@@ -2385,6 +2369,29 @@
         );
         labelNode.style.top = `${(labelTopPx / stageRect.height) * 100}%`;
       });
+
+      const appleLabelNode = stageNode.querySelector(".pp-pantry-label--apple");
+      const bananaLabelNode = stageNode.querySelector(".pp-pantry-label--banana");
+      const avocadoNode = stageNode.querySelector(".pp-pantry-item--avocado");
+      if (appleLabelNode && bananaLabelNode && avocadoNode) {
+        const desiredInterRowGapPx = clamp(stageRect.height * 0.055, 18, 24);
+        const currentTopRowBottomPx = Math.max(
+          appleLabelNode.getBoundingClientRect().bottom - stageRect.top,
+          bananaLabelNode.getBoundingClientRect().bottom - stageRect.top,
+        );
+        const avocadoTopPx = avocadoNode.getBoundingClientRect().top - stageRect.top;
+        const overlapDeficitPx = desiredInterRowGapPx - (avocadoTopPx - currentTopRowBottomPx);
+
+        if (overlapDeficitPx > 0) {
+          const liftTopRowLabelsPx = Math.min(18, overlapDeficitPx);
+          [appleLabelNode, bananaLabelNode].forEach((labelNode) => {
+            const labelTopPx =
+              (Number.parseFloat(labelNode.style.top) / 100) * stageRect.height;
+            const nextTopPx = Math.max(4, labelTopPx - liftTopRowLabelsPx);
+            labelNode.style.top = `${(nextTopPx / stageRect.height) * 100}%`;
+          });
+        }
+      }
 
       if (pendingImageLoad) requestPantryLayoutSync();
     };

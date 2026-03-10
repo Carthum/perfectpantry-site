@@ -703,7 +703,7 @@ html.pp-tour-locked body {
 }
 
 .pp-obj--pantry-board-bottom {
-  top: 66%;
+  top: 69%;
   left: 50%;
   width: 74%;
   max-width: 380px;
@@ -2027,7 +2027,7 @@ html.pp-tour-locked body {
 }
 
 .pp-pantry-item--avocado {
-  top: 62%;
+  top: 65%;
   left: 50%;
   transform: translateX(-50%);
   width: 26%;
@@ -2068,17 +2068,17 @@ html.pp-tour-locked body {
 }
 
 .pp-pantry-label--apple {
-  top: 54%;
+  top: 52%;
   left: 6%;
 }
 
 .pp-pantry-label--banana {
-  top: 54%;
+  top: 52%;
   right: 6%;
 }
 
 .pp-pantry-label--avocado {
-  top: 84%;
+  top: 88%;
   left: 50%;
   transform: translateX(-50%);
   width: clamp(116px, 36%, 146px);
@@ -2474,11 +2474,11 @@ html.pp-tour-locked body {
 
   .pp-pantry-label--apple,
   .pp-pantry-label--banana {
-    top: 52%;
+    top: 50%;
   }
 
   .pp-pantry-label--avocado {
-    top: 84%;
+    top: 88%;
   }
 }
 

@@ -1986,7 +1986,10 @@
         banana: 4.55,
         avocado: 4.4,
       },
-      labelGapBelowShelfPx: 8,
+      labelGapBelowShelfPxByShelf: {
+        top: 5,
+        bottom: 12,
+      },
       labelRowGapPx: 10,
       labelSidePadPx: 14,
       labelWidthPxByKey: {
@@ -2353,12 +2356,16 @@
 
         const labelRect = labelNode.getBoundingClientRect();
         const labelHeightPx = Math.max(44, labelRect.height || labelNode.offsetHeight || 0);
+        const labelGapBelowShelfPx =
+          (PANTRY_LAYOUT.labelGapBelowShelfPxByShelf &&
+            PANTRY_LAYOUT.labelGapBelowShelfPxByShelf[String(shelfKey)]) ||
+          8;
         const shelfBottomPx =
           shelfBottomByKey.get(String(shelfKey)) ||
-          metric.topPx + PANTRY_LAYOUT.labelGapBelowShelfPx;
+          metric.topPx + labelGapBelowShelfPx;
         const labelTopPx = Math.max(
           4,
-          shelfBottomPx + PANTRY_LAYOUT.labelGapBelowShelfPx,
+          shelfBottomPx + labelGapBelowShelfPx,
         );
         labelNode.style.top = `${(labelTopPx / stageRect.height) * 100}%`;
       });

@@ -703,7 +703,7 @@ html.pp-tour-locked body {
 }
 
 .pp-obj--pantry-board-bottom {
-  top: 72%;
+  top: 66%;
   left: 50%;
   width: 74%;
   max-width: 380px;
@@ -1991,6 +1991,7 @@ html.pp-tour-locked body {
   position: relative;
   height: 100%;
   min-height: clamp(300px, calc(var(--pp-phone-demo-w, 360px) * 1.06), 420px);
+  overflow: visible;
 }
 
 .pp-pantry-item {
@@ -2101,7 +2102,7 @@ html.pp-tour-locked body {
   display: grid;
   align-content: start;
   gap: 8px;
-  padding: 0 4px 6px;
+  padding: 0 8px 6px;
 }
 
 .pp-spice-section {
@@ -2163,6 +2164,7 @@ html.pp-tour-locked body {
 .pp-spice-row {
   position: relative;
   min-height: clamp(166px, 20.5vw, 194px);
+  overflow: visible;
 }
 
 .pp-spice-shelf-img {
@@ -2170,7 +2172,7 @@ html.pp-tour-locked body {
   left: 50%;
   bottom: 64px;
   transform: translateX(-50%);
-  width: 94%;
+  width: 90%;
   max-width: 332px;
   height: auto;
   filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.16));
@@ -2215,14 +2217,14 @@ html.pp-tour-locked body {
   box-sizing: border-box;
   font: inherit;
   font-family: var(--font-display);
-  font-size: clamp(8.5px, calc(var(--pp-phone-demo-w, 360px) * 0.025), 10.25px);
+  font-size: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.024), 10px);
   font-weight: 810;
   letter-spacing: -0.012em;
   line-height: 1;
   color: rgba(58, 42, 26, 0.9);
   text-align: center;
   cursor: pointer;
-  max-width: min(32%, 114px);
+  max-width: min(30%, 108px);
   min-width: 0;
 }
 

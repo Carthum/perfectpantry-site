@@ -2047,6 +2047,11 @@
       jarTopNudgePx: 2.5,
       jarRowGapPx: 10,
       jarSidePadPx: 8,
+      jarCenterFractionsByCount: {
+        1: [0.5],
+        2: [0.34, 0.66],
+        3: [0.19, 0.5, 0.81],
+      },
       jarVisualHeightRatioByCount: {
         1: 0.245,
         2: 0.232,
@@ -2057,13 +2062,13 @@
       labelWidthRatioByCount: {
         1: 0.38,
         2: 0.29,
-        3: 0.21,
+        3: 0.19,
       },
-      labelWidthMinPx: 70,
-      labelWidthMaxPx: 114,
+      labelWidthMinPx: 66,
+      labelWidthMaxPx: 108,
       labelGapBelowShelfPx: 5,
-      labelGapPx: 6,
-      labelSidePadPx: 22,
+      labelGapPx: 4,
+      labelSidePadPx: 18,
     });
 
     const EMPTY_ALPHA_INSETS = Object.freeze({
@@ -2229,10 +2234,7 @@
         if (!hasNaturalSize && !boardNode.complete) pendingImageLoad = true;
         const rect = boardNode.getBoundingClientRect();
         if (!rect.height) return;
-        const alphaInsets = hasNaturalSize ? readImageAlphaInsets(boardNode) : EMPTY_ALPHA_INSETS;
-        const visualBottomPx =
-          rect.top - stageRect.top + rect.height * (1 - (alphaInsets.bottom || 0));
-        shelfBottomByKey.set(String(key), visualBottomPx);
+        shelfBottomByKey.set(String(key), rect.bottom - stageRect.top);
       });
 
       const itemDefs = [
@@ -2354,10 +2356,9 @@
         const shelfBottomPx =
           shelfBottomByKey.get(String(shelfKey)) ||
           metric.topPx + PANTRY_LAYOUT.labelGapBelowShelfPx;
-        const labelTopPx = clamp(
-          shelfBottomPx + PANTRY_LAYOUT.labelGapBelowShelfPx,
+        const labelTopPx = Math.max(
           4,
-          stageRect.height - labelHeightPx - 6,
+          shelfBottomPx + PANTRY_LAYOUT.labelGapBelowShelfPx,
         );
         labelNode.style.top = `${(labelTopPx / stageRect.height) * 100}%`;
       });
@@ -2417,14 +2418,16 @@
           SPICE_LAYOUT.jarVisualHeightMaxPx,
         );
 
-        const leftEdgePx = shelfVisualLeftPx + shelfVisualWidthPx * 0.16;
-        const rightEdgePx = shelfVisualLeftPx + shelfVisualWidthPx * 0.84;
         const keys = [];
         const centerByKey = new Map();
         const widthByKey = new Map();
         const minCenterByKey = new Map();
         const maxCenterByKey = new Map();
         const jarVisualBottomByKey = new Map();
+
+        const centerFractions =
+          SPICE_LAYOUT.jarCenterFractionsByCount[count] ||
+          SPICE_LAYOUT.jarCenterFractionsByCount[3];
 
         jarNodes.forEach((jarNode, index) => {
           const key = `jar-${index}`;
@@ -2448,9 +2451,13 @@
           const boxHeightPx = jarVisualHeightPx / visualFillRatioY;
           const widthPx = Math.max(1, boxHeightPx / Math.max(0.2, ratio));
           const center =
-            count <= 1
-              ? (leftEdgePx + rightEdgePx) / 2
-              : leftEdgePx + ((rightEdgePx - leftEdgePx) * index) / (count - 1);
+            shelfVisualLeftPx +
+            shelfVisualWidthPx *
+              (centerFractions[index] != null
+                ? centerFractions[index]
+                : count <= 1
+                  ? 0.5
+                  : index / Math.max(1, count - 1));
           const minCenter = widthPx / 2 + SPICE_LAYOUT.jarSidePadPx;
           const maxCenter = rowRect.width - widthPx / 2 - SPICE_LAYOUT.jarSidePadPx;
           centerByKey.set(key, center);
@@ -2515,6 +2522,13 @@
           const labelText = String(
             (labelNode.querySelector(".pp-spice-label-text") || labelNode).textContent || "",
           ).trim();
+          const centerPx = resolvedCenterByKey.get(key) || rowRect.width / 2;
+          const maxWidthAtCenter = Math.max(
+            SPICE_LAYOUT.labelWidthMinPx,
+            Math.floor(
+              Math.min(centerPx - usableLabelLeftPx, usableLabelRightPx - centerPx) * 2,
+            ),
+          );
           const labelWidthRatio =
             SPICE_LAYOUT.labelWidthRatioByCount[count] || SPICE_LAYOUT.labelWidthRatioByCount[3];
           const lengthBoost =
@@ -2528,35 +2542,20 @@
           const labelWidthPx = clamp(
             rowRect.width * labelWidthRatio * lengthBoost,
             SPICE_LAYOUT.labelWidthMinPx,
-            SPICE_LAYOUT.labelWidthMaxPx,
+            Math.min(SPICE_LAYOUT.labelWidthMaxPx, maxWidthAtCenter),
           );
           labelNode.style.width = `${Math.round(labelWidthPx)}px`;
           const measuredLabelRect = labelNode.getBoundingClientRect();
           const measuredWidthPx = Math.max(1, Math.round(measuredLabelRect.width || labelWidthPx));
           labelWidthByKey.set(key, measuredWidthPx);
-          labelCenterByKey.set(key, resolvedCenterByKey.get(key) || rowRect.width / 2);
-          labelMinCenterByKey.set(
-            key,
-            usableLabelLeftPx + (labelWidthByKey.get(key) || labelWidthPx) / 2,
-          );
-          labelMaxCenterByKey.set(
-            key,
-            usableLabelRightPx - (labelWidthByKey.get(key) || labelWidthPx) / 2,
-          );
-        });
-
-        const resolvedLabelCenterByKey = resolveCenteredBoxes({
-          keys,
-          centerByKey: labelCenterByKey,
-          widthByKey: labelWidthByKey,
-          minCenterByKey: labelMinCenterByKey,
-          maxCenterByKey: labelMaxCenterByKey,
-          gapPx: SPICE_LAYOUT.labelGapPx,
+          labelCenterByKey.set(key, centerPx);
+          labelMinCenterByKey.set(key, centerPx);
+          labelMaxCenterByKey.set(key, centerPx);
         });
 
         labelNodes.forEach((labelNode, index) => {
           const key = `jar-${index}`;
-          const centerPx = resolvedLabelCenterByKey.get(key) || rowRect.width / 2;
+          const centerPx = labelCenterByKey.get(key) || rowRect.width / 2;
           const referenceBottomPx = Math.max(
             jarVisualBottomByKey.get(key) || shelfSurfaceY,
             shelfVisualBottomPx,

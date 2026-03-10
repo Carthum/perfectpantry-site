@@ -156,6 +156,22 @@ html.pp-tour-locked body {
   gap: 1rem;
 }
 
+.pp-scrolly.pp-tour-static .pp-tour-right {
+  width: 100%;
+  justify-items: center;
+  gap: 0.75rem;
+}
+
+.pp-scrolly.pp-tour-static .pp-demo-hero-mount {
+  justify-items: center;
+  margin-inline: auto;
+}
+
+.pp-scrolly.pp-tour-static .pp-tour-tip {
+  text-align: center;
+  margin-inline: auto;
+}
+
 .pp-scrolly.pp-tour-static .pp-tour-step {
   grid-area: auto;
   opacity: 1;

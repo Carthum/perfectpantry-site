@@ -4409,6 +4409,7 @@
 
     const stack = stage.querySelector("[data-pp-tour-stack]");
     if (!stack) return;
+    const demoAside = mount.closest(".pp-tour-right");
 
     const reduceMotion = prefersReducedMotion();
     const stageMode =
@@ -4816,6 +4817,15 @@
       // Non-stage mode: fall back to a standard stacked layout and keep the phone interactive
       // so users can still explore overlays on smaller viewports.
       stage.classList.add("pp-tour-static");
+      if (demoAside) {
+        const firstStep = stack.querySelector(".pp-tour-step");
+        demoAside.classList.add("pp-tour-right--inline");
+        if (firstStep) {
+          firstStep.insertAdjacentElement("afterend", demoAside);
+        } else {
+          stack.appendChild(demoAside);
+        }
+      }
       stepNodesById.forEach((node) => setNodeInert(node, false));
       activeStepIndex = STEPS.length > 1 ? 1 : 0; // default to Home vs splash
       stage.dataset.ppBg = STEPS[activeStepIndex].bg || "home";

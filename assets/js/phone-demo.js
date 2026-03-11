@@ -2370,29 +2370,6 @@
         labelNode.style.top = `${(labelTopPx / stageRect.height) * 100}%`;
       });
 
-      const appleLabelNode = stageNode.querySelector(".pp-pantry-label--apple");
-      const bananaLabelNode = stageNode.querySelector(".pp-pantry-label--banana");
-      const avocadoNode = stageNode.querySelector(".pp-pantry-item--avocado");
-      if (appleLabelNode && bananaLabelNode && avocadoNode) {
-        const desiredInterRowGapPx = clamp(stageRect.height * 0.055, 18, 24);
-        const currentTopRowBottomPx = Math.max(
-          appleLabelNode.getBoundingClientRect().bottom - stageRect.top,
-          bananaLabelNode.getBoundingClientRect().bottom - stageRect.top,
-        );
-        const avocadoTopPx = avocadoNode.getBoundingClientRect().top - stageRect.top;
-        const overlapDeficitPx = desiredInterRowGapPx - (avocadoTopPx - currentTopRowBottomPx);
-
-        if (overlapDeficitPx > 0) {
-          const liftTopRowLabelsPx = Math.min(18, overlapDeficitPx);
-          [appleLabelNode, bananaLabelNode].forEach((labelNode) => {
-            const labelTopPx =
-              (Number.parseFloat(labelNode.style.top) / 100) * stageRect.height;
-            const nextTopPx = Math.max(4, labelTopPx - liftTopRowLabelsPx);
-            labelNode.style.top = `${(nextTopPx / stageRect.height) * 100}%`;
-          });
-        }
-      }
-
       if (pendingImageLoad) requestPantryLayoutSync();
     };
 

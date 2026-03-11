@@ -2498,6 +2498,21 @@ html.pp-tour-locked body {
   }
 }
 
+@media (min-width: 1400px) and (min-height: 850px) and (hover: hover) and (pointer: fine) {
+  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-label--apple,
+  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-label--banana {
+    transform: translateX(-50%) translateY(-12px) !important;
+  }
+
+  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-item--avocado {
+    transform: translate(-50%, 18px) !important;
+  }
+
+  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-label--avocado {
+    transform: translateX(-50%) translateY(12px) !important;
+  }
+}
+
 .pp-shop-stage {
   position: relative;
   height: 100%;

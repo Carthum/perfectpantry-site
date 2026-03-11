@@ -2413,7 +2413,16 @@
           );
           if (missingGapPx > 0) {
             setNodeTopPx(avocadoNode, topInStagePx(avocadoNode) + missingGapPx);
-            setNodeTopPx(avocadoLabelNode, topInStagePx(avocadoLabelNode) + missingGapPx);
+          }
+
+          const avocadoBottomPx = bottomInStagePx(avocadoNode);
+          const avocadoLabelTopPx = topInStagePx(avocadoLabelNode);
+          const missingLabelGapPx = Math.max(
+            0,
+            avocadoBottomPx + 8 - avocadoLabelTopPx,
+          );
+          if (missingLabelGapPx > 0) {
+            setNodeTopPx(avocadoLabelNode, avocadoLabelTopPx + missingLabelGapPx);
           }
         }
 

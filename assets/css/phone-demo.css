@@ -2474,49 +2474,16 @@ html.pp-tour-locked body {
   color: rgba(58, 42, 26, 0.9);
 }
 
-@media (min-width: 961px) and (hover: hover) and (pointer: fine) {
-  /* Desktop-only nudges: align pantry items to the shelf art in the sticky scrolly stage. */
-  .pp-pantry-item--apple {
-    top: 21.5%;
-  }
-
-  .pp-pantry-item--banana {
-    top: 20.5%;
-  }
-
-  .pp-pantry-item--avocado {
-    top: 56.5%;
-  }
-
-  .pp-pantry-label--apple,
-  .pp-pantry-label--banana {
-    top: 50%;
-  }
-
-  .pp-pantry-label--avocado {
-    top: 88%;
-  }
-}
-
 @media (min-width: 1025px) and (min-height: 761px) and (hover: hover) and (pointer: fine) {
-  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-item--avocado {
-    top: 62%;
+  .pp-app[data-pp-tab="pantry"][data-pp-pantry-view="items"][data-pp-pantry-display="cards"] .pp-screen-pantry {
+    grid-template-rows: auto auto auto;
+    align-content: start;
+    height: auto;
+    min-height: 100%;
   }
 
-  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-label--apple,
-  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-label--banana {
-    top: 46%;
-  }
-
-  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-label--avocado {
-    top: 93%;
-  }
-}
-
-@media (min-width: 1400px) and (min-height: 850px) and (hover: hover) and (pointer: fine) {
-  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-item--avocado {
-    width: 22.5%;
-    max-width: 142px;
+  .pp-app[data-pp-tab="pantry"][data-pp-pantry-view="items"][data-pp-pantry-display="cards"] .pp-pantry-stage {
+    height: auto;
   }
 }
 

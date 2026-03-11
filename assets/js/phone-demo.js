@@ -14,6 +14,10 @@
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
+  const STAGE_MODE_MEDIA_QUERY =
+    "(min-width: 1025px) and (min-height: 761px) and (hover: hover) and (pointer: fine)";
+  const isStageModeViewport = () =>
+    !!(window.matchMedia && window.matchMedia(STAGE_MODE_MEDIA_QUERY).matches);
 
   const actionSetPhoneModal = (modal, params) => ({
     type: "set_phone_modal",
@@ -811,6 +815,12 @@
     let activePantryItemsDisplayMode = "cards";
     let activeSpiceDisplayMode = "cards";
     let activeShopDisplayMode = "cards";
+    const getActivePantryDisplayMode = () =>
+      activePantryView === "spice" ? activeSpiceDisplayMode : activePantryItemsDisplayMode;
+    const syncPantryStateAttrs = () => {
+      app.dataset.ppPantryView = activePantryView;
+      app.dataset.ppPantryDisplay = getActivePantryDisplayMode();
+    };
 
     const renderObjectsForTab = (tab, pantryView = "items") => {
       clear(objectsLayer);
@@ -1992,6 +2002,8 @@
       },
       labelRowGapPx: 10,
       labelSidePadPx: 14,
+      itemRowGapPx: 12,
+      stageBottomPadPx: 24,
       labelWidthPxByKey: {
         apple: { ratio: 0.27, min: 92, max: 114 },
         banana: { ratio: 0.29, min: 98, max: 122 },
@@ -2213,20 +2225,22 @@
       const bottomBoard = objectsLayer.querySelector(".pp-obj--pantry-board-bottom");
       if (!stageNode || !topBoard || !bottomBoard) return;
 
+      stageNode.style.height = "";
       const stageRect = stageNode.getBoundingClientRect();
-      if (!stageRect.height) return;
+      if (!stageRect.height || !stageRect.width) return;
 
-      const boardTopPct = (boardNode) => {
-        const rect = boardNode.getBoundingClientRect();
-        return ((rect.top - stageRect.top) / stageRect.height) * 100;
+      const desktopCardsStage = isStageModeViewport();
+      const viewportHeightPx = appContent.clientHeight || stageRect.height;
+      const baseStageMinHeight =
+        Number.parseFloat(getComputedStyle(stageNode).minHeight) || stageRect.height;
+      const topInStagePx = (node) => node.getBoundingClientRect().top - stageRect.top;
+      const bottomInStagePx = (node) => node.getBoundingClientRect().bottom - stageRect.top;
+      const setNodeTopPx = (node, topPx) => {
+        node.style.top = `${Math.round(Math.max(-8, topPx) * 100) / 100}px`;
       };
 
-      const topBoardPct = boardTopPct(topBoard);
-      const bottomBoardPct = boardTopPct(bottomBoard);
-      if (!Number.isFinite(topBoardPct) || !Number.isFinite(bottomBoardPct)) return;
-      const topShelfPct = topBoardPct + PANTRY_LAYOUT.topShelfSurfaceInsetPct;
-      const bottomShelfPct = bottomBoardPct + PANTRY_LAYOUT.bottomShelfSurfaceInsetPct;
       let pendingImageLoad = false;
+      const shelfSurfaceByKey = new Map();
       const shelfBottomByKey = new Map();
       [
         ["top", topBoard],
@@ -2237,6 +2251,14 @@
         if (!hasNaturalSize && !boardNode.complete) pendingImageLoad = true;
         const rect = boardNode.getBoundingClientRect();
         if (!rect.height) return;
+        const surfaceInsetPct =
+          key === "top"
+            ? PANTRY_LAYOUT.topShelfSurfaceInsetPct
+            : PANTRY_LAYOUT.bottomShelfSurfaceInsetPct;
+        shelfSurfaceByKey.set(
+          String(key),
+          rect.top - stageRect.top + viewportHeightPx * (surfaceInsetPct / 100),
+        );
         shelfBottomByKey.set(String(key), rect.bottom - stageRect.top);
       });
 
@@ -2246,45 +2268,51 @@
           selector: ".pp-pantry-item--apple",
           labelSelector: ".pp-pantry-label--apple",
           shelfKey: "top",
-          shelfPct: topShelfPct,
         },
         {
           key: "banana",
           selector: ".pp-pantry-item--banana",
           labelSelector: ".pp-pantry-label--banana",
           shelfKey: "top",
-          shelfPct: topShelfPct,
         },
         {
           key: "avocado",
           selector: ".pp-pantry-item--avocado",
           labelSelector: ".pp-pantry-label--avocado",
           shelfKey: "bottom",
-          shelfPct: bottomShelfPct,
         },
       ];
       const itemMetrics = new Map();
 
-      itemDefs.forEach(({ key, selector, shelfPct }) => {
+      itemDefs.forEach(({ key, selector, shelfKey }) => {
         const node = stageNode.querySelector(selector);
         if (!node) return;
-        const hasNaturalSize = node.naturalWidth > 0 && node.naturalHeight > 0;
-        if (!hasNaturalSize && !node.complete) pendingImageLoad = true;
+        const imgNode = node.querySelector(".pp-pantry-item-img");
+        const hasNaturalSize = !!(imgNode && imgNode.naturalWidth > 0 && imgNode.naturalHeight > 0);
+        if (imgNode && !hasNaturalSize && !imgNode.complete) pendingImageLoad = true;
 
         const rect = node.getBoundingClientRect();
         if (!rect.height) return;
-        const itemHeightPct = (rect.height / stageRect.height) * 100;
-        const alphaInsets = hasNaturalSize ? readImageAlphaInsets(node) : EMPTY_ALPHA_INSETS;
-        const visualBottomInsetPct = itemHeightPct * (alphaInsets.bottom || 0);
+        const itemHeightPx = rect.height;
+        const alphaInsets =
+          hasNaturalSize && imgNode ? readImageAlphaInsets(imgNode) : EMPTY_ALPHA_INSETS;
+        const visualBottomInsetPx = itemHeightPx * (alphaInsets.bottom || 0);
         const nudgePct = (PANTRY_LAYOUT.itemNudgePct && PANTRY_LAYOUT.itemNudgePct[key]) || 0;
-        const topPct = shelfPct - itemHeightPct + visualBottomInsetPct + nudgePct;
-        node.style.top = `${clamp(topPct, -8, 94)}%`;
+        const shelfSurfacePx = shelfSurfaceByKey.get(String(shelfKey));
+        if (!Number.isFinite(shelfSurfacePx)) return;
+        const topPx =
+          shelfSurfacePx -
+          itemHeightPx +
+          visualBottomInsetPx +
+          viewportHeightPx * (nudgePct / 100);
+        setNodeTopPx(node, topPx);
 
         const nextRect = node.getBoundingClientRect();
         if (!nextRect.height || !nextRect.width) return;
         itemMetrics.set(key, {
           centerPx: nextRect.left - stageRect.left + nextRect.width / 2,
           topPx: nextRect.top - stageRect.top,
+          bottomPx: nextRect.bottom - stageRect.top,
         });
       });
 
@@ -2354,8 +2382,6 @@
         labelNode.style.right = "auto";
         labelNode.style.transform = "translateX(-50%)";
 
-        const labelRect = labelNode.getBoundingClientRect();
-        const labelHeightPx = Math.max(44, labelRect.height || labelNode.offsetHeight || 0);
         const labelGapBelowShelfPx =
           (PANTRY_LAYOUT.labelGapBelowShelfPxByShelf &&
             PANTRY_LAYOUT.labelGapBelowShelfPxByShelf[String(shelfKey)]) ||
@@ -2367,8 +2393,47 @@
           4,
           shelfBottomPx + labelGapBelowShelfPx,
         );
-        labelNode.style.top = `${(labelTopPx / stageRect.height) * 100}%`;
+        setNodeTopPx(labelNode, labelTopPx);
       });
+
+      if (desktopCardsStage) {
+        const avocadoNode = stageNode.querySelector(".pp-pantry-item--avocado");
+        const avocadoLabelNode = stageNode.querySelector(".pp-pantry-label--avocado");
+        const topLabelNodes = [
+          stageNode.querySelector(".pp-pantry-label--apple"),
+          stageNode.querySelector(".pp-pantry-label--banana"),
+        ].filter(Boolean);
+
+        if (topLabelNodes.length && avocadoNode && avocadoLabelNode) {
+          const topRowBottomPx = Math.max(...topLabelNodes.map((node) => bottomInStagePx(node)));
+          const avocadoTopPx = topInStagePx(avocadoNode);
+          const missingGapPx = Math.max(
+            0,
+            topRowBottomPx + PANTRY_LAYOUT.itemRowGapPx - avocadoTopPx,
+          );
+          if (missingGapPx > 0) {
+            setNodeTopPx(avocadoNode, topInStagePx(avocadoNode) + missingGapPx);
+            setNodeTopPx(avocadoLabelNode, topInStagePx(avocadoLabelNode) + missingGapPx);
+          }
+        }
+
+        const laidOutNodes = itemDefs
+          .flatMap(({ selector, labelSelector }) => [
+            stageNode.querySelector(selector),
+            stageNode.querySelector(labelSelector),
+          ])
+          .filter(Boolean);
+        if (laidOutNodes.length) {
+          const bottomMostPx = Math.max(...laidOutNodes.map((node) => bottomInStagePx(node)));
+          const expandedStageHeightPx = Math.max(
+            baseStageMinHeight,
+            bottomMostPx + PANTRY_LAYOUT.stageBottomPadPx,
+          );
+          if (expandedStageHeightPx > baseStageMinHeight + 0.5) {
+            stageNode.style.height = `${Math.ceil(expandedStageHeightPx)}px`;
+          }
+        }
+      }
 
       if (pendingImageLoad) requestPantryLayoutSync();
     };
@@ -2379,6 +2444,10 @@
         pantryLayoutRaf = 0;
         syncPantryLayoutFromShelves();
       });
+    };
+    const refreshPantryLayout = () => {
+      syncPantryLayoutFromShelves();
+      requestPantryLayoutSync();
     };
 
     const syncPantrySpiceLayout = () => {
@@ -4149,6 +4218,7 @@
       activeShopDisplayMode = "cards";
       splashImg.style.display = "block";
       app.setAttribute("aria-hidden", "true");
+      syncPantryStateAttrs();
       setSelectedNavUi(null);
       cancelPantryLayoutSync();
       cancelPantrySpiceLayoutSync();
@@ -4192,7 +4262,7 @@
         appContent.scrollLeft = 0;
         if (tab === "pantry") {
           if (activePantryView === "spice") requestPantrySpiceLayoutSync();
-          else requestPantryLayoutSync();
+          else refreshPantryLayout();
         } else if (tab === "shop") {
           requestShopLayoutSync();
         }
@@ -4209,11 +4279,17 @@
 
       app.dataset.ppTab = tab;
       app.dataset.ppBg = bgKeyForTab(tab);
+      syncPantryStateAttrs();
 
       renderObjectsForTab(tab, activePantryView);
       renderFabsForTab(tab, activePantryView);
 
-      const fixedLayout = tab === "pantry" || tab === "shop";
+      const allowPantryCardsScroll =
+        isStageModeViewport() &&
+        tab === "pantry" &&
+        activePantryView === "items" &&
+        activePantryItemsDisplayMode === "cards";
+      const fixedLayout = tab === "shop" || (tab === "pantry" && !allowPantryCardsScroll);
       appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
       if (tab !== lastUiTab) {
         appContent.scrollTop = 0;
@@ -4229,7 +4305,7 @@
           requestPantrySpiceLayoutSync();
           cancelPantryLayoutSync();
         } else {
-          requestPantryLayoutSync();
+          refreshPantryLayout();
           cancelPantrySpiceLayoutSync();
         }
         cancelShopLayoutSync();
@@ -4313,7 +4389,7 @@
       syncLayout() {
         if (activeTab === "pantry") {
           if (activePantryView === "spice") requestPantrySpiceLayoutSync();
-          else requestPantryLayoutSync();
+          else refreshPantryLayout();
         }
         if (activeTab === "shop") requestShopLayoutSync();
       },
@@ -4414,11 +4490,7 @@
     const reduceMotion = prefersReducedMotion();
     const stageMode =
       !reduceMotion &&
-      window.matchMedia &&
-      window.matchMedia(
-        "(min-width: 1025px) and (min-height: 761px) and (hover: hover) and (pointer: fine)",
-      )
-        .matches;
+      isStageModeViewport();
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(

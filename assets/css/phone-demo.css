@@ -2498,18 +2498,25 @@ html.pp-tour-locked body {
   }
 }
 
+@media (min-width: 1025px) and (min-height: 761px) and (hover: hover) and (pointer: fine) {
+  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-item--avocado {
+    top: 62%;
+  }
+
+  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-label--apple,
+  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-label--banana {
+    top: 46%;
+  }
+
+  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-label--avocado {
+    top: 93%;
+  }
+}
+
 @media (min-width: 1400px) and (min-height: 850px) and (hover: hover) and (pointer: fine) {
-  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-label--apple,
-  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-label--banana {
-    transform: translateX(-50%) translateY(-12px) !important;
-  }
-
-  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-item--avocado {
-    transform: translate(-50%, 18px) !important;
-  }
-
-  .pp-scrolly[data-pp-bg="pantry"] .pp-pantry-label--avocado {
-    transform: translateX(-50%) translateY(12px) !important;
+  .pp-app[data-pp-bg="pantry"][data-pp-tab="pantry"] .pp-pantry-item--avocado {
+    width: 22.5%;
+    max-width: 142px;
   }
 }
 

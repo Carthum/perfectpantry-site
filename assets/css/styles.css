@@ -388,7 +388,7 @@ p {
   position: absolute;
   inset: -140px -90px -140px -90px;
   pointer-events: none;
-  background-image: url("../brand/pp-splash-hero-desktop.jpg");
+  background-image: url("../brand/pp-splash-hero-desktop.jpg?v=20260315-01");
   background-size: cover;
   background-position: center;
   opacity: 0.16;
@@ -402,7 +402,7 @@ p {
 @media (max-width: 900px) {
   .hero::before {
     inset: -110px -60px -110px -60px;
-    background-image: url("../brand/pp-splash-hero-mobile.png");
+    background-image: url("../brand/pp-splash-hero-mobile.png?v=20260315-01");
     opacity: 0.12;
   }
 }

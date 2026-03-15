@@ -1,4 +1,8 @@
 (() => {
+  const STATIC_ASSET_VERSION = "20260315-01";
+  const versionedAsset = (path) =>
+    `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
+
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
   const readCssPxVar = (name, fallback) => {
@@ -647,7 +651,7 @@
     splashImg.decoding = "async";
     splashImg.loading = "eager";
     splashImg.alt = "Pantry & Plate loading screen";
-    splashImg.src = "assets/brand/pp-splash-ios-source.png";
+    splashImg.src = versionedAsset("assets/brand/pp-splash-ios-source.png");
 
     const overlay = el("div", "pp-phone-overlay");
 
@@ -4508,7 +4512,7 @@
 
     // Preload assets early so scroll-driven swaps don't flash.
     preloadImages([
-      "assets/brand/pp-splash-ios-source.png",
+      versionedAsset("assets/brand/pp-splash-ios-source.png"),
       "assets/backgrounds/bg_home.jpg",
       "assets/backgrounds/bg_pantry.jpg",
       "assets/backgrounds/bg_cookbook.jpg",

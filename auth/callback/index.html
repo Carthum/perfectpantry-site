@@ -195,7 +195,7 @@
       <section class="card">
         <h1 id="headline">Continue in Pantry & Plate</h1>
         <p>
-          This secure link can continue sign-in or password recovery in Pantry & Plate.
+          This secure link can finish sign-in, a household invite, or password recovery in Pantry & Plate.
         </p>
 
         <div id="status" class="status">Preparing secure handoff...</div>
@@ -239,17 +239,15 @@
         </div>
 
         <div class="block">
-          <p class="block-title">App deep link</p>
+          <p class="block-title">App fallback link</p>
           <code id="appUrlText"></code>
         </div>
 
         <div id="desktopHelp" class="desktop-help" hidden>
-          <p>
-            If you prefer the app flow, open this link on your phone and continue there.
-          </p>
+          <p>If the app did not open automatically, use the button above or open this link on your phone.</p>
           <ol>
             <li>Open Pantry & Plate on your phone.</li>
-            <li>Open your reset email link, or paste the copied current link into mobile browser.</li>
+            <li>Open your Pantry & Plate email link, or paste the copied current link into mobile browser.</li>
             <li>Complete the flow in the app.</li>
           </ol>
           <p>Need help? Visit <a href="/support.html">Support</a>.</p>
@@ -321,10 +319,12 @@
         }
 
         const params = queryAndHash.toString();
-        const deepLinkBase = "pantryandplate://login-callback/";
-        const deepLink = params ? `${deepLinkBase}?${params}` : deepLinkBase;
+        const appHandoffBase = "pantryandplate://login-callback/";
+        const appHandoffUrl = params ? `${appHandoffBase}?${params}` : appHandoffBase;
         const flowType = (queryAndHash.get("type") || "").toLowerCase();
         const isRecovery = flowType === "recovery";
+        const inviteId = (queryAndHash.get("invite_id") || "").trim();
+        const isInvite = inviteId !== "";
         const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent || "");
         const accessToken = (queryAndHash.get("access_token") || "").trim();
         const authCode = (queryAndHash.get("code") || "").trim();
@@ -335,14 +335,16 @@
 
         if (isRecovery) {
           headlineEl.textContent = "Reset your password";
+        } else if (isInvite) {
+          headlineEl.textContent = "Join your Pantry & Plate household";
         }
 
-        openBtn.href = deepLink;
+        openBtn.href = appHandoffUrl;
         phoneUrlText.textContent = maskForDisplay(pageUrl.toString());
-        appUrlText.textContent = maskForDisplay(deepLink);
+        appUrlText.textContent = maskForDisplay(appHandoffUrl);
 
         copyAppLinkBtn.addEventListener("click", function () {
-          copyText(deepLink, "Copied app link.");
+          copyText(appHandoffUrl, "Copied app fallback link.");
         });
 
         copyPhoneUrlBtn.addEventListener("click", function () {
@@ -350,7 +352,7 @@
         });
 
         function tryOpenApp() {
-          window.location.href = deepLink;
+          window.location.href = appHandoffUrl;
         }
 
         if (errorDescription) {
@@ -460,10 +462,15 @@
                 "This recovery link is missing a usable token. Request a new reset email and try again.",
                 "error",
               );
-            } else if (authCode && state.isEmpty) {
+            } else if (authCode && !state) {
               setStatus(
                 "This link contains an app-issued auth code and must be completed in the app flow. For desktop reset, request a new reset email from the latest app build.",
                 "error",
+              );
+            } else if (isInvite) {
+              setStatus(
+                "Continue in Pantry & Plate to review and join this household invite.",
+                "",
               );
             } else {
               setStatus("Continue sign-in in the app, or copy this link to your phone.", "");
@@ -475,7 +482,12 @@
           if (!(isRecovery && accessToken)) {
             window.setTimeout(tryOpenApp, 80);
             window.setTimeout(function () {
-              setStatus("If the app did not open, tap \"Open Pantry & Plate\".", "");
+              setStatus(
+                isInvite
+                  ? "If the app did not open, tap \"Open Pantry & Plate\" to continue joining this household."
+                  : "If the app did not open, tap \"Open Pantry & Plate\".",
+                "",
+              );
             }, 1300);
           }
         }

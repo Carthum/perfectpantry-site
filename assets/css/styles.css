@@ -585,6 +585,49 @@ p {
   padding: 1.1rem;
 }
 
+.support-quick-note {
+  margin-top: 1.15rem;
+  display: grid;
+  gap: 0.7rem;
+  border-color: rgba(95, 127, 87, 0.24);
+}
+
+.support-delete-shell {
+  border-color: rgba(182, 99, 46, 0.24);
+  box-shadow: var(--shadow-strong);
+}
+
+.support-card-grid {
+  margin-top: 1rem;
+}
+
+.support-card {
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.64);
+  display: grid;
+  gap: 0.6rem;
+}
+
+.support-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.support-card p,
+.support-card li {
+  color: var(--ink-700);
+}
+
+.support-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding-top: 0.15rem;
+}
+
 .list-clean {
   margin: 0;
   padding-left: 1rem;

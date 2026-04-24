@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260315-01";
+  const STATIC_ASSET_VERSION = "20260424-01";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -18,10 +18,10 @@
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
-  const STAGE_MODE_MIN_WIDTH = 1100;
-  const STAGE_MODE_MIN_HEIGHT = 780;
+  const STAGE_MODE_MIN_WIDTH = 1025;
+  const STAGE_MODE_MIN_HEIGHT = 640;
   const STAGE_MODE_MEDIA_QUERY =
-    `(min-width: ${STAGE_MODE_MIN_WIDTH}px) and (min-height: ${STAGE_MODE_MIN_HEIGHT}px) and (hover: hover) and (pointer: fine)`;
+    `(min-width: ${STAGE_MODE_MIN_WIDTH}px) and (min-height: ${STAGE_MODE_MIN_HEIGHT}px)`;
   const isStageModeViewport = () =>
     !!(window.matchMedia && window.matchMedia(STAGE_MODE_MEDIA_QUERY).matches);
   const PHONE_DEMO_SIZING = Object.freeze({
@@ -3033,6 +3033,51 @@
       return false;
     }
 
+    const normalizeWheelDeltaY = (event) => {
+      if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) return event.deltaY * 16;
+      if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+        return event.deltaY * Math.max(1, appContent.clientHeight || window.innerHeight);
+      }
+      return event.deltaY;
+    };
+
+    const canScrollNodeBy = (node, deltaY) => {
+      if (!node || !Number.isFinite(deltaY) || Math.abs(deltaY) < 0.5) return false;
+      const maxScrollTop = Math.max(0, node.scrollHeight - node.clientHeight);
+      if (maxScrollTop <= 1) return false;
+      if (deltaY < 0) return node.scrollTop > 1;
+      return node.scrollTop < maxScrollTop - 1;
+    };
+
+    const activePhoneWheelTarget = (deltaY) => {
+      const candidates = [];
+      if (isPageOpen) {
+        candidates.push(page.querySelector(".pp-page-scroll"), page);
+      }
+      if (isSheetOpen) {
+        candidates.push(sheetBody, sheet);
+      }
+      candidates.push(appContent);
+      return candidates.find((node) => canScrollNodeBy(node, deltaY)) || null;
+    };
+
+    phone.addEventListener(
+      "wheel",
+      (event) => {
+        const deltaY = normalizeWheelDeltaY(event);
+        const target = activePhoneWheelTarget(deltaY);
+        if (!target) return;
+        target.scrollTop = clamp(
+          target.scrollTop + deltaY,
+          0,
+          Math.max(0, target.scrollHeight - target.clientHeight),
+        );
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      { passive: false },
+    );
+
     const openDownloadCta = () => {
       if (typeof onAction === "function") onAction(actionOpenDownloadCta());
     };
@@ -4706,12 +4751,23 @@
 
     const stack = stage.querySelector("[data-pp-tour-stack]");
     if (!stack) return;
+    const grid = stage.querySelector(".pp-scrolly-grid");
     const demoAside = mount.closest(".pp-tour-right");
 
     const reduceMotion = prefersReducedMotion();
     const stageMode =
       !reduceMotion &&
       isStageModeViewport();
+
+    if (stageMode) {
+      stage.classList.remove("pp-tour-static");
+      if (demoAside) {
+        demoAside.classList.remove("pp-tour-right--inline");
+        if (grid && demoAside.parentElement !== grid) {
+          grid.appendChild(demoAside);
+        }
+      }
+    }
 
     const modalById = new Map(MODAL_SCREENS.map((s) => [s.id, s]));
     const tabToStepId = new Map(

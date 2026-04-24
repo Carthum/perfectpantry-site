@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260424-02";
+  const STATIC_ASSET_VERSION = "20260424-03";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -1681,6 +1681,8 @@
       topLine.appendChild(menuBtn);
       root.appendChild(topLine);
 
+      const scrollNode = el("div", "pp-screen-scroll pp-cookbook-scroll");
+      scrollNode.dataset.ppPhoneScroll = "true";
       const grid = el("div", "pp-app-grid");
       const recipes = [
         {
@@ -1754,7 +1756,8 @@
         card.appendChild(el("p", "pp-app-recipe-meta", r.meta));
         grid.appendChild(card);
       });
-      root.appendChild(grid);
+      scrollNode.appendChild(grid);
+      root.appendChild(scrollNode);
 
       return root;
     };
@@ -1777,6 +1780,8 @@
       );
       root.appendChild(hud);
 
+      const scrollNode = el("div", "pp-screen-scroll pp-plan-scroll");
+      scrollNode.dataset.ppPhoneScroll = "true";
       const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday"];
       const meals = [
         {
@@ -1820,8 +1825,9 @@
         actions.appendChild(replan);
         card.appendChild(actions);
 
-        root.appendChild(card);
+        scrollNode.appendChild(card);
       });
+      root.appendChild(scrollNode);
 
       return root;
     };
@@ -1866,20 +1872,23 @@
       topRow.appendChild(searchBtn);
       root.appendChild(topRow);
 
-      const hero = el("div", "pp-shop-hero");
-      hero.appendChild(
-        buildPill({
-          label: "Tomatillo Salsa Verde",
-          className: "pp-app-pill--title pp-shop-recipe-pill",
-        }),
-      );
-      root.appendChild(hero);
+      const buildShopHero = () => {
+        const hero = el("div", "pp-shop-hero");
+        hero.appendChild(
+          buildPill({
+            label: "Tomatillo Salsa Verde",
+            className: "pp-app-pill--title pp-shop-recipe-pill",
+          }),
+        );
+        return hero;
+      };
 
       const stageNode = el("div", "pp-shop-stage");
       if (activeShopDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll pp-demo-list-scroll--shop");
         scrollNode.dataset.ppPhoneScroll = "true";
         const stack = el("div", "pp-demo-list-stack");
+        scrollNode.appendChild(buildShopHero());
 
         stack.appendChild(
           buildDemoListSection({
@@ -2003,6 +2012,7 @@
         const scrollNode = el("div", "pp-shop-scroll");
         scrollNode.dataset.ppPhoneScroll = "true";
         const itemsWrap = el("div", "pp-shop-items pp-shop-items--stacked");
+        scrollNode.appendChild(buildShopHero());
 
         itemsWrap.appendChild(
           buildShopRow({
@@ -2085,15 +2095,15 @@
     let activeTab = null;
 
     const PANTRY_LAYOUT = Object.freeze({
-      topShelfSurfaceInsetPct: 0.3,
-      bottomShelfSurfaceInsetPct: 0.3,
+      topShelfSurfaceInsetPct: 28,
+      bottomShelfSurfaceInsetPct: 28,
       itemNudgePct: {
-        apple: 4.45,
-        banana: 4.55,
-        avocado: 4.4,
+        apple: 3.8,
+        banana: 3.85,
+        avocado: 6.4,
       },
       labelGapBelowShelfPxByShelf: {
-        top: 5,
+        top: 10,
         bottom: 12,
       },
       labelRowGapPx: 10,
@@ -2357,7 +2367,7 @@
             : PANTRY_LAYOUT.bottomShelfSurfaceInsetPct;
         shelfSurfaceByKey.set(
           String(key),
-          rect.top - stageRect.top + viewportHeightPx * (surfaceInsetPct / 100),
+          rect.top - stageRect.top + rect.height * (surfaceInsetPct / 100),
         );
         shelfBottomByKey.set(String(key), rect.bottom - stageRect.top);
       });
@@ -4559,7 +4569,7 @@
       renderObjectsForTab(tab, activePantryView);
       renderFabsForTab(tab, activePantryView);
 
-      const fixedLayout = tab === "shop" || tab === "pantry";
+      const fixedLayout = ["pantry", "cookbook", "plan", "shop"].includes(tab);
       appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
       const shouldResetScroll = tab !== lastUiTab || !isSamePantryView || !isSameDisplayMode;
       if (tab !== lastUiTab) {

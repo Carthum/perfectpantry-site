@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260424-01";
+  const STATIC_ASSET_VERSION = "20260424-02";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -924,7 +924,13 @@
         return;
       }
 
-      // Pantry shelves live inside `.pp-pantry-stage` so shelves and items share scroll.
+      if (
+        tab === "pantry" &&
+        pantryView === "items" &&
+        activePantryItemsDisplayMode === "cards"
+      ) {
+        add("assets/objects/obj_pantry_shelf.png", "pp-obj--pantry-shelf");
+      }
     };
 
     const renderFabsForTab = (tab, pantryView = "items") => {
@@ -1222,7 +1228,8 @@
       };
 
       if (activePantryItemsDisplayMode === "list") {
-        const scrollNode = el("div", "pp-demo-list-scroll");
+        const scrollNode = el("div", "pp-demo-list-scroll pp-pantry-scroll pp-pantry-scroll--list");
+        scrollNode.dataset.ppPhoneScroll = "true";
         const stack = el("div", "pp-demo-list-stack");
 
         stack.appendChild(
@@ -1297,14 +1304,9 @@
         return root;
       }
 
+      const scrollNode = el("div", "pp-pantry-scroll pp-pantry-scroll--cards");
+      scrollNode.dataset.ppPhoneScroll = "true";
       const stageNode = el("div", "pp-pantry-stage");
-      stageNode.appendChild(
-        imgEl({
-          src: "assets/objects/obj_pantry_shelf.png",
-          className: "pp-obj pp-obj--pantry-shelf",
-          alt: "",
-        }),
-      );
       stageNode.appendChild(
         imgEl({
           src: "assets/objects/obj_pantry_item_shelf.png",
@@ -1376,7 +1378,8 @@
         labelBtn({ id: "avocado", cls: "pp-pantry-label--avocado", title: "Avocado", sub: "Exp 0d" }),
       );
 
-      root.appendChild(stageNode);
+      scrollNode.appendChild(stageNode);
+      root.appendChild(scrollNode);
       return root;
     };
 
@@ -1459,6 +1462,7 @@
 
       if (activeSpiceDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll");
+        scrollNode.dataset.ppPhoneScroll = "true";
         const stack = el("div", "pp-demo-list-stack");
 
         SPICE_SECTIONS.forEach((section) => {
@@ -1494,6 +1498,7 @@
       }
 
       const scrollNode = el("div", "pp-spice-scroll");
+      scrollNode.dataset.ppPhoneScroll = "true";
       const stageNode = el("div", "pp-spice-stage");
       stageNode.appendChild(
         imgEl({
@@ -1873,6 +1878,7 @@
       const stageNode = el("div", "pp-shop-stage");
       if (activeShopDisplayMode === "list") {
         const scrollNode = el("div", "pp-demo-list-scroll pp-demo-list-scroll--shop");
+        scrollNode.dataset.ppPhoneScroll = "true";
         const stack = el("div", "pp-demo-list-stack");
 
         stack.appendChild(
@@ -1995,6 +2001,7 @@
         };
 
         const scrollNode = el("div", "pp-shop-scroll");
+        scrollNode.dataset.ppPhoneScroll = "true";
         const itemsWrap = el("div", "pp-shop-items pp-shop-items--stacked");
 
         itemsWrap.appendChild(
@@ -2319,7 +2326,11 @@
       if (!stageRect.height || !stageRect.width) return;
 
       const desktopCardsStage = isStageModeViewport();
-      const viewportHeightPx = appContent.clientHeight || stageRect.height;
+      const scrollViewport = stageNode.closest("[data-pp-phone-scroll='true']");
+      const viewportHeightPx =
+        (scrollViewport && scrollViewport.clientHeight) ||
+        appContent.clientHeight ||
+        stageRect.height;
       const baseStageMinHeight =
         Number.parseFloat(getComputedStyle(stageNode).minHeight) || stageRect.height;
       const topInStagePx = (node) => node.getBoundingClientRect().top - stageRect.top;
@@ -3057,8 +3068,18 @@
       if (isSheetOpen) {
         candidates.push(sheetBody, sheet);
       }
+      candidates.push(...appContent.querySelectorAll("[data-pp-phone-scroll='true']"));
       candidates.push(appContent);
       return candidates.find((node) => canScrollNodeBy(node, deltaY)) || null;
+    };
+
+    const resetAppScrollTargets = () => {
+      appContent.scrollTop = 0;
+      appContent.scrollLeft = 0;
+      appContent.querySelectorAll("[data-pp-phone-scroll='true']").forEach((node) => {
+        node.scrollTop = 0;
+        node.scrollLeft = 0;
+      });
     };
 
     phone.addEventListener(
@@ -4513,8 +4534,7 @@
             ? activeShopDisplayMode === nextShopDisplayMode
             : true;
       if (tab === activeTab && isSamePantryView && isSameDisplayMode) {
-        appContent.scrollTop = 0;
-        appContent.scrollLeft = 0;
+        resetAppScrollTargets();
         if (tab === "pantry") {
           if (activePantryView === "spice") requestPantrySpiceLayoutSync();
           else refreshPantryLayout();
@@ -4539,21 +4559,16 @@
       renderObjectsForTab(tab, activePantryView);
       renderFabsForTab(tab, activePantryView);
 
-      const allowPantryCardsScroll =
-        isStageModeViewport() &&
-        tab === "pantry" &&
-        activePantryView === "items" &&
-        activePantryItemsDisplayMode === "cards";
-      const fixedLayout = tab === "shop" || (tab === "pantry" && !allowPantryCardsScroll);
+      const fixedLayout = tab === "shop" || tab === "pantry";
       appContent.classList.toggle("pp-app-content--fixed", fixedLayout);
+      const shouldResetScroll = tab !== lastUiTab || !isSamePantryView || !isSameDisplayMode;
       if (tab !== lastUiTab) {
-        appContent.scrollTop = 0;
-        appContent.scrollLeft = 0;
         lastUiTab = tab;
       }
 
       clear(appContent);
       appContent.appendChild(renderOverviewForTab(tab, activePantryView));
+      if (shouldResetScroll) resetAppScrollTargets();
       setSelectedNavUi(tab);
       if (tab === "pantry") {
         if (activePantryView === "spice") {

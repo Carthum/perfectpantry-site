@@ -724,16 +724,16 @@ html.pp-tour-locked body {
 
 .pp-obj--pantry-shelf {
   z-index: 0;
-  top: 18%;
+  top: clamp(66px, calc(var(--pp-phone-demo-w, 360px) * 0.23), 102px);
   left: 50%;
-  width: 64%;
+  width: 54%;
   max-width: 340px;
   transform: translateX(-50%);
 }
 
 .pp-obj--pantry-board-top {
   z-index: 1;
-  top: 38%;
+  top: clamp(206px, calc(var(--pp-phone-demo-w, 360px) * 0.75), 310px);
   left: 50%;
   width: 74%;
   max-width: 380px;
@@ -742,7 +742,7 @@ html.pp-tour-locked body {
 
 .pp-obj--pantry-board-bottom {
   z-index: 1;
-  top: 69%;
+  top: clamp(360px, calc(var(--pp-phone-demo-w, 360px) * 1.12), 490px);
   left: 50%;
   width: 74%;
   max-width: 380px;
@@ -1119,7 +1119,7 @@ html.pp-tour-locked body {
 }
 
 .pp-pantry-scroll--cards {
-  --pp-pantry-scroll-mask-top: clamp(190px, calc(var(--pp-phone-demo-w, 360px) * 0.6), 246px);
+  --pp-pantry-scroll-mask-top: clamp(126px, calc(var(--pp-phone-demo-w, 360px) * 0.42), 176px);
   padding: 4px 0 132px;
   -webkit-mask-image: linear-gradient(
     to bottom,
@@ -2101,7 +2101,7 @@ html.pp-tour-locked body {
 .pp-pantry-stage {
   position: relative;
   height: 100%;
-  min-height: clamp(560px, calc(var(--pp-phone-demo-w, 360px) * 1.72), 700px);
+  min-height: clamp(660px, calc(var(--pp-phone-demo-w, 360px) * 1.9), 820px);
   overflow: visible;
   isolation: isolate;
 }
@@ -3662,6 +3662,110 @@ html.pp-tour-locked body {
 
 .pp-app-tile-label {
   font-size: 13px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] {
+  top: clamp(42px, 7%, 62px);
+  padding: 8px 14px 12px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-handle {
+  width: 64px;
+  height: 5px;
+  margin: 4px auto 7px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-header {
+  grid-template-columns: 1fr 36px;
+  gap: 8px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-spacer {
+  display: none;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-title {
+  grid-column: 1;
+  text-align: left;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-close {
+  width: 36px;
+  height: 36px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-body {
+  gap: 6px;
+  padding: 8px 2px 4px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-sub {
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.029), 12px);
+  line-height: 1.05;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-row {
+  gap: 8px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-pill {
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 18px;
+  font-size: 12px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-circle--sheet {
+  width: 40px;
+  height: 40px;
+  border-radius: 18px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-section {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-tile-grid {
+  gap: 7px;
+  overflow: visible;
+  padding: 0;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-tile {
+  min-height: 58px;
+  border-radius: 15px;
+  padding: 5px 5px 4px;
+  gap: 3px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-tile-media {
+  height: clamp(28px, calc(var(--pp-phone-demo-w, 360px) * 0.092), 36px);
+  aspect-ratio: auto;
+  border-radius: 12px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-tile-media img {
+  width: 64%;
+  height: 64%;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-tile-label {
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 12px);
+  line-height: 1.02;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-footer {
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-btn {
+  min-height: 44px;
+  padding: 9px 14px;
+  border-radius: 20px;
+  font-size: 14px;
 }
 
 .pp-app-sheet-menu-wrap {

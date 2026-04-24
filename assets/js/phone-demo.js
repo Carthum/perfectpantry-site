@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260424-05";
+  const STATIC_ASSET_VERSION = "20260424-06";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -1326,6 +1326,7 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = `pp-pantry-item ${cls || ""}`;
+        btn.dataset.ppPantryItem = id;
         btn.setAttribute("aria-label", `${title} details`);
         btn.appendChild(imgEl({ src, className: "pp-pantry-item-img", alt: "" }));
         btn.addEventListener("click", () => openItemDetail(id));
@@ -2095,16 +2096,16 @@
     let activeTab = null;
 
     const PANTRY_LAYOUT = Object.freeze({
-      topShelfSurfaceInsetPct: 28,
-      bottomShelfSurfaceInsetPct: 28,
+      topShelfSurfaceInsetPct: 11,
+      bottomShelfSurfaceInsetPct: 12,
       itemNudgePct: {
-        apple: 3.8,
-        banana: 3.85,
-        avocado: 6.4,
+        apple: 0.35,
+        banana: 0.35,
+        avocado: 0.55,
       },
       labelGapBelowShelfPxByShelf: {
-        top: 10,
-        bottom: 12,
+        top: 8,
+        bottom: 10,
       },
       labelRowGapPx: 10,
       labelSidePadPx: 14,
@@ -2507,35 +2508,6 @@
       });
 
       if (desktopCardsStage) {
-        const avocadoNode = stageNode.querySelector(".pp-pantry-item--avocado");
-        const avocadoLabelNode = stageNode.querySelector(".pp-pantry-label--avocado");
-        const topLabelNodes = [
-          stageNode.querySelector(".pp-pantry-label--apple"),
-          stageNode.querySelector(".pp-pantry-label--banana"),
-        ].filter(Boolean);
-
-        if (topLabelNodes.length && avocadoNode && avocadoLabelNode) {
-          const topRowBottomPx = Math.max(...topLabelNodes.map((node) => bottomInStagePx(node)));
-          const avocadoTopPx = topInStagePx(avocadoNode);
-          const missingGapPx = Math.max(
-            0,
-            topRowBottomPx + PANTRY_LAYOUT.itemRowGapPx - avocadoTopPx,
-          );
-          if (missingGapPx > 0) {
-            setNodeTopPx(avocadoNode, topInStagePx(avocadoNode) + missingGapPx);
-          }
-
-          const avocadoBottomPx = bottomInStagePx(avocadoNode);
-          const avocadoLabelTopPx = topInStagePx(avocadoLabelNode);
-          const missingLabelGapPx = Math.max(
-            0,
-            avocadoBottomPx + 8 - avocadoLabelTopPx,
-          );
-          if (missingLabelGapPx > 0) {
-            setNodeTopPx(avocadoLabelNode, avocadoLabelTopPx + missingLabelGapPx);
-          }
-        }
-
         const laidOutNodes = itemDefs
           .flatMap(({ selector, labelSelector }) => [
             stageNode.querySelector(selector),
@@ -3156,6 +3128,8 @@
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
       sheet.dataset.ppAlign = "center";
+      delete sheet.dataset.ppKind;
+      delete sheet.dataset.ppMode;
       activeSheetAlign = "center";
       sheetTitle.textContent = "";
       clear(sheetBody);
@@ -4481,6 +4455,8 @@
       if (!sheetSpec) return closeSheet();
       if (!isSheetOpen) rememberOverlayTrigger();
       sheet.dataset.ppAlign = String(sheetSpec.align || "center");
+      sheet.dataset.ppKind = String(sheetSpec.kind || "");
+      sheet.dataset.ppMode = String(sheetSpec.mode || "");
       activeSheetAlign = String(sheetSpec.align || "center");
       sheetTitle.textContent = String(sheetSpec.title || "Preview");
       const { bodyNodes, footerNodes } = renderSheetContent(sheetSpec);

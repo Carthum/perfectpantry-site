@@ -165,23 +165,54 @@
 
     if (!modal || !image || !title || !copy) return;
 
+    title.id = title.id || "lightbox-title";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-labelledby", title.id);
+    modal.tabIndex = -1;
+    const focusableSelector = [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      "[tabindex]:not([tabindex='-1'])",
+    ].join(",");
+    let lastFocused = null;
+
+    const focusableNodes = () =>
+      Array.from(modal.querySelectorAll(focusableSelector)).filter((node) => {
+        const rect = node.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      });
+
     const close = () => {
+      const wasOpen = modal.getAttribute("aria-hidden") === "false";
       modal.setAttribute("aria-hidden", "true");
       image.removeAttribute("src");
       image.removeAttribute("alt");
       document.body.style.overflow = "";
+      if (wasOpen && lastFocused && document.contains(lastFocused)) {
+        lastFocused.focus({ preventScroll: true });
+      }
+      lastFocused = null;
     };
 
     const open = (node) => {
       const src = node.dataset.src;
       if (!src) return;
 
+      lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       image.src = src;
       image.alt = node.dataset.title || "Pantry & Plate screenshot";
       title.textContent = node.dataset.title || "Screenshot";
       copy.textContent = node.dataset.caption || "";
       modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      window.requestAnimationFrame(() => {
+        const target = closeButton || focusableNodes()[0] || modal;
+        if (target && typeof target.focus === "function") target.focus({ preventScroll: true });
+      });
     };
 
     $$('[data-lightbox]').forEach((node) => {
@@ -205,7 +236,23 @@
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") close();
+      if (modal.getAttribute("aria-hidden") !== "false") return;
+      if (event.key === "Escape") {
+        close();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const nodes = focusableNodes();
+      if (!nodes.length) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus({ preventScroll: true });
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus({ preventScroll: true });
+      }
     });
   };
 

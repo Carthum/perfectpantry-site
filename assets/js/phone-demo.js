@@ -18,10 +18,21 @@
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
+  const STAGE_MODE_MIN_WIDTH = 1100;
+  const STAGE_MODE_MIN_HEIGHT = 780;
   const STAGE_MODE_MEDIA_QUERY =
-    "(min-width: 1025px) and (min-height: 761px) and (hover: hover) and (pointer: fine)";
+    `(min-width: ${STAGE_MODE_MIN_WIDTH}px) and (min-height: ${STAGE_MODE_MIN_HEIGHT}px) and (hover: hover) and (pointer: fine)`;
   const isStageModeViewport = () =>
     !!(window.matchMedia && window.matchMedia(STAGE_MODE_MEDIA_QUERY).matches);
+  const PHONE_DEMO_SIZING = Object.freeze({
+    screenAspect: 1170 / 2532,
+    framePadPx: 28,
+    safePadPx: 12,
+    staticMaxWidthPx: 360,
+    staticLandscapeMaxWidthPx: 320,
+    stageMinWidthPx: 290,
+    stageMaxWidthPx: 500,
+  });
 
   const actionSetPhoneModal = (modal, params) => ({
     type: "set_phone_modal",
@@ -335,14 +346,25 @@
     },
   };
 
-  const preloadImages = (paths) => {
+  const preloadImages = (paths, options = {}) => {
     const uniq = Array.from(new Set((paths || []).filter(Boolean)));
+    const fetchPriority = options.fetchPriority || "low";
     uniq.forEach((src) => {
       const img = new Image();
       img.decoding = "async";
       img.loading = "eager";
+      img.fetchPriority = fetchPriority;
       img.src = src;
     });
+  };
+
+  const preloadImagesWhenIdle = (paths, delayMs = 900) => {
+    const run = () => preloadImages(paths, { fetchPriority: "low" });
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(run, { timeout: delayMs + 1200 });
+      return;
+    }
+    window.setTimeout(run, delayMs);
   };
 
   const el = (tag, className, text) => {
@@ -566,10 +588,11 @@
     return svg;
   };
 
-  const imgEl = ({ src, className, alt }) => {
+  const imgEl = ({ src, className, alt, loading, fetchPriority }) => {
     const img = document.createElement("img");
     img.decoding = "async";
-    img.loading = "eager";
+    img.loading = loading || "eager";
+    if (fetchPriority) img.fetchPriority = fetchPriority;
     img.src = src;
     img.className = className || "";
     img.alt = alt || "";
@@ -666,18 +689,24 @@
     objectsLayer.setAttribute("aria-hidden", "true");
     const appContent = el("div", "pp-app-content");
     const fabsLayer = el("div", "pp-app-fabs");
-    fabsLayer.setAttribute("aria-hidden", "true");
+    fabsLayer.setAttribute("aria-label", "Floating app actions");
+    fabsLayer.setAttribute("aria-hidden", "false");
 
     const modal = el("div", "pp-app-modal");
     modal.setAttribute("aria-hidden", "true");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
     const scrim = el("div", "pp-app-scrim");
     const sheet = el("div", "pp-app-sheet");
+    sheet.tabIndex = -1;
     sheet.dataset.ppScrollable = "true";
     sheet.dataset.ppAlign = "center";
     const sheetHandle = el("div", "pp-app-sheet-handle");
     const sheetHeader = el("div", "pp-app-sheet-header");
     const sheetSpacer = el("div", "pp-app-sheet-spacer");
     const sheetTitle = el("h3", "pp-app-sheet-title", "");
+    sheetTitle.id = "pp-app-sheet-title";
+    modal.setAttribute("aria-labelledby", sheetTitle.id);
     const sheetClose = document.createElement("button");
     sheetClose.type = "button";
     sheetClose.className = "pp-app-sheet-close";
@@ -697,14 +726,23 @@
     modal.appendChild(sheet);
 
     const page = el("div", "pp-app-page");
+    page.tabIndex = -1;
     page.setAttribute("aria-hidden", "true");
+    page.setAttribute("role", "dialog");
+    page.setAttribute("aria-modal", "true");
+    page.setAttribute("aria-label", "App detail view");
 
     const download = el("div", "pp-app-download");
     download.setAttribute("aria-hidden", "true");
+    download.setAttribute("role", "dialog");
+    download.setAttribute("aria-modal", "true");
     const downloadScrim = el("div", "pp-app-download-scrim");
     const downloadCard = el("div", "pp-app-download-card");
+    downloadCard.tabIndex = -1;
     const downloadHeader = el("div", "pp-app-download-header");
     const downloadTitle = el("h3", "pp-app-download-title", "Download the app");
+    downloadTitle.id = "pp-app-download-title";
+    download.setAttribute("aria-labelledby", downloadTitle.id);
     const downloadClose = document.createElement("button");
     downloadClose.type = "button";
     downloadClose.className = "pp-app-download-close";
@@ -746,19 +784,45 @@
 
     const nav = el("nav", "pp-app-nav");
     nav.setAttribute("aria-label", "App tabs");
+    nav.setAttribute("role", "tablist");
 
     const navButtons = new Map();
-    ["home", "pantry", "cookbook", "plan", "shop"].forEach((tab) => {
+    const appTabs = ["home", "pantry", "cookbook", "plan", "shop"];
+    appTabs.forEach((tab) => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "pp-app-nav-btn";
       btn.dataset.tab = tab;
+      btn.id = `pp-app-tab-${tab}`;
+      btn.setAttribute("role", "tab");
       btn.setAttribute("aria-label", slugToLabel(tab));
       btn.setAttribute("aria-selected", "false");
+      btn.setAttribute("tabindex", "-1");
 
       if (typeof onAction === "function") {
         btn.addEventListener("click", () => onAction(actionSelectTab(tab)));
       }
+
+      btn.addEventListener("keydown", (event) => {
+        const currentIndex = appTabs.indexOf(tab);
+        let nextIndex = null;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          nextIndex = (currentIndex + 1) % appTabs.length;
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          nextIndex = (currentIndex - 1 + appTabs.length) % appTabs.length;
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = appTabs.length - 1;
+        }
+
+        if (nextIndex == null) return;
+        event.preventDefault();
+        const nextTab = appTabs[nextIndex];
+        const nextBtn = navButtons.get(nextTab);
+        if (nextBtn) nextBtn.focus({ preventScroll: true });
+        if (typeof onAction === "function") onAction(actionSelectTab(nextTab));
+      });
 
       const icon = tabIconEl(tab);
       if (icon) icon.classList.add("pp-app-nav-icon");
@@ -800,9 +864,15 @@
     wrap.addEventListener(
       "keydown",
       (event) => {
-        if (event.key !== "Escape") return;
-        event.preventDefault();
-        event.stopPropagation();
+        if (event.key === "Escape") {
+          event.preventDefault();
+          event.stopPropagation();
+          closeActiveOverlayFromKeyboard();
+          return;
+        }
+        if (event.key === "Tab" && trapFocusInActiveOverlay(event)) {
+          event.stopPropagation();
+        }
       },
       true,
     );
@@ -811,7 +881,9 @@
 
     const setSelectedNavUi = (tab) => {
       navButtons.forEach((btn, key) => {
-        btn.setAttribute("aria-selected", String(key === tab));
+        const selected = key === tab;
+        btn.setAttribute("aria-selected", String(selected));
+        btn.setAttribute("tabindex", selected ? "0" : "-1");
       });
     };
 
@@ -852,15 +924,7 @@
         return;
       }
 
-      if (
-        tab === "pantry" &&
-        pantryView === "items" &&
-        activePantryItemsDisplayMode === "cards"
-      ) {
-        add("assets/objects/obj_pantry_shelf.png", "pp-obj--pantry-shelf");
-        add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-top");
-        add("assets/objects/obj_pantry_item_shelf.png", "pp-obj--pantry-board-bottom");
-      }
+      // Pantry shelves live inside `.pp-pantry-stage` so shelves and items share scroll.
     };
 
     const renderFabsForTab = (tab, pantryView = "items") => {
@@ -1234,6 +1298,27 @@
       }
 
       const stageNode = el("div", "pp-pantry-stage");
+      stageNode.appendChild(
+        imgEl({
+          src: "assets/objects/obj_pantry_shelf.png",
+          className: "pp-obj pp-obj--pantry-shelf",
+          alt: "",
+        }),
+      );
+      stageNode.appendChild(
+        imgEl({
+          src: "assets/objects/obj_pantry_item_shelf.png",
+          className: "pp-obj pp-obj--pantry-board-top",
+          alt: "",
+        }),
+      );
+      stageNode.appendChild(
+        imgEl({
+          src: "assets/objects/obj_pantry_item_shelf.png",
+          className: "pp-obj pp-obj--pantry-board-bottom",
+          alt: "",
+        }),
+      );
 
       const itemBtn = ({ id, title, src, cls }) => {
         const btn = document.createElement("button");
@@ -2225,8 +2310,8 @@
     const syncPantryLayoutFromShelves = () => {
       if (activeTab !== "pantry" || activePantryView !== "items") return;
       const stageNode = appContent.querySelector(".pp-pantry-stage");
-      const topBoard = objectsLayer.querySelector(".pp-obj--pantry-board-top");
-      const bottomBoard = objectsLayer.querySelector(".pp-obj--pantry-board-bottom");
+      const topBoard = stageNode ? stageNode.querySelector(".pp-obj--pantry-board-top") : null;
+      const bottomBoard = stageNode ? stageNode.querySelector(".pp-obj--pantry-board-bottom") : null;
       if (!stageNode || !topBoard || !bottomBoard) return;
 
       stageNode.style.height = "";
@@ -2849,16 +2934,118 @@
     let activeSheetAlign = "center";
     let isPageOpen = false;
     let isDownloadOpen = false;
+    let lastFocusedBeforeOverlay = null;
+
+    const focusableSelector = [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      "[tabindex]:not([tabindex='-1'])",
+    ].join(",");
+
+    const setInteractiveLayerHidden = (node, hidden) => {
+      if (!node) return;
+      if ("inert" in node) node.inert = !!hidden;
+      node.setAttribute("aria-hidden", hidden ? "true" : "false");
+    };
+
+    const getFocusableNodes = (root) =>
+      Array.from(root ? root.querySelectorAll(focusableSelector) : []).filter((node) => {
+        if (!(node instanceof HTMLElement)) return false;
+        if (node.closest("[aria-hidden='true']")) return false;
+        const rect = node.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      });
+
+    const currentOverlayRoot = () => {
+      if (isDownloadOpen) return downloadCard;
+      if (isPageOpen) return page;
+      if (isSheetOpen) return sheet;
+      return null;
+    };
+
+    const rememberOverlayTrigger = () => {
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && wrap.contains(active)) {
+        lastFocusedBeforeOverlay = active;
+      }
+    };
+
+    const restoreOverlayTrigger = () => {
+      if (isSheetOpen || isPageOpen || isDownloadOpen) return;
+      const target = lastFocusedBeforeOverlay;
+      lastFocusedBeforeOverlay = null;
+      if (
+        target instanceof HTMLElement &&
+        document.contains(target) &&
+        wrap.contains(target) &&
+        !target.closest("[aria-hidden='true']")
+      ) {
+        target.focus({ preventScroll: true });
+      }
+    };
+
+    const focusOverlay = (root, fallback) => {
+      window.requestAnimationFrame(() => {
+        const target = getFocusableNodes(root)[0] || fallback || root;
+        if (target && typeof target.focus === "function") {
+          target.focus({ preventScroll: true });
+        }
+      });
+    };
+
+    function closeActiveOverlayFromKeyboard() {
+      if (isDownloadOpen) {
+        if (typeof onAction === "function") onAction(actionCloseDownloadCta());
+        return true;
+      }
+      if (isSheetOpen || isPageOpen) {
+        if (typeof onAction === "function") onAction(actionClosePhoneModal());
+        return true;
+      }
+      return false;
+    }
+
+    function trapFocusInActiveOverlay(event) {
+      const root = currentOverlayRoot();
+      if (!root) return false;
+      const focusableNodes = getFocusableNodes(root);
+      if (!focusableNodes.length) {
+        event.preventDefault();
+        if (typeof root.focus === "function") root.focus({ preventScroll: true });
+        return true;
+      }
+      const first = focusableNodes[0];
+      const last = focusableNodes[focusableNodes.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus({ preventScroll: true });
+        return true;
+      }
+      if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus({ preventScroll: true });
+        return true;
+      }
+      return false;
+    }
 
     const openDownloadCta = () => {
       if (typeof onAction === "function") onAction(actionOpenDownloadCta());
     };
 
     const setDownloadCtaOpen = (isOpen) => {
+      const wasOpen = isDownloadOpen;
+      if (isOpen && !wasOpen) rememberOverlayTrigger();
       isDownloadOpen = !!isOpen;
       download.classList.toggle("is-open", isDownloadOpen);
       download.setAttribute("aria-hidden", isDownloadOpen ? "false" : "true");
       syncOverlayChrome();
+      if (isDownloadOpen && !wasOpen) focusOverlay(downloadCard, downloadClose);
+      if (!isDownloadOpen && wasOpen) restoreOverlayTrigger();
     };
 
     const syncOverlayChrome = () => {
@@ -2870,20 +3057,25 @@
       nav.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
       objectsLayer.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
       fabsLayer.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);
+      setInteractiveLayerHidden(nav, anyOverlay && !rightDrawerOnly);
+      setInteractiveLayerHidden(fabsLayer, anyOverlay && !rightDrawerOnly);
       // In-phone overlays must not affect the main page scroll/stack.
       document.documentElement.classList.remove("pp-tour-locked");
     };
 
     const closePage = () => {
+      const wasOpen = isPageOpen;
       isPageOpen = false;
       page.classList.remove("is-open");
       page.setAttribute("aria-hidden", "true");
       delete page.dataset.ppKind;
       clear(page);
       syncOverlayChrome();
+      if (wasOpen) restoreOverlayTrigger();
     };
 
     const closeSheet = () => {
+      const wasOpen = isSheetOpen;
       isSheetOpen = false;
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
@@ -2894,6 +3086,7 @@
       clear(sheetFooter);
       sheetFooter.hidden = true;
       syncOverlayChrome();
+      if (wasOpen) restoreOverlayTrigger();
     };
 
     const buildSheetBtn = ({
@@ -4185,6 +4378,7 @@
 
     const openPage = (pageSpec) => {
       if (!pageSpec) return closePage();
+      if (!isPageOpen) rememberOverlayTrigger();
       clear(page);
       const kind = pageSpec && pageSpec.kind ? String(pageSpec.kind) : "";
       const node =
@@ -4204,10 +4398,12 @@
       page.classList.add("is-open");
       page.setAttribute("aria-hidden", "false");
       syncOverlayChrome();
+      focusOverlay(page);
     };
 
     const openSheet = (sheetSpec) => {
       if (!sheetSpec) return closeSheet();
+      if (!isSheetOpen) rememberOverlayTrigger();
       sheet.dataset.ppAlign = String(sheetSpec.align || "center");
       activeSheetAlign = String(sheetSpec.align || "center");
       sheetTitle.textContent = String(sheetSpec.title || "Preview");
@@ -4221,6 +4417,7 @@
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       syncOverlayChrome();
+      focusOverlay(sheet, sheetClose);
     };
 
     const setSplash = () => {
@@ -4481,6 +4678,17 @@
     }
 
     return {
+      scrollToStep(index, options = {}) {
+        measure();
+        const targetIndex = clamp(Number(index) || 0, 0, steps.length - 1);
+        const range = Math.max(1, stageHeight - viewportHeight);
+        const progress = steps.length <= 1 ? 0 : targetIndex / (steps.length - 1);
+        const top = Math.round(stageTop + range * progress);
+        window.scrollTo({
+          top,
+          behavior: options.behavior || "smooth",
+        });
+      },
       destroy() {
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("resize", onWindowResize);
@@ -4510,7 +4718,8 @@
       STEPS.filter((s) => s && s.tab).map((s) => [String(s.tab), String(s.id)]),
     );
 
-    // Preload assets early so scroll-driven swaps don't flash.
+    // Preload only the first visible/nearby tour assets immediately. The remaining demo
+    // assets are queued for idle time so mobile users do not pay the full tour cost upfront.
     preloadImages([
       versionedAsset("assets/brand/pp-splash-ios-source.png"),
       "assets/backgrounds/bg_home.jpg",
@@ -4519,11 +4728,17 @@
       "assets/backgrounds/bg_shopping.jpg",
       "assets/objects/obj_fridge_note.png",
       "assets/objects/obj_fridge_pic.png",
+      "assets/objects/obj_pantry_shelf.png",
+      "assets/objects/obj_pantry_item_shelf.png",
+      "assets/ingredients/apple.png",
+      "assets/ingredients/banana.png",
+      "assets/ingredients/avocado.png",
+    ], { fetchPriority: "high" });
+
+    preloadImagesWhenIdle([
       "assets/objects/obj_fridge_calendar.png",
       "assets/objects/obj_unicorn.png",
       "assets/objects/obj_cookbook.png",
-      "assets/objects/obj_pantry_shelf.png",
-      "assets/objects/obj_pantry_item_shelf.png",
       "assets/objects/obj_tan_spice.png",
       "assets/objects/obj_spice_rack.png",
       "assets/objects/obj_green_spice.png",
@@ -4557,9 +4772,6 @@
       "assets/recipes/chicken_avocado_wrap_paleo.png",
       "assets/recipes/salmon_in_green_chili_cream_sauce.png",
       "assets/recipes/spicy_avocado_chicken.png",
-      "assets/ingredients/apple.png",
-      "assets/ingredients/banana.png",
-      "assets/ingredients/avocado.png",
       "assets/ingredients/milk.png",
       "assets/ingredients/bread.png",
       "assets/ingredients/eggs.png",
@@ -4578,7 +4790,7 @@
       "assets/ingredients/jalapeno.png",
       "assets/ingredients/olive_oil.png",
       "assets/ingredients/white_onion.png",
-    ]);
+    ], 1200);
 
     // Desktop stage mode supports reactive copy for tabs + overlay screens.
     // Mobile/stacked mode stays scroll-step only.
@@ -4726,6 +4938,7 @@
       return (base && base.id) || STEPS[0].id;
     };
 
+    let scrollController = null;
     const phone = createAppSimPhone({
       mount,
       onAction(action) {
@@ -4745,9 +4958,14 @@
             const idx = STEPS.findIndex((s) => s && s.tab === nextTab);
             if (idx < 0) return;
             if (stageMode) {
-              // Desktop stage mode: keep the scrolly copy/background tied to scroll, but let the
-              // phone demo tabs navigate independently inside the phone bezel.
-              phoneNavState.routeOverride = nextTab;
+              // Desktop stage mode has one owner for phone/copy/background state: the scroll step.
+              activeStepIndex = idx;
+              phoneNavState.routeOverride = null;
+              if (scrollController && typeof scrollController.scrollToStep === "function") {
+                scrollController.scrollToStep(idx, {
+                  behavior: prefersReducedMotion() ? "auto" : "smooth",
+                });
+              }
             } else {
               activeStepIndex = idx;
               phoneNavState.routeOverride = null;
@@ -4853,28 +5071,38 @@
         : 0;
       const stickyContentH = Math.max(1, stickyRectH - stickyPads);
 
-      // Phone screen is iPhone screenshot ratio (1170x2532).
-      const screenAspect = 1170 / 2532;
-      const framePad = 14 * 2; // `.pp-phone-frame` padding in CSS
-
-      const safe = 10; // breathing room inside the sticky region
       const tipSpace = tipH + tipMargins;
-      // Fit the phone within the sticky viewport height. Previously we enforced a minimum
-      // height/width, which could push the phone partially off-screen on shorter viewports,
-      // making in-phone modals feel like a page overlay.
-      const maxPhoneOuterH = Math.max(1, stickyContentH - tipSpace - safe);
-      const maxOuterWByH = Math.floor(screenAspect * Math.max(1, maxPhoneOuterH - framePad) + framePad);
+      const maxPhoneOuterH = Math.max(1, stickyContentH - tipSpace - PHONE_DEMO_SIZING.safePadPx);
+      const maxOuterWByH = Math.floor(
+        PHONE_DEMO_SIZING.screenAspect *
+          Math.max(1, maxPhoneOuterH - PHONE_DEMO_SIZING.framePadPx) +
+          PHONE_DEMO_SIZING.framePadPx,
+      );
 
       const colW = aside ? aside.getBoundingClientRect().width : mount.getBoundingClientRect().width;
-      const maxWByCol = Math.floor(colW - 4);
+      const maxWByCol = Math.floor(Math.max(1, colW - 4));
       const viewportW = window.innerWidth;
       const viewportH = window.innerHeight;
-      const compactMode = !stageMode || viewportW <= 720;
-      const midDesktopMode = stageMode && (viewportW <= 1280 || viewportH <= 900);
-      const narrowDesktopMode = stageMode && (viewportW <= 1120 || viewportH <= 820);
-      const minW = compactMode ? 250 : narrowDesktopMode ? 270 : midDesktopMode ? 288 : 320;
-      const maxW = compactMode ? 360 : narrowDesktopMode ? 380 : midDesktopMode ? 430 : 520;
-      const widthBySpace = Math.max(1, Math.min(maxOuterWByH, maxWByCol));
+      const staticMode = !stageMode;
+      const shortLandscape = staticMode && viewportW > viewportH && viewportH < 520;
+      const pageSafeWidth = Math.max(1, viewportW - 32);
+      const stageMinW = clamp(
+        viewportW * 0.255,
+        PHONE_DEMO_SIZING.stageMinWidthPx,
+        330,
+      );
+      const stageMaxW = clamp(
+        viewportW * 0.3,
+        360,
+        PHONE_DEMO_SIZING.stageMaxWidthPx,
+      );
+      const minW = staticMode ? 250 : stageMinW;
+      const maxW = staticMode
+        ? shortLandscape
+          ? PHONE_DEMO_SIZING.staticLandscapeMaxWidthPx
+          : PHONE_DEMO_SIZING.staticMaxWidthPx
+        : stageMaxW;
+      const widthBySpace = Math.max(1, Math.min(maxOuterWByH, maxWByCol, pageSafeWidth));
       const target = widthBySpace < minW ? widthBySpace : clamp(widthBySpace, minW, maxW);
       stage.style.setProperty("--pp-phone-demo-w", `${target}px`);
       if (phone && typeof phone.syncLayout === "function") phone.syncLayout();
@@ -4883,7 +5111,7 @@
     if (stageMode) {
       // In stage mode, only the active step should be focusable.
       stepNodesById.forEach((node) => setNodeInert(node, true));
-      createScrollStageController({
+      scrollController = createScrollStageController({
         stage,
         steps: STEPS,
         onStepIndex(stepIndex) {

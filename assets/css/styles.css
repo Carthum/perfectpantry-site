@@ -59,6 +59,15 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@supports not (overflow-x: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
 }
 
 html {
@@ -67,6 +76,7 @@ html {
 }
 
 body {
+  width: 100%;
   position: relative;
   color: var(--ink-900);
   font-family: var(--font-body);
@@ -119,18 +129,18 @@ img {
 
 .skip-link {
   position: absolute;
-  left: -9999px;
-  top: 0;
+  left: 1rem;
+  top: 1rem;
   z-index: 999;
   padding: 0.8rem 1rem;
   border-radius: var(--radius-xs);
   border: 1px solid var(--line);
   background: var(--surface-strong);
+  transform: translateY(calc(-100% - 1.5rem));
 }
 
 .skip-link:focus {
-  left: 1rem;
-  top: 1rem;
+  transform: none;
 }
 
 .site-header {

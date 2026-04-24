@@ -97,6 +97,7 @@ html.pp-tour-locked body {
   top: var(--nav-height);
   z-index: 2;
   height: calc(100vh - var(--nav-height));
+  height: calc(100dvh - var(--nav-height));
   padding: clamp(0.9rem, 2vh, 1.5rem) 0;
   display: flex;
   align-items: flex-start;
@@ -104,6 +105,7 @@ html.pp-tour-locked body {
 
 .pp-scrolly-spacer {
   height: calc((var(--pp-step-count) - 1) * (100vh - var(--nav-height)));
+  height: calc((var(--pp-step-count) - 1) * (100dvh - var(--nav-height)));
 }
 
 .pp-scrolly-grid {
@@ -165,6 +167,11 @@ html.pp-tour-locked body {
 .pp-scrolly.pp-tour-static .pp-demo-hero-mount {
   justify-items: center;
   margin-inline: auto;
+  width: min(100%, 380px);
+}
+
+.pp-scrolly.pp-tour-static .pp-demo-hero-mount .pp-phone {
+  width: min(var(--pp-phone-demo-w, 360px), calc(100vw - 2rem));
 }
 
 .pp-scrolly.pp-tour-static .pp-tour-tip {
@@ -667,6 +674,15 @@ html.pp-tour-locked body {
   filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.16));
 }
 
+.pp-pantry-stage .pp-obj {
+  position: absolute;
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.16));
+  pointer-events: none;
+  user-select: none;
+}
+
 .pp-obj--fridge-note {
   top: 34px;
   left: 40px;
@@ -703,6 +719,7 @@ html.pp-tour-locked body {
 }
 
 .pp-obj--pantry-shelf {
+  z-index: 0;
   top: 18%;
   left: 50%;
   width: 64%;
@@ -711,6 +728,7 @@ html.pp-tour-locked body {
 }
 
 .pp-obj--pantry-board-top {
+  z-index: 1;
   top: 42%;
   left: 50%;
   width: 74%;
@@ -719,6 +737,7 @@ html.pp-tour-locked body {
 }
 
 .pp-obj--pantry-board-bottom {
+  z-index: 1;
   top: 69%;
   left: 50%;
   width: 74%;
@@ -2008,10 +2027,12 @@ html.pp-tour-locked body {
   height: 100%;
   min-height: clamp(300px, calc(var(--pp-phone-demo-w, 360px) * 1.06), 420px);
   overflow: visible;
+  isolation: isolate;
 }
 
 .pp-pantry-item {
   position: absolute;
+  z-index: 2;
   display: block;
   width: 150px;
   height: auto;
@@ -2052,6 +2073,7 @@ html.pp-tour-locked body {
 
 .pp-pantry-label {
   position: absolute;
+  z-index: 3;
   width: clamp(92px, 29%, 122px);
   min-height: 56px;
   border-radius: 999px;
@@ -2474,7 +2496,7 @@ html.pp-tour-locked body {
   color: rgba(58, 42, 26, 0.9);
 }
 
-@media (min-width: 1025px) and (min-height: 761px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 1100px) and (min-height: 780px) and (hover: hover) and (pointer: fine) {
   .pp-app[data-pp-tab="pantry"][data-pp-pantry-view="items"][data-pp-pantry-display="cards"] .pp-screen-pantry {
     grid-template-rows: auto auto auto;
     align-content: start;
@@ -4796,7 +4818,7 @@ html.pp-tour-locked body {
   }
 }
 
-@media (max-width: 1024px), (max-height: 760px), (hover: none) and (pointer: coarse) {
+@media (max-width: 1099px), (max-height: 779px), (hover: none) and (pointer: coarse) {
   .pp-scrolly-sticky {
     position: static;
     height: auto;

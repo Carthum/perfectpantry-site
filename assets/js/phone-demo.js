@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260424-07";
+  const STATIC_ASSET_VERSION = "20260424-08";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -3069,12 +3069,16 @@
       (event) => {
         const deltaY = normalizeWheelDeltaY(event);
         const target = activePhoneWheelTarget(deltaY);
-        if (!target) return;
-        target.scrollTop = clamp(
-          target.scrollTop + deltaY,
-          0,
-          Math.max(0, target.scrollHeight - target.clientHeight),
-        );
+        const hasOpenOverlay = isSheetOpen || isPageOpen || isDownloadOpen;
+        if (target) {
+          target.scrollTop = clamp(
+            target.scrollTop + deltaY,
+            0,
+            Math.max(0, target.scrollHeight - target.clientHeight),
+          );
+        } else if (!hasOpenOverlay) {
+          return;
+        }
         event.preventDefault();
         event.stopPropagation();
       },

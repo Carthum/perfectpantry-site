@@ -3703,7 +3703,7 @@ html.pp-tour-locked body {
   min-height: 46px;
   padding: 9px 12px;
   border-radius: 20px;
-  font-size: 15px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.038), 14px);
   line-height: 1.05;
 }
 
@@ -3713,8 +3713,8 @@ html.pp-tour-locked body {
 }
 
 .pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-tip {
-  font-size: 11px;
-  line-height: 1.12;
+  font-size: clamp(9.5px, calc(var(--pp-phone-demo-w, 360px) * 0.029), 10.5px);
+  line-height: 1.1;
 }
 
 .pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-footer {
@@ -3743,13 +3743,14 @@ html.pp-tour-locked body {
 .pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-sheet-grid2 .pp-app-sheet-btn {
   min-height: 44px;
   padding: 8px 8px;
-  font-size: 18px;
+  font-size: clamp(13px, calc(var(--pp-phone-demo-w, 360px) * 0.04), 15px);
 }
 
 .pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-sheet-body > .pp-app-sheet-btn {
   min-height: 46px;
   padding: 8px 12px;
-  font-size: 18px;
+  font-size: clamp(13px, calc(var(--pp-phone-demo-w, 360px) * 0.039), 15px);
+  line-height: 1.02;
 }
 
 .pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-mini-seg {
@@ -3762,6 +3763,10 @@ html.pp-tour-locked body {
   min-height: 34px;
   padding-top: 7px;
   padding-bottom: 7px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-mini-seg-btn {
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 11px);
 }
 
 .pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] {

@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260424-08";
+  const STATIC_ASSET_VERSION = "20260425-01";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -3042,6 +3042,43 @@
       return node.scrollTop < maxScrollTop - 1;
     };
 
+    let backgroundScrollLock = null;
+
+    const overlayIsOpen = () => isSheetOpen || isPageOpen || isDownloadOpen;
+
+    const backgroundScrollNodes = () => [
+      appContent,
+      ...appContent.querySelectorAll("[data-pp-phone-scroll='true']"),
+    ];
+
+    const lockPhoneBackgroundScroll = () => {
+      if (backgroundScrollLock) {
+        restorePhoneBackgroundScroll();
+        return;
+      }
+      backgroundScrollLock = backgroundScrollNodes().map((node) => ({
+        node,
+        top: node.scrollTop,
+        left: node.scrollLeft,
+      }));
+      app.classList.add("is-background-scroll-locked");
+    };
+
+    const restorePhoneBackgroundScroll = () => {
+      if (!backgroundScrollLock) return;
+      backgroundScrollLock.forEach(({ node, top, left }) => {
+        if (!node || !node.isConnected) return;
+        node.scrollTop = top;
+        node.scrollLeft = left;
+      });
+    };
+
+    const releasePhoneBackgroundScroll = () => {
+      restorePhoneBackgroundScroll();
+      backgroundScrollLock = null;
+      app.classList.remove("is-background-scroll-locked");
+    };
+
     const activePhoneWheelTarget = (deltaY) => {
       const candidates = [];
       if (isPageOpen) {
@@ -3050,8 +3087,13 @@
       if (isSheetOpen) {
         candidates.push(sheetBody, sheet);
       }
-      candidates.push(...appContent.querySelectorAll("[data-pp-phone-scroll='true']"));
-      candidates.push(appContent);
+      if (isDownloadOpen) {
+        candidates.push(download.querySelector(".pp-app-download-body"), downloadCard);
+      }
+      if (!overlayIsOpen()) {
+        candidates.push(...appContent.querySelectorAll("[data-pp-phone-scroll='true']"));
+        candidates.push(appContent);
+      }
       return candidates.find((node) => canScrollNodeBy(node, deltaY)) || null;
     };
 
@@ -3064,26 +3106,124 @@
       });
     };
 
-    phone.addEventListener(
+    const pointIsInsidePhone = (event) => {
+      if (!event || !Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) {
+        return false;
+      }
+      const rect = phone.getBoundingClientRect();
+      return (
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+      );
+    };
+
+    const handledWheelEvents = new WeakSet();
+
+    const handlePhoneWheel = (event) => {
+      if (handledWheelEvents.has(event)) return;
+      handledWheelEvents.add(event);
+      const deltaY = normalizeWheelDeltaY(event);
+      const target = activePhoneWheelTarget(deltaY);
+      const hasOpenOverlay = overlayIsOpen();
+      if (target) {
+        target.scrollTop = clamp(
+          target.scrollTop + deltaY,
+          0,
+          Math.max(0, target.scrollHeight - target.clientHeight),
+        );
+      } else if (!hasOpenOverlay) {
+        return;
+      }
+      if (hasOpenOverlay) restorePhoneBackgroundScroll();
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    document.addEventListener(
       "wheel",
       (event) => {
-        const deltaY = normalizeWheelDeltaY(event);
+        if (!overlayIsOpen()) return;
+        if (pointIsInsidePhone(event)) {
+          handlePhoneWheel(event);
+          return;
+        }
+        restorePhoneBackgroundScroll();
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      { passive: false, capture: true },
+    );
+
+    phone.addEventListener("wheel", handlePhoneWheel, { passive: false, capture: true });
+
+    let lastPhoneTouchY = null;
+
+    phone.addEventListener(
+      "touchstart",
+      (event) => {
+        lastPhoneTouchY = event.touches && event.touches.length === 1
+          ? event.touches[0].clientY
+          : null;
+      },
+      { passive: true },
+    );
+
+    phone.addEventListener(
+      "touchmove",
+      (event) => {
+        const hasOpenOverlay = overlayIsOpen();
+        if (!hasOpenOverlay) return;
+        const nextY = event.touches && event.touches.length === 1
+          ? event.touches[0].clientY
+          : null;
+        const deltaY =
+          nextY != null && lastPhoneTouchY != null ? lastPhoneTouchY - nextY : 0;
+        lastPhoneTouchY = nextY;
         const target = activePhoneWheelTarget(deltaY);
-        const hasOpenOverlay = isSheetOpen || isPageOpen || isDownloadOpen;
         if (target) {
           target.scrollTop = clamp(
             target.scrollTop + deltaY,
             0,
             Math.max(0, target.scrollHeight - target.clientHeight),
           );
-        } else if (!hasOpenOverlay) {
-          return;
         }
+        restorePhoneBackgroundScroll();
         event.preventDefault();
         event.stopPropagation();
       },
-      { passive: false },
+      { passive: false, capture: true },
     );
+
+    document.addEventListener(
+      "touchmove",
+      (event) => {
+        if (!overlayIsOpen()) return;
+        const touch = event.touches && event.touches.length === 1 ? event.touches[0] : null;
+        if (
+          touch &&
+          touch.clientX >= phone.getBoundingClientRect().left &&
+          touch.clientX <= phone.getBoundingClientRect().right &&
+          touch.clientY >= phone.getBoundingClientRect().top &&
+          touch.clientY <= phone.getBoundingClientRect().bottom
+        ) {
+          return;
+        }
+        restorePhoneBackgroundScroll();
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      { passive: false, capture: true },
+    );
+
+    phone.addEventListener("touchend", () => {
+      lastPhoneTouchY = null;
+    });
+
+    phone.addEventListener("touchcancel", () => {
+      lastPhoneTouchY = null;
+    });
 
     const openDownloadCta = () => {
       if (typeof onAction === "function") onAction(actionOpenDownloadCta());
@@ -3104,6 +3244,8 @@
       const anyOverlay = isSheetOpen || isPageOpen || isDownloadOpen;
       const rightDrawerOnly =
         isSheetOpen && !isPageOpen && !isDownloadOpen && activeSheetAlign === "right";
+      if (anyOverlay) lockPhoneBackgroundScroll();
+      else releasePhoneBackgroundScroll();
       // Hide tab bar + decorative layers so overlays feel like real app screens.
       app.classList.toggle("is-overlay-open", anyOverlay && !rightDrawerOnly);
       nav.classList.toggle("is-hidden", anyOverlay && !rightDrawerOnly);

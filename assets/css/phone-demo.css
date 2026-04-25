@@ -3770,8 +3770,9 @@ html.pp-tour-locked body {
 }
 
 .pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] {
-  top: auto;
-  max-height: calc(100% - 38px);
+  top: clamp(46px, 8%, 68px);
+  bottom: auto;
+  max-height: calc(100% - 58px);
   padding: 8px 14px 12px;
 }
 
@@ -3801,7 +3802,7 @@ html.pp-tour-locked body {
 }
 
 .pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-body {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   display: grid;
   gap: clamp(5px, calc(var(--pp-phone-demo-w, 360px) * 0.017), 7px);
   padding: 8px 2px 2px;
@@ -3872,6 +3873,117 @@ html.pp-tour-locked body {
 }
 
 .pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-btn {
+  min-height: clamp(39px, calc(var(--pp-phone-demo-w, 360px) * 0.112), 44px);
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: clamp(14px, calc(var(--pp-phone-demo-w, 360px) * 0.04), 16px);
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] {
+  top: clamp(46px, 8%, 68px);
+  bottom: auto;
+  max-height: calc(100% - 58px);
+  padding: 8px 14px 12px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-handle {
+  width: 64px;
+  height: 5px;
+  margin: 4px auto 7px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-header {
+  grid-template-columns: 1fr 36px;
+  gap: 8px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-spacer {
+  display: none;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-title {
+  grid-column: 1;
+  text-align: left;
+  font-size: clamp(23px, calc(var(--pp-phone-demo-w, 360px) * 0.074), 30px);
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-close {
+  width: 36px;
+  height: 36px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-body {
+  flex: 1 1 auto;
+  display: grid;
+  gap: clamp(6px, calc(var(--pp-phone-demo-w, 360px) * 0.018), 8px);
+  padding: 8px 2px 3px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-sub {
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.029), 12px);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-row {
+  gap: clamp(6px, calc(var(--pp-phone-demo-w, 360px) * 0.02), 9px);
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-pill {
+  min-height: clamp(36px, calc(var(--pp-phone-demo-w, 360px) * 0.105), 40px);
+  padding: 7px 10px;
+  border-radius: 18px;
+  font-size: clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 12px);
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-circle--sheet {
+  width: clamp(36px, calc(var(--pp-phone-demo-w, 360px) * 0.105), 40px);
+  height: clamp(36px, calc(var(--pp-phone-demo-w, 360px) * 0.105), 40px);
+  border-radius: 18px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-section {
+  font-size: 13px;
+  line-height: 1;
+  margin: 0;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-tile-grid {
+  gap: clamp(7px, calc(var(--pp-phone-demo-w, 360px) * 0.02), 9px);
+  overflow: hidden;
+  padding: 1px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-tile {
+  min-height: clamp(54px, calc(var(--pp-phone-demo-w, 360px) * 0.165), 68px);
+  border-radius: 15px;
+  padding: 5px 5px 4px;
+  gap: 3px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-tile-media {
+  height: clamp(28px, calc(var(--pp-phone-demo-w, 360px) * 0.095), 38px);
+  aspect-ratio: auto;
+  border-radius: 12px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-tile-media img {
+  width: 64%;
+  height: 64%;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-tile-label {
+  font-size: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 12px);
+  line-height: 1.02;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-footer {
+  gap: 8px;
+  padding-top: 7px;
+}
+
+.pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-btn {
   min-height: clamp(39px, calc(var(--pp-phone-demo-w, 360px) * 0.112), 44px);
   padding: 7px 14px;
   border-radius: 20px;

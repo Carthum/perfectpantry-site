@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260425-02";
+  const STATIC_ASSET_VERSION = "20260425-03";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 

@@ -3771,8 +3771,8 @@ html.pp-tour-locked body {
 
 .pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] {
   top: clamp(46px, 8%, 68px);
-  bottom: auto;
-  max-height: calc(100% - 58px);
+  bottom: 12px;
+  max-height: none;
   padding: 8px 14px 12px;
 }
 
@@ -3802,7 +3802,7 @@ html.pp-tour-locked body {
 }
 
 .pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] .pp-app-sheet-body {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   display: grid;
   gap: clamp(5px, calc(var(--pp-phone-demo-w, 360px) * 0.017), 7px);
   padding: 8px 2px 2px;
@@ -3881,8 +3881,8 @@ html.pp-tour-locked body {
 
 .pp-app-sheet[data-pp-kind="shop_staples"] {
   top: clamp(46px, 8%, 68px);
-  bottom: auto;
-  max-height: calc(100% - 58px);
+  bottom: 12px;
+  max-height: none;
   padding: 8px 14px 12px;
 }
 
@@ -3913,7 +3913,7 @@ html.pp-tour-locked body {
 }
 
 .pp-app-sheet[data-pp-kind="shop_staples"] .pp-app-sheet-body {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   display: grid;
   gap: clamp(6px, calc(var(--pp-phone-demo-w, 360px) * 0.018), 8px);
   padding: 8px 2px 3px;

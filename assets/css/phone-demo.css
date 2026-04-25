@@ -733,7 +733,7 @@ html.pp-tour-locked body {
 
 .pp-obj--pantry-board-top {
   z-index: 1;
-  top: clamp(206px, calc(var(--pp-phone-demo-w, 360px) * 0.75), 310px);
+  top: clamp(172px, calc(var(--pp-phone-demo-w, 360px) * 0.61), 258px);
   left: 50%;
   width: 74%;
   max-width: 380px;
@@ -742,7 +742,7 @@ html.pp-tour-locked body {
 
 .pp-obj--pantry-board-bottom {
   z-index: 1;
-  top: clamp(360px, calc(var(--pp-phone-demo-w, 360px) * 1.12), 490px);
+  top: clamp(374px, calc(var(--pp-phone-demo-w, 360px) * 1.15), 506px);
   left: 50%;
   width: 74%;
   max-width: 380px;
@@ -2101,7 +2101,7 @@ html.pp-tour-locked body {
 .pp-pantry-stage {
   position: relative;
   height: 100%;
-  min-height: clamp(660px, calc(var(--pp-phone-demo-w, 360px) * 1.9), 820px);
+  min-height: clamp(620px, calc(var(--pp-phone-demo-w, 360px) * 1.78), 760px);
   overflow: visible;
   isolation: isolate;
 }
@@ -3664,6 +3664,106 @@ html.pp-tour-locked body {
   font-size: 13px;
 }
 
+.pp-app-sheet[data-pp-kind="add_recipe"] {
+  top: clamp(46px, 8%, 68px);
+  padding: 8px 14px 12px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-handle {
+  width: 64px;
+  height: 5px;
+  margin: 4px auto 8px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-header {
+  grid-template-columns: 36px 1fr 36px;
+  gap: 8px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-close {
+  width: 36px;
+  height: 36px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-body {
+  gap: 7px;
+  padding: 8px 2px 4px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-seg {
+  gap: 5px;
+  padding: 5px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-grid2 {
+  gap: 8px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-btn {
+  min-height: 46px;
+  padding: 9px 12px;
+  border-radius: 20px;
+  font-size: 15px;
+  line-height: 1.05;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-tip {
+  font-size: 11px;
+  line-height: 1.12;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-footer {
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-surface {
+  padding: 8px 8px 7px;
+  border-radius: 18px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-surface-head {
+  margin-bottom: 5px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"] .pp-app-sheet-surface-note {
+  margin-top: 5px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-sheet-body {
+  gap: 6px;
+  padding-top: 7px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-sheet-grid2 .pp-app-sheet-btn {
+  min-height: 44px;
+  padding: 8px 8px;
+  font-size: 18px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-sheet-body > .pp-app-sheet-btn {
+  min-height: 46px;
+  padding: 8px 12px;
+  font-size: 18px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-mini-seg {
+  gap: 5px;
+  padding: 5px;
+  border-radius: 16px;
+}
+
+.pp-app-sheet[data-pp-kind="add_recipe"][data-pp-mode="photo"] .pp-app-mini-seg-btn {
+  min-height: 34px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
 .pp-app-sheet[data-pp-kind="add_pantry_item"][data-pp-mode="bulk"] {
   top: clamp(42px, 7%, 62px);
   padding: 8px 14px 12px;
@@ -3857,13 +3957,17 @@ html.pp-tour-locked body {
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(255, 255, 255, 0.68);
-  padding: 8px 8px 8px 24px;
+  padding: 8px;
   font: inherit;
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 900;
   color: rgba(58, 42, 26, 0.9);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

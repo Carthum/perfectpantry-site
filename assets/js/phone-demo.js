@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260424-06";
+  const STATIC_ASSET_VERSION = "20260424-07";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -2099,18 +2099,18 @@
       topShelfSurfaceInsetPct: 11,
       bottomShelfSurfaceInsetPct: 12,
       itemNudgePct: {
-        apple: 0.35,
-        banana: 0.35,
-        avocado: 0.55,
+        apple: 0.25,
+        banana: 0.25,
+        avocado: 0.35,
       },
       labelGapBelowShelfPxByShelf: {
-        top: 8,
-        bottom: 10,
+        top: 2,
+        bottom: 6,
       },
       labelRowGapPx: 10,
       labelSidePadPx: 14,
       itemRowGapPx: 12,
-      stageBottomPadPx: 24,
+      stageBottomPadPx: 12,
       labelWidthPxByKey: {
         apple: { ratio: 0.27, min: 92, max: 114 },
         banana: { ratio: 0.29, min: 98, max: 122 },

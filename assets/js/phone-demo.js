@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260426-01";
+  const STATIC_ASSET_VERSION = "20260426-02";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -1021,10 +1021,24 @@
       weekCard.appendChild(el("p", "pp-app-card-sub", "Pantry coverage: 0/10 on hand  •  10 to buy"));
       root.appendChild(weekCard);
 
+      const plannedDinnerTitle = "Shredded Flank Steak with Peppers";
       const dinnerCard = el("div", "pp-app-card");
       dinnerCard.appendChild(el("p", "pp-app-card-title", "What's For Dinner?"));
-      dinnerCard.appendChild(el("p", "pp-meal-title", "One-Pot Creamy Tuscan Pasta"));
-      dinnerCard.appendChild(el("p", "pp-app-card-sub", "Pantry coverage: 0/10 on hand  •  10 to buy"));
+      const dinnerPreview = el("div", "pp-home-dinner-preview");
+      const dinnerThumb = el("div", "pp-home-dinner-thumb");
+      dinnerThumb.appendChild(
+        imgEl({
+          src: "assets/objects/flank_steak_w_peppers.png?v=20260215-57",
+          className: "pp-home-dinner-img",
+          alt: `Planned meal preview for ${plannedDinnerTitle}`,
+        }),
+      );
+      const dinnerMeta = el("div", "pp-home-dinner-meta");
+      dinnerMeta.appendChild(el("p", "pp-meal-title", plannedDinnerTitle));
+      dinnerMeta.appendChild(el("p", "pp-app-card-sub", "Pantry coverage: 0/10 on hand  •  10 to buy"));
+      dinnerPreview.appendChild(dinnerThumb);
+      dinnerPreview.appendChild(dinnerMeta);
+      dinnerCard.appendChild(dinnerPreview);
       dinnerCard.appendChild(el("div", "pp-app-divider"));
       const ctas = el("div", "pp-home-cta-row");
       const viewBtn = buildPill({ label: "View Recipe", className: "pp-app-pill--title" });

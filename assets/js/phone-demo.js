@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260426-02";
+  const STATIC_ASSET_VERSION = "20260426-03";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -79,6 +79,10 @@
           "See what to cook next, what your pantry already covers, and what needs attention in one friendly view.",
         bullets: [
           { strong: "Try it:", text: "tap Quick Actions to open Add Recipe and Add Pantry flows." },
+          {
+            strong: "See tonight:",
+            text: "what's for dinner and which ingredients are already in your pantry.",
+          },
           { strong: "Why it matters:", text: "less decision fatigue and smoother daily momentum." },
         ],
       },

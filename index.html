@@ -3,20 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pantry & Plate | Cook With What You Already Have</title>
+    <title>Pantry &amp; Plate | Cook With What You Already Have</title>
     <meta
       name="description"
-      content="Pantry & Plate helps households move from recipe ideas to meal plan to shopping list without duplicate purchases."
+      content="Coming soon: Pantry & Plate is a pantry-aware recipe, meal planning, and shopping list app that helps busy households cook with what they already have and shop only what is missing."
     />
     <meta name="theme-color" content="#d27a3d" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Pantry & Plate" />
+    <meta property="og:title" content="Pantry &amp; Plate | Cook With What You Already Have" />
     <meta
       property="og:description"
-      content="Recipes, pantry tracking, meal planning, and shopping in one calm flow."
+      content="Coming soon: Pantry & Plate is a pantry-aware recipe, meal planning, and shopping list app that helps busy households cook with what they already have and shop only what is missing."
     />
+    <meta property="og:url" content="https://pantryandplate.app/" />
     <meta property="og:image" content="assets/media/og-cover.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pantry &amp; Plate | Cook With What You Already Have" />
+    <meta
+      name="twitter:description"
+      content="Coming soon: Pantry & Plate is a pantry-aware recipe, meal planning, and shopping list app that helps busy households cook with what they already have and shop only what is missing."
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,8 +34,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/pp-favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/pp-favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/pp-apple-touch-180.png" />
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260425-03" />
-    <link rel="stylesheet" href="assets/css/phone-demo.css?v=20260425-03" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260426-01" />
+    <link rel="stylesheet" href="assets/css/phone-demo.css?v=20260426-01" />
     <script>
       (function () {
         const path = window.location.pathname.replace(/\/+$/, "") || "/";
@@ -52,7 +62,7 @@
 
     <header class="site-header">
       <div class="container nav-shell">
-        <a class="brand" href="index.html">
+        <a class="brand" href="index.html" aria-label="Pantry & Plate home">
           <img
             class="brand-mark"
             src="assets/brand/pp-mark-256.png"
@@ -61,7 +71,7 @@
             height="42"
           />
           <span class="brand-text">
-            <span class="brand-title">Pantry & Plate</span>
+            <span class="brand-title">Pantry &amp; Plate</span>
             <span class="brand-subtitle">Cook with what you already have</span>
           </span>
         </a>
@@ -78,149 +88,297 @@
         </button>
 
         <nav class="nav-links" id="primaryNav" data-nav data-open="false" aria-label="Primary">
-          <a href="index.html" aria-current="page">Home</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#trust">Trust</a>
+          <a href="#faq">FAQ</a>
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
+          <a
+            class="btn btn-primary btn-sm nav-cta"
+            href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request"
+          >
+            Request beta access
+          </a>
         </nav>
       </div>
     </header>
-  
+
     <main id="main" class="container">
-      <section class="section pp-scrolly" id="guided-tour" data-pp-demo="stage">
+      <section class="section hero prelaunch-hero" aria-labelledby="hero-title">
+        <div class="hero-copy prelaunch-hero-copy" data-reveal>
+          <p class="eyebrow">Coming soon</p>
+          <h1 id="hero-title">
+            <span class="hero-title-mobile-break">Cook tonight with</span>
+            <span class="hero-title-mobile-break">what you already</span>
+            <span class="hero-title-mobile-break">have.</span>
+          </h1>
+          <p class="hero-lead">
+            Pantry &amp; Plate connects your pantry, recipes, weekly meal plan, and shopping list
+            so busy households can plan dinner faster, avoid duplicate buys, and shop only the gap.
+          </p>
+
+          <div class="hero-cta" aria-label="Pre-launch actions">
+            <a
+              class="btn btn-primary"
+              href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request"
+            >
+              Request beta access
+            </a>
+            <a class="btn btn-outline" href="#how-it-works">See how it works</a>
+          </div>
+
+          <div class="hero-chip-row prelaunch-chip-row" aria-label="Key app capabilities">
+            <span class="chip">Pantry-aware planning</span>
+            <span class="chip">Private household recipes</span>
+            <span class="chip">UPC scanning</span>
+            <span class="chip">Guided cooking mode</span>
+            <span class="chip">Household list sync</span>
+          </div>
+
+          <p class="small launch-note">
+            Pantry &amp; Plate is in active development. Request beta access or launch updates as
+            we prepare for release.
+          </p>
+        </div>
+      </section>
+
+      <section class="section pp-scrolly app-preview-section" id="guided-tour" data-pp-demo="stage">
+        <div class="section-head app-preview-head" data-reveal>
+          <p class="eyebrow">App preview</p>
+          <h2>Explore the connected weekly flow.</h2>
+          <p class="muted">
+            The preview shows how Home, Pantry, Cookbook, Plan, and Shop are designed to work
+            together before Pantry &amp; Plate is publicly available.
+          </p>
+        </div>
+
         <div class="pp-scrolly-sticky">
           <div class="pp-scrolly-grid">
             <div class="pp-tour-left">
               <div class="pp-tour-stack" aria-label="Guided tour steps" data-pp-tour-stack></div>
             </div>
-  
+
             <aside class="pp-tour-right" aria-label="Pantry & Plate demo phone">
               <div class="pp-demo-hero-mount" id="ppDemoMount"></div>
               <p class="small pp-tour-tip">
-                Click the buttons, navigation tabs and scroll to move through the app screens.
+                Explore the app preview below. Use the buttons, tabs, and scroll areas to move
+                through the sample screens.
               </p>
             </aside>
           </div>
         </div>
-  
+
         <div class="pp-scrolly-spacer" aria-hidden="true"></div>
       </section>
 
       <div id="tour-after" aria-hidden="true"></div>
-  
-        <section class="section" data-reveal>
-          <div class="section-head">
-            <p class="eyebrow">Why this works</p>
-          <h2>Built around real home cooking constraints</h2>
+
+      <section class="section" id="how-it-works" data-reveal>
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2>From pantry to plate in one weekly flow.</h2>
           <p class="muted">
-            Pantry & Plate was shaped for busy households that need speed, flexibility,
-            and fewer repeated grocery mistakes.
+            Instead of planning in one app, checking your pantry in another, and rewriting a
+            grocery list by hand, Pantry &amp; Plate keeps the loop connected.
           </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card surface" data-reveal data-delay="80">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Save recipes you will actually cook</h3>
+            <p class="muted">
+              Build a personal cookbook from recipes your household already likes, imported links,
+              or new ideas you want to try.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="120">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Track what is already at home</h3>
+            <p class="muted">
+              Keep pantry staples, product details, and expiration timing visible before you plan
+              or shop.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="160">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Plan meals with pantry context</h3>
+            <p class="muted">
+              Drop meals into the week and see what is covered while you plan, not after the list
+              is already made.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="200">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Shop only the gap</h3>
+            <p class="muted">
+              Turn planned meals into a focused shopping list that prioritizes what is missing
+              instead of what you already own.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="200">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Cook without losing your place</h3>
+            <p class="muted">
+              Open recipe details and guided cooking flows from the same system that planned the
+              meal.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section example-flow" data-reveal>
+        <div class="surface panel example-panel">
+          <div class="section-head">
+            <p class="eyebrow">Example flow</p>
+            <h2>A smarter Sunday planning flow.</h2>
+            <p class="muted">
+              Add tacos, pasta, and a sheet-pan dinner to the week. Pantry &amp; Plate checks the
+              plan against your pantry, flags ingredients that need attention, and turns only the
+              missing items into a focused shopping list.
+            </p>
+          </div>
+
+          <div class="flow-grid flow-grid-3">
+            <article class="flow-step">
+              <span class="step-num">1</span>
+              <h3>Plan three dinners</h3>
+            </article>
+            <article class="flow-step">
+              <span class="step-num">2</span>
+              <h3>Check pantry coverage</h3>
+            </article>
+            <article class="flow-step">
+              <span class="step-num">3</span>
+              <h3>Shop the missing items</h3>
+            </article>
+          </div>
+
+          <p class="small">
+            Example shown for illustration. Actual results depend on the recipes and pantry items
+            you add.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-head">
+          <p class="eyebrow">What makes it different</p>
+          <h2>Built for the part of cooking most apps skip.</h2>
         </div>
 
         <div class="grid-3">
           <article class="info-card surface" data-reveal data-delay="80">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Less decision fatigue</h3>
+            <h3><span class="icon-dot" aria-hidden="true"></span>Pantry-aware before checkout</h3>
             <p class="muted">
-              Pick meals with context, not guesswork. Keep a weekly plan visible and easy to
-              update.
+              Most meal-planning tools create a list first. Pantry &amp; Plate is designed to
+              compare your plan against what is already in your kitchen.
             </p>
           </article>
           <article class="info-card surface" data-reveal data-delay="120">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Lower food waste</h3>
+            <h3><span class="icon-dot" aria-hidden="true"></span>Private household recipes</h3>
             <p class="muted">
-              Pantry visibility and expiration awareness help you use ingredients before they
-              become waste.
+              Family recipes can be personal. Pantry &amp; Plate is designed around private
+              household recipe storage and explicit sharing.
             </p>
           </article>
           <article class="info-card surface" data-reveal data-delay="160">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Cleaner shopping trips</h3>
+            <h3><span class="icon-dot" aria-hidden="true"></span>One connected weekly system</h3>
             <p class="muted">
-              Lists are tied to what you already have and what your plan actually needs.
+              Home, Pantry, Cookbook, Plan, and Shop are designed to roll into one another instead
+              of becoming separate chores.
             </p>
           </article>
         </div>
       </section>
 
-      <section class="section" data-reveal>
+      <section class="section" id="trust" data-reveal>
+        <article class="surface panel trust-panel">
+          <div class="section-head">
+            <p class="eyebrow">Trust</p>
+            <h2>Your recipes stay yours.</h2>
+            <p class="muted">
+              Private household recipes are intended to be visible only to you and your household
+              members. Pantry &amp; Plate does not sell, publish, or use private household recipes
+              for marketing or advertising.
+            </p>
+            <p class="muted">
+              AI recipe extraction and generation run only when you choose to use those features.
+              Camera and photo access are used only for user-started actions such as barcode
+              scanning, recipe capture, or selected uploads.
+            </p>
+          </div>
+          <a class="btn btn-outline" href="privacy.html">Read the privacy policy</a>
+        </article>
+      </section>
+
+      <section class="section" id="faq" data-reveal>
         <div class="section-head">
-          <p class="eyebrow">Core experience</p>
-          <h2>Five connected tabs, one weekly system</h2>
-          <p class="muted">
-            The app shell is designed around Home, Pantry, Cookbook, Plan, and Shop so each
-            action rolls forward into the next.
-          </p>
+          <p class="eyebrow">FAQ</p>
+          <h2>Frequently asked questions</h2>
         </div>
 
-        <div class="grid-3">
-          <article class="feature-card surface">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Home</h3>
-            <p class="muted">
-              Daily overview of what to cook next, what to restock, and what needs attention.
+        <div class="faq">
+          <details>
+            <summary>Is Pantry &amp; Plate available yet?</summary>
+            <p>
+              Not yet. Pantry &amp; Plate is in active development as we prepare for release. You
+              can request beta access or launch updates by emailing
+              <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>.
             </p>
-          </article>
-          <article class="feature-card surface">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Pantry</h3>
-            <p class="muted">
-              Track staples, product details, and expiration timing with fast add/edit flows.
+          </details>
+          <details>
+            <summary>How do I request beta access?</summary>
+            <p>
+              Use the Request beta access button or email
+              <a href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request">
+                support@pantryandplate.app
+              </a>
+              with the subject line "Pantry &amp; Plate Beta Access Request."
             </p>
-          </article>
-          <article class="feature-card surface">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Cookbook</h3>
-            <p class="muted">
-              Browse and save recipes, then open detail and cooking flows without losing context.
+          </details>
+          <details>
+            <summary>Will there be App Store or Google Play links?</summary>
+            <p>We will add official download links when the app is ready for public release.</p>
+          </details>
+          <details>
+            <summary>Does Pantry &amp; Plate use AI?</summary>
+            <p>
+              Pantry &amp; Plate may use AI for user-initiated recipe extraction or generation.
+              That means prompts, links, or images are processed only when you choose to use those
+              features.
             </p>
-          </article>
-          <article class="feature-card surface">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Plan</h3>
-            <p class="muted">
-              Drop meals into the week and see pantry coverage while planning, not after.
+          </details>
+          <details>
+            <summary>Are private recipes shared publicly?</summary>
+            <p>
+              No. Private household recipes are intended for you and your household members. Any
+              public sharing should be explicit, opt-in, and clearly labeled.
             </p>
-          </article>
-          <article class="feature-card surface">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Shop</h3>
-            <p class="muted">
-              Turn plan gaps into a focused list and stay synced with household list updates.
+          </details>
+          <details>
+            <summary>Can Pantry &amp; Plate help reduce duplicate grocery purchases?</summary>
+            <p>
+              That is one of the main goals. The app is designed to compare planned meals against
+              pantry context so shopping lists focus on missing items.
             </p>
-          </article>
-          <article class="feature-card surface">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Support tools</h3>
-            <p class="muted">
-              Includes UPC scanning, share-import for recipes, and guided cooking mode.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" data-reveal>
-        <div class="section-head">
-          <p class="eyebrow">Weekly flow</p>
-          <h2>From idea to shopping cart in four steps</h2>
-        </div>
-
-        <div class="flow-grid">
-          <article class="flow-step surface" data-reveal data-delay="80">
-            <span class="step-num">1</span>
-            <h3>Save recipes you will actually cook</h3>
-            <p class="muted">Build a personal cookbook that matches your household habits.</p>
-          </article>
-          <article class="flow-step surface" data-reveal data-delay="120">
-            <span class="step-num">2</span>
-            <h3>Drop meals into the week</h3>
-            <p class="muted">Plan quickly and adjust days as your schedule changes.</p>
-          </article>
-          <article class="flow-step surface" data-reveal data-delay="160">
-            <span class="step-num">3</span>
-            <h3>Compare plan against pantry</h3>
-            <p class="muted">Surface coverage before checkout and avoid overbuying basics.</p>
-          </article>
-          <article class="flow-step surface" data-reveal data-delay="200">
-            <span class="step-num">4</span>
-            <h3>Shop only the gap</h3>
-            <p class="muted">Leave with one useful list and fewer duplicate purchases.</p>
-          </article>
+          </details>
         </div>
       </section>
 
+      <section class="section final-cta" data-reveal>
+        <div class="surface panel final-cta-card">
+          <div class="section-head">
+            <p class="eyebrow">Early access</p>
+            <h2>Want to help shape Pantry &amp; Plate before launch?</h2>
+            <p class="muted">
+              Join the early access list and share feedback as Pantry &amp; Plate gets ready for
+              market.
+            </p>
+          </div>
+          <a
+            class="btn btn-primary"
+            href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request"
+          >
+            Request beta access
+          </a>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -229,30 +387,34 @@
           <a class="brand" href="index.html">
             <img class="brand-mark" src="assets/brand/pp-mark-256.png" alt="" width="42" height="42" />
             <span class="brand-text">
-              <span class="brand-title">Pantry & Plate</span>
-              <span class="brand-subtitle">Recipes, pantry, plan, shop</span>
+              <span class="brand-title">Pantry &amp; Plate</span>
+              <span class="brand-subtitle">Cook with what you already have</span>
             </span>
           </a>
           <p class="small" style="margin-top: 0.75rem; max-width: 56ch">
-            A marketing and support site for the Pantry & Plate mobile experience.
-            We are focused on helping households reduce food waste and simplify
-            weekly meal decisions.
+            Pantry &amp; Plate is a coming-soon mobile experience for pantry-aware recipes, meal
+            planning, and shopping lists.
           </p>
           <p class="small" style="margin-top: 0.45rem">
             Contact: <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>
           </p>
-          <p class="small" style="margin-top: 0.45rem">&copy; <span data-year></span> Pantry & Plate.</p>
+          <p class="small" style="margin-top: 0.45rem">&copy; <span data-year></span> Pantry &amp; Plate.</p>
         </div>
 
         <nav class="footer-links" aria-label="Footer links">
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
+          <a
+            href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request"
+          >
+            Request beta access
+          </a>
         </nav>
       </div>
     </footer>
 
-    <script src="assets/js/main.js?v=20260425-03"></script>
-    <script src="assets/js/phone-demo.js?v=20260425-03"></script>
+    <script src="assets/js/main.js?v=20260426-01"></script>
+    <script src="assets/js/phone-demo.js?v=20260426-01"></script>
     <script>
       if (window.PPDemo) {
         window.PPDemo.init({

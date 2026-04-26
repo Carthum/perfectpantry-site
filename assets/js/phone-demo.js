@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260425-03";
+  const STATIC_ASSET_VERSION = "20260426-01";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -740,7 +740,7 @@
     const downloadCard = el("div", "pp-app-download-card");
     downloadCard.tabIndex = -1;
     const downloadHeader = el("div", "pp-app-download-header");
-    const downloadTitle = el("h3", "pp-app-download-title", "Download the app");
+    const downloadTitle = el("h3", "pp-app-download-title", "Request beta access");
     downloadTitle.id = "pp-app-download-title";
     download.setAttribute("aria-labelledby", downloadTitle.id);
     const downloadClose = document.createElement("button");
@@ -756,23 +756,24 @@
       el(
         "p",
         "pp-app-download-body",
-        "Explore the interactive phone tour, then use support for launch updates and onboarding questions.",
+        "Pantry & Plate is not publicly available yet. Request beta access or launch updates as we prepare for release.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
-    const appStore = document.createElement("a");
-    appStore.className = "pp-app-download-btn";
-    appStore.href = "support.html";
-    appStore.textContent = "Contact support";
-    const playStore = document.createElement("a");
-    playStore.className = "pp-app-download-btn";
-    playStore.href = "privacy.html";
-    playStore.textContent = "Privacy policy";
-    downloadBtns.appendChild(appStore);
-    downloadBtns.appendChild(playStore);
+    const betaAccess = document.createElement("a");
+    betaAccess.className = "pp-app-download-btn";
+    betaAccess.href =
+      "mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request";
+    betaAccess.textContent = "Request beta access";
+    const privacyLink = document.createElement("a");
+    privacyLink.className = "pp-app-download-btn pp-app-download-btn-secondary";
+    privacyLink.href = "privacy.html";
+    privacyLink.textContent = "Privacy policy";
+    downloadBtns.appendChild(betaAccess);
+    downloadBtns.appendChild(privacyLink);
     downloadCard.appendChild(downloadBtns);
     downloadCard.appendChild(
-      el("p", "pp-app-download-note", "Accounts and in-app actions happen in the mobile app."),
+      el("p", "pp-app-download-note", "We will add official download links when the app is ready."),
     );
     download.appendChild(downloadScrim);
     download.appendChild(downloadCard);
@@ -4191,12 +4192,10 @@
       headRow.appendChild(fav);
       const headText = el("div", "pp-recipe-head-text");
       headText.appendChild(el("div", "pp-recipe-title", recipeTitleText));
-      const rating = el("div", "pp-recipe-rating");
-      const starSvg = iconEl("star");
-      if (starSvg) rating.appendChild(starSvg);
-      rating.appendChild(el("span", "", "5.0"));
-      rating.appendChild(el("span", "pp-recipe-rating-sub", "(1)"));
-      headText.appendChild(rating);
+      const recipeStatus = el("div", "pp-recipe-rating");
+      recipeStatus.appendChild(el("span", "", "Preview"));
+      recipeStatus.appendChild(el("span", "pp-recipe-rating-sub", "Beta sample"));
+      headText.appendChild(recipeStatus);
       headRow.appendChild(headText);
       headerCard.appendChild(headRow);
       scroll.appendChild(headerCard);
@@ -4328,7 +4327,7 @@
       dlBtn.type = "button";
       dlBtn.className = "pp-gated-cta";
       dlBtn.dataset.downloadCta = "true";
-      dlBtn.textContent = "Download to see full ingredient list";
+      dlBtn.textContent = "Request beta access for full ingredient lists";
       gatedOverlay.appendChild(dlBtn);
       gated.appendChild(gatedContent);
       gated.appendChild(gatedOverlay);
@@ -4372,7 +4371,7 @@
       dirDl.type = "button";
       dirDl.className = "pp-gated-cta";
       dirDl.dataset.downloadCta = "true";
-      dirDl.textContent = "Download to see full directions";
+      dirDl.textContent = "Request beta access for full directions";
       dirGateOverlay.appendChild(dirDl);
       dirGate.appendChild(dirGateContent);
       dirGate.appendChild(dirGateOverlay);
@@ -4773,7 +4772,7 @@
       if (typeof onAction === "function") onAction(actionCloseDownloadCta());
     });
 
-    // Single handler for any CTA that should prompt the "Download the app" hook.
+    // Single handler for any CTA that should prompt the beta-access hook.
     app.addEventListener("click", (event) => {
       const target =
         event.target instanceof Element ? event.target.closest("[data-download-cta=\"true\"]") : null;

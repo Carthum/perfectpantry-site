@@ -108,7 +108,7 @@
         return;
       }
 
-      const subject = `Pantry & Plate support: ${String(data.get("category") || "General")}`;
+      const subject = `Pantry & Plate™ support: ${String(data.get("category") || "General")}`;
       const lines = [
         "Support request",
         "",
@@ -204,7 +204,7 @@
 
       lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       image.src = src;
-      image.alt = node.dataset.title || "Pantry & Plate screenshot";
+      image.alt = node.dataset.title || "Pantry & Plate™ screenshot";
       title.textContent = node.dataset.title || "Screenshot";
       copy.textContent = node.dataset.caption || "";
       modal.setAttribute("aria-hidden", "false");

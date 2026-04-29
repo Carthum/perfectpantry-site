@@ -1,5 +1,5 @@
 (() => {
-  const STATIC_ASSET_VERSION = "20260426-04";
+  const STATIC_ASSET_VERSION = "20260429-01";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
 
@@ -61,10 +61,10 @@
       tab: null,
       copy: {
         variant: "hero",
-        eyebrow: "Welcome to Pantry & Plate",
+        eyebrow: "Welcome to Pantry & Plate™",
         title: "The weekly food loop, finally in one place.",
         description:
-          "Pantry & Plate connects recipes, pantry inventory, meal planning, and shopping so weeknight decisions get easier and grocery trips stay focused.",
+          "Pantry & Plate™ connects recipes, pantry inventory, meal planning, and shopping so weeknight decisions get easier and grocery trips stay focused.",
         notes: ["Use the phone demo to explore Home, Pantry, Cookbook, Plan, and Shop."],
       },
     },
@@ -306,7 +306,7 @@
           "Filter by source, dish type, and cuisine to land on the best fit for tonight.",
         bullets: [
           {
-            text: "Recipes come from your household, public recipes, cooking basics, and the Pantry & Plate cookbook.",
+            text: "Recipes come from your household, public recipes, cooking basics, and the Pantry & Plate™ cookbook.",
           },
           { text: "Categories include mains, sides, appetizers, and more." },
           { text: "Cuisine and preference dropdowns quickly surface the flavors you love." },
@@ -677,7 +677,7 @@
     splashImg.className = "pp-phone-scene";
     splashImg.decoding = "async";
     splashImg.loading = "eager";
-    splashImg.alt = "Pantry & Plate loading screen";
+    splashImg.alt = "Pantry & Plate™ loading screen";
     splashImg.src = versionedAsset("assets/brand/pp-splash-ios-source.png");
 
     const overlay = el("div", "pp-phone-overlay");
@@ -760,7 +760,7 @@
       el(
         "p",
         "pp-app-download-body",
-        "Pantry & Plate is not publicly available yet. Request beta access or launch updates as we prepare for release.",
+        "Pantry & Plate™ is not publicly available yet. Request beta access or launch updates as we prepare for release.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");

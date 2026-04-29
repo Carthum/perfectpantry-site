@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Pantry & Plate - Continue in App</title>
+    <title>Pantry & Plate™ - Continue in App</title>
     <style>
       :root {
         --paper: #f5ead9;
@@ -193,9 +193,9 @@
   <body>
     <main class="layout">
       <section class="card">
-        <h1 id="headline">Continue in Pantry & Plate</h1>
+        <h1 id="headline">Continue in Pantry & Plate™</h1>
         <p>
-          This secure link can finish sign-in, a household invite, or password recovery in Pantry & Plate.
+          This secure link can finish sign-in, a household invite, or password recovery in Pantry & Plate™.
         </p>
 
         <div id="status" class="status">Preparing secure handoff...</div>
@@ -220,7 +220,7 @@
 
         <div id="appActions" class="row">
           <a id="openBtn" class="button-link button-primary" href="#">
-            Open Pantry & Plate
+            Open Pantry & Plate™
           </a>
           <button id="showWebResetBtn" class="button-secondary" type="button" hidden>
             Reset here instead
@@ -246,8 +246,8 @@
         <div id="desktopHelp" class="desktop-help" hidden>
           <p>If the app did not open automatically, use the button above or open this link on your phone.</p>
           <ol>
-            <li>Open Pantry & Plate on your phone.</li>
-            <li>Open your Pantry & Plate email link, or paste the copied current link into mobile browser.</li>
+            <li>Open Pantry & Plate™ on your phone.</li>
+            <li>Open your Pantry & Plate™ email link, or paste the copied current link into mobile browser.</li>
             <li>Complete the flow in the app.</li>
           </ol>
           <p>Need help? Visit <a href="/support.html">Support</a>.</p>
@@ -336,7 +336,7 @@
         if (isRecovery) {
           headlineEl.textContent = "Reset your password";
         } else if (isInvite) {
-          headlineEl.textContent = "Join your Pantry & Plate household";
+          headlineEl.textContent = "Join your Pantry & Plate™ household";
         }
 
         openBtn.href = appHandoffUrl;
@@ -370,13 +370,13 @@
             });
 
             if (!errorDescription) {
-              setStatus("Opening Pantry & Plate to continue password reset...", "");
+              setStatus("Opening Pantry & Plate™ to continue password reset...", "");
             }
             window.setTimeout(tryOpenApp, 80);
             window.setTimeout(function () {
               if (!errorDescription) {
                 setStatus(
-                  "If the app did not open, tap \"Open Pantry & Plate\" or use \"Reset here instead\".",
+                  "If the app did not open, tap \"Open Pantry & Plate™\" or use \"Reset here instead\".",
                   "",
                 );
               }
@@ -469,7 +469,7 @@
               );
             } else if (isInvite) {
               setStatus(
-                "Continue in Pantry & Plate to review and join this household invite.",
+                "Continue in Pantry & Plate™ to review and join this household invite.",
                 "",
               );
             } else {
@@ -484,8 +484,8 @@
             window.setTimeout(function () {
               setStatus(
                 isInvite
-                  ? "If the app did not open, tap \"Open Pantry & Plate\" to continue joining this household."
-                  : "If the app did not open, tap \"Open Pantry & Plate\".",
+                  ? "If the app did not open, tap \"Open Pantry & Plate™\" to continue joining this household."
+                  : "If the app did not open, tap \"Open Pantry & Plate™\".",
                 "",
               );
             }, 1300);

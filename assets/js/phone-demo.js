@@ -744,7 +744,7 @@
     const downloadCard = el("div", "pp-app-download-card");
     downloadCard.tabIndex = -1;
     const downloadHeader = el("div", "pp-app-download-header");
-    const downloadTitle = el("h3", "pp-app-download-title", "Request beta access");
+    const downloadTitle = el("h3", "pp-app-download-title", "Contact support");
     downloadTitle.id = "pp-app-download-title";
     download.setAttribute("aria-labelledby", downloadTitle.id);
     const downloadClose = document.createElement("button");
@@ -760,15 +760,15 @@
       el(
         "p",
         "pp-app-download-body",
-        "Pantry & Plate™ is not publicly available yet. Request beta access or launch updates as we prepare for release.",
+        "Contact Pantry & Plate™ support for current access, release, or account questions.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
     const betaAccess = document.createElement("a");
     betaAccess.className = "pp-app-download-btn";
     betaAccess.href =
-      "mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request";
-    betaAccess.textContent = "Request beta access";
+      "mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Support";
+    betaAccess.textContent = "Contact support";
     const privacyLink = document.createElement("a");
     privacyLink.className = "pp-app-download-btn pp-app-download-btn-secondary";
     privacyLink.href = "privacy.html";
@@ -777,7 +777,7 @@
     downloadBtns.appendChild(privacyLink);
     downloadCard.appendChild(downloadBtns);
     downloadCard.appendChild(
-      el("p", "pp-app-download-note", "We will add official download links when the app is ready."),
+      el("p", "pp-app-download-note", "Official download links will be shown here when available."),
     );
     download.appendChild(downloadScrim);
     download.appendChild(downloadCard);
@@ -4166,7 +4166,7 @@
       }
 
       // Fallback.
-      bodyNodes.push(el("p", "", "More details coming soon."));
+      bodyNodes.push(el("p", "", "Choose another preview screen for more details."));
       return { bodyNodes, footerNodes };
     };
 
@@ -4345,7 +4345,7 @@
       dlBtn.type = "button";
       dlBtn.className = "pp-gated-cta";
       dlBtn.dataset.downloadCta = "true";
-      dlBtn.textContent = "Request beta access for full ingredient lists";
+      dlBtn.textContent = "Contact support for access details";
       gatedOverlay.appendChild(dlBtn);
       gated.appendChild(gatedContent);
       gated.appendChild(gatedOverlay);
@@ -4389,7 +4389,7 @@
       dirDl.type = "button";
       dirDl.className = "pp-gated-cta";
       dirDl.dataset.downloadCta = "true";
-      dirDl.textContent = "Request beta access for full directions";
+      dirDl.textContent = "Contact support for access details";
       dirGateOverlay.appendChild(dirDl);
       dirGate.appendChild(dirGateContent);
       dirGate.appendChild(dirGateOverlay);
@@ -4599,7 +4599,7 @@
           ? buildRecipeViewPage()
           : kind === "cook_view"
             ? buildCookViewPage()
-            : el("div", "pp-page", "Screen coming soon.");
+            : el("div", "pp-page", "Screen preview unavailable.");
       page.appendChild(node);
       const pageScroll = node.querySelector(".pp-page-scroll");
       if (pageScroll) {

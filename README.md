@@ -2,6 +2,14 @@
 
 This folder is a lightweight, responsive marketing/support site for **Pantry & Plate**.
 
+## Source-of-truth checks
+- The production website source for `pantryandplate.app` should contain `CNAME`
+  with exactly `pantryandplate.app`.
+- Before deploying, verify the checkout, branch, and dirty status with
+  `pwd`, `git branch --show-current`, `git status --short`, and `cat CNAME`.
+- Do not deploy from a checkout whose `CNAME` still points at
+  `perfectpantryapp.com`.
+
 ## Files
 - `index.html` — Landing page with interactive guided tour
 - `support.html` — FAQs + contact form (template)
@@ -11,7 +19,7 @@ This folder is a lightweight, responsive marketing/support site for **Pantry & P
 - `assets/img/` — Placeholder images (swap with real screenshots)
 
 ## Quick customization checklist
-1. Update the email address: `support@perfectpantryapp.com`
+1. Verify the support email address: `support@pantryandplate.app`
 2. Replace placeholder SVG screenshots in `assets/img/` with real PNG/JPG
 3. Update copy (headlines, pricing, FAQs) based on what your app really does
 4. Review and customize `privacy.html` to match your actual data practices

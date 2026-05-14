@@ -65,9 +65,9 @@
           <a href="privacy.html" aria-current="page">Privacy</a>
           <a
             class="btn btn-primary btn-sm nav-cta"
-            href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Beta%20Access%20Request"
+            href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Support"
           >
-            Request beta access
+            Contact support
           </a>
         </nav>
       </div>
@@ -79,7 +79,7 @@
           <p class="eyebrow">Privacy Policy</p>
           <h1>How Pantry & Plate™ handles your information</h1>
           <p class="hero-lead">
-            Last updated: <strong>March 17, 2026</strong>
+            Last updated: <strong>May 14, 2026</strong>
           </p>
         </div>
       </section>
@@ -102,18 +102,19 @@
           <h3 style="margin-top: 0.85rem">Information you provide</h3>
           <ul class="list-clean" style="margin-top: 0.5rem">
             <li>Account and sign-in information such as your email address, profile details, and selected sign-in method.</li>
-            <li>Pantry items, shopping lists, meal plans, household membership, recipes, and other content you create, import, or sync.</li>
-            <li>Profile photos, recipe photos, and other images you choose to upload.</li>
-            <li>Prompts, links, and images you submit when using recipe import, extraction, or generation features.</li>
-            <li>Support, feedback, and privacy requests you send through email, in-app forms, or contact flows.</li>
+            <li>Pantry items, grocery and shopping lists, meal plans, household membership, recipes, imported recipes, and other content you create, import, or sync.</li>
+            <li>Dietary preferences, allergy details, and food preferences you choose to save.</li>
+            <li>Profile photos, recipe photos, receipts, screenshots, shared files, prompts, links, and images you choose to upload or submit for app features.</li>
+            <li>Support, feedback, parser reports, recipe reports, and privacy requests you choose to send. These may include your message, optional contact email, selected report details, and limited app context shown by the app.</li>
+            <li>Subscription and purchase status if subscriptions are enabled in the app build you use.</li>
           </ul>
 
           <h3 style="margin-top: 1rem">Information collected automatically</h3>
           <ul class="list-clean" style="margin-top: 0.5rem">
             <li>Device and app metadata such as platform, OS version, app version, and build number.</li>
-            <li>Notification preferences and reminder schedules if you enable reminders.</li>
+            <li>Notification preferences, reminder schedules, push-notification tokens, and delivery state if you enable reminders or notifications.</li>
             <li>Feedback diagnostic context such as app version, platform, and sign-in state.</li>
-            <li>Firebase Analytics event data about app interactions, feature usage, and reliability or performance trends.</li>
+            <li>Firebase Analytics, Crashlytics, and Messaging data used for app interactions, feature usage, crash diagnostics, push messaging, reliability, and performance trends.</li>
             <li>Basic website usage signals needed for security and performance.</li>
           </ul>
         </article>
@@ -125,11 +126,12 @@
           <ul class="list-clean" style="margin-top: 0.6rem">
             <li>Provide and maintain pantry, recipe, meal-planning, barcode-scanning, and shopping workflows.</li>
             <li>Authenticate accounts and sync data across your devices and household members.</li>
-            <li>Store and display profile photos, recipe photos, and other content you choose to upload.</li>
-            <li>Process user-submitted prompts and images to help extract or generate recipe content.</li>
+            <li>Store and display photos, recipes, lists, preferences, and other content you choose to upload or save.</li>
+            <li>Process user-submitted prompts, links, receipts, screenshots, and images for recipe extraction, receipt parsing, and generation features you choose to use.</li>
             <li>Deliver reminders and notifications you choose to enable.</li>
             <li>Respond to support, feedback, privacy, and deletion requests.</li>
-            <li>Measure feature usage, app interactions, and reliability trends so we can improve product quality.</li>
+            <li>Review user-initiated parser and recipe reports while minimizing raw recipe, pantry, grocery, receipt, image, prompt, allergy, dietary, and diagnostic content that is not needed for the report.</li>
+            <li>Measure feature usage, app interactions, and reliability trends so Pantry &amp; Plate can improve product quality.</li>
             <li>Monitor security, prevent abuse, and comply with legal obligations where required.</li>
           </ul>
         </article>
@@ -137,7 +139,7 @@
 
       <section class="section-tight" data-reveal>
         <article class="surface panel">
-          <h2>4. Camera, Photos, and AI Processing</h2>
+          <h2>4. Camera, Photos, Receipts, and AI Processing</h2>
           <p class="muted" style="margin-top: 0.55rem">
             Pantry & Plate may request camera access only when you explicitly start a
             camera-based feature, such as scanning a barcode or capturing a recipe or profile
@@ -145,10 +147,11 @@
             import an image from your device.
           </p>
           <p class="muted" style="margin-top: 0.65rem">
-            If you choose recipe extraction or generation features, selected images, prompts,
-            and related request data may be transmitted to Pantry & Plate services and
-            OpenAI so the feature can analyze the input and return recipe content. Camera and
-            photo access are not used for background collection.
+            If you choose recipe extraction, receipt parsing, or generation features, selected
+            prompts, links, receipts, screenshots, images, and related request data may be
+            transmitted to Pantry &amp; Plate services and OpenAI so the feature can analyze the
+            input and return recipe or receipt content. Camera and photo access are not used for
+            background collection.
           </p>
         </article>
       </section>
@@ -185,17 +188,23 @@
         <article class="surface panel">
           <h2>7. Sharing and Disclosure</h2>
           <p class="muted" style="margin-top: 0.55rem">
-            We do not sell personal or sensitive user data. Data is shared only as needed to
-            provide the feature you choose to use, operate the service, comply with legal
-            obligations, or protect users and the service.
+            Pantry &amp; Plate does not sell personal or sensitive user data and does not use data
+            for cross-app advertising tracking. Data is shared only as needed to provide the
+            feature you choose to use, operate the service, comply with legal obligations, or
+            protect users and the service.
           </p>
+          <p class="muted" style="margin-top: 0.55rem">Pantry &amp; Plate may share data with:</p>
           <ul class="list-clean" style="margin-top: 0.6rem">
             <li>Supabase for authentication, database storage, file storage, and app-backed functions.</li>
-            <li>OpenAI for user-initiated recipe prompt and image processing.</li>
+            <li>OpenAI for user-initiated recipe prompt, image, and receipt processing.</li>
             <li>Firebase Analytics for app analytics and product-improvement insights.</li>
+            <li>Firebase Crashlytics for crash diagnostics and Firebase Messaging for push-notification delivery.</li>
+            <li>Google Forms for user-initiated feedback or parser-report intake when configured.</li>
+            <li>Email providers such as Resend for support, account, invite, welcome, and report-related email delivery when configured.</li>
             <li>Apple and Google if you choose those sign-in providers.</li>
+            <li>RevenueCat, Apple, and Google app-store purchase systems if subscriptions are enabled.</li>
             <li>Instacart if you launch connected shopping or delivery flows.</li>
-            <li>Food and recipe data providers used by user-invoked features, including USDA, Spoonacular, and Chomp.</li>
+            <li>Food and recipe data providers used by user-invoked features, including USDA, Spoonacular, Chomp, BigOven, and Open Food Facts.</li>
           </ul>
         </article>
       </section>
@@ -300,8 +309,7 @@
             </span>
           </a>
           <p class="small" style="margin-top: 0.75rem; max-width: 56ch">
-            Pantry &amp; Plate™ is a coming-soon mobile experience for pantry-aware recipes, meal
-            planning, and shopping lists.
+            This policy covers current website and app operations.
           </p>
           <p class="small" style="margin-top: 0.45rem">
             Contact: <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>

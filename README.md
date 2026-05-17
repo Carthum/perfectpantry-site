@@ -18,6 +18,12 @@ This folder is a lightweight, responsive marketing/support site for **Pantry & P
 - `assets/js/main.js` — Mobile menu + lightbox + demo form handling
 - `assets/img/` — Placeholder images (swap with real screenshots)
 
+## Public brand URLs
+- Homepage: https://pantryandplate.app
+- Logo: https://pantryandplate.app/assets/brand/pantry-and-plate-logo.png
+- Terms: https://pantryandplate.app/terms.html
+- Privacy: https://pantryandplate.app/privacy.html
+
 ## Quick customization checklist
 1. Verify the support email address: `support@pantryandplate.app`
 2. Replace placeholder SVG screenshots in `assets/img/` with real PNG/JPG

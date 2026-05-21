@@ -23,6 +23,7 @@ This folder is a lightweight, responsive marketing/support site for **Pantry & P
 - Logo: https://pantryandplate.app/assets/brand/pantry-and-plate-logo.png
 - Terms: https://pantryandplate.app/terms.html
 - Privacy: https://pantryandplate.app/privacy.html
+- DMCA: https://pantryandplate.app/dmca.html
 
 ## Quick customization checklist
 1. Verify the support email address: `support@pantryandplate.app`

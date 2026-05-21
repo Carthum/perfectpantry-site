@@ -1,0 +1,29 @@
+{
+  "serviceProvider": {
+    "name": "Pantry and Plate LLC",
+    "addressLine1": "691 Foxcroft Cir SE",
+    "city": "Marietta",
+    "state": "GA",
+    "zip": "30067",
+    "country": "United States",
+    "website": "pantryandplate.app"
+  },
+  "dmcaAgent": {
+    "name": "Benjamin Adgie",
+    "organization": "Pantry and Plate LLC",
+    "addressLine1": "691 Foxcroft Cir SE",
+    "city": "Marietta",
+    "state": "GA",
+    "zip": "30067",
+    "country": "United States",
+    "phone": "6789104299",
+    "email": "dmca@pantryandplate.app"
+  },
+  "dmcaRegistrationNumber": "DMCA-1073129",
+  "dmcaAlternateNames": [
+    "Pantry & Plate",
+    "Pantry and Plate",
+    "Pantry and Plate app",
+    "pantryandplate.app"
+  ]
+}

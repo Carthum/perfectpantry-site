@@ -2,7 +2,7 @@
 
 ## Summary
 
-Final recommendation: **WEBSITE COPY FIXED LOCALLY / SUBSCRIPTION TERMS RESTORED / DEPLOYMENT AND LEGAL REVIEW REQUIRED**.
+Final recommendation: **SUPERSEDED BY WEBSITE_DEPLOYMENT_LIVE_SIGNOFF.md**.
 
 The source checkout for `pantryandplate.app` is `/Users/benadgie/Desktop/meal_planner/.tmp/perfectpantry-site`. Its `CNAME` is `pantryandplate.app`; the sibling `/Users/benadgie/Desktop/perfectpantry-site` checkout still points at `perfectpantryapp.com` and was not edited.
 
@@ -125,17 +125,14 @@ The exact beta/public-release-pending search includes this signoff file, so it r
 | `node --check assets/js/main.js && node --check assets/js/phone-demo.js` | PASS | JavaScript syntax checks passed. |
 | `python3 - <<'PY' ... PY` static local link check | PASS | Checked 132 local `href`/`src` references; all targets exist. |
 
-## Deployment Required
+## Deployment Status
 
-Deployment is still required. These changes are local in the website repository and have not been verified on the live `https://pantryandplate.app/` site.
+Deployment was completed after this local-copy signoff. See `WEBSITE_DEPLOYMENT_LIVE_SIGNOFF.md` for the authoritative live verification result.
 
-Do not treat the live website copy as passing until this website repo is committed, legally reviewed, deployed, and the live root, privacy, terms, support/account deletion, AASA, and assetlinks URLs are rechecked.
+The deployment pass rechecked the live root, privacy, terms, support/account deletion, AASA, and assetlinks URLs.
 
 ## Remaining Blockers
 
-- Deploy the local website copy changes.
-- Recheck live `https://pantryandplate.app/`, `https://pantryandplate.app/terms.html`, `https://pantryandplate.app/privacy.html`, and `https://pantryandplate.app/support.html`.
-- Have a human/legal reviewer approve the subscription terms correction before deployment.
 - Separately verify app subscription implementation, store products, purchase/restore behavior, RevenueCat/Billing state, and store disclosures.
 - Add real App Store / Google Play links only after the public listings are live.
 - This website copy pass does not resolve the app release's separate hosted/provider/store/signed-artifact/release-smoke evidence gates.

@@ -764,16 +764,16 @@
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
-    const betaAccess = document.createElement("a");
-    betaAccess.className = "pp-app-download-btn";
-    betaAccess.href =
+    const supportAccess = document.createElement("a");
+    supportAccess.className = "pp-app-download-btn";
+    supportAccess.href =
       "mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Support";
-    betaAccess.textContent = "Contact support";
+    supportAccess.textContent = "Contact support";
     const privacyLink = document.createElement("a");
     privacyLink.className = "pp-app-download-btn pp-app-download-btn-secondary";
     privacyLink.href = "privacy.html";
     privacyLink.textContent = "Privacy policy";
-    downloadBtns.appendChild(betaAccess);
+    downloadBtns.appendChild(supportAccess);
     downloadBtns.appendChild(privacyLink);
     downloadCard.appendChild(downloadBtns);
     downloadCard.appendChild(
@@ -4212,7 +4212,7 @@
       headText.appendChild(el("div", "pp-recipe-title", recipeTitleText));
       const recipeStatus = el("div", "pp-recipe-rating");
       recipeStatus.appendChild(el("span", "", "Preview"));
-      recipeStatus.appendChild(el("span", "pp-recipe-rating-sub", "Beta sample"));
+      recipeStatus.appendChild(el("span", "pp-recipe-rating-sub", "Demo sample"));
       headText.appendChild(recipeStatus);
       headRow.appendChild(headText);
       headerCard.appendChild(headRow);
@@ -4790,7 +4790,7 @@
       if (typeof onAction === "function") onAction(actionCloseDownloadCta());
     });
 
-    // Single handler for any CTA that should prompt the beta-access hook.
+    // Single handler for any CTA that should prompt the support contact hook.
     app.addEventListener("click", (event) => {
       const target =
         event.target instanceof Element ? event.target.closest("[data-download-cta=\"true\"]") : null;

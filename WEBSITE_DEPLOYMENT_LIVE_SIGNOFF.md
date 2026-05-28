@@ -76,6 +76,7 @@ Independent legal counsel output is not attached in this repo. If the release pr
 - Push result: `5ffeaca..cc33712  HEAD -> main`.
 - Deployment mechanism: GitHub Pages source branch `main`.
 - DNS was not changed.
+- Non-blocking polling note: an initial propagation loop returned non-zero because it searched for the unescaped text `Pantry & Plate is offered...`; the live HTML correctly encodes this as `Pantry &amp; Plate is offered...`. The corrected live regex below passed.
 
 ## Live URL Verification
 

@@ -3,26 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pantry &amp; Plate™ | Cook With What You Already Have</title>
+    <title>Pantry &amp; Plate™ | Meal Planning From What You Already Have</title>
     <meta
       name="description"
-      content="Pantry & Plate™ is a pantry-aware recipe, meal planning, and shopping list app that helps busy households cook with what they already have and shop only what is missing."
+      content="Plan meals from your pantry, save household recipes, and shop only for missing ingredients with Pantry & Plate."
     />
     <meta name="theme-color" content="#d27a3d" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Pantry &amp; Plate™ | Cook With What You Already Have" />
+    <meta property="og:title" content="Pantry &amp; Plate™ | Meal Planning From What You Already Have" />
     <meta
       property="og:description"
-      content="Pantry & Plate™ is a pantry-aware recipe, meal planning, and shopping list app that helps busy households cook with what they already have and shop only what is missing."
+      content="Pantry & Plate connects pantry tracking, household recipes, weekly meal planning, and grocery lists so you can cook with what you already have."
     />
     <meta property="og:url" content="https://pantryandplate.app/" />
     <meta property="og:image" content="assets/media/og-cover.svg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Pantry &amp; Plate™ | Cook With What You Already Have" />
+    <meta name="twitter:title" content="Pantry &amp; Plate™ | Meal Planning From What You Already Have" />
     <meta
       name="twitter:description"
-      content="Pantry & Plate™ is a pantry-aware recipe, meal planning, and shopping list app that helps busy households cook with what they already have and shop only what is missing."
+      content="Plan meals from what’s already in your kitchen, then shop only for what’s missing."
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +37,7 @@
     <script>
       document.documentElement.classList.add("js");
     </script>
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260501-02" />
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260531-01" />
     <link rel="stylesheet" href="assets/css/phone-demo.css?v=20260426-02" />
     <script>
       (function () {
@@ -95,9 +95,11 @@
           <a href="privacy.html">Privacy</a>
           <a
             class="btn btn-primary btn-sm nav-cta"
-            href="support.html"
+            href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+            data-launch-url="google-play"
+            aria-label="Get Pantry & Plate on Google Play"
           >
-            Support
+            Google Play
           </a>
         </nav>
       </div>
@@ -120,11 +122,21 @@
           <div class="hero-cta" aria-label="Primary actions">
             <a
               class="btn btn-primary"
-              href="support.html"
+              href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+              data-launch-url="google-play"
+              aria-label="Get Pantry & Plate on Google Play"
             >
-              Contact support
+              Get it on Google Play
             </a>
-            <a class="btn btn-outline" href="#how-it-works">See how it works</a>
+            <a
+              class="btn btn-outline"
+              href="mailto:support@pantryandplate.app?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist"
+              data-launch-url="ios-waitlist"
+              aria-label="Join the Pantry & Plate iOS waitlist"
+            >
+              Join the iOS waitlist
+            </a>
+            <a class="btn btn-ghost" href="#how-it-works">See how it works</a>
           </div>
 
           <div class="hero-chip-row prelaunch-chip-row" aria-label="Key app capabilities">
@@ -136,9 +148,48 @@
           </div>
 
           <p class="small launch-note">
-            For account help, privacy requests, or availability questions, contact
-            support@pantryandplate.app.
+            Android is live now. iOS is awaiting App Store review. For account help,
+            privacy requests, or support, contact support@pantryandplate.app.
           </p>
+        </div>
+      </section>
+
+      <section class="section section-tight launch-availability" aria-labelledby="launch-availability-title" data-reveal>
+        <div class="availability-grid">
+          <article class="surface availability-card availability-card-live">
+            <div>
+              <p class="eyebrow">Android launch</p>
+              <h2 id="launch-availability-title">Now available on Google Play.</h2>
+            </div>
+            <a
+              class="btn btn-primary"
+              href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+              data-launch-url="google-play"
+              aria-label="Get Pantry & Plate on Google Play"
+            >
+              Get it on Google Play
+            </a>
+          </article>
+          <article class="surface availability-card">
+            <div>
+              <p class="eyebrow">iPhone launch</p>
+              <h2>iOS is awaiting App Store review.</h2>
+              <p class="muted">
+                Join the waitlist and we’ll let you know when it’s live.
+              </p>
+            </div>
+            <div class="availability-actions">
+              <a
+                class="btn btn-outline"
+                href="mailto:support@pantryandplate.app?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist"
+                data-launch-url="ios-waitlist"
+                aria-label="Join the Pantry & Plate iOS waitlist"
+              >
+                Join the iOS waitlist
+              </a>
+              <p class="small">We’ll notify you when the iPhone version is live.</p>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -222,44 +273,91 @@
         </div>
       </section>
 
-      <section class="section example-flow" data-reveal>
-        <div class="surface panel example-panel">
+      <section class="section launch-demo" aria-labelledby="launch-demo-title" data-reveal>
+        <div class="launch-demo-grid">
           <div class="section-head">
-            <p class="eyebrow">Example flow</p>
-            <h2>A smarter Sunday planning flow.</h2>
+            <p class="eyebrow">Launch demo</p>
+            <h2 id="launch-demo-title">See the weekly flow in under a minute.</h2>
             <p class="muted">
-              Add tacos, pasta, and a sheet-pan dinner to the week. Pantry &amp; Plate checks the
-              plan against your pantry, flags ingredients that need attention, and turns only the
-              missing items into a focused shopping list.
+              Plan meals, check pantry coverage, and turn only the missing ingredients into a
+              focused shopping list.
             </p>
+            <div class="hero-cta launch-demo-cta" aria-label="Demo actions">
+              <a
+                class="btn btn-primary"
+                href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+                data-launch-url="google-play"
+                aria-label="Get Pantry & Plate on Google Play"
+              >
+                Get it on Google Play
+              </a>
+              <a
+                class="btn btn-outline"
+                href="mailto:support@pantryandplate.app?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist"
+                data-launch-url="ios-waitlist"
+                aria-label="Join the Pantry & Plate iOS waitlist"
+              >
+                Join the iOS waitlist
+              </a>
+            </div>
           </div>
 
-          <div class="flow-grid flow-grid-3">
-            <article class="flow-step">
-              <span class="step-num">1</span>
-              <h3>Plan three dinners</h3>
-            </article>
-            <article class="flow-step">
-              <span class="step-num">2</span>
-              <h3>Check pantry coverage</h3>
-            </article>
-            <article class="flow-step">
-              <span class="step-num">3</span>
-              <h3>Shop the missing items</h3>
-            </article>
+          <div class="surface demo-frame" role="img" aria-label="Pantry & Plate weekly planning flow preview">
+            <div class="demo-phone-card" aria-hidden="true">
+              <div class="demo-phone-top">
+                <span>Weekly plan</span>
+                <strong>3 dinners</strong>
+              </div>
+              <div class="demo-plan-list">
+                <div class="demo-plan-row">
+                  <span class="demo-day">Mon</span>
+                  <strong>Skillet tacos</strong>
+                  <span>5 of 7 at home</span>
+                </div>
+                <div class="demo-plan-row">
+                  <span class="demo-day">Wed</span>
+                  <strong>Tomato pasta</strong>
+                  <span>6 of 8 at home</span>
+                </div>
+                <div class="demo-plan-row">
+                  <span class="demo-day">Fri</span>
+                  <strong>Sheet-pan chicken</strong>
+                  <span>4 of 6 at home</span>
+                </div>
+              </div>
+              <div class="demo-gap-card">
+                <span>Shopping gap</span>
+                <strong>Limes, tortillas, spinach, yogurt</strong>
+              </div>
+              <div class="demo-frame-overlay">
+                <span>Plan</span>
+                <span>Pantry</span>
+                <span>Shop</span>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <p class="small">
-            Example shown for illustration. Actual results depend on the recipes and pantry items
-            you add.
-          </p>
+        <div class="flow-grid flow-grid-3 demo-storyboard" aria-label="Weekly flow storyboard">
+          <article class="flow-step surface">
+            <span class="step-num">1</span>
+            <h3>Plan three dinners</h3>
+          </article>
+          <article class="flow-step surface">
+            <span class="step-num">2</span>
+            <h3>Check pantry coverage</h3>
+          </article>
+          <article class="flow-step surface">
+            <span class="step-num">3</span>
+            <h3>Shop the missing items</h3>
+          </article>
         </div>
       </section>
 
       <section class="section" data-reveal>
         <div class="section-head">
           <p class="eyebrow">What makes it different</p>
-          <h2>Built for the part of cooking most apps skip.</h2>
+          <h2>A practical workflow for real household planning.</h2>
         </div>
 
         <div class="grid-3">
@@ -285,6 +383,19 @@
             </p>
           </article>
         </div>
+      </section>
+
+      <section class="section founder-note" data-reveal>
+        <article class="surface panel founder-panel">
+          <p class="eyebrow">Founder note</p>
+          <h2>Built for the part of cooking most apps skip.</h2>
+          <p class="muted">
+            I built Pantry &amp; Plate™ because meal planning, pantry tracking, and grocery lists
+            were always split across different tools. This brings them into one household workflow:
+            save the recipes you actually cook, plan from what is already home, and shop only for
+            what is missing.
+          </p>
+        </article>
       </section>
 
       <section class="section" id="trust" data-reveal>
@@ -315,26 +426,42 @@
 
         <div class="faq">
           <details>
-            <summary>How can I find current availability?</summary>
+            <summary>Where can I download Pantry &amp; Plate?</summary>
             <p>
-              Pantry &amp; Plate™ helps households manage their pantry, plan meals, and build
-              grocery lists. For current availability or support questions, email
-              <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>.
+              Pantry &amp; Plate™ is available on
+              <a
+                href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+                data-launch-url="google-play"
+              >Google Play</a>.
+              iOS is awaiting App Store review. Join the
+              <a
+                href="mailto:support@pantryandplate.app?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist"
+                data-launch-url="ios-waitlist"
+                aria-label="Join the Pantry & Plate iOS waitlist from FAQ"
+              >iOS waitlist</a>
+              and we’ll notify you when the iPhone version is live.
             </p>
           </details>
           <details>
-            <summary>How do I ask about access or support?</summary>
+            <summary>How do I join the iOS waitlist?</summary>
             <p>
-              Email
+              Use the iOS waitlist link on this page, or email
               <a href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Support">
                 support@pantryandplate.app
               </a>
-              with your question or support request.
+              and ask to be notified when the App Store listing is available.
             </p>
           </details>
           <details>
-            <summary>Will there be App Store or Google Play links?</summary>
-            <p>Official App Store and Google Play links will be posted here when the public listings are live.</p>
+            <summary>Can I send product feedback?</summary>
+            <p>
+              Yes. Email
+              <a href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Feedback">
+                support@pantryandplate.app
+              </a>
+              with feedback, questions, or issues. Early feedback helps improve the pantry,
+              recipe, meal-planning, and shopping-list workflow.
+            </p>
           </details>
           <details>
             <summary>Does Pantry &amp; Plate use AI?</summary>
@@ -364,19 +491,32 @@
       <section class="section final-cta" data-reveal>
         <div class="surface panel final-cta-card">
           <div class="section-head">
-            <p class="eyebrow">Support</p>
-            <h2>Have questions about Pantry &amp; Plate?</h2>
+            <p class="eyebrow">Start planning</p>
+            <h2>Cook tonight with what is already in your kitchen.</h2>
             <p class="muted">
-              Contact support for account help, privacy requests, availability questions, or
-              product feedback.
+              Pantry &amp; Plate is live on Google Play, and the iPhone version is in App Store
+              review. Support stays available for account help, privacy requests, and feedback.
             </p>
           </div>
-          <a
-            class="btn btn-primary"
-            href="support.html"
-          >
-            Contact support
-          </a>
+          <div class="final-cta-actions">
+            <a
+              class="btn btn-primary"
+              href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+              data-launch-url="google-play"
+              aria-label="Get Pantry & Plate on Google Play"
+            >
+              Get it on Google Play
+            </a>
+            <a
+              class="btn btn-outline"
+              href="mailto:support@pantryandplate.app?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist"
+              data-launch-url="ios-waitlist"
+              aria-label="Join the Pantry & Plate iOS waitlist"
+            >
+              Join the iOS waitlist
+            </a>
+            <a class="btn btn-ghost" href="support.html">Contact support</a>
+          </div>
         </div>
       </section>
     </main>
@@ -401,20 +541,30 @@
         </div>
 
         <nav class="footer-links" aria-label="Footer links">
+          <a
+            href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+            data-launch-url="google-play"
+            aria-label="Get Pantry & Plate on Google Play"
+          >
+            Google Play
+          </a>
+          <a
+            href="mailto:support@pantryandplate.app?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist"
+            data-launch-url="ios-waitlist"
+            aria-label="Join the Pantry & Plate iOS waitlist"
+          >
+            iOS waitlist
+          </a>
           <a href="support.html">Support</a>
           <a href="privacy.html">Privacy</a>
           <a href="dmca.html">DMCA</a>
-          <a
-            href="support.html"
-          >
-            Support
-          </a>
         </nav>
       </div>
     </footer>
 
+    <script src="assets/js/launch-config.js?v=20260531-01"></script>
     <script src="assets/js/main.js?v=20260429-01"></script>
-    <script src="assets/js/phone-demo.js?v=20260429-01"></script>
+    <script src="assets/js/phone-demo.js?v=20260531-01"></script>
     <script>
       if (window.PPDemo) {
         window.PPDemo.init({

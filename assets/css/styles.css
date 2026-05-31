@@ -459,6 +459,45 @@ p {
   margin-bottom: clamp(1.1rem, 2vw, 1.6rem);
 }
 
+.launch-availability {
+  padding-top: 0.5rem;
+}
+
+.availability-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.availability-card {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.availability-card h2 {
+  font-family: var(--font-body);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+
+.availability-card .muted {
+  margin-top: 0.35rem;
+}
+
+.availability-card-live {
+  border-color: rgba(95, 127, 87, 0.32);
+}
+
+.availability-actions {
+  display: grid;
+  gap: 0.45rem;
+  justify-items: start;
+}
+
 @media (max-width: 900px) {
   .hero::before {
     inset: -110px -60px -110px -60px;
@@ -635,6 +674,163 @@ p {
   color: var(--sage-700);
 }
 
+.launch-demo {
+  display: grid;
+  gap: 1rem;
+}
+
+.launch-demo-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(260px, 0.48fr);
+  gap: clamp(1rem, 3vw, 2.2rem);
+  align-items: center;
+}
+
+.launch-demo-cta {
+  padding-top: 0.55rem;
+}
+
+.demo-frame {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 360px);
+  aspect-ratio: 9 / 12;
+  padding: 0.7rem;
+  overflow: hidden;
+}
+
+.demo-phone-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  border: 1px solid var(--line-soft);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(249, 236, 216, 0.72)),
+    url("../backgrounds/bg_onboarding_wood.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 0.86rem;
+  display: grid;
+  align-content: start;
+  gap: 0.72rem;
+  overflow: hidden;
+}
+
+.demo-phone-top,
+.demo-plan-row,
+.demo-gap-card {
+  border: 1px solid rgba(31, 38, 32, 0.14);
+  background: rgba(255, 248, 237, 0.88);
+  box-shadow: 0 10px 26px rgba(24, 37, 29, 0.08);
+}
+
+.demo-phone-top {
+  min-height: 56px;
+  border-radius: 16px;
+  padding: 0.68rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  color: var(--ink-700);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.demo-phone-top strong {
+  color: var(--sage-700);
+}
+
+.demo-plan-list {
+  display: grid;
+  gap: 0.52rem;
+}
+
+.demo-plan-row {
+  min-height: 62px;
+  border-radius: 15px;
+  padding: 0.62rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.58rem;
+  row-gap: 0.08rem;
+  align-items: center;
+}
+
+.demo-plan-row strong {
+  min-width: 0;
+  color: var(--ink-900);
+  font-size: 0.9rem;
+  line-height: 1.16;
+}
+
+.demo-plan-row span:last-child {
+  grid-column: 2;
+  color: var(--ink-500);
+  font-size: 0.73rem;
+  font-weight: 760;
+}
+
+.demo-day {
+  grid-row: span 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(95, 127, 87, 0.14);
+  border: 1px solid rgba(95, 127, 87, 0.28);
+  color: var(--sage-700);
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+.demo-gap-card {
+  border-radius: 16px;
+  padding: 0.72rem;
+  display: grid;
+  gap: 0.16rem;
+}
+
+.demo-gap-card span {
+  color: var(--ink-500);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.demo-gap-card strong {
+  color: var(--ink-900);
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+.demo-frame-overlay {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.demo-frame-overlay span {
+  border-radius: 999px;
+  padding: 0.32rem 0.58rem;
+  background: rgba(255, 248, 237, 0.9);
+  border: 1px solid rgba(31, 38, 32, 0.18);
+  color: var(--ink-700);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.demo-storyboard {
+  margin-top: 0.2rem;
+}
+
 .callout {
   padding: 1rem;
   border-radius: var(--radius-sm);
@@ -663,14 +859,40 @@ p {
   max-width: 980px;
 }
 
+.founder-note {
+  padding-top: 1rem;
+}
+
+.founder-panel {
+  max-width: 940px;
+  display: grid;
+  gap: 0.65rem;
+  border-color: rgba(95, 127, 87, 0.28);
+}
+
+.founder-panel h2 {
+  max-width: 15ch;
+}
+
+.founder-panel p.muted {
+  max-width: 76ch;
+}
+
 .final-cta-card {
   align-items: center;
   justify-items: start;
 }
 
+.final-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: flex-start;
+}
+
 @media (min-width: 900px) {
   .final-cta-card {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.7fr);
     gap: 2rem;
   }
 }
@@ -1056,7 +1278,9 @@ details p {
   .hero-grid,
   .grid-3,
   .flow-grid,
-  .shot-grid {
+  .shot-grid,
+  .availability-grid,
+  .launch-demo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1155,6 +1379,15 @@ details p {
     grid-template-columns: 1fr;
   }
 
+  .availability-card {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-frame {
+    justify-self: stretch;
+    width: 100%;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
   }
@@ -1230,7 +1463,9 @@ details p {
 
   .grid-3,
   .flow-grid,
-  .shot-grid {
+  .shot-grid,
+  .availability-grid,
+  .launch-demo-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1247,6 +1482,12 @@ details p {
   }
 
   .hero-cta {
+    width: 100%;
+  }
+
+  .final-cta-actions,
+  .launch-demo-cta,
+  .availability-actions {
     width: 100%;
   }
 

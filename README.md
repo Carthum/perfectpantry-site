@@ -21,9 +21,36 @@ This folder is a lightweight, responsive marketing/support site for **Pantry & P
 ## Public brand URLs
 - Homepage: https://pantryandplate.app
 - Logo: https://pantryandplate.app/assets/brand/pantry-and-plate-logo.png
+- Google Play: https://play.google.com/store/apps/details?id=app.pantryandplate
 - Terms: https://pantryandplate.app/terms.html
 - Privacy: https://pantryandplate.app/privacy.html
 - DMCA: https://pantryandplate.app/dmca.html
+
+## Launch CTA configuration
+
+The static site uses `assets/js/launch-config.js` as the public-safe launch
+configuration module. The checked-in fallback values intentionally make Android
+launch traffic work without a build step:
+
+```text
+NEXT_PUBLIC_GOOGLE_PLAY_URL=https://play.google.com/store/apps/details?id=app.pantryandplate
+NEXT_PUBLIC_APP_STORE_URL=
+NEXT_PUBLIC_IOS_WAITLIST_URL=
+NEXT_PUBLIC_SITE_URL=https://pantryandplate.app
+NEXT_PUBLIC_ENABLE_GOOGLE_PLAY_CTA=true
+NEXT_PUBLIC_ENABLE_IOS_WAITLIST=true
+NEXT_PUBLIC_ENABLE_APP_STORE_CTA=false
+```
+
+- Google Play is live, so the Google Play CTA defaults to enabled.
+- iOS is awaiting App Store review, so the iOS waitlist CTA defaults to enabled.
+- Until a waitlist provider URL is configured, iOS waitlist links use the
+  mailto fallback to `support@pantryandplate.app`.
+- Do not enable an App Store CTA or set `NEXT_PUBLIC_APP_STORE_URL` until Apple
+  approves a real App Store listing URL.
+- When iOS is approved, set `NEXT_PUBLIC_APP_STORE_URL=<real App Store URL>`
+  and set `NEXT_PUBLIC_ENABLE_APP_STORE_CTA=true` if the site should expose a
+  live App Store CTA.
 
 ## Quick customization checklist
 1. Verify the support email address: `support@pantryandplate.app`

@@ -2,6 +2,14 @@
   const STATIC_ASSET_VERSION = "20260429-01";
   const versionedAsset = (path) =>
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
+  const launchConfig = window.PPLaunchConfig || {};
+  const SUPPORT_EMAIL = launchConfig.SUPPORT_EMAIL || "support@pantryandplate.app";
+  const GOOGLE_PLAY_URL =
+    launchConfig.GOOGLE_PLAY_URL ||
+    "https://play.google.com/store/apps/details?id=app.pantryandplate";
+  const IOS_WAITLIST_URL =
+    launchConfig.IOS_WAITLIST_URL ||
+    `mailto:${SUPPORT_EMAIL}?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist`;
 
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
@@ -744,7 +752,7 @@
     const downloadCard = el("div", "pp-app-download-card");
     downloadCard.tabIndex = -1;
     const downloadHeader = el("div", "pp-app-download-header");
-    const downloadTitle = el("h3", "pp-app-download-title", "Contact support");
+    const downloadTitle = el("h3", "pp-app-download-title", "Get Pantry & Plate™");
     downloadTitle.id = "pp-app-download-title";
     download.setAttribute("aria-labelledby", downloadTitle.id);
     const downloadClose = document.createElement("button");
@@ -760,24 +768,27 @@
       el(
         "p",
         "pp-app-download-body",
-        "Contact Pantry & Plate™ support for current access, release, or account questions.",
+        "Pantry & Plate™ is available now on Google Play. iOS is awaiting App Store review; join the waitlist and we will let you know when it is live.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
-    const supportAccess = document.createElement("a");
-    supportAccess.className = "pp-app-download-btn";
-    supportAccess.href =
-      "mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Support";
-    supportAccess.textContent = "Contact support";
-    const privacyLink = document.createElement("a");
-    privacyLink.className = "pp-app-download-btn pp-app-download-btn-secondary";
-    privacyLink.href = "privacy.html";
-    privacyLink.textContent = "Privacy policy";
-    downloadBtns.appendChild(supportAccess);
-    downloadBtns.appendChild(privacyLink);
+    const googlePlayAccess = document.createElement("a");
+    googlePlayAccess.className = "pp-app-download-btn";
+    googlePlayAccess.href = GOOGLE_PLAY_URL;
+    googlePlayAccess.dataset.launchUrl = "google-play";
+    googlePlayAccess.setAttribute("aria-label", "Get Pantry & Plate on Google Play");
+    googlePlayAccess.textContent = "Get it on Google Play";
+    const iosWaitlistAccess = document.createElement("a");
+    iosWaitlistAccess.className = "pp-app-download-btn pp-app-download-btn-secondary";
+    iosWaitlistAccess.href = IOS_WAITLIST_URL;
+    iosWaitlistAccess.dataset.launchUrl = "ios-waitlist";
+    iosWaitlistAccess.setAttribute("aria-label", "Join the Pantry & Plate iOS waitlist");
+    iosWaitlistAccess.textContent = "Join the iOS waitlist";
+    downloadBtns.appendChild(googlePlayAccess);
+    downloadBtns.appendChild(iosWaitlistAccess);
     downloadCard.appendChild(downloadBtns);
     downloadCard.appendChild(
-      el("p", "pp-app-download-note", "Official download links will be shown here when available."),
+      el("p", "pp-app-download-note", `For support or privacy requests, email ${SUPPORT_EMAIL}.`),
     );
     download.appendChild(downloadScrim);
     download.appendChild(downloadCard);
@@ -4345,7 +4356,7 @@
       dlBtn.type = "button";
       dlBtn.className = "pp-gated-cta";
       dlBtn.dataset.downloadCta = "true";
-      dlBtn.textContent = "Contact support for access details";
+      dlBtn.textContent = "Get Pantry & Plate";
       gatedOverlay.appendChild(dlBtn);
       gated.appendChild(gatedContent);
       gated.appendChild(gatedOverlay);
@@ -4389,7 +4400,7 @@
       dirDl.type = "button";
       dirDl.className = "pp-gated-cta";
       dirDl.dataset.downloadCta = "true";
-      dirDl.textContent = "Contact support for access details";
+      dirDl.textContent = "Get Pantry & Plate";
       dirGateOverlay.appendChild(dirDl);
       dirGate.appendChild(dirGateContent);
       dirGate.appendChild(dirGateOverlay);

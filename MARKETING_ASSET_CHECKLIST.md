@@ -5,8 +5,8 @@ Use this checklist before publishing any screenshot, video, reel, ad creative, p
 ## Store Links And Availability
 
 - [ ] App Store URL is exactly: https://apps.apple.com/us/app/pantry-plate/id6761082174
-- [ ] Google Play copy says "Google Play link coming soon" unless a real public URL has been verified.
-- [ ] No fake Google Play URL is linked.
+- [ ] Google Play URL is exactly: https://play.google.com/store/apps/details?id=app.pantryandplate
+- [ ] Both store links are live and visible where download CTAs appear.
 - [ ] Trial copy says eligible users can start a 7-day free trial.
 - [ ] Subscription copy says active subscription required after trial.
 - [ ] Copy does not say or imply "free forever."
@@ -46,7 +46,7 @@ Use this checklist before publishing any screenshot, video, reel, ad creative, p
 - [ ] Visuals show clean, public-facing UI only.
 - [ ] Captions and overlays are readable on mobile.
 - [ ] App Store badge or button links to the live App Store URL.
-- [ ] Google Play placeholder is secondary and not styled as a live purchase/download link.
+- [ ] Google Play badge or button links to the live Google Play URL.
 
 ## Final Review
 

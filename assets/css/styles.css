@@ -323,21 +323,6 @@ img {
   border-color: rgba(31, 38, 32, 0.14);
 }
 
-.btn-disabled,
-.btn[aria-disabled="true"] {
-  cursor: default;
-  color: var(--ink-500);
-  background: rgba(255, 255, 255, 0.4);
-  border-color: rgba(31, 38, 32, 0.18);
-  box-shadow: none;
-}
-
-.btn-disabled:hover,
-.btn[aria-disabled="true"]:hover {
-  transform: none;
-  box-shadow: none;
-}
-
 .btn-sm {
   min-height: 38px;
   padding-inline: 0.9rem;
@@ -1235,15 +1220,10 @@ details p {
   gap: 0.42rem;
 }
 
-.footer-links a,
-.footer-link-disabled {
+.footer-links a {
   text-decoration: none;
   font-weight: 760;
   color: var(--ink-700);
-}
-
-.footer-link-disabled {
-  color: var(--ink-350);
 }
 
 .footer-links a:hover {

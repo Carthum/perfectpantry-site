@@ -1,10 +1,10 @@
 (() => {
   const DEFAULTS = Object.freeze({
-    GOOGLE_PLAY_URL: "",
+    GOOGLE_PLAY_URL: "https://play.google.com/store/apps/details?id=app.pantryandplate",
     APP_STORE_URL: "https://apps.apple.com/us/app/pantry-plate/id6761082174",
     SUPPORT_EMAIL: "support@pantryandplate.app",
     SITE_URL: "https://pantryandplate.app",
-    ENABLE_GOOGLE_PLAY_CTA: false,
+    ENABLE_GOOGLE_PLAY_CTA: true,
     ENABLE_APP_STORE_CTA: true,
   });
 
@@ -48,7 +48,7 @@
   const configuredGooglePlayUrl = readString("GOOGLE_PLAY_URL", "NEXT_PUBLIC_GOOGLE_PLAY_URL");
   const googlePlayUrl = isRealHttpUrl(configuredGooglePlayUrl)
     ? configuredGooglePlayUrl
-    : "";
+    : DEFAULTS.GOOGLE_PLAY_URL;
   const configuredAppStoreUrl = readString("APP_STORE_URL", "NEXT_PUBLIC_APP_STORE_URL");
   const appStoreUrl = isRealHttpUrl(configuredAppStoreUrl)
     ? configuredAppStoreUrl

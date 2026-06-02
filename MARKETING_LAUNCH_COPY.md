@@ -13,7 +13,7 @@ Core message:
 Store status:
 
 - iOS: https://apps.apple.com/us/app/pantry-plate/id6761082174
-- Google Play: Google Play link coming soon.
+- Google Play: https://play.google.com/store/apps/details?id=app.pantryandplate
 - Trial: Start your 7-day free trial. Active subscription required after trial.
 
 ## One-Line Pitch
@@ -30,7 +30,7 @@ Pantry & Plate connects pantry tracking, My Cookbook, meal planning, and smart g
 
 ## 100-Word Pitch
 
-Pantry & Plate is a household meal-planning app built around the food and recipes you already have. Track pantry items, save and organize recipes in My Cookbook, plan meals for the week, and turn missing ingredients into a smarter grocery list. Optional connected shopping can help with handoff when you choose to use it, and AI-assisted recipe and image tools are available for user-started recipe workflows. Pantry & Plate is now available on the App Store. Start your 7-day free trial; an active subscription is required after trial. Google Play link coming soon.
+Pantry & Plate is a household meal-planning app built around the food and recipes you already have. Track pantry items, save and organize recipes in My Cookbook, plan meals for the week, and turn missing ingredients into a smarter grocery list. Optional connected shopping can help with handoff when you choose to use it, and AI-assisted recipe and image tools are available for user-started recipe workflows. Pantry & Plate is now available on the App Store and Google Play. Start your 7-day free trial; an active subscription is required after trial.
 
 ## Website Hero Copy Options
 
@@ -42,7 +42,7 @@ Supporting copy: Pantry & Plate connects your pantry, recipes, weekly meal plan,
 
 CTA: Download on the App Store
 
-Secondary: Start your 7-day free trial. Google Play link coming soon.
+Secondary: Start your 7-day free trial. Also available on Google Play.
 
 ### Option 2
 
@@ -66,11 +66,11 @@ Secondary: Start your 7-day free trial.
 
 ## Email Announcement
 
-Subject: Pantry & Plate is now available on the App Store
+Subject: Pantry & Plate is now available on the App Store and Google Play
 
 Hi,
 
-Pantry & Plate is now live on the App Store.
+Pantry & Plate is now live on the App Store and Google Play.
 
 It is built for the weekly loop so many households repeat: check what is in the kitchen, choose recipes you actually want to cook, plan the week, and shop for what is missing.
 
@@ -83,10 +83,12 @@ With Pantry & Plate you can:
 - Use optional connected shopping when you choose.
 - Use AI-assisted recipe and image tools for user-started recipe workflows.
 
-Start your 7-day free trial here:
-https://apps.apple.com/us/app/pantry-plate/id6761082174
+Start your 7-day free trial:
 
-An active subscription is required after trial. Google Play link coming soon.
+- App Store: https://apps.apple.com/us/app/pantry-plate/id6761082174
+- Google Play: https://play.google.com/store/apps/details?id=app.pantryandplate
+
+An active subscription is required after trial.
 
 Thanks for being part of the launch,
 Pantry & Plate
@@ -97,14 +99,17 @@ I built Pantry & Plate because meal planning, pantry tracking, recipe saving, an
 
 The app brings those pieces into one household workflow: know what is already in your kitchen, plan what you will cook, and build a grocery list around what is missing. It also includes My Cookbook, optional connected shopping, and AI-assisted recipe and image tools for user-started recipe workflows.
 
-Pantry & Plate is now available on the App Store with a 7-day free trial. An active subscription is required after trial. Google Play link coming soon.
+Pantry & Plate is now available on the App Store and Google Play with a 7-day free trial. An active subscription is required after trial.
 
 Download on the App Store:
 https://apps.apple.com/us/app/pantry-plate/id6761082174
 
+Get it on Google Play:
+https://play.google.com/store/apps/details?id=app.pantryandplate
+
 ## Press Blurb
 
-Pantry & Plate is a mobile app for household meal planning from the pantry outward. The app helps users track pantry items, save and organize recipes in My Cookbook, plan meals, and generate grocery lists around missing ingredients. Optional connected shopping and AI-assisted recipe and image tools are available for user-started workflows. Pantry & Plate is now available on the App Store with a 7-day free trial; subscription required after trial.
+Pantry & Plate is a mobile app for household meal planning from the pantry outward. The app helps users track pantry items, save and organize recipes in My Cookbook, plan meals, and generate grocery lists around missing ingredients. Optional connected shopping and AI-assisted recipe and image tools are available for user-started workflows. Pantry & Plate is now available on the App Store and Google Play with a 7-day free trial; subscription required after trial.
 
 ## FAQ
 
@@ -113,7 +118,8 @@ Pantry & Plate is a mobile app for household meal planning from the pantry outwa
 Pantry & Plate is available on the App Store:
 https://apps.apple.com/us/app/pantry-plate/id6761082174
 
-Google Play link coming soon.
+It is also available on Google Play:
+https://play.google.com/store/apps/details?id=app.pantryandplate
 
 ### Is Pantry & Plate free?
 

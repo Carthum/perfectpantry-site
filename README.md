@@ -22,7 +22,7 @@ This folder is a lightweight, responsive marketing/support site for **Pantry & P
 - Homepage: https://pantryandplate.app
 - Logo: https://pantryandplate.app/assets/brand/pantry-and-plate-logo.png
 - App Store: https://apps.apple.com/us/app/pantry-plate/id6761082174
-- Google Play: link coming soon
+- Google Play: https://play.google.com/store/apps/details?id=app.pantryandplate
 - Terms: https://pantryandplate.app/terms.html
 - Privacy: https://pantryandplate.app/privacy.html
 - DMCA: https://pantryandplate.app/dmca.html
@@ -30,22 +30,21 @@ This folder is a lightweight, responsive marketing/support site for **Pantry & P
 ## Launch CTA configuration
 
 The static site uses `assets/js/launch-config.js` as the public-safe launch
-configuration module. The checked-in fallback values intentionally make iOS App
-Store launch traffic work without a build step:
+configuration module. The checked-in fallback values intentionally make App
+Store and Google Play launch traffic work without a build step:
 
 ```text
-NEXT_PUBLIC_GOOGLE_PLAY_URL=
+NEXT_PUBLIC_GOOGLE_PLAY_URL=https://play.google.com/store/apps/details?id=app.pantryandplate
 NEXT_PUBLIC_APP_STORE_URL=https://apps.apple.com/us/app/pantry-plate/id6761082174
 NEXT_PUBLIC_SITE_URL=https://pantryandplate.app
-NEXT_PUBLIC_ENABLE_GOOGLE_PLAY_CTA=false
+NEXT_PUBLIC_ENABLE_GOOGLE_PLAY_CTA=true
 NEXT_PUBLIC_ENABLE_APP_STORE_CTA=true
 ```
 
 - iOS is live, so the App Store CTA defaults to enabled.
-- Google Play does not have a public URL in this repo, so the Google Play CTA
-  defaults to disabled and visible copy should say the link is coming soon.
-- Do not enable a Google Play CTA or set `NEXT_PUBLIC_GOOGLE_PLAY_URL` until a
-  real public Google Play listing URL is available and verified.
+- Google Play is live, so the Google Play CTA defaults to enabled.
+- Do not change either store URL unless the public listing URL changes and has
+  been verified.
 
 ## Quick customization checklist
 1. Verify the support email address: `support@pantryandplate.app`

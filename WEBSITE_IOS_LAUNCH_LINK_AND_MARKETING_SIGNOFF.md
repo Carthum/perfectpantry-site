@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-Pantry & Plate's public website has been updated for the iOS App Store launch. The live App Store URL is now present in the homepage navigation, hero, availability section, demo CTA, FAQ, final CTA, footer, support page, launch configuration, and phone-demo download dialog.
+Pantry & Plate's public website has been updated for the iOS App Store launch and corrected to reflect that Google Play is also live. The live App Store and Google Play URLs are now present in the homepage navigation, hero, availability section, demo CTA, FAQ, final CTA, footer, support page, launch configuration, and phone-demo download dialog.
 
-Google Play remains a safe placeholder because no verified public Google Play URL was provided for this pass.
+Google Play was initially treated as unavailable during this pass, but the owner confirmed it is live and the public URL was verified after the initial push.
 
 Marketing launch copy, social copy, an asset checklist, and an asset inventory were created in the website repo. No large media files were copied into the website repo.
 
@@ -14,11 +14,15 @@ WEBSITE LAUNCH LINK PASS
 
 MARKETING MATERIALS PASS
 
-## App Store Link Added
+## Store Links Added
 
 Live App Store URL:
 
 https://apps.apple.com/us/app/pantry-plate/id6761082174
+
+Live Google Play URL:
+
+https://play.google.com/store/apps/details?id=app.pantryandplate
 
 Updated placements:
 
@@ -36,13 +40,13 @@ Updated placements:
 
 ## Google Play Link Status
 
-Google Play public URL was not provided and was not invented.
+Google Play is live and linked.
 
 Current site behavior:
 
-- Google Play CTA defaults to disabled in `assets/js/launch-config.js`.
-- Visible copy says "Google Play link coming soon."
-- No fake Google Play URL is linked from the active homepage or support page.
+- Google Play CTA defaults to enabled in `assets/js/launch-config.js`.
+- Visible copy says Pantry & Plate is available on both the App Store and Google Play.
+- The public Google Play URL is linked from active homepage/support surfaces.
 
 ## Website Files Changed
 
@@ -138,10 +142,10 @@ Privacy, Terms, Support, account deletion, DMCA, AASA, and assetlinks links rema
 | `node --check assets/js/main.js && node --check assets/js/phone-demo.js && node --check assets/js/launch-config.js` | PASS | JavaScript syntax clean. |
 | `rg -n -i "beta\|public release pending\|coming soon beta\|request beta\|early access\|waitlist\|when the app is ready" index.html support.html terms.html privacy.html assets \|\| true` | PASS | No active stale launch-copy matches. |
 | `rg -n "https://apps.apple.com/us/app/pantry-plate/id6761082174" .` | PASS | App Store URL appears in intended site, config, README, tests, and marketing docs. |
-| Local browser smoke check at `http://127.0.0.1:8123/` | PASS | Found App Store copy, trial copy, Google Play placeholder, 8 App Store links, 0 fake Google Play links, and no old waitlist/App Store review copy. |
+| Local browser smoke check at `http://127.0.0.1:8123/` | PASS | Found App Store copy, Google Play copy, trial copy, live store links, and no old waitlist/App Store review copy. |
 | Legal/support endpoint file check | PASS | Privacy, Terms, Support, AASA, and assetlinks files exist locally. |
 | Live endpoint curl check | PASS | Root, Support, Privacy, Terms, account-deletion anchors, AASA, and assetlinks returned HTTP 200. |
-| Live root/support content check | PASS | App Store link present, Google Play placeholder present, no stale waitlist/beta copy, no fake Google Play URL. |
+| Live root/support content check | PASS | App Store link present, Google Play link present, no stale waitlist/beta copy, and no Google Play coming-soon copy. |
 
 ## Live Verification
 
@@ -158,13 +162,13 @@ Results:
 - assetlinks returned HTTP 200.
 - Live root contains the App Store URL.
 - Live support page contains the App Store URL.
-- Live root and support page contain "Google Play link coming soon."
+- Live root contains the Google Play URL.
+- Live support page contains the Google Play URL.
 - Live root and support page do not contain stale waitlist or App Store-review-pending copy.
-- Live root and support page do not link the unverified Google Play URL.
+- Live root and support page do not contain stale Google Play coming-soon copy.
 
 ## Remaining Marketing / Website Blockers
 
-- Google Play public URL is still unavailable; keep Google Play as coming soon until a verified public URL exists.
 - Final MOV files should not be used publicly until each has a full playback review.
 - Final PNG capture candidates outside `app_store_media_clean` should receive owner approval before placement.
 
@@ -182,8 +186,8 @@ This signoff file was prepared after live verification and should be included in
 
 Website App Store launch link: GO.
 
-Marketing materials: GO.
+Google Play launch link: GO.
 
-Google Play launch link: NO-GO until a verified public Google Play URL is available.
+Marketing materials: GO.
 
 Reminder: the public DMCA page should match the final Copyright Office registration after certification and payment.

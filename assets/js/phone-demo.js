@@ -4,12 +4,9 @@
     `${path}${String(path).includes("?") ? "&" : "?"}v=${STATIC_ASSET_VERSION}`;
   const launchConfig = window.PPLaunchConfig || {};
   const SUPPORT_EMAIL = launchConfig.SUPPORT_EMAIL || "support@pantryandplate.app";
-  const GOOGLE_PLAY_URL =
-    launchConfig.GOOGLE_PLAY_URL ||
-    "https://play.google.com/store/apps/details?id=app.pantryandplate";
-  const IOS_WAITLIST_URL =
-    launchConfig.IOS_WAITLIST_URL ||
-    `mailto:${SUPPORT_EMAIL}?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist`;
+  const APP_STORE_URL =
+    launchConfig.APP_STORE_URL ||
+    "https://apps.apple.com/us/app/pantry-plate/id6761082174";
 
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
@@ -768,24 +765,22 @@
       el(
         "p",
         "pp-app-download-body",
-        "Pantry & Plate™ is available now on Google Play. iOS is awaiting App Store review; join the waitlist and we will let you know when it is live.",
+        "Pantry & Plate™ is now available on the App Store. Start your 7-day free trial; active subscription required after trial. Google Play link coming soon.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
-    const googlePlayAccess = document.createElement("a");
-    googlePlayAccess.className = "pp-app-download-btn";
-    googlePlayAccess.href = GOOGLE_PLAY_URL;
-    googlePlayAccess.dataset.launchUrl = "google-play";
-    googlePlayAccess.setAttribute("aria-label", "Get Pantry & Plate on Google Play");
-    googlePlayAccess.textContent = "Get it on Google Play";
-    const iosWaitlistAccess = document.createElement("a");
-    iosWaitlistAccess.className = "pp-app-download-btn pp-app-download-btn-secondary";
-    iosWaitlistAccess.href = IOS_WAITLIST_URL;
-    iosWaitlistAccess.dataset.launchUrl = "ios-waitlist";
-    iosWaitlistAccess.setAttribute("aria-label", "Join the Pantry & Plate iOS waitlist");
-    iosWaitlistAccess.textContent = "Join the iOS waitlist";
-    downloadBtns.appendChild(googlePlayAccess);
-    downloadBtns.appendChild(iosWaitlistAccess);
+    const appStoreAccess = document.createElement("a");
+    appStoreAccess.className = "pp-app-download-btn";
+    appStoreAccess.href = APP_STORE_URL;
+    appStoreAccess.dataset.launchUrl = "app-store";
+    appStoreAccess.setAttribute("aria-label", "Download Pantry & Plate on the App Store");
+    appStoreAccess.textContent = "Download on the App Store";
+    const googlePlayNotice = document.createElement("span");
+    googlePlayNotice.className = "pp-app-download-btn pp-app-download-btn-secondary";
+    googlePlayNotice.setAttribute("aria-disabled", "true");
+    googlePlayNotice.textContent = "Google Play link coming soon";
+    downloadBtns.appendChild(appStoreAccess);
+    downloadBtns.appendChild(googlePlayNotice);
     downloadCard.appendChild(downloadBtns);
     downloadCard.appendChild(
       el("p", "pp-app-download-note", `For support or privacy requests, email ${SUPPORT_EMAIL}.`),

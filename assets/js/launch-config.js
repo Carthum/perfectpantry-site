@@ -1,12 +1,11 @@
 (() => {
   const DEFAULTS = Object.freeze({
-    GOOGLE_PLAY_URL: "https://play.google.com/store/apps/details?id=app.pantryandplate",
-    APP_STORE_URL: "",
+    GOOGLE_PLAY_URL: "",
+    APP_STORE_URL: "https://apps.apple.com/us/app/pantry-plate/id6761082174",
     SUPPORT_EMAIL: "support@pantryandplate.app",
     SITE_URL: "https://pantryandplate.app",
-    ENABLE_GOOGLE_PLAY_CTA: true,
-    ENABLE_IOS_WAITLIST: true,
-    ENABLE_APP_STORE_CTA: false,
+    ENABLE_GOOGLE_PLAY_CTA: false,
+    ENABLE_APP_STORE_CTA: true,
   });
 
   const runtime =
@@ -45,40 +44,25 @@
     }
   };
 
-  const isAllowedCtaUrl = (value) => isRealHttpUrl(value) || String(value || "").startsWith("mailto:");
-
-  const mailtoWaitlistUrl = (email) =>
-    `mailto:${email}?subject=Join%20the%20Pantry%20%26%20Plate%20iOS%20waitlist`;
-
   const supportEmail = readString("SUPPORT_EMAIL", "NEXT_PUBLIC_SUPPORT_EMAIL") || DEFAULTS.SUPPORT_EMAIL;
   const configuredGooglePlayUrl = readString("GOOGLE_PLAY_URL", "NEXT_PUBLIC_GOOGLE_PLAY_URL");
   const googlePlayUrl = isRealHttpUrl(configuredGooglePlayUrl)
     ? configuredGooglePlayUrl
-    : DEFAULTS.GOOGLE_PLAY_URL;
+    : "";
   const configuredAppStoreUrl = readString("APP_STORE_URL", "NEXT_PUBLIC_APP_STORE_URL");
-  const appStoreUrl = isRealHttpUrl(configuredAppStoreUrl) ? configuredAppStoreUrl : "";
-  const configuredWaitlistUrl = readString(
-    "IOS_WAITLIST_URL",
-    "NEXT_PUBLIC_IOS_WAITLIST_URL",
-  );
+  const appStoreUrl = isRealHttpUrl(configuredAppStoreUrl)
+    ? configuredAppStoreUrl
+    : DEFAULTS.APP_STORE_URL;
 
   const config = Object.freeze({
     GOOGLE_PLAY_URL: googlePlayUrl,
     APP_STORE_URL: appStoreUrl,
-    IOS_WAITLIST_URL: isAllowedCtaUrl(configuredWaitlistUrl)
-      ? configuredWaitlistUrl
-      : mailtoWaitlistUrl(supportEmail),
     SUPPORT_EMAIL: supportEmail,
     SITE_URL: readString("SITE_URL", "NEXT_PUBLIC_SITE_URL") || DEFAULTS.SITE_URL,
     ENABLE_GOOGLE_PLAY_CTA: readBool(
       DEFAULTS.ENABLE_GOOGLE_PLAY_CTA,
       "ENABLE_GOOGLE_PLAY_CTA",
       "NEXT_PUBLIC_ENABLE_GOOGLE_PLAY_CTA",
-    ),
-    ENABLE_IOS_WAITLIST: readBool(
-      DEFAULTS.ENABLE_IOS_WAITLIST,
-      "ENABLE_IOS_WAITLIST",
-      "NEXT_PUBLIC_ENABLE_IOS_WAITLIST",
     ),
     ENABLE_APP_STORE_CTA:
       readBool(
@@ -90,13 +74,11 @@
 
   const launchUrls = Object.freeze({
     "google-play": config.GOOGLE_PLAY_URL,
-    "ios-waitlist": config.IOS_WAITLIST_URL,
     "app-store": config.APP_STORE_URL,
   });
 
   const isEnabled = (kind) => {
     if (kind === "google-play") return config.ENABLE_GOOGLE_PLAY_CTA;
-    if (kind === "ios-waitlist") return config.ENABLE_IOS_WAITLIST;
     if (kind === "app-store") return config.ENABLE_APP_STORE_CTA;
     return true;
   };

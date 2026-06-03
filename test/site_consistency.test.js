@@ -140,6 +140,25 @@ test("homepage and phone demo do not include the removed fake weekly storyboard"
   assertIncludes(phoneDemo, "The weekly food loop, finally in one place.");
 });
 
+test("restored phone demo keeps responsive overflow safeguards", () => {
+  const index = readSiteFile("index.html");
+  const css = readSiteFile("assets/css/phone-demo.css");
+  const phoneDemo = readSiteFile("assets/js/phone-demo.js");
+
+  assertIncludes(index, "assets/css/phone-demo.css?v=20260603-responsive-demo");
+  assertIncludes(index, "assets/js/phone-demo.js?v=20260603-responsive-demo");
+  assertIncludes(css, "--pp-app-nav-safe-bottom");
+  assertIncludes(css, ".pp-screen-plan .pp-plan-scroll");
+  assertIncludes(css, "padding-bottom: var(--pp-app-nav-safe-bottom)");
+  assertIncludes(css, '.pp-app-sheet[data-pp-kind="pantry_item_detail"]');
+  assertIncludes(css, ".pp-app-download-card");
+  assertIncludes(css, "max-height: calc(100% - 8px)");
+  assertIncludes(css, "overflow-y: auto");
+  assertIncludes(css, "overflow-wrap: anywhere");
+  assertIncludes(phoneDemo, 'article.appendChild(el("h2", "", copy.title || ""))');
+  assertNotIncludes(phoneDemo, 'article.appendChild(el("h1", "", copy.title || ""))');
+});
+
 test("all static store CTAs keep tracking attributes and accessible labels", () => {
   for (const file of ["index.html", "support.html"]) {
     const html = readSiteFile(file);

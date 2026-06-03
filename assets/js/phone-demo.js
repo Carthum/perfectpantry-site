@@ -455,7 +455,7 @@
 
     if (copy.variant === "hero") {
       if (copy.eyebrow) article.appendChild(el("p", "eyebrow", copy.eyebrow));
-      article.appendChild(el("h1", "", copy.title || ""));
+      article.appendChild(el("h2", "", copy.title || ""));
       if (copy.description) article.appendChild(el("p", "hero-lead", copy.description));
 
       const ctas = buildCtas(copy.ctas);

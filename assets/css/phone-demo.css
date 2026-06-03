@@ -591,6 +591,8 @@ html.pp-tour-locked body {
   color: var(--pp-app-ink);
   font-family: var(--font-body);
   /* Unified in-phone type scale across Home, Pantry, Cookbook, Plan, and Shop. */
+  --pp-app-nav-h: clamp(74px, calc(var(--pp-phone-demo-w, 360px) * 0.245), 88px);
+  --pp-app-nav-safe-bottom: calc(var(--pp-app-nav-h) + 18px);
   --pp-type-display-xl: clamp(18px, calc(var(--pp-phone-demo-w, 360px) * 0.052), 21px);
   --pp-type-display-lg: clamp(16px, calc(var(--pp-phone-demo-w, 360px) * 0.047), 18px);
   --pp-type-display-md: clamp(14px, calc(var(--pp-phone-demo-w, 360px) * 0.042), 16px);
@@ -1150,12 +1152,19 @@ html.pp-tour-locked body {
 
 .pp-screen-scroll {
   padding: 0 0 18px;
+  scroll-padding-bottom: 18px;
 }
 
 .pp-cookbook-scroll,
 .pp-plan-scroll {
   display: grid;
   align-content: start;
+}
+
+.pp-screen-plan .pp-plan-scroll {
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.027), 12px);
+  padding-bottom: var(--pp-app-nav-safe-bottom);
+  scroll-padding-bottom: var(--pp-app-nav-safe-bottom);
 }
 
 .pp-pantry-scroll--cards {
@@ -1821,17 +1830,20 @@ html.pp-tour-locked body {
 
 .pp-plan-hud {
   position: sticky;
-  top: 12px;
+  top: 6px;
   z-index: 5;
   display: grid;
-  gap: 12px;
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.027), 12px);
   padding-top: 2px;
 }
 
 .pp-plan-week-row {
   display: grid;
-  grid-template-columns: 54px 1fr 54px;
-  gap: 12px;
+  grid-template-columns:
+    clamp(44px, calc(var(--pp-phone-demo-w, 360px) * 0.15), 54px)
+    minmax(0, 1fr)
+    clamp(44px, calc(var(--pp-phone-demo-w, 360px) * 0.15), 54px);
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 12px);
   align-items: center;
 }
 
@@ -1846,9 +1858,9 @@ html.pp-tour-locked body {
 .pp-plan-autofill-pill {
   justify-self: center;
   width: fit-content;
-  max-width: calc(100% - 96px);
-  min-height: 46px;
-  padding: 0 16px;
+  max-width: calc(100% - 64px);
+  min-height: clamp(38px, calc(var(--pp-phone-demo-w, 360px) * 0.128), 46px);
+  padding: 0 clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.044), 16px);
   gap: 6px;
   font-size: var(--pp-type-display-md);
   font-weight: 760;
@@ -1857,19 +1869,20 @@ html.pp-tour-locked body {
 
 .pp-meal-card {
   display: grid;
-  grid-template-columns: 62px minmax(0, 1fr);
+  grid-template-columns: clamp(50px, calc(var(--pp-phone-demo-w, 360px) * 0.172), 62px) minmax(0, 1fr);
   grid-template-areas:
     "thumb meta"
     "actions actions";
-  gap: 14px;
+  gap: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.034), 14px);
   align-items: start;
+  padding: clamp(13px, calc(var(--pp-phone-demo-w, 360px) * 0.044), 18px);
 }
 
 .pp-meal-thumb {
   grid-area: thumb;
-  width: 62px;
-  height: 62px;
-  border-radius: 18px;
+  width: clamp(50px, calc(var(--pp-phone-demo-w, 360px) * 0.172), 62px);
+  height: clamp(50px, calc(var(--pp-phone-demo-w, 360px) * 0.172), 62px);
+  border-radius: clamp(15px, calc(var(--pp-phone-demo-w, 360px) * 0.05), 18px);
   overflow: hidden;
   background:
     radial-gradient(circle at 30% 20%, rgba(210, 122, 61, 0.22), transparent 55%),
@@ -1911,15 +1924,15 @@ html.pp-tour-locked body {
   grid-area: actions;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: clamp(7px, calc(var(--pp-phone-demo-w, 360px) * 0.027), 10px);
   margin-top: 2px;
 }
 
 .pp-meal-actions .pp-app-pill {
   width: 100%;
-  min-height: 44px;
+  min-height: clamp(36px, calc(var(--pp-phone-demo-w, 360px) * 0.122), 44px);
   font-size: var(--pp-type-body-sm);
-  padding: 0 12px;
+  padding: 0 clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px);
   box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12);
 }
 
@@ -2405,12 +2418,13 @@ html.pp-tour-locked body {
 
 .pp-pantry-detail {
   display: grid;
-  gap: 16px;
+  gap: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.038), 16px);
+  padding-bottom: 10px;
 }
 
 .pp-pantry-detail-hero {
   position: relative;
-  height: 240px;
+  height: clamp(142px, calc(var(--pp-phone-demo-w, 360px) * 0.52), 198px);
   border-radius: 28px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background:
@@ -2422,9 +2436,9 @@ html.pp-tour-locked body {
 .pp-pantry-detail-shelf {
   position: absolute;
   left: 50%;
-  bottom: 18px;
+  bottom: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.042), 16px);
   transform: translateX(-50%);
-  width: 94%;
+  width: 90%;
   max-width: 360px;
   height: auto;
   filter: drop-shadow(0 18px 20px rgba(0, 0, 0, 0.18));
@@ -2433,7 +2447,7 @@ html.pp-tour-locked body {
 .pp-pantry-detail-img {
   position: absolute;
   left: 50%;
-  bottom: 44px;
+  bottom: clamp(32px, calc(var(--pp-phone-demo-w, 360px) * 0.12), 42px);
   transform: translateX(-50%);
   width: 46%;
   max-width: 220px;
@@ -2442,26 +2456,26 @@ html.pp-tour-locked body {
 }
 
 .pp-pantry-detail-hero[data-item="apple"] .pp-pantry-detail-img {
-  width: 38%;
-  bottom: 48px;
+  width: clamp(82px, 34%, 126px);
+  bottom: clamp(34px, calc(var(--pp-phone-demo-w, 360px) * 0.126), 44px);
 }
 
 .pp-pantry-detail-hero[data-item="banana"] .pp-pantry-detail-img {
   width: 56%;
-  bottom: 52px;
+  bottom: clamp(36px, calc(var(--pp-phone-demo-w, 360px) * 0.13), 48px);
 }
 
 .pp-pantry-detail-card {
   display: grid;
-  gap: 10px;
-  padding: 18px 18px 16px;
+  gap: clamp(7px, calc(var(--pp-phone-demo-w, 360px) * 0.026), 10px);
+  padding: clamp(13px, calc(var(--pp-phone-demo-w, 360px) * 0.045), 18px);
 }
 
 .pp-pantry-detail-name {
   margin: 0;
   text-align: center;
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: clamp(18px, calc(var(--pp-phone-demo-w, 360px) * 0.06), 22px);
   font-weight: 900;
   letter-spacing: -0.012em;
 }
@@ -2477,11 +2491,12 @@ html.pp-tour-locked body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 14px;
+  padding: clamp(7px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 10px)
+    clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.039), 14px);
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.14);
   background: rgba(106, 86, 66, 0.14);
-  font-size: 14px;
+  font-size: clamp(11px, calc(var(--pp-phone-demo-w, 360px) * 0.037), 14px);
   font-weight: 820;
   color: rgba(58, 42, 26, 0.86);
   letter-spacing: -0.01em;
@@ -2492,16 +2507,16 @@ html.pp-tour-locked body {
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.82);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
-  padding: 18px;
+  padding: clamp(13px, calc(var(--pp-phone-demo-w, 360px) * 0.045), 18px);
   display: grid;
-  gap: 12px;
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px);
 }
 
 .pp-pantry-detail-section-title {
   margin: 0;
   text-align: center;
   font-family: var(--font-display);
-  font-size: 23px;
+  font-size: clamp(18px, calc(var(--pp-phone-demo-w, 360px) * 0.06), 23px);
   font-weight: 900;
   letter-spacing: -0.012em;
 }
@@ -2517,14 +2532,16 @@ html.pp-tour-locked body {
 .pp-nutrition-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: clamp(7px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 10px);
 }
 
 .pp-nutrition-cell {
-  border-radius: 20px;
+  border-radius: clamp(16px, calc(var(--pp-phone-demo-w, 360px) * 0.055), 20px);
   border: 1px solid rgba(58, 42, 26, 0.12);
   background: rgba(255, 255, 255, 0.54);
-  padding: 12px 12px 10px;
+  padding: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px)
+    clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px)
+    clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 10px);
 }
 
 .pp-nutrition-label {
@@ -2536,8 +2553,8 @@ html.pp-tour-locked body {
 }
 
 .pp-nutrition-value {
-  margin-top: 6px;
-  font-size: 15px;
+  margin-top: 4px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.041), 15px);
   font-weight: 900;
   letter-spacing: -0.01em;
   color: rgba(58, 42, 26, 0.92);
@@ -2549,10 +2566,10 @@ html.pp-tour-locked body {
   border-radius: 26px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(244, 231, 214, 0.88);
-  padding: 12px;
+  padding: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px);
   display: grid;
-  grid-template-columns: 76px 1fr;
-  gap: 12px;
+  grid-template-columns: clamp(56px, calc(var(--pp-phone-demo-w, 360px) * 0.21), 76px) minmax(0, 1fr);
+  gap: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px);
   align-items: center;
   cursor: pointer;
   font: inherit;
@@ -2563,9 +2580,9 @@ html.pp-tour-locked body {
 .pp-useitup-thumb {
   position: relative;
   overflow: hidden;
-  width: 76px;
-  height: 76px;
-  border-radius: 20px;
+  width: clamp(56px, calc(var(--pp-phone-demo-w, 360px) * 0.21), 76px);
+  height: clamp(56px, calc(var(--pp-phone-demo-w, 360px) * 0.21), 76px);
+  border-radius: clamp(16px, calc(var(--pp-phone-demo-w, 360px) * 0.055), 20px);
   background:
     radial-gradient(circle at 30% 20%, rgba(210, 122, 61, 0.18), transparent 55%),
     radial-gradient(circle at 80% 55%, rgba(95, 127, 87, 0.18), transparent 58%),
@@ -2581,7 +2598,7 @@ html.pp-tour-locked body {
 }
 
 .pp-useitup-title {
-  font-size: 14px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.039), 14px);
   font-weight: 900;
   letter-spacing: -0.01em;
 }
@@ -2596,17 +2613,18 @@ html.pp-tour-locked body {
 .pp-useitup-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px);
 }
 
 .pp-useitup-action {
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.16);
   background: rgba(255, 255, 255, 0.52);
-  padding: 12px 14px;
+  padding: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.034), 12px)
+    clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.039), 14px);
   font: inherit;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.039), 14px);
   font-weight: 900;
   letter-spacing: -0.01em;
   cursor: pointer;
@@ -3084,6 +3102,7 @@ html.pp-tour-locked body {
   flex-direction: column;
   overflow: hidden;
   overscroll-behavior: contain;
+  max-height: calc(100% - 24px);
 }
 
 .pp-app-sheet[data-pp-scrollable="true"]::-webkit-scrollbar {
@@ -3521,6 +3540,24 @@ html.pp-tour-locked body {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px 2px 6px;
+  scroll-padding-bottom: 14px;
+}
+
+.pp-app-sheet[data-pp-kind="pantry_item_detail"] {
+  top: clamp(36px, 7%, 54px);
+  bottom: 8px;
+  padding: clamp(7px, calc(var(--pp-phone-demo-w, 360px) * 0.026), 10px)
+    clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.044), 16px)
+    clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.039), 14px);
+}
+
+.pp-app-sheet[data-pp-kind="pantry_item_detail"] .pp-app-sheet-handle {
+  margin-bottom: clamp(4px, calc(var(--pp-phone-demo-w, 360px) * 0.022), 8px);
+}
+
+.pp-app-sheet[data-pp-kind="pantry_item_detail"] .pp-app-sheet-body {
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.032), 10px);
+  padding-bottom: 16px;
 }
 
 .pp-app-sheet-footer {
@@ -5036,7 +5073,7 @@ html.pp-tour-locked body {
   z-index: 40;
   display: grid;
   place-items: center;
-  padding: 14px;
+  padding: clamp(10px, calc(var(--pp-phone-demo-w, 360px) * 0.04), 14px);
   pointer-events: none;
 }
 
@@ -5058,7 +5095,8 @@ html.pp-tour-locked body {
 
 .pp-app-download-card {
   position: relative;
-  width: min(360px, 100%);
+  width: min(300px, 100%);
+  max-height: calc(100% - 8px);
   transform: translateY(8px) scale(0.98);
   opacity: 0;
   transition: transform 260ms ease, opacity 260ms ease;
@@ -5066,7 +5104,16 @@ html.pp-tour-locked body {
   border-radius: 26px;
   border: 1px solid rgba(74, 47, 27, 0.18);
   box-shadow: 0 34px 86px rgba(0, 0, 0, 0.35);
-  padding: 14px;
+  padding: clamp(12px, calc(var(--pp-phone-demo-w, 360px) * 0.04), 14px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.pp-app-download-card::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .pp-app-download.is-open .pp-app-download-scrim {
@@ -5088,15 +5135,16 @@ html.pp-tour-locked body {
 .pp-app-download-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: clamp(14px, calc(var(--pp-phone-demo-w, 360px) * 0.045), 16px);
   font-weight: 950;
   letter-spacing: -0.01em;
   color: rgba(58, 42, 26, 0.92);
 }
 
 .pp-app-download-close {
-  width: 38px;
-  height: 38px;
+  width: clamp(32px, calc(var(--pp-phone-demo-w, 360px) * 0.105), 38px);
+  height: clamp(32px, calc(var(--pp-phone-demo-w, 360px) * 0.105), 38px);
+  flex: none;
   border-radius: 999px;
   border: 0;
   background: transparent;
@@ -5114,21 +5162,23 @@ html.pp-tour-locked body {
 }
 
 .pp-app-download-body {
-  margin: 10px 0 0;
-  font-size: 12px;
+  margin: clamp(7px, calc(var(--pp-phone-demo-w, 360px) * 0.028), 10px) 0 0;
+  font-size: clamp(10.5px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px);
   font-weight: 780;
   color: rgba(58, 42, 26, 0.72);
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .pp-app-download-btns {
-  margin-top: 12px;
+  margin-top: clamp(9px, calc(var(--pp-phone-demo-w, 360px) * 0.033), 12px);
   display: grid;
-  gap: 10px;
+  gap: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 10px);
 }
 
 .pp-app-download-btn {
-  min-height: 46px;
+  min-width: 0;
+  width: 100%;
+  min-height: clamp(40px, calc(var(--pp-phone-demo-w, 360px) * 0.13), 46px);
   border-radius: 999px;
   border: 1px solid rgba(58, 42, 26, 0.18);
   background: rgba(255, 255, 255, 0.72);
@@ -5137,11 +5187,16 @@ html.pp-tour-locked body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: clamp(12.5px, calc(var(--pp-phone-demo-w, 360px) * 0.039), 14px);
   font-weight: 950;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+  line-height: 1.08;
+  text-align: center;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
   color: rgba(58, 42, 26, 0.92);
   text-decoration: none;
+  padding: 0 12px;
 }
 
 .pp-app-download-btn-secondary {
@@ -5156,11 +5211,12 @@ html.pp-tour-locked body {
 }
 
 .pp-app-download-note {
-  margin: 10px 0 0;
-  font-size: 11px;
+  margin: clamp(8px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 10px) 0 0;
+  font-size: clamp(9.5px, calc(var(--pp-phone-demo-w, 360px) * 0.03), 11px);
   font-weight: 780;
   color: rgba(58, 42, 26, 0.6);
   text-align: center;
+  line-height: 1.25;
 }
 
 .pp-redact-fade {

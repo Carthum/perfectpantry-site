@@ -96,20 +96,17 @@ test("connected-shopping copy consistently says live where supported and optiona
   const index = normalizeText(readSiteFile("index.html"));
   const privacy = normalizeText(readSiteFile("privacy.html"));
   const support = normalizeText(readSiteFile("support.html"));
-  const phoneDemo = normalizeText(readSiteFile("assets/js/phone-demo.js"));
 
   [
     index,
     privacy,
     support,
-    phoneDemo,
   ].forEach((copy) => assertIncludes(copy, "live where supported"));
 
   assertIncludes(index, "Connected grocery checkout is not required to use Pantry &amp; Plate.");
-  assertIncludes(index, "checkout is optional. You can always use the list manually.");
   assertIncludes(
     index,
-    "Connected grocery availability may vary by platform, region, retailer availability, account eligibility, inventory, and app version.",
+    "Availability may vary by platform, region, retailer availability, account eligibility, inventory, and app version.",
   );
   assertIncludes(
     privacy,
@@ -117,10 +114,30 @@ test("connected-shopping copy consistently says live where supported and optiona
   );
   assertIncludes(privacy, 'id="connected-shopping"');
   assertIncludes(readSiteFile("index.html"), 'href="privacy.html#connected-shopping"');
-  assertIncludes(
-    phoneDemo,
-    "availability may vary by platform, region, retailer availability, account eligibility, inventory, and app version.",
-  );
+});
+
+test("homepage and phone demo do not include the removed fake weekly storyboard", () => {
+  const index = readSiteFile("index.html");
+  const phoneDemo = readSiteFile("assets/js/phone-demo.js");
+  const publicDemoCopy = `${index}\n${phoneDemo}`;
+
+  [
+    "Weekly planning demo",
+    "Turn the week into one focused grocery list",
+    "Chicken taco bowls",
+    "Lemon pasta",
+    "Veggie fried rice",
+    "Missing ingredients",
+    "Pick the week’s meals",
+    "Build one list",
+    "Shop your way",
+  ].forEach((phrase) => assertNotIncludes(publicDemoCopy, phrase));
+
+  assertNotIncludes(index, 'class="section launch-demo"');
+  assertIncludes(index, 'id="guided-tour"');
+  assertIncludes(index, 'id="ppDemoMount"');
+  assertIncludes(phoneDemo, 'id: "welcome"');
+  assertIncludes(phoneDemo, "The weekly food loop, finally in one place.");
 });
 
 test("all static store CTAs keep tracking attributes and accessible labels", () => {

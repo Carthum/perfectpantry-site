@@ -120,7 +120,6 @@ test("homepage hero and availability CTAs point to both app stores", () => {
     "nav",
     "hero",
     "launch-availability",
-    "launch-demo",
     "final-cta",
     "footer",
   ].forEach((placement) => assertTrackedStorePlacement(html, placement));
@@ -143,18 +142,24 @@ test("store CTA tracking hooks are configured without replacing real links", () 
   assertIncludes(phoneDemo, 'googlePlayAccess.dataset.store = "google-play"');
   assertIncludes(phoneDemo, 'googlePlayAccess.dataset.placement = "download-dialog"');
 
-  assertIncludes(phoneDemo, 'id: "start-pantry"');
-  assertIncludes(phoneDemo, "Chicken taco bowls");
-  assertIncludes(phoneDemo, "5 pantry items covered");
-  assertIncludes(phoneDemo, "4 items missing");
-  assertIncludes(
-    phoneDemo,
-    "Instacart and Kroger connected-shopping flows are live where supported, but checkout is optional.",
-  );
-  assertIncludes(
-    phoneDemo,
-    "availability may vary by platform, region, retailer availability, account eligibility, inventory, and app version.",
-  );
+  assertIncludes(phoneDemo, 'id: "welcome"');
+  assertIncludes(phoneDemo, 'id: "home"');
+  assertIncludes(phoneDemo, 'id: "pantry"');
+  assertIncludes(phoneDemo, 'id: "cookbook"');
+  assertIncludes(phoneDemo, 'id: "plan"');
+  assertIncludes(phoneDemo, 'id: "shop"');
+  assertIncludes(phoneDemo, "The weekly food loop, finally in one place.");
+  assertIncludes(phoneDemo, "Your calm weekly dashboard");
+  assertIncludes(phoneDemo, "Inventory clarity without the spreadsheet feel");
+  assertIncludes(phoneDemo, "A household cookbook that stays useful");
+  assertIncludes(phoneDemo, "Plan meals together, then adjust fast");
+  assertIncludes(phoneDemo, "Shop the gap, not the whole pantry");
+  assertNotIncludes(phoneDemo, 'id: "start-pantry"');
+  assertNotIncludes(phoneDemo, "Chicken taco bowls");
+  assertNotIncludes(phoneDemo, "Lemon pasta");
+  assertNotIncludes(phoneDemo, "Veggie fried rice");
+  assertNotIncludes(phoneDemo, "5 pantry items covered");
+  assertNotIncludes(phoneDemo, "4 items missing");
 });
 
 test("homepage demo, founder note, and FAQ reflect launch state", () => {
@@ -288,67 +293,31 @@ test("homepage demo, founder note, and FAQ reflect launch state", () => {
   assertNotIncludes(html, "intended to be visible");
   assertNotIncludes(html, "Private household recipes are intended for you");
 
-  assertIncludes(html, "See one dinner become a smarter shopping list.");
+  assertIncludes(html, "Explore the connected weekly flow.");
   assertIncludes(
     normalized,
-    "Follow a simple weekly flow: check what is already in the pantry, add a meal to the plan, and turn only the missing ingredients into a focused list.",
+    "The preview shows how Home, Pantry, Cookbook, Plan, and Shop are designed to work together without turning meal planning into another spreadsheet.",
   );
-  assertIncludes(html, "Start with what you have");
-  assertIncludes(
-    normalized,
-    "Pantry &amp; Plate checks staples already in your pantry, like rice, black beans, salsa, olive oil, and taco seasoning.",
-  );
-  assertIncludes(html, "Add dinner to the week");
-  assertIncludes(
-    normalized,
-    "Drop chicken taco bowls into the weekly plan so the app can compare the recipe against your pantry.",
-  );
-  assertIncludes(html, "See pantry coverage");
-  assertIncludes(html, "5 pantry items covered");
-  assertIncludes(html, "4 items missing");
-  assertIncludes(html, "Shop only the gap");
-  assertIncludes(
-    normalized,
-    "Add the missing chicken, tortillas, cilantro, and limes to your shopping list.",
-  );
-  assertIncludes(html, "Use connected grocery where supported");
-  assertIncludes(
-    normalized,
-    "Instacart and Kroger connected-shopping flows are live where supported, but checkout is optional. You can always use the list manually.",
-  );
+  assertIncludes(html, 'aria-label="Guided tour steps"');
+  assertIncludes(html, 'aria-label="Pantry & Plate™ demo phone"');
+  assertIncludes(html, 'data-pp-tour-stack');
+  assertIncludes(html, 'id="ppDemoMount"');
   assert.ok(
     html.indexOf('id="guided-tour"') < html.indexOf('id="tour-after"'),
     "App preview should appear before the downstream tour anchor",
   );
-
-  assertIncludes(html, "Weekly planning demo");
-  assertIncludes(html, "Turn the week into one focused grocery list.");
-  assertIncludes(
-    normalized,
-    "Plan a few dinners, compare them against your pantry, and send only the missing ingredients to your list.",
-  );
-  assertIncludes(html, "Chicken taco bowls");
-  assertIncludes(html, "Lemon pasta");
-  assertIncludes(html, "Veggie fried rice");
-  assertIncludes(html, "Missing ingredients");
-  assertIncludes(
-    html,
-    "Chicken, tortillas, cilantro, limes, lemons, parmesan, eggs, scallions",
-  );
-  assertIncludes(html, "Pick the week’s meals");
-  assertIncludes(html, "Check pantry coverage");
-  assertIncludes(html, "8 items already covered");
-  assertIncludes(html, "8 items missing");
-  assertIncludes(html, "Build one list");
-  assertIncludes(html, "Shop your way");
-  assertIncludes(
-    normalized,
-    "Instacart and Kroger connected-shopping flows are live where supported, and checkout is optional. You can also shop manually from the list.",
-  );
-  assertIncludes(
-    normalized,
-    "Connected grocery availability may vary by platform, region, retailer availability, account eligibility, inventory, and app version.",
-  );
+  assertNotIncludes(html, "Weekly planning demo");
+  assertNotIncludes(html, "Turn the week into one focused grocery list.");
+  assertNotIncludes(html, "Chicken taco bowls");
+  assertNotIncludes(html, "Lemon pasta");
+  assertNotIncludes(html, "Veggie fried rice");
+  assertNotIncludes(html, "Missing ingredients");
+  assertNotIncludes(html, "Pick the week’s meals");
+  assertNotIncludes(html, "8 items already covered");
+  assertNotIncludes(html, "8 items missing");
+  assertNotIncludes(html, "Build one list");
+  assertNotIncludes(html, "Shop your way");
+  assertNotIncludes(html, 'class="section launch-demo"');
   assertNotIncludes(html, "See the weekly flow in under a minute.");
   assertNotIncludes(html, "Plan three dinners");
   assertNotIncludes(html, "Shop the missing items");

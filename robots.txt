@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pantryandplate.app/sitemap.xml

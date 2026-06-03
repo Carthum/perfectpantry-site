@@ -3,20 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Support &amp; Delete Account | Pantry &amp; Plate™</title>
+    <title>Support | Pantry &amp; Plate™</title>
     <meta
       name="description"
-      content="Get support for Pantry & Plate™, review account deletion steps, and see what data is deleted or retained."
+      content="Get help with Pantry & Plate account access, billing, subscriptions, bugs, privacy requests, product feedback, and account or data deletion."
     />
+    <link rel="canonical" href="https://pantryandplate.app/support.html" />
     <meta name="theme-color" content="#5f7f57" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Pantry & Plate™ Support & Delete Account" />
+    <meta property="og:title" content="Support | Pantry &amp; Plate™" />
     <meta
       property="og:description"
-      content="Contact Pantry & Plate™ support, request account deletion, and review data deletion details."
+      content="Get help with Pantry & Plate account access, billing, subscriptions, bugs, privacy requests, product feedback, and account or data deletion."
     />
-    <meta property="og:image" content="assets/media/og-cover.svg" />
+    <meta property="og:url" content="https://pantryandplate.app/support.html" />
+    <meta property="og:site_name" content="Pantry &amp; Plate" />
+    <meta property="og:image" content="https://pantryandplate.app/assets/media/og-cover.svg" />
+    <meta
+      property="og:image:alt"
+      content="Pantry & Plate app preview showing pantry-aware meal planning and a smart shopping list"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,7 +37,7 @@
     <script>
       document.documentElement.classList.add("js");
     </script>
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260602-01" />
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260602-02" />
     <link rel="stylesheet" href="assets/css/phone-demo.css?v=20260426-02" />
   </head>
   <body data-bg="pantry">
@@ -77,22 +84,25 @@
     <main id="main" class="container">
       <section class="section" data-reveal>
         <div class="section-head">
-          <p class="eyebrow">Support &amp; account deletion</p>
-          <h1>Support and account deletion for Pantry &amp; Plate™</h1>
+          <p class="eyebrow">Support</p>
+          <h1>Support for Pantry &amp; Plate™</h1>
           <p class="hero-lead">
-            Use this page to contact Pantry &amp; Plate™ support, request account deletion, and
-            send product feedback for the Pantry &amp; Plate™ app from Pantry and Plate LLC.
-          </p>
-          <p class="small">
-            Questions? Email
-            <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>.
+            Need help with Pantry &amp; Plate? Contact us for account access, billing questions,
+            subscription issues, bug reports, privacy requests, product feedback, or problems with
+            pantry, recipes, meal planning, shopping lists, connected grocery flows, or household
+            sync.
           </p>
           <div class="callout prelaunch-support-note">
-            <strong>Support</strong>
+            <strong>Contact support</strong>
             <p class="muted">
-              Pantry &amp; Plate is now available on the App Store and Google Play. For bugs,
-              account help, feedback, or privacy requests, contact
-              <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>.
+              Email
+              <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>. Include
+              the email address associated with your Pantry &amp; Plate account when it helps us
+              find your account.
+            </p>
+            <p class="small">
+              Do not send passwords, full payment-card numbers, or highly sensitive personal
+              information.
             </p>
             <a
               class="btn btn-primary btn-sm"
@@ -103,12 +113,20 @@
             <a
               class="btn btn-outline btn-sm"
               href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
+              data-cta="store-link"
+              data-store="app-store"
+              data-placement="support"
+              aria-label="Download Pantry & Plate on the App Store"
             >
               Download on the App Store
             </a>
             <a
               class="btn btn-outline btn-sm"
               href="https://play.google.com/store/apps/details?id=app.pantryandplate"
+              data-cta="store-link"
+              data-store="google-play"
+              data-placement="support"
+              aria-label="Get Pantry & Plate on Google Play"
             >
               Get it on Google Play
             </a>
@@ -117,110 +135,77 @@
 
         <div class="surface panel support-quick-note">
           <p class="eyebrow">Quick links</p>
-          <h2>Find the right next step fast</h2>
+          <h2>Find the right help fast</h2>
           <p class="muted">
-            Looking for account deletion? Jump directly to the Pantry &amp; Plate™ deletion steps
-            below or contact support if you cannot access the app.
+            Choose a support topic, create an email draft, or jump to account and data deletion if
+            that is what you need.
           </p>
           <nav class="toc" aria-label="Quick links">
-            <a href="#delete-account">Delete Your Pantry &amp; Plate™ Account</a>
             <a href="#support-contact">Contact support</a>
+            <a href="#billing-cancellation">Billing and cancellation</a>
+            <a href="#delete-account">Account and data deletion</a>
             <a href="privacy.html#account-deletion">Privacy Policy</a>
             <a href="/terms.html">Terms of Service</a>
             <a href="/dmca.html">DMCA</a>
-            <a href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Support">
-              Contact support
-            </a>
           </nav>
         </div>
       </section>
 
-      <section class="section-tight" data-reveal data-delay="80">
-        <article class="surface panel support-delete-shell" id="delete-account">
+      <section class="section-tight" id="support-topics" data-reveal data-delay="80">
+        <article class="surface panel">
           <div class="section-head" style="margin-bottom: 0.8rem">
-            <p class="eyebrow">Delete account</p>
-            <h2>Delete Your Pantry &amp; Plate Account</h2>
-            <p class="muted">
-              If you would like to delete your Pantry &amp; Plate account and associated data,
-              follow the steps below.
-            </p>
+            <p class="eyebrow">Help topics</p>
+            <h2>What we can help with</h2>
           </div>
 
-          <div class="grid-2 support-card-grid">
+          <div class="grid-3 support-card-grid">
             <div class="support-card">
-              <h3><span class="icon-dot"></span>Option 1: Delete in the App</h3>
-              <ol class="list-clean">
-                <li>Open Pantry &amp; Plate.</li>
-                <li>Go to Settings.</li>
-                <li>Open Account, then tap <strong>Delete account</strong>.</li>
-                <li>Confirm your deletion request.</li>
-              </ol>
+              <h3><span class="icon-dot"></span>Account access</h3>
+              <p>Sign-in issues, account email questions, household access, and profile help.</p>
             </div>
-
             <div class="support-card">
-              <h3><span class="icon-dot"></span>Option 2: Request by Email</h3>
+              <h3><span class="icon-dot"></span>Billing and subscriptions</h3>
+              <p>Trial, subscription, entitlement, cancellation, and app-store billing questions.</p>
+            </div>
+            <div class="support-card">
+              <h3><span class="icon-dot"></span>Bugs and app issues</h3>
               <p>
-                If you cannot access the app, email
-                <a href="mailto:support@pantryandplate.app?subject=Delete%20Account%20Request">
-                  support@pantryandplate.app
-                </a>
-                and include:
+                Problems with pantry items, recipes, meal plans, shopping lists, barcode scanning,
+                photos, AI-assisted features, or household sync.
               </p>
-              <ul class="list-clean">
-                <li>the email address associated with your account</li>
-                <li>the subject line: <strong>Delete Account Request</strong></li>
-              </ul>
-              <div class="support-actions">
-                <a
-                  class="btn btn-primary btn-sm"
-                  href="mailto:support@pantryandplate.app?subject=Delete%20Account%20Request"
-                >
-                  Email support
-                </a>
-                <a class="btn btn-outline btn-sm" href="#support-contact">Support contact</a>
-              </div>
+            </div>
+            <div class="support-card">
+              <h3><span class="icon-dot"></span>Connected grocery flows</h3>
+              <p>
+                Questions about Instacart or Kroger connected-shopping flows that are live where
+                supported, including retailer handoff, cart availability, or checkout issues.
+              </p>
+            </div>
+            <div class="support-card">
+              <h3><span class="icon-dot"></span>Privacy and data requests</h3>
+              <p>Privacy questions, account deletion, and requests to delete specific Pantry &amp; Plate data.</p>
             </div>
           </div>
+        </article>
+      </section>
 
-          <div class="grid-2 support-card-grid">
-            <div class="support-card">
-              <h3><span class="icon-dot"></span>What Data Is Deleted</h3>
-              <p>
-                When your account is deleted, Pantry &amp; Plate will delete or anonymize, as
-                applicable:
-              </p>
-              <ul class="list-clean">
-                <li>your account profile information</li>
-                <li>saved and created recipes associated with your account</li>
-                <li>uploaded recipe images associated with your account</li>
-                <li>other personal account data associated with your Pantry &amp; Plate account</li>
-              </ul>
-            </div>
-
-            <div class="support-card">
-              <h3><span class="icon-dot"></span>Data Retention</h3>
-              <p>
-                Certain limited records may be retained for a reasonable period where necessary
-                for:
-              </p>
-              <ul class="list-clean">
-                <li>legal compliance</li>
-                <li>fraud or abuse prevention</li>
-                <li>backup and disaster recovery systems</li>
-              </ul>
-              <p class="small">
-                Where applicable, this may include a minimal anonymized deletion audit record
-                retained for up to 30 days. Some limited records may also remain in secure backups
-                until those systems cycle out, after which they are deleted or anonymized.
-              </p>
-            </div>
-          </div>
-
+      <section class="section-tight" id="billing-cancellation" data-reveal data-delay="100">
+        <article class="surface panel">
+          <p class="eyebrow">Billing</p>
+          <h2>Billing and cancellation</h2>
+          <p class="muted">
+            Pantry &amp; Plate subscriptions are managed through Apple or Google. You can manage or
+            cancel your subscription in your App Store or Google Play account settings.
+          </p>
+          <p class="muted">
+            Pantry &amp; Plate does not directly receive your full payment-card number from Apple or
+            Google.
+          </p>
           <div class="callout" style="margin-top: 1rem">
-            <strong>Questions</strong>
+            <strong>Subscription cancellation</strong>
             <p class="muted" style="margin-top: 0.35rem">
-              If you have questions about account deletion, contact
-              <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>.
+              Deleting your Pantry &amp; Plate account may not automatically cancel an active
+              app-store subscription. Manage subscription cancellation through Apple or Google.
             </p>
           </div>
         </article>
@@ -232,9 +217,15 @@
             <p class="eyebrow">Contact support</p>
             <h2>Send a support message</h2>
             <p class="muted">
-              Email <strong>support@pantryandplate.app</strong> for bugs, account help, deletion
-              follow-up, or general questions. This form opens your email app with a prefilled
-              support draft.
+              Email <strong>support@pantryandplate.app</strong> for account access, billing,
+              subscriptions, bugs, product feedback, privacy requests, account or data deletion, or
+              connected grocery questions. This form opens your email app with a prefilled support
+              draft.
+            </p>
+            <p class="muted" style="margin-top: 0.65rem">
+              If you include an email address, we may use it to follow up about your request.
+              Do not send passwords, full payment-card numbers, or highly sensitive personal
+              information.
             </p>
             <p class="muted" style="margin-top: 0.65rem">
               For copyright complaints, please see our
@@ -264,16 +255,18 @@
               <label>
                 Category
                 <select name="category">
+                  <option value="Account access">Account access</option>
+                  <option value="Billing or subscription">Billing or subscription</option>
                   <option value="Bug report">Bug report</option>
-                  <option value="Availability question">Availability question</option>
-                  <option value="Feature request">Feature request</option>
-                  <option value="Account help">Account help</option>
-                  <option value="Delete account follow-up">Delete account follow-up</option>
-                  <option value="General question">General question</option>
+                  <option value="Product feedback">Product feedback</option>
+                  <option value="Privacy request">Privacy request</option>
+                  <option value="Account/data deletion">Account/data deletion</option>
+                  <option value="Connected grocery flow">Connected grocery flow</option>
+                  <option value="Other">Other</option>
                 </select>
               </label>
               <label>
-                Device
+                App platform or device
                 <select name="device">
                   <option value="iPhone">iPhone</option>
                   <option value="Android">Android</option>
@@ -311,6 +304,121 @@
             <p id="supportMessage" class="form-message" hidden></p>
           </form>
         </div>
+      </section>
+
+      <section class="section-tight" data-reveal data-delay="140">
+        <article class="surface panel support-delete-shell" id="delete-account">
+          <div class="section-head" style="margin-bottom: 0.8rem">
+            <p class="eyebrow">Account and data deletion</p>
+            <h2>Account and data deletion</h2>
+            <p class="muted">
+              You can request deletion of your Pantry &amp; Plate account or deletion of specific
+              Pantry &amp; Plate data from this page.
+            </p>
+          </div>
+
+          <div class="grid-2 support-card-grid">
+            <div class="support-card">
+              <h3><span class="icon-dot"></span>Delete your account in the app</h3>
+              <p>If you can access the app, request account deletion from Pantry &amp; Plate settings.</p>
+              <ol class="list-clean">
+                <li>Open Pantry &amp; Plate.</li>
+                <li>Go to Settings.</li>
+                <li>Open Account.</li>
+                <li>Tap <strong>Delete account</strong>.</li>
+                <li>Follow the confirmation prompts.</li>
+              </ol>
+            </div>
+
+            <div class="support-card">
+              <h3><span class="icon-dot"></span>Delete your account by email</h3>
+              <p>
+                If you cannot access the app, email
+                <a href="mailto:support@pantryandplate.app?subject=Delete%20Account%20Request">
+                  support@pantryandplate.app
+                </a>
+                from the email address associated with your Pantry &amp; Plate account with the
+                subject line <strong>Delete Account Request</strong>.
+              </p>
+              <p>
+                Please include enough information for us to identify the account. Do not send
+                passwords, full payment-card numbers, or highly sensitive personal information.
+              </p>
+              <div class="support-actions">
+                <a
+                  class="btn btn-primary btn-sm"
+                  href="mailto:support@pantryandplate.app?subject=Delete%20Account%20Request"
+                >
+                  Email support
+                </a>
+                <a class="btn btn-outline btn-sm" href="#support-contact">Support form</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2 support-card-grid">
+            <div class="support-card">
+              <h3><span class="icon-dot"></span>Delete some data without deleting your account</h3>
+              <p>
+                You may request deletion of specific Pantry &amp; Plate data without deleting your
+                whole account. This can include uploaded photos, receipts, recipes, pantry items,
+                grocery lists, meal plans, support messages, connected-shopping authorization data,
+                or report submissions.
+              </p>
+              <p>
+                Email
+                <a href="mailto:support@pantryandplate.app?subject=Data%20Deletion%20Request">
+                  support@pantryandplate.app
+                </a>
+                with the subject line <strong>Data Deletion Request</strong> and describe what you
+                want deleted.
+              </p>
+            </div>
+
+            <div class="support-card">
+              <h3><span class="icon-dot"></span>What may be retained</h3>
+              <p>
+                Some limited information may be retained where necessary for legal compliance,
+                fraud or abuse prevention, dispute resolution, app-store transaction records,
+                security, backup, or disaster recovery.
+              </p>
+              <p class="small">
+                Pantry &amp; Plate may retain a minimal anonymized deletion audit record for up to
+                30 days.
+              </p>
+            </div>
+          </div>
+
+          <div class="support-card" style="margin-top: 1rem">
+            <h3><span class="icon-dot"></span>What is deleted or anonymized</h3>
+            <p>
+              When your account deletion request is completed, Pantry &amp; Plate deletes or
+              anonymizes account data associated with your account, where applicable.
+            </p>
+            <ul class="list-clean">
+              <li>account profile information</li>
+              <li>email-linked account data</li>
+              <li>household membership</li>
+              <li>pantry items</li>
+              <li>grocery and shopping lists</li>
+              <li>meal plans</li>
+              <li>saved or imported recipes</li>
+              <li>recipe collections or folders</li>
+              <li>uploaded recipe, profile, receipt, or feedback images associated with the account</li>
+              <li>support, feedback, parser report, or recipe report data linked to the account where applicable</li>
+              <li>notification tokens</li>
+              <li>connected-shopping authorization data where applicable</li>
+            </ul>
+          </div>
+
+          <div class="callout" style="margin-top: 1rem">
+            <strong>Questions</strong>
+            <p class="muted" style="margin-top: 0.35rem">
+              If you have questions about account or data deletion, contact
+              <a href="mailto:support@pantryandplate.app">support@pantryandplate.app</a>.
+            </p>
+          </div>
+        </article>
       </section>
 
       <section class="section-tight" data-reveal data-delay="160">
@@ -356,6 +464,6 @@
       </div>
     </footer>
 
-    <script src="assets/js/main.js?v=20260429-01"></script>
+    <script src="assets/js/main.js?v=20260602-02"></script>
   </body>
 </html>

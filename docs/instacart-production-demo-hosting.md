@@ -6,7 +6,7 @@
 - Status: unlisted review page
 - Search indexing: page includes `<meta name="robots" content="noindex, nofollow">`
 - Main navigation: not linked from the main site navigation
-- Sitemap: no sitemap is present in this static site, so this page is not added to one
+- Sitemap: intentionally omitted from `sitemap.xml` because this is an unlisted noindex review page
 
 ## Video
 - Video handling: embedded local MP4

@@ -3,27 +3,72 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pantry &amp; Plate™ | Meal Planning From What You Already Have</title>
+    <title>Pantry &amp; Plate™ | Pantry Tracker, Meal Planner &amp; Smart Grocery List</title>
     <meta
       name="description"
-      content="Plan meals from your pantry, save household recipes, and shop only for missing ingredients with Pantry & Plate."
+      content="Plan meals from what you already have. Pantry & Plate connects your pantry, saved recipes, weekly meal plan, and shopping list for iPhone and Android."
     />
+    <link rel="canonical" href="https://pantryandplate.app/" />
     <meta name="theme-color" content="#d27a3d" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Pantry &amp; Plate™ | Meal Planning From What You Already Have" />
+    <meta property="og:title" content="Pantry &amp; Plate™ | Pantry Tracker, Meal Planner &amp; Smart Grocery List" />
     <meta
       property="og:description"
-      content="Pantry & Plate connects pantry tracking, household recipes, weekly meal planning, and grocery lists so you can cook with what you already have."
+      content="Plan meals from what you already have. Pantry & Plate connects your pantry, saved recipes, weekly meal plan, and shopping list for iPhone and Android."
     />
     <meta property="og:url" content="https://pantryandplate.app/" />
-    <meta property="og:image" content="assets/media/og-cover.svg" />
+    <meta property="og:site_name" content="Pantry &amp; Plate" />
+    <meta property="og:image" content="https://pantryandplate.app/assets/media/og-cover.svg" />
+    <meta
+      property="og:image:alt"
+      content="Pantry & Plate app preview showing pantry-aware meal planning and a smart shopping list"
+    />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Pantry &amp; Plate™ | Meal Planning From What You Already Have" />
+    <meta name="twitter:title" content="Pantry &amp; Plate™ | Pantry Tracker, Meal Planner &amp; Smart Grocery List" />
     <meta
       name="twitter:description"
-      content="Plan meals from what’s already in your kitchen, then shop only for what’s missing."
+      content="Plan meals from what you already have. Pantry & Plate connects your pantry, saved recipes, weekly meal plan, and shopping list for iPhone and Android."
     />
+    <meta name="twitter:image" content="https://pantryandplate.app/assets/media/og-cover.svg" />
+    <meta
+      name="twitter:image:alt"
+      content="Pantry & Plate app preview showing pantry-aware meal planning and a smart shopping list"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Pantry & Plate",
+        "alternateName": "Pantry and Plate",
+        "applicationCategory": "FoodApplication",
+        "operatingSystem": "iOS, Android",
+        "description": "Pantry & Plate connects your pantry, saved recipes, weekly meal plan, and shopping list so your household can plan meals from what you already have.",
+        "url": "https://pantryandplate.app/",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pantry and Plate LLC"
+        },
+        "sameAs": [
+          "https://apps.apple.com/us/app/pantry-plate/id6761082174",
+          "https://play.google.com/store/apps/details?id=app.pantryandplate"
+        ],
+        "offers": [
+          {
+            "@type": "Offer",
+            "price": "4.99",
+            "priceCurrency": "USD",
+            "description": "Monthly subscription after 7-day free trial. U.S. pricing; pricing may vary by store or region."
+          },
+          {
+            "@type": "Offer",
+            "price": "49.99",
+            "priceCurrency": "USD",
+            "description": "Annual subscription after 7-day free trial. U.S. pricing; pricing may vary by store or region."
+          }
+        ]
+      }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,8 +82,8 @@
     <script>
       document.documentElement.classList.add("js");
     </script>
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260602-01" />
-    <link rel="stylesheet" href="assets/css/phone-demo.css?v=20260426-02" />
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260602-02" />
+    <link rel="stylesheet" href="assets/css/phone-demo.css?v=20260426-03" />
     <script>
       (function () {
         const path = window.location.pathname.replace(/\/+$/, "") || "/";
@@ -97,6 +142,9 @@
             class="btn btn-primary btn-sm nav-cta"
             href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
             data-launch-url="app-store"
+            data-cta="store-link"
+            data-store="app-store"
+            data-placement="nav"
             aria-label="Download Pantry & Plate on the App Store"
           >
             App Store
@@ -105,6 +153,9 @@
             class="btn btn-outline btn-sm nav-cta"
             href="https://play.google.com/store/apps/details?id=app.pantryandplate"
             data-launch-url="google-play"
+            data-cta="store-link"
+            data-store="google-play"
+            data-placement="nav"
             aria-label="Get Pantry & Plate on Google Play"
           >
             Google Play
@@ -116,16 +167,16 @@
     <main id="main" class="container">
       <section class="section hero prelaunch-hero" aria-labelledby="hero-title">
         <div class="hero-copy prelaunch-hero-copy" data-reveal>
-          <p class="eyebrow">Pantry-aware cooking</p>
+          <p class="eyebrow">Pantry-aware meal planning</p>
           <h1 id="hero-title">
-            <span class="hero-title-mobile-break">Cook tonight with</span>
-            <span class="hero-title-mobile-break">what you already</span>
-            <span class="hero-title-mobile-break">have.</span>
+            <span class="hero-title-mobile-break">Plan meals from</span>
+            <span class="hero-title-mobile-break">your pantry.</span>
+            <span class="hero-title-mobile-break">Buy only what’s missing.</span>
           </h1>
           <p class="hero-lead">
-            Pantry &amp; Plate™ connects your pantry, recipes, weekly meal plan, and shopping list
-            so busy households can plan dinner faster, avoid duplicate buys, and shop only the gap.
-            Now available on the App Store and Google Play.
+            Pantry &amp; Plate™ connects your pantry, saved recipes, weekly meal plan, and shopping
+            list so your household can plan dinner faster, avoid duplicate buys, and shop only the
+            gap.
           </p>
 
           <div class="hero-cta" aria-label="Primary actions">
@@ -133,6 +184,9 @@
               class="btn btn-primary"
               href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
               data-launch-url="app-store"
+              data-cta="store-link"
+              data-store="app-store"
+              data-placement="hero"
               aria-label="Download Pantry & Plate on the App Store"
             >
               Download on the App Store
@@ -141,11 +195,13 @@
               class="btn btn-outline"
               href="https://play.google.com/store/apps/details?id=app.pantryandplate"
               data-launch-url="google-play"
+              data-cta="store-link"
+              data-store="google-play"
+              data-placement="hero"
               aria-label="Get Pantry & Plate on Google Play"
             >
               Get it on Google Play
             </a>
-            <a class="btn btn-ghost" href="#how-it-works">See how it works</a>
           </div>
 
           <div class="hero-chip-row prelaunch-chip-row" aria-label="Key app capabilities">
@@ -157,8 +213,11 @@
           </div>
 
           <p class="small launch-note">
-            Start your 7-day free trial. Active subscription required after trial. For account
-            help, privacy requests, or support, contact support@pantryandplate.app.
+            7-day free trial. Then $4.99/month or $49.99/year in the U.S. Pricing may vary by
+            store or region. Cancel anytime through Apple or Google.
+          </p>
+          <p class="small launch-note">
+            See <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms</a>.
           </p>
         </div>
       </section>
@@ -170,13 +229,17 @@
               <p class="eyebrow">iPhone launch</p>
               <h2 id="launch-availability-title">Now available on the App Store.</h2>
               <p class="muted">
-                Start your 7-day free trial and plan meals from what you already have.
+                Start free for 7 days. Then $4.99/month or $49.99/year in the U.S. Pricing may
+                vary by store or region. Cancel anytime through Apple or Google.
               </p>
             </div>
             <a
               class="btn btn-primary"
               href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
               data-launch-url="app-store"
+              data-cta="store-link"
+              data-store="app-store"
+              data-placement="launch-availability"
               aria-label="Download Pantry & Plate on the App Store"
             >
               Download on the App Store
@@ -195,6 +258,9 @@
                 class="btn btn-outline"
                 href="https://play.google.com/store/apps/details?id=app.pantryandplate"
                 data-launch-url="google-play"
+                data-cta="store-link"
+                data-store="google-play"
+                data-placement="launch-availability"
                 aria-label="Get Pantry & Plate on Google Play"
               >
                 Get it on Google Play
@@ -205,27 +271,245 @@
         </div>
       </section>
 
+      <section class="section" id="how-it-works" data-reveal>
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2>From pantry to weekly plan to shopping list.</h2>
+          <p class="muted">
+            Start with what is already in your kitchen, plan meals your household will actually
+            cook, and turn only the missing ingredients into a focused grocery list.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card surface" data-reveal data-delay="80">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Add what you have</h3>
+            <p class="muted">
+              Scan pantry items, add staples manually, or build your inventory as you shop. You do
+              not need a perfect pantry list on day one.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="120">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Save real household recipes</h3>
+            <p class="muted">
+              Keep the recipes you already cook, imported links, photos, and new ideas in one
+              private cookbook.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="160">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Plan the week</h3>
+            <p class="muted">
+              Drop dinners into your weekly plan and see pantry coverage before the grocery list is
+              made.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="200">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Shop the gap</h3>
+            <p class="muted">
+              Turn planned meals into a shopping list focused on what is missing, not what you
+              already own.
+            </p>
+          </article>
+        </div>
+
+        <div class="callout" style="margin-top: 1rem">
+          <strong>No full kitchen inventory required.</strong>
+          <p class="muted" style="margin-top: 0.35rem">
+            Start with the ingredients you buy most often. Pantry &amp; Plate becomes more useful
+            as your household uses it, but setup should not block your first meal plan.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="feature-availability" data-reveal>
+        <div class="section-head">
+          <p class="eyebrow">Feature availability</p>
+          <h2>What’s live today</h2>
+          <p class="muted">
+            Pantry &amp; Plate is built around pantry tracking, saved recipes, weekly meal
+            planning, and a smarter shopping list. Connected grocery flows are available for
+            supported Instacart and Kroger experiences, but the core app works even when you plan
+            and shop manually.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card surface" data-reveal data-delay="80">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Core planning tools</h3>
+            <ul class="list-clean" style="margin-top: 0.75rem">
+              <li>Pantry tracking</li>
+              <li>Saved recipes and recipe organization</li>
+              <li>Weekly meal planning</li>
+              <li>Smart shopping lists</li>
+              <li>Household sync</li>
+            </ul>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="120">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Live connected grocery flows</h3>
+            <ul class="list-clean" style="margin-top: 0.75rem">
+              <li>Instacart connected-shopping flow, where supported</li>
+              <li>Kroger connected-shopping flow, where supported</li>
+              <li>
+                Retailer cart handoff or checkout support may depend on platform, region, retailer
+                availability, account eligibility, inventory, and app version
+              </li>
+            </ul>
+            <p class="small" style="margin-top: 0.75rem">
+              <a href="privacy.html#connected-shopping">
+                Learn how connected-shopping data is handled
+              </a>
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="160">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Works without checkout</h3>
+            <p class="muted">
+              Connected grocery checkout is not required to use Pantry &amp; Plate. You can still
+              track pantry items, save recipes, plan meals, and build a focused shopping list even
+              if a retailer flow is unavailable.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="trust" data-reveal>
+        <div class="section-head">
+          <p class="eyebrow">Trust</p>
+          <h2>Privacy in 30 seconds</h2>
+          <p class="muted">
+            Pantry &amp; Plate is built around household food data: recipes, pantry items, meal
+            plans, shopping lists, photos, connected-shopping choices, and feedback you choose to
+            provide.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card surface" data-reveal data-delay="80">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Private recipes stay private</h3>
+            <p class="muted">
+              Private household recipes are visible only to you and invited household members
+              unless you explicitly choose to share or publish them.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="120">
+            <h3><span class="icon-dot" aria-hidden="true"></span>AI runs when you choose it</h3>
+            <p class="muted">
+              Recipe extraction, receipt parsing, and generation use selected prompts, links,
+              receipts, screenshots, or images only when you start those features.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="160">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Camera and photos are user-started</h3>
+            <p class="muted">
+              Camera and photo access are used for actions such as barcode scanning, recipe
+              capture, profile photos, receipt parsing, or selected uploads.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="200">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Feedback includes shown context</h3>
+            <p class="muted">
+              If you send feedback, Pantry &amp; Plate receives your message, optional email, and
+              the app context shown before you submit so we can review the issue and follow up if
+              requested.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="240">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Diagnostics help fix the app</h3>
+            <p class="muted">
+              App interactions, crash logs, diagnostics, device/app details, and subscription
+              status may be used to operate, improve, secure, and support Pantry &amp; Plate.
+            </p>
+          </article>
+          <article class="feature-card surface" data-reveal data-delay="280">
+            <h3><span class="icon-dot" aria-hidden="true"></span>Connected shopping is user-initiated</h3>
+            <p class="muted">
+              Instacart and Kroger connected-shopping flows are live where supported. Retailer,
+              cart, checkout, and attribution data is used when you launch those supported flows.
+            </p>
+            <p class="muted" style="margin-top: 0.65rem">
+              Availability may vary by platform, region, retailer availability, account
+              eligibility, inventory, and app version.
+            </p>
+          </article>
+        </div>
+
+        <p class="small" style="margin-top: 1rem">
+          <a href="privacy.html">Read the Privacy Policy</a>
+          <span aria-hidden="true"> · </span>
+          <a href="support.html">Contact Support</a>
+          <span aria-hidden="true"> · </span>
+          <a href="support.html#delete-account">Account and data deletion</a>
+        </p>
+      </section>
+
       <section class="section pp-scrolly app-preview-section" id="guided-tour" data-pp-demo="stage">
         <div class="section-head app-preview-head" data-reveal>
           <p class="eyebrow">App preview</p>
-          <h2>Explore the connected weekly flow.</h2>
+          <h2>See one dinner become a smarter shopping list.</h2>
           <p class="muted">
-            The preview shows how Home, Pantry, Cookbook, Plan, and Shop are designed to work
-            together across pantry, recipe, meal-planning, and shopping workflows.
+            Follow a simple weekly flow: check what is already in the pantry, add a meal to the
+            plan, and turn only the missing ingredients into a focused list.
           </p>
         </div>
 
         <div class="pp-scrolly-sticky">
           <div class="pp-scrolly-grid">
             <div class="pp-tour-left">
-              <div class="pp-tour-stack" aria-label="Guided tour steps" data-pp-tour-stack></div>
+              <div
+                class="pp-tour-stack"
+                aria-label="Chicken taco bowls demo steps"
+                data-pp-tour-stack
+              >
+                <article class="pp-tour-step surface is-active" data-pp-step="start-pantry">
+                  <p class="pp-tour-kicker">Step 1</p>
+                  <h2>Start with what you have</h2>
+                  <p class="muted">
+                    Pantry &amp; Plate checks staples already in your pantry, like rice, black
+                    beans, salsa, olive oil, and taco seasoning.
+                  </p>
+                </article>
+                <article class="pp-tour-step surface" data-pp-step="add-dinner">
+                  <p class="pp-tour-kicker">Step 2</p>
+                  <h2>Add dinner to the week</h2>
+                  <p class="muted">
+                    Drop chicken taco bowls into the weekly plan so the app can compare the recipe
+                    against your pantry.
+                  </p>
+                </article>
+                <article class="pp-tour-step surface" data-pp-step="coverage">
+                  <p class="pp-tour-kicker">Step 3</p>
+                  <h2>See pantry coverage</h2>
+                  <p class="muted">
+                    Pantry &amp; Plate shows what is already covered before the shopping list is
+                    created.
+                  </p>
+                  <ul class="pp-tour-bullets">
+                    <li><strong>Covered:</strong> 5 pantry items covered</li>
+                    <li><strong>Missing:</strong> 4 items missing</li>
+                  </ul>
+                </article>
+                <article class="pp-tour-step surface" data-pp-step="shop-gap">
+                  <p class="pp-tour-kicker">Step 4</p>
+                  <h2>Shop only the gap</h2>
+                  <p class="muted">
+                    Add the missing chicken, tortillas, cilantro, and limes to your shopping list.
+                  </p>
+                </article>
+                <article class="pp-tour-step surface" data-pp-step="connected-grocery">
+                  <p class="pp-tour-kicker">Step 5</p>
+                  <h2>Use connected grocery where supported</h2>
+                  <p class="muted">
+                    Instacart and Kroger connected-shopping flows are live where supported, but
+                    checkout is optional. You can always use the list manually.
+                  </p>
+                </article>
+              </div>
             </div>
 
-            <aside class="pp-tour-right" aria-label="Pantry & Plate™ demo phone">
+            <aside class="pp-tour-right" aria-label="Pantry & Plate™ chicken taco bowls demo phone">
               <div class="pp-demo-hero-mount" id="ppDemoMount"></div>
               <p class="small pp-tour-tip">
-                Explore the app preview below. Use the buttons, tabs, and scroll areas to move
-                through the sample screens.
+                The phone preview follows chicken taco bowls from pantry coverage to a focused
+                list. Use the buttons, tabs, and scroll areas to explore the sample screens.
               </p>
             </aside>
           </div>
@@ -236,69 +520,23 @@
 
       <div id="tour-after" aria-hidden="true"></div>
 
-      <section class="section" id="how-it-works" data-reveal>
-        <div class="section-head">
-          <p class="eyebrow">How it works</p>
-          <h2>From pantry to plate in one weekly flow.</h2>
-          <p class="muted">
-            Instead of planning in one app, checking your pantry in another, and rewriting a
-            grocery list by hand, Pantry &amp; Plate keeps the loop connected.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <article class="feature-card surface" data-reveal data-delay="80">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Save recipes you will actually cook</h3>
-            <p class="muted">
-              Build a personal cookbook from recipes your household already likes, imported links,
-              or new ideas you want to try.
-            </p>
-          </article>
-          <article class="feature-card surface" data-reveal data-delay="120">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Track what is already at home</h3>
-            <p class="muted">
-              Keep pantry staples, product details, and expiration timing visible before you plan
-              or shop.
-            </p>
-          </article>
-          <article class="feature-card surface" data-reveal data-delay="160">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Plan meals with pantry context</h3>
-            <p class="muted">
-              Drop meals into the week and see what is covered while you plan, not after the list
-              is already made.
-            </p>
-          </article>
-          <article class="feature-card surface" data-reveal data-delay="200">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Shop only the gap</h3>
-            <p class="muted">
-              Turn planned meals into a focused shopping list that prioritizes what is missing
-              instead of what you already own.
-            </p>
-          </article>
-          <article class="feature-card surface" data-reveal data-delay="200">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Cook without losing your place</h3>
-            <p class="muted">
-              Open recipe details and guided cooking flows from the same system that planned the
-              meal.
-            </p>
-          </article>
-        </div>
-      </section>
-
       <section class="section launch-demo" aria-labelledby="launch-demo-title" data-reveal>
         <div class="launch-demo-grid">
           <div class="section-head">
-            <p class="eyebrow">Launch demo</p>
-            <h2 id="launch-demo-title">See the weekly flow in under a minute.</h2>
+            <p class="eyebrow">Weekly planning demo</p>
+            <h2 id="launch-demo-title">Turn the week into one focused grocery list.</h2>
             <p class="muted">
-              Plan meals, check pantry coverage, and turn only the missing ingredients into a
-              focused shopping list.
+              Plan a few dinners, compare them against your pantry, and send only the missing
+              ingredients to your list.
             </p>
             <div class="hero-cta launch-demo-cta" aria-label="Demo actions">
               <a
                 class="btn btn-primary"
                 href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
                 data-launch-url="app-store"
+                data-cta="store-link"
+                data-store="app-store"
+                data-placement="launch-demo"
                 aria-label="Download Pantry & Plate on the App Store"
               >
                 Download on the App Store
@@ -307,11 +545,18 @@
                 class="btn btn-outline"
                 href="https://play.google.com/store/apps/details?id=app.pantryandplate"
                 data-launch-url="google-play"
+                data-cta="store-link"
+                data-store="google-play"
+                data-placement="launch-demo"
                 aria-label="Get Pantry & Plate on Google Play"
               >
                 Get it on Google Play
               </a>
             </div>
+            <p class="small">
+              7-day free trial. Then $4.99/month or $49.99/year in the U.S. Pricing may vary by
+              store or region. Cancel anytime through Apple or Google.
+            </p>
           </div>
 
           <div class="surface demo-frame" role="img" aria-label="Pantry & Plate weekly planning flow preview">
@@ -323,45 +568,71 @@
               <div class="demo-plan-list">
                 <div class="demo-plan-row">
                   <span class="demo-day">Mon</span>
-                  <strong>Skillet tacos</strong>
-                  <span>5 of 7 at home</span>
+                  <strong>Chicken taco bowls</strong>
+                  <span>5 pantry items covered</span>
                 </div>
                 <div class="demo-plan-row">
                   <span class="demo-day">Wed</span>
-                  <strong>Tomato pasta</strong>
-                  <span>6 of 8 at home</span>
+                  <strong>Lemon pasta</strong>
+                  <span>3 pantry items covered</span>
                 </div>
                 <div class="demo-plan-row">
                   <span class="demo-day">Fri</span>
-                  <strong>Sheet-pan chicken</strong>
-                  <span>4 of 6 at home</span>
+                  <strong>Veggie fried rice</strong>
+                  <span>4 pantry items covered</span>
                 </div>
               </div>
               <div class="demo-gap-card">
-                <span>Shopping gap</span>
-                <strong>Limes, tortillas, spinach, yogurt</strong>
+                <span>Missing ingredients</span>
+                <strong>Chicken, tortillas, cilantro, limes, lemons, parmesan, eggs, scallions</strong>
               </div>
               <div class="demo-frame-overlay">
                 <span>Plan</span>
                 <span>Pantry</span>
+                <span>Missing</span>
                 <span>Shop</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="flow-grid flow-grid-3 demo-storyboard" aria-label="Weekly flow storyboard">
+        <div class="flow-grid demo-storyboard" aria-label="Weekly planning storyboard">
           <article class="flow-step surface">
             <span class="step-num">1</span>
-            <h3>Plan three dinners</h3>
+            <h3>Pick the week’s meals</h3>
+            <p class="muted">
+              Add a few dinners your household will actually cook, like chicken taco bowls, lemon
+              pasta, and veggie fried rice.
+            </p>
           </article>
           <article class="flow-step surface">
             <span class="step-num">2</span>
             <h3>Check pantry coverage</h3>
+            <p class="muted">
+              Pantry &amp; Plate compares planned meals against ingredients already on hand before
+              the shopping list is created.
+            </p>
+            <p class="small">8 items already covered · 8 items missing</p>
           </article>
           <article class="flow-step surface">
             <span class="step-num">3</span>
-            <h3>Shop the missing items</h3>
+            <h3>Build one list</h3>
+            <p class="muted">
+              Missing ingredients roll into a focused list so you are not rebuying rice, pasta,
+              salsa, garlic, or other staples you already have.
+            </p>
+          </article>
+          <article class="flow-step surface">
+            <span class="step-num">4</span>
+            <h3>Shop your way</h3>
+            <p class="muted">
+              Instacart and Kroger connected-shopping flows are live where supported, and checkout
+              is optional. You can also shop manually from the list.
+            </p>
+            <p class="small">
+              Connected grocery availability may vary by platform, region, retailer availability,
+              account eligibility, inventory, and app version.
+            </p>
           </article>
         </div>
       </section>
@@ -374,7 +645,7 @@
 
         <div class="grid-3">
           <article class="info-card surface" data-reveal data-delay="80">
-            <h3><span class="icon-dot" aria-hidden="true"></span>Pantry-aware before checkout</h3>
+            <h3><span class="icon-dot" aria-hidden="true"></span>Pantry-aware before you shop</h3>
             <p class="muted">
               Most meal-planning tools create a list first. Pantry &amp; Plate is designed to
               compare your plan against what is already in your kitchen.
@@ -410,90 +681,84 @@
         </article>
       </section>
 
-      <section class="section" id="trust" data-reveal>
-        <article class="surface panel trust-panel">
-          <div class="section-head">
-            <p class="eyebrow">Trust</p>
-            <h2>Your recipes stay yours.</h2>
-            <p class="muted">
-              Private household recipes are intended to be visible only to you and your household
-              members. Pantry &amp; Plate™ does not sell, publish, or use private household recipes
-              for marketing or advertising.
-            </p>
-            <p class="muted">
-              AI recipe extraction and generation run only when you choose to use those features.
-              Camera and photo access are used only for user-started actions such as barcode
-              scanning, recipe capture, or selected uploads.
-            </p>
-          </div>
-          <a class="btn btn-outline" href="privacy.html">Read the privacy policy</a>
-        </article>
-      </section>
-
       <section class="section" id="faq" data-reveal>
         <div class="section-head">
           <p class="eyebrow">FAQ</p>
-          <h2>Frequently asked questions</h2>
+          <h2>Questions before you install?</h2>
+          <p class="muted">
+            Here are the practical details: setup, pricing, privacy, AI, household sharing, and
+            connected grocery availability.
+          </p>
         </div>
 
         <div class="faq">
           <details>
-            <summary>Where can I download Pantry &amp; Plate?</summary>
+            <summary>Do I need to add my whole pantry before using Pantry &amp; Plate?</summary>
             <p>
-              Pantry &amp; Plate™ is now available on the
-              <a
-                href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
-                data-launch-url="app-store"
-              >App Store</a>
-              and
-              <a
-                href="https://play.google.com/store/apps/details?id=app.pantryandplate"
-                data-launch-url="google-play"
-              >Google Play</a>.
+              No. Start with the staples and ingredients you buy most often. You can add items as
+              you shop, scan, plan, and cook. Pantry &amp; Plate becomes more useful over time, but
+              setup should not block your first weekly plan.
             </p>
           </details>
           <details>
-            <summary>Which platforms are available?</summary>
+            <summary>How much does Pantry &amp; Plate cost?</summary>
             <p>
-              Pantry &amp; Plate is live on iPhone through the App Store and on Android through
-              Google Play. You can email
-              <a href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Support">
-                support@pantryandplate.app
-              </a>
-              with availability questions.
+              New users get a 7-day free trial. After that, Pantry &amp; Plate requires a paid
+              subscription: $4.99/month or $49.99/year in the U.S. Pricing may vary by store or
+              region.
             </p>
           </details>
           <details>
-            <summary>Can I send product feedback?</summary>
+            <summary>Can I cancel anytime?</summary>
             <p>
-              Yes. Email
-              <a href="mailto:support@pantryandplate.app?subject=Pantry%20%26%20Plate%20Feedback">
-                support@pantryandplate.app
-              </a>
-              with feedback, questions, or issues. Feedback helps improve the pantry, recipe,
-              meal-planning, and shopping-list workflow.
+              Yes. Subscriptions are managed through Apple or Google. You can manage or cancel your
+              subscription in your App Store or Google Play account settings.
             </p>
           </details>
           <details>
-            <summary>Does Pantry &amp; Plate use AI?</summary>
+            <summary>Can my household share the same pantry, recipes, and shopping list?</summary>
             <p>
-              Pantry &amp; Plate may use AI for user-initiated recipe extraction or generation.
-              That means prompts, links, or images are processed only when you choose to use those
-              features.
+              Pantry &amp; Plate is built for household planning. Invited household members can work
+              from shared pantry, recipe, meal-planning, and shopping-list workflows.
             </p>
           </details>
           <details>
-            <summary>Are private recipes shared publicly?</summary>
+            <summary>Are my private recipes public?</summary>
             <p>
-              No. Private household recipes are intended for you and your household members. Any
-              public sharing should be explicit, opt-in, and clearly labeled.
+              No. Private household recipes are visible only to you and invited household members
+              unless you explicitly choose to share or publish them.
             </p>
           </details>
           <details>
-            <summary>Can Pantry &amp; Plate help reduce duplicate grocery purchases?</summary>
+            <summary>When does Pantry &amp; Plate use AI?</summary>
             <p>
-              That is one of the main goals. The app is designed to compare planned meals against
-              pantry context so shopping lists focus on missing items.
+              AI-assisted extraction, receipt parsing, or generation runs only when you choose
+              those features, such as importing a recipe, parsing a receipt, or generating recipe
+              ideas from selected inputs.
+            </p>
+          </details>
+          <details>
+            <summary>What happens if a barcode is not recognized?</summary>
+            <p>
+              Barcode databases are not perfect. If an item is not recognized, you can still add or
+              adjust the pantry item manually.
+            </p>
+          </details>
+          <details>
+            <summary>Are Instacart and Kroger connected-shopping flows required?</summary>
+            <p>
+              No. Pantry tracking, saved recipes, meal planning, and smart shopping lists work
+              without connected grocery checkout. Instacart and Kroger connected-shopping flows are
+              live where supported, but availability may vary by platform, region, retailer
+              availability, account eligibility, inventory, and app version.
+            </p>
+          </details>
+          <details>
+            <summary>Where do I get help or request data deletion?</summary>
+            <p>
+              For account access, billing questions, product feedback, privacy requests, or
+              account/data deletion, visit <a href="support.html">Support</a>. You can also review
+              <a href="support.html#delete-account">Account and data deletion</a>.
             </p>
           </details>
         </div>
@@ -503,11 +768,11 @@
         <div class="surface panel final-cta-card">
           <div class="section-head">
             <p class="eyebrow">Start planning</p>
-            <h2>Cook tonight with what is already in your kitchen.</h2>
+            <h2>Plan your next grocery list from what you already have.</h2>
             <p class="muted">
-              Pantry &amp; Plate is now available on the App Store and Google Play. Start your
-              7-day free trial; active subscription required after trial. Support stays available
-              for account help, privacy requests, and feedback.
+              Pantry &amp; Plate is available on iPhone and Android. Start free for 7 days, then
+              continue with a paid subscription: $4.99/month or $49.99/year in the U.S. Pricing
+              may vary by store or region. Cancel anytime through Apple or Google.
             </p>
           </div>
           <div class="final-cta-actions">
@@ -515,6 +780,9 @@
               class="btn btn-primary"
               href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
               data-launch-url="app-store"
+              data-cta="store-link"
+              data-store="app-store"
+              data-placement="final-cta"
               aria-label="Download Pantry & Plate on the App Store"
             >
               Download on the App Store
@@ -523,6 +791,9 @@
               class="btn btn-outline"
               href="https://play.google.com/store/apps/details?id=app.pantryandplate"
               data-launch-url="google-play"
+              data-cta="store-link"
+              data-store="google-play"
+              data-placement="final-cta"
               aria-label="Get Pantry & Plate on Google Play"
             >
               Get it on Google Play
@@ -556,6 +827,9 @@
           <a
             href="https://apps.apple.com/us/app/pantry-plate/id6761082174"
             data-launch-url="app-store"
+            data-cta="store-link"
+            data-store="app-store"
+            data-placement="footer"
             aria-label="Download Pantry & Plate on the App Store"
           >
             App Store
@@ -563,6 +837,9 @@
           <a
             href="https://play.google.com/store/apps/details?id=app.pantryandplate"
             data-launch-url="google-play"
+            data-cta="store-link"
+            data-store="google-play"
+            data-placement="footer"
             aria-label="Get Pantry & Plate on Google Play"
           >
             Google Play
@@ -575,8 +852,8 @@
     </footer>
 
     <script src="assets/js/launch-config.js?v=20260602-01"></script>
-    <script src="assets/js/main.js?v=20260429-01"></script>
-    <script src="assets/js/phone-demo.js?v=20260602-01"></script>
+    <script src="assets/js/main.js?v=20260602-02"></script>
+    <script src="assets/js/phone-demo.js?v=20260602-02"></script>
     <script>
       if (window.PPDemo) {
         window.PPDemo.init({

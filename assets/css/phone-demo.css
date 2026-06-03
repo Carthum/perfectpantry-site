@@ -5149,6 +5149,12 @@ html.pp-tour-locked body {
   box-shadow: none;
 }
 
+.pp-app-download-btn.is-preferred-store {
+  border-color: rgba(95, 127, 87, 0.48);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 16px 34px rgba(95, 127, 87, 0.22);
+}
+
 .pp-app-download-note {
   margin: 10px 0 0;
   font-size: 11px;

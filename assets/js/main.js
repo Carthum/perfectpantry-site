@@ -115,8 +115,9 @@
         `Name: ${String(data.get("name") || "").trim() || "Not provided"}`,
         `Email: ${email}`,
         `Category: ${String(data.get("category") || "General")}`,
-        `Device: ${String(data.get("device") || "Not provided")}`,
+        `Platform/device: ${String(data.get("device") || "Not provided")}`,
         `App version: ${String(data.get("app_version") || "Not provided")}`,
+        `Urgency: ${String(data.get("urgency") || "Not provided")}`,
         "",
         "Details:",
         details,
@@ -153,6 +154,76 @@
           card.hidden = !show;
         });
       });
+    });
+  };
+
+  const setupStoreCtas = () => {
+    const storeSelector = 'a[data-cta="store-link"]';
+    const doc = document.documentElement;
+    const userAgent = navigator.userAgent || "";
+    const platform = navigator.platform || "";
+    const isTouchMac =
+      platform === "MacIntel" && Number(navigator.maxTouchPoints || 0) > 1;
+    const isIos = /iPad|iPhone|iPod/i.test(userAgent) || isTouchMac;
+    const isAndroid = /Android/i.test(userAgent);
+    const preferredStore = isAndroid ? "google-play" : isIos ? "app-store" : "";
+
+    const applyPreference = (root = document) => {
+      const links =
+        root.matches && root.matches(storeSelector)
+          ? [root]
+          : $$(storeSelector, root);
+
+      links.forEach((link) => {
+        link.classList.toggle(
+          "is-preferred-store",
+          !!preferredStore && link.dataset.store === preferredStore,
+        );
+      });
+    };
+
+    if (preferredStore) {
+      doc.classList.add("has-device-store-preference");
+      doc.dataset.preferredStore = preferredStore;
+    }
+
+    applyPreference();
+
+    if ("MutationObserver" in window && document.body) {
+      const observer = new MutationObserver((entries) => {
+        entries.forEach((entry) => {
+          entry.addedNodes.forEach((node) => {
+            if (node instanceof Element) applyPreference(node);
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    document.addEventListener("click", (event) => {
+      const link =
+        event.target instanceof Element
+          ? event.target.closest(storeSelector)
+          : null;
+      if (!link) return;
+
+      const store = link.dataset.store || "";
+      if (store !== "app-store" && store !== "google-play") return;
+
+      try {
+        window.dispatchEvent(
+          new CustomEvent("pantryplate:store_cta_click", {
+            detail: {
+              store,
+              placement: link.dataset.placement || "",
+              href: link.href || link.getAttribute("href") || "",
+              path: window.location.pathname,
+            },
+          }),
+        );
+      } catch (_) {
+        // Store links should keep navigating even if event dispatch is unavailable.
+      }
     });
   };
 
@@ -262,5 +333,6 @@
   setupYear();
   setupSupportForm();
   setupShotFilter();
+  setupStoreCtas();
   setupLightbox();
 })();

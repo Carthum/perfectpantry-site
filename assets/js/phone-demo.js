@@ -64,108 +64,91 @@
   // Later we can add `hotspots` per-step without touching the scroll engine.
   const STEPS = [
     {
-      id: "welcome",
-      bg: "home",
-      tab: null,
-      copy: {
-        variant: "hero",
-        eyebrow: "Welcome to Pantry & Plate™",
-        title: "The weekly food loop, finally in one place.",
-        description:
-          "Pantry & Plate™ connects recipes, pantry inventory, meal planning, and shopping so weeknight decisions get easier and grocery trips stay focused.",
-        notes: ["Use the phone demo to explore Home, Pantry, Cookbook, Plan, and Shop."],
-      },
-    },
-    {
-      id: "home",
-      bg: "home",
-      tab: "home",
-      copy: {
-        kicker: "Home",
-        title: "Your calm weekly dashboard",
-        description:
-          "See what to cook next, what your pantry already covers, and what needs attention in one friendly view.",
-        bullets: [
-          { strong: "Try it:", text: "tap Quick Actions to open Add Recipe and Add Pantry flows." },
-          {
-            strong: "What's for dinner:",
-            text: "quickly see what's for dinner, review the recipe, and see what you already have in the pantry.",
-          },
-          { strong: "Why it matters:", text: "less decision fatigue and smoother daily momentum." },
-        ],
-      },
-    },
-    {
-      id: "pantry",
+      id: "start-pantry",
       bg: "pantry",
       tab: "pantry",
       copy: {
-        kicker: "Pantry",
-        title: "Inventory clarity without the spreadsheet feel",
+        kicker: "Step 1",
+        title: "Start with what you have",
         description:
-          "Track staples, quantities, and timing in grouped lists, then make smarter plan and shopping decisions from real pantry coverage.",
+          "Pantry & Plate checks staples already in your pantry, like rice, black beans, salsa, olive oil, and taco seasoning.",
         bullets: [
           {
-            strong: "Try it:",
-            text: "use the view button to swap between List and Cards without leaving Pantry.",
+            strong: "Already at home:",
+            text: "rice, black beans, salsa, olive oil, and taco seasoning.",
           },
-          {
-            strong: "In list view:",
-            text: "use-first ingredients and stable staples stay separated so timing is obvious at a glance.",
-          },
-          { strong: "Why it matters:", text: "fewer duplicate purchases and less forgotten food." },
         ],
       },
     },
     {
-      id: "cookbook",
-      bg: "cookbook",
-      tab: "cookbook",
-      copy: {
-        kicker: "Cookbook",
-        title: "A household cookbook that stays useful",
-        description:
-          "Keep trusted recipes close, pull them up quickly, and move from browsing to cooking without losing context.",
-        bullets: [
-          { strong: "Try it:", text: "tap any recipe card to open the detail experience." },
-          { strong: "Why it matters:", text: "faster repeats, fewer dead-end recipe hunts." },
-        ],
-      },
-    },
-    {
-      id: "plan",
+      id: "add-dinner",
       bg: "home",
       tab: "plan",
       copy: {
-        kicker: "Meal Plan",
-        title: "Plan meals together, then adjust fast",
+        kicker: "Step 2",
+        title: "Add dinner to the week",
         description:
-          "Invite household members so meal plans, pantry, and shopping stay shared. Month view helps you review what was planned and reused.",
+          "Drop chicken taco bowls into the weekly plan so the app can compare the recipe against your pantry.",
         bullets: [
-          { strong: "Try it:", text: "tap a meal slot to open planning actions for that day." },
-          { strong: "Why it matters:", text: "everyone stays aligned from plan to pantry to shopping." },
+          {
+            strong: "Meal:",
+            text: "chicken taco bowls.",
+          },
+          {
+            strong: "Why it matters:",
+            text: "the plan can become a list based on what is missing.",
+          },
         ],
       },
     },
     {
-      id: "shop",
+      id: "coverage",
+      bg: "home",
+      tab: "plan",
+      copy: {
+        kicker: "Step 3",
+        title: "See pantry coverage",
+        description:
+          "Pantry & Plate shows what is already covered before the shopping list is created.",
+        bullets: [
+          { strong: "Covered:", text: "5 pantry items covered." },
+          { strong: "Missing:", text: "4 items missing." },
+        ],
+      },
+    },
+    {
+      id: "shop-gap",
+      bg: "home",
+      tab: "shop",
+      copy: {
+        kicker: "Step 4",
+        title: "Shop only the gap",
+        description:
+          "Add the missing chicken, tortillas, cilantro, and limes to your shopping list.",
+        bullets: [
+          { strong: "Missing:", text: "chicken, tortillas, cilantro, and limes." },
+          { strong: "Manual list:", text: "you can shop from the list directly." },
+        ],
+      },
+    },
+    {
+      id: "connected-grocery",
       bg: "shopping",
       tab: "shop",
       copy: {
-        kicker: "Shopping",
-        title: "Shop the gap, not the whole pantry",
+        kicker: "Step 5",
+        title: "Use connected grocery where supported",
         description:
-          "Shopping lists stay grouped by recipe and household needs so you can move faster without missing the basics.",
+          "Instacart and Kroger connected-shopping flows are live where supported, but checkout is optional. You can always use the list manually.",
         bullets: [
           {
-            strong: "Try it:",
-            text: "use the view button to swap between Cards and List without leaving Shopping.",
+            strong: "Optional:",
+            text: "connected checkout is not required for pantry tracking, planning, or lists.",
           },
           {
-            strong: "In list view:",
-            text: "recipe items and household restocks stay grouped together so one trip covers both.",
+            strong: "Availability:",
+            text: "availability may vary by platform, region, retailer availability, account eligibility, inventory, and app version.",
           },
-          { strong: "Why it matters:", text: "quicker trips with cleaner lists and fewer duplicates." },
         ],
       },
     },
@@ -241,7 +224,7 @@
         kicker: "Pantry Details",
         title: "Item insights at a glance",
         description:
-          "See nutrition info, product age, and recipe suggestions before ingredients go to waste.",
+          "See item timing, pantry status, and recipe suggestions before ingredients go unused.",
       },
     },
     {
@@ -253,7 +236,7 @@
         kicker: "Pantry Details",
         title: "Item insights at a glance",
         description:
-          "See nutrition info, product age, and recipe suggestions before ingredients go to waste.",
+          "See item timing, pantry status, and recipe suggestions before ingredients go unused.",
       },
     },
     {
@@ -265,7 +248,7 @@
         kicker: "Pantry Details",
         title: "Item insights at a glance",
         description:
-          "See nutrition info, product age, and recipe suggestions before ingredients go to waste.",
+          "See item timing, pantry status, and recipe suggestions before ingredients go unused.",
       },
     },
     {
@@ -279,7 +262,7 @@
         description:
           "Everything needed to decide, prep, and cook is visible in one clear flow.",
         bullets: [
-          { text: "Nutrition and ingredient flags provide quick reference (actual results may vary)." },
+          { text: "Ingredient details and pantry status provide quick reference before cooking." },
           { text: "Ingredients already in your pantry are marked off." },
           { text: "Items you still need can be added to shopping lists." },
         ],
@@ -768,7 +751,7 @@
       el(
         "p",
         "pp-app-download-body",
-        "Pantry & Plate™ is now available on the App Store and Google Play. Start your 7-day free trial; active subscription required after trial.",
+        "Pantry & Plate™ is now available on the App Store and Google Play. Start free for 7 days. Then $4.99/month or $49.99/year in the U.S. Pricing may vary by store or region. Cancel anytime through Apple or Google.",
       ),
     );
     const downloadBtns = el("div", "pp-app-download-btns");
@@ -776,12 +759,18 @@
     appStoreAccess.className = "pp-app-download-btn";
     appStoreAccess.href = APP_STORE_URL;
     appStoreAccess.dataset.launchUrl = "app-store";
+    appStoreAccess.dataset.cta = "store-link";
+    appStoreAccess.dataset.store = "app-store";
+    appStoreAccess.dataset.placement = "download-dialog";
     appStoreAccess.setAttribute("aria-label", "Download Pantry & Plate on the App Store");
     appStoreAccess.textContent = "Download on the App Store";
     const googlePlayAccess = document.createElement("a");
     googlePlayAccess.className = "pp-app-download-btn pp-app-download-btn-secondary";
     googlePlayAccess.href = GOOGLE_PLAY_URL;
     googlePlayAccess.dataset.launchUrl = "google-play";
+    googlePlayAccess.dataset.cta = "store-link";
+    googlePlayAccess.dataset.store = "google-play";
+    googlePlayAccess.dataset.placement = "download-dialog";
     googlePlayAccess.setAttribute("aria-label", "Get Pantry & Plate on Google Play");
     googlePlayAccess.textContent = "Get it on Google Play";
     downloadBtns.appendChild(appStoreAccess);
@@ -1237,7 +1226,7 @@
       topRow.appendChild(viewToggle);
       topRow.appendChild(
         buildPill({
-          label: "All Items",
+          label: "Pantry Coverage",
           className: "pp-app-pill--title pp-top-pill pp-top-pill--main",
         }),
       );
@@ -1264,66 +1253,54 @@
 
         stack.appendChild(
           buildDemoListSection({
-            title: "Use first",
-            subtitle: "Produce nearing its ideal window",
-            count: 3,
-            rows: [
-              buildDemoListRow({
-                title: "Avocado",
-                subtitle: "Produce • Qty 1 • ripe today",
-                mediaSrc: "assets/ingredients/avocado.png",
-                pills: [{ label: "Today", tone: "alert" }],
-                onClick: () => openItemDetail("avocado"),
-                ariaLabel: "Avocado details",
-              }),
-              buildDemoListRow({
-                title: "Apple",
-                subtitle: "Produce • Qty 1 • crisp and ready",
-                mediaSrc: "assets/ingredients/apple.png",
-                pills: [{ label: "1 day", tone: "copper" }],
-                onClick: () => openItemDetail("apple"),
-                ariaLabel: "Apple details",
-              }),
-              buildDemoListRow({
-                title: "Banana",
-                subtitle: "Produce • Qty 1 • good for smoothies",
-                mediaSrc: "assets/ingredients/banana.png",
-                pills: [{ label: "1 day", tone: "copper" }],
-                onClick: () => openItemDetail("banana"),
-                ariaLabel: "Banana details",
-              }),
-            ],
-          }),
-        );
-
-        stack.appendChild(
-          buildDemoListSection({
-            title: "Pantry staples",
-            subtitle: "Longer-lasting items already on hand",
+            title: "Chicken taco bowls",
+            subtitle: "Pantry items already available",
             count: 5,
             rows: [
               buildDemoListRow({
-                title: "Olive Oil",
+                title: "Rice",
+                subtitle: "Pantry • staple for bowls",
+                mediaIcon: "list",
+                pills: [{ label: "Covered", tone: "sage" }],
+                checked: true,
+                downloadCta: true,
+                ariaLabel: "Rice pantry item covered",
+              }),
+              buildDemoListRow({
+                title: "Black beans",
+                subtitle: "Pantry • bowl staple",
+                mediaIcon: "list",
+                pills: [{ label: "Covered", tone: "sage" }],
+                checked: true,
+                downloadCta: true,
+                ariaLabel: "Black beans pantry item covered",
+              }),
+              buildDemoListRow({
+                title: "Salsa",
+                subtitle: "Refrigerated • already at home",
+                mediaSrc: "assets/objects/obj_bowl_tomato.png",
+                pills: [{ label: "Covered", tone: "sage" }],
+                checked: true,
+                downloadCta: true,
+                ariaLabel: "Salsa pantry item covered",
+              }),
+              buildDemoListRow({
+                title: "Olive oil",
                 subtitle: "Pantry • 1 bottle • plan-ready",
                 mediaSrc: "assets/ingredients/olive_oil.png",
+                pills: [{ label: "Covered", tone: "sage" }],
+                checked: true,
                 downloadCta: true,
-                ariaLabel: "Olive oil pantry item",
+                ariaLabel: "Olive oil pantry item covered",
               }),
               buildDemoListRow({
-                title: "Garlic",
-                subtitle: "Produce • 2 bulbs • weekly staple",
-                mediaSrc: "assets/ingredients/garlic.png",
-                pills: [{ label: "Staple", tone: "muted" }],
+                title: "Taco seasoning",
+                subtitle: "Spice rack • already in pantry",
+                mediaSrc: "assets/objects/obj_bowl_spices.png",
+                pills: [{ label: "Covered", tone: "sage" }],
+                checked: true,
                 downloadCta: true,
-                ariaLabel: "Garlic pantry item",
-              }),
-              buildDemoListRow({
-                title: "Crushed Tomatoes",
-                subtitle: "Pantry • 2 cans • ready for sauces",
-                mediaSrc: "assets/ingredients/tomato.png",
-                pills: [{ label: "Plan-ready", tone: "sage" }],
-                downloadCta: true,
-                ariaLabel: "Crushed tomatoes pantry item",
+                ariaLabel: "Taco seasoning pantry item covered",
               }),
             ],
           }),
@@ -1804,9 +1781,9 @@
       hud.appendChild(weekRow);
       hud.appendChild(
         buildPill({
-          label: "Auto-fill this week",
+          label: "Add from cookbook",
           className: "pp-app-pill--title pp-plan-autofill-pill",
-          leftIcon: "sparkles",
+          leftIcon: "list",
         }),
       );
       root.appendChild(hud);
@@ -1816,20 +1793,28 @@
       const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday"];
       const meals = [
         {
-          title: "Vegetarian BLT with Avocado",
-          image: "assets/objects/vegetarian_blt.png",
+          title: "Chicken taco bowls",
+          image: "assets/objects/skillet_tacos.png",
+          coverage: "5 pantry items covered",
+          missing: "4 items missing",
         },
         {
-          title: "Chicken Avocado Wrap - Paleo",
-          image: "assets/objects/chicken_avocado_wraps.png",
+          title: "Open dinner slot",
+          image: "assets/objects/obj_bowl_tomato.png",
+          coverage: "Choose a recipe to compare",
+          missing: "Pantry coverage appears here",
         },
         {
-          title: "Salmon in Green Chili Cream Sauce",
-          image: "assets/objects/salmon_in_green_sauce.png",
+          title: "Open dinner slot",
+          image: "assets/objects/obj_bowl_basil.png",
+          coverage: "Choose a recipe to compare",
+          missing: "Pantry coverage appears here",
         },
         {
-          title: "Spicy Avocado Chicken",
-          image: "assets/objects/spicy_avocado_chicken.png",
+          title: "Open dinner slot",
+          image: "assets/objects/obj_bowl_spices.png",
+          coverage: "Choose a recipe to compare",
+          missing: "Pantry coverage appears here",
         },
       ];
       dayNames.forEach((day, idx) => {
@@ -1842,16 +1827,19 @@
         const meta = el("div", "pp-meal-meta");
         meta.appendChild(el("p", "pp-meal-title", `${day}  •  2/${idx + 2}`));
         meta.appendChild(el("p", "pp-meal-sub", meal.title || ""));
-        meta.appendChild(el("p", "pp-meal-sub", `${idx + 1} of ${idx + 7} from pantry`));
+        meta.appendChild(el("p", "pp-meal-sub", meal.coverage || ""));
+        meta.appendChild(el("p", "pp-meal-sub", meal.missing || ""));
         card.appendChild(meta);
 
         const actions = el("div", "pp-meal-actions");
-        const startCooking = buildPill({ label: "Start Cooking" });
-        if (typeof onAction === "function") {
+        const startCooking = buildPill({ label: idx === 0 ? "Review Recipe" : "Add Meal" });
+        if (idx === 0 && typeof onAction === "function") {
           startCooking.addEventListener("click", () => onAction(actionSetPhoneModal("cookView")));
+        } else {
+          startCooking.dataset.downloadCta = "true";
         }
         actions.appendChild(startCooking);
-        const replan = buildPill({ label: "Replan Meal" });
+        const replan = buildPill({ label: idx === 0 ? "Shop Gap" : "Plan Meal" });
         replan.dataset.downloadCta = "true";
         actions.appendChild(replan);
         card.appendChild(actions);
@@ -1907,7 +1895,7 @@
         const hero = el("div", "pp-shop-hero");
         hero.appendChild(
           buildPill({
-            label: "Tomatillo Salsa Verde",
+            label: "Chicken taco bowls",
             className: "pp-app-pill--title pp-shop-recipe-pill",
           }),
         );
@@ -1923,36 +1911,45 @@
 
         stack.appendChild(
           buildDemoListSection({
-            title: "Produce",
-            subtitle: "Items tied to tonight's recipe",
-            count: 3,
+            title: "Missing for dinner",
+            subtitle: "Added from this week's plan",
+            count: 4,
             rows: [
               buildDemoListRow({
-                title: "Garlic",
-                subtitle: "Tomatillo Salsa Verde • already picked",
-                mediaSrc: "assets/objects/obj_garlic.png",
-                pills: [{ label: "Recipe", tone: "muted" }],
-                checked: true,
-                downloadCta: true,
-                ariaLabel: "Garlic shopping list item",
-              }),
-              buildDemoListRow({
-                title: "Jalapeno",
-                subtitle: "Tomatillo Salsa Verde • need 2 peppers",
-                mediaSrc: "assets/ingredients/jalapeno.png",
-                pills: [{ label: "Need 2", tone: "copper" }],
+                title: "Chicken",
+                subtitle: "Chicken taco bowls • need 1 package",
+                mediaSrc: "assets/objects/chicken_avocado_wraps.png",
+                pills: [{ label: "Missing", tone: "copper" }],
                 checked: false,
                 downloadCta: true,
-                ariaLabel: "Jalapeno shopping list item",
+                ariaLabel: "Chicken missing shopping list item",
               }),
               buildDemoListRow({
-                title: "White Onion",
-                subtitle: "Tomatillo Salsa Verde • need 1 onion",
-                mediaSrc: "assets/ingredients/white_onion.png",
-                pills: [{ label: "Need 1", tone: "copper" }],
+                title: "Tortillas",
+                subtitle: "Chicken taco bowls • need 1 pack",
+                mediaIcon: "list",
+                pills: [{ label: "Missing", tone: "copper" }],
                 checked: false,
                 downloadCta: true,
-                ariaLabel: "White onion shopping list item",
+                ariaLabel: "Tortillas missing shopping list item",
+              }),
+              buildDemoListRow({
+                title: "Cilantro",
+                subtitle: "Chicken taco bowls • need 1 bunch",
+                mediaSrc: "assets/objects/obj_bowl_basil.png",
+                pills: [{ label: "Missing", tone: "copper" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "Cilantro missing shopping list item",
+              }),
+              buildDemoListRow({
+                title: "Limes",
+                subtitle: "Chicken taco bowls • need 2 limes",
+                mediaSrc: "assets/ingredients/lime.png",
+                pills: [{ label: "Missing", tone: "copper" }],
+                checked: false,
+                downloadCta: true,
+                ariaLabel: "Limes missing shopping list item",
               }),
             ],
           }),
@@ -1960,27 +1957,54 @@
 
         stack.appendChild(
           buildDemoListSection({
-            title: "Pantry top-offs",
-            subtitle: "Recipe support and pantry gaps",
-            count: 2,
+            title: "Already covered",
+            subtitle: "At home from pantry coverage",
+            count: 5,
             rows: [
               buildDemoListRow({
-                title: "Kosher Salt",
-                subtitle: "Spice rack gap for the week",
-                mediaSrc: "assets/objects/obj_white_spice.png",
-                pills: [{ label: "Pantry gap", tone: "alert" }],
-                checked: false,
+                title: "Rice",
+                subtitle: "Covered by pantry",
+                mediaIcon: "list",
+                pills: [{ label: "Pantry", tone: "sage" }],
+                checked: true,
                 downloadCta: true,
-                ariaLabel: "Kosher salt shopping list item",
+                ariaLabel: "Rice covered by pantry",
+              }),
+              buildDemoListRow({
+                title: "Black beans",
+                subtitle: "Covered by pantry",
+                mediaIcon: "list",
+                pills: [{ label: "Pantry", tone: "sage" }],
+                checked: true,
+                downloadCta: true,
+                ariaLabel: "Black beans covered by pantry",
+              }),
+              buildDemoListRow({
+                title: "Salsa",
+                subtitle: "Covered by pantry",
+                mediaSrc: "assets/objects/obj_bowl_tomato.png",
+                pills: [{ label: "Pantry", tone: "sage" }],
+                checked: true,
+                downloadCta: true,
+                ariaLabel: "Salsa covered by pantry",
               }),
               buildDemoListRow({
                 title: "Olive Oil",
-                subtitle: "Top off before next meal plan run",
+                subtitle: "Covered by pantry",
                 mediaSrc: "assets/ingredients/olive_oil.png",
-                pills: [{ label: "Top off", tone: "muted" }],
-                checked: false,
+                pills: [{ label: "Pantry", tone: "sage" }],
+                checked: true,
                 downloadCta: true,
-                ariaLabel: "Olive oil shopping list item",
+                ariaLabel: "Olive oil covered by pantry",
+              }),
+              buildDemoListRow({
+                title: "Taco seasoning",
+                subtitle: "Covered by pantry",
+                mediaSrc: "assets/objects/obj_bowl_spices.png",
+                pills: [{ label: "Pantry", tone: "sage" }],
+                checked: true,
+                downloadCta: true,
+                ariaLabel: "Taco seasoning covered by pantry",
               }),
             ],
           }),
@@ -1988,27 +2012,18 @@
 
         stack.appendChild(
           buildDemoListSection({
-            title: "Household",
-            subtitle: "Non-food restocks ride the same trip",
-            count: 2,
+            title: "Connected grocery",
+            subtitle: "Optional where supported",
+            count: "",
             rows: [
               buildDemoListRow({
-                title: "Dishwashing detergent",
-                subtitle: "Sink restock",
-                mediaSrc: "assets/objects/dishwashing_detergent.png",
-                pills: [{ label: "Household", tone: "muted" }],
-                checked: false,
+                title: "Instacart or Kroger",
+                subtitle: "Checkout is optional; you can always use the list manually",
+                mediaIcon: "cart",
+                pills: [{ label: "Where supported", tone: "muted" }],
+                checked: null,
                 downloadCta: true,
-                ariaLabel: "Dishwashing detergent shopping list item",
-              }),
-              buildDemoListRow({
-                title: "Trash bags",
-                subtitle: "Pantry pull-out bin restock",
-                mediaSrc: "assets/objects/trash_bag_black.png",
-                pills: [{ label: "Household", tone: "muted" }],
-                checked: false,
-                downloadCta: true,
-                ariaLabel: "Trash bags shopping list item",
+                ariaLabel: "Optional connected grocery where supported",
               }),
             ],
           }),
@@ -2049,9 +2064,9 @@
           buildShopRow({
             className: "pp-shop-row--food-top",
             items: [
-              { key: "garlic", src: "assets/objects/obj_garlic.png", label: "Garlic" },
-              { key: "jalapeno", src: "assets/ingredients/jalapeno.png", label: "Jalapeno" },
-              { key: "salt", src: "assets/objects/obj_white_spice.png", label: "Kosher Salt" },
+              { key: "garlic", src: "assets/objects/chicken_avocado_wraps.png", label: "Chicken" },
+              { key: "jalapeno", src: "assets/objects/skillet_tacos.png", label: "Tortillas" },
+              { key: "salt", src: "assets/objects/obj_bowl_basil.png", label: "Cilantro" },
             ],
           }),
         );
@@ -2059,14 +2074,14 @@
           buildShopRow({
             className: "pp-shop-row--food-bottom",
             items: [
-              { key: "oliveoil", src: "assets/ingredients/olive_oil.png", label: "Olive oil" },
-              { key: "onion", src: "assets/ingredients/white_onion.png", label: "White Onion" },
+              { key: "oliveoil", src: "assets/ingredients/lime.png", label: "Limes" },
+              { key: "onion", src: "assets/objects/obj_bowl_spices.png", label: "Pantry covered" },
             ],
           }),
         );
 
         itemsWrap.appendChild(
-          el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Household"),
+          el("div", "pp-shop-section-chip pp-shop-section-chip--household", "Optional"),
         );
         itemsWrap.appendChild(
           buildShopRow({
@@ -2074,10 +2089,10 @@
             items: [
               {
                 key: "dishdetergent",
-                src: "assets/objects/dishwashing_detergent.png",
-                label: "Dishwashing detergent",
+                src: "assets/objects/obj_pantry_shelf.png",
+                label: "Use list manually",
               },
-              { key: "trashbags", src: "assets/objects/trash_bag_black.png", label: "Trash bags" },
+              { key: "trashbags", src: "assets/objects/obj_pantry_item_shelf.png", label: "Connected where supported" },
             ],
           }),
         );
@@ -3533,7 +3548,7 @@
       if (kind === "pantry_item_detail") {
         const itemId = sheetSpec && sheetSpec.item ? String(sheetSpec.item) : "apple";
 
-        // These values are sourced from `/Users/benadgie/Desktop/meal_planner/assets/catalog/usda_generic_nutrition.json`.
+        // These sample values keep the detail sheet readable without implying live analysis.
         const ITEMS = {
           apple: {
             title: "Apple",
@@ -3541,7 +3556,6 @@
             qty: 1,
             expires: "1d",
             category: "Produce",
-            nutrition: { per: "100g", kcal: 58.2, protein_g: 0.1, carbs_g: 15.7, fat_g: 0.2 },
             recipe: {
               title: "Apple Cinnamon Overnight Oats",
               meta: "Pantry —",
@@ -3553,7 +3567,6 @@
             qty: 1,
             expires: "1d",
             category: "Produce",
-            nutrition: { per: "100g", kcal: 85.0, protein_g: 0.7, carbs_g: 20.1, fat_g: 0.2 },
             recipe: {
               title: "Banana Peanut Smoothie",
               meta: "Pantry —",
@@ -3565,7 +3578,6 @@
             qty: 1,
             expires: "0d",
             category: "Produce",
-            nutrition: { per: "100g", kcal: 206.0, protein_g: 1.8, carbs_g: 8.3, fat_g: 20.3 },
             recipe: {
               title: "Avocado Salsa (without the avocado)",
               meta: "Pantry —",
@@ -3575,14 +3587,7 @@
 
         const item = ITEMS[itemId] || ITEMS.apple;
 
-        const fmt1 = (value) => {
-          const n = Number(value);
-          if (!Number.isFinite(n)) return "";
-          const s = n.toFixed(1);
-          return s.endsWith(".0") ? s.slice(0, -2) : s;
-        };
-
-        const buildNutritionCell = (label, value) => {
+        const buildDetailCell = (label, value) => {
           const node = el("div", "pp-nutrition-cell");
           node.appendChild(el("div", "pp-nutrition-label", label));
           node.appendChild(el("div", "pp-nutrition-value", value));
@@ -3620,13 +3625,13 @@
 
         const useItUp = el("div", "pp-pantry-detail-useitup");
         useItUp.appendChild(el("h3", "pp-pantry-detail-section-title", "Use It Up"));
-        useItUp.appendChild(el("p", "pp-pantry-detail-section-sub", `Nutrition (${item.nutrition.per})`));
+        useItUp.appendChild(el("p", "pp-pantry-detail-section-sub", "Pantry detail"));
 
         const grid = el("div", "pp-nutrition-grid");
-        grid.appendChild(buildNutritionCell("Calories", `${fmt1(item.nutrition.kcal)} kcal`));
-        grid.appendChild(buildNutritionCell("Protein", `${fmt1(item.nutrition.protein_g)} g`));
-        grid.appendChild(buildNutritionCell("Carbs", `${fmt1(item.nutrition.carbs_g)} g`));
-        grid.appendChild(buildNutritionCell("Fat", `${fmt1(item.nutrition.fat_g)} g`));
+        grid.appendChild(buildDetailCell("Quantity", `${item.qty}`));
+        grid.appendChild(buildDetailCell("Timing", `Expires ${item.expires}`));
+        grid.appendChild(buildDetailCell("Category", item.category));
+        grid.appendChild(buildDetailCell("Idea", item.recipe.title));
         useItUp.appendChild(grid);
 
         const recipe = document.createElement("button");
@@ -3726,7 +3731,7 @@
           );
           const filters = el("div", "pp-app-sheet-stack");
           [
-            "Protein: Any",
+            "Main ingredient: Any",
             "Prep time: Any",
             "Cuisine: Any",
             "Method: Any",
@@ -4252,17 +4257,17 @@
       const nutTitle = el("div", "pp-recipe-nut-title");
       const listSvg = iconEl("list");
       if (listSvg) nutTitle.appendChild(listSvg);
-      nutTitle.appendChild(el("span", "", "Nutrition & Tags"));
+      nutTitle.appendChild(el("span", "", "Ingredients & Tags"));
       nutHead.appendChild(nutTitle);
       nutHead.appendChild(el("div", "pp-recipe-nut-servings", "4 servings"));
       nut.appendChild(nutHead);
 
       const pills = el("div", "pp-recipe-nut-pills");
       [
-        { k: "Calories", v: "926 kcal" },
-        { k: "Protein", v: "76 g" },
-        { k: "Carbs", v: "129 g" },
-        { k: "Fat", v: "20 g" },
+        { k: "Pantry", v: "0 of 16" },
+        { k: "Servings", v: "4" },
+        { k: "Tags", v: "Dinner" },
+        { k: "List", v: "Ready" },
       ].forEach((p) => {
         const pill = el("div", "pp-recipe-pill");
         pill.appendChild(el("div", "pp-recipe-pill-k", p.k));
@@ -4271,7 +4276,7 @@
       });
       nut.appendChild(pills);
 
-      nut.appendChild(el("div", "pp-recipe-nut-note", "Analysis via Spoonacular"));
+      nut.appendChild(el("div", "pp-recipe-nut-note", "Demo recipe preview"));
       scroll.appendChild(nut);
 
       const ingCard = el("div", "pp-recipe-ing pp-app-card");
@@ -5042,9 +5047,9 @@
       route: null,
       routeOverride: null,
       pantryView: "items",
-      pantryDisplayMode: "cards",
+      pantryDisplayMode: "list",
       spiceDisplayMode: "cards",
-      shopDisplayMode: "cards",
+      shopDisplayMode: "list",
       modal: null,
       params: null,
       downloadCtaOpen: false,
@@ -5350,6 +5355,8 @@
           // Any scroll-driven step change closes transient modal UI so the demo stays deterministic.
           phoneNavState.routeOverride = null;
           phoneNavState.pantryView = "items";
+          phoneNavState.pantryDisplayMode = "list";
+          phoneNavState.shopDisplayMode = "list";
           phoneNavState.modal = null;
           phoneNavState.params = null;
           phoneNavState.downloadCtaOpen = false;
@@ -5371,10 +5378,12 @@
         }
       }
       stepNodesById.forEach((node) => setNodeInert(node, false));
-      activeStepIndex = STEPS.length > 1 ? 1 : 0; // default to Home vs splash
+      activeStepIndex = 0;
       stage.dataset.ppBg = STEPS[activeStepIndex].bg || "home";
       syncRouteFromBaseStep();
       phoneNavState.pantryView = "items";
+      phoneNavState.pantryDisplayMode = "list";
+      phoneNavState.shopDisplayMode = "list";
       phoneNavState.modal = null;
       phoneNavState.params = null;
       phoneNavState.downloadCtaOpen = false;

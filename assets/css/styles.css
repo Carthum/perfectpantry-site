@@ -329,6 +329,20 @@ img {
   font-size: 0.9rem;
 }
 
+.has-device-store-preference [data-cta="store-link"].is-preferred-store {
+  border-color: rgba(95, 127, 87, 0.48);
+  box-shadow: 0 14px 28px rgba(95, 127, 87, 0.2);
+}
+
+.has-device-store-preference .btn-outline[data-cta="store-link"].is-preferred-store,
+.has-device-store-preference .btn-ghost[data-cta="store-link"].is-preferred-store {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.has-device-store-preference .footer-links [data-cta="store-link"].is-preferred-store {
+  color: var(--leaf-700);
+}
+
 main {
   padding-bottom: 4rem;
 }
